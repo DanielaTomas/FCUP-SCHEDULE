@@ -1,0 +1,8 @@
+FlaskAPI/settings.json
+.vscode/
+certs/
+venv/
+__pycache__/
+.env
+*.csv
+*.columns

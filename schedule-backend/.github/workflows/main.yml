@@ -1,0 +1,38 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  database:
+    runs-on: ubuntu-latest
+    env:
+      DB_USER: "root"
+      DB_PASSWORD: "root"
+      DB_HOST: "127.0.0.1"
+      DB_NAME: "schedule"
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Start SQL Service
+      run: sudo systemctl start mysql.service
+    - name: Load Database Scheme
+      run: sudo mysql --user=$DB_USER --password=$DB_PASSWORD --host=$DB_HOST < ./Database/schedule.sql
+    - name: Create Migration Folders
+      run: |
+        mkdir ./Migration/old_db
+        mkdir ./Migration/new_db
+    - name: Fetch Old DB 
+      run: |
+        wget --no-check-certificate "${{ secrets.OLD_DB_ZIP }}" -O ./Migration/old_db/old_db.zip
+        unzip ./Migration/old_db/old_db.zip -d ./Migration/old_db/
+      # --use-deprecated=legacy-resolver is due to package Mysqlclient 2.2.0
+    - name: Migrate Old Database
+      run: |
+        cd Migration
+        python3 -m pip --use-deprecated=legacy-resolver install -r requirements.txt
+        python3 migrate.py
+    

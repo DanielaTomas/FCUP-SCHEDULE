@@ -1,0 +1,177 @@
+/*
+  elm-hot creates an additional div wrapper around the app to make HMR possible.
+  This could break styling in development mode if you are using Elm UI.
+
+  More context in the issue:
+    https://github.com/halfzebra/create-elm-app/issues/320
+*/
+[data-elm-hot="true"] {
+  height: inherit;
+}
+
+body {
+  font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  text-align: center;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+img {
+  margin: 20px 0;
+  max-width: 200px;
+}
+
+.list {
+  margin: 1em 0 0;
+  padding: 0;
+  min-height: 18em;
+  border: 1px solid #aaa;
+  background: white;
+}
+
+/* Make the list scrollable  */
+.list {
+  position: relative;
+  max-height: 18em;
+  overflow-y: auto;
+  border-radius: 5px;
+}
+
+/* For testing purposes only*/
+.list-item:hover {
+  background: #4c9ad3;
+  box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
+}
+
+.list-item {
+  display: flex;
+  /* justify-content: space-around; */
+  overflow-y: hidden;
+  overflow-x: clip;
+  height: 10%;
+  text-align: start;
+  cursor: pointer;
+  margin-left: 0.5vw;
+}
+
+.listbox-area {
+  display: grid;
+  justify-content: center;
+  grid-gap: 1vh;
+  grid-template-columns: 10% 10% 10% 60% 10%;
+  padding: 20px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background: #eee;
+}
+
+/* custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
+ul:before {
+  content: attr(aria-label);
+  font-size: 120%;
+  font-weight: bold;
+  /* margin-left:-15px; */
+}
+
+.list-text {
+  white-space: nowrap;
+  overflow: hidden;
+  direction: ltr;
+  /* overflow-x: auto;
+  overflow-y: hidden; */
+}
+
+.list-text:hover {
+  overflow: auto;
+}
+
+.list-title {
+  display: flex;
+  word-break: break-word;
+  padding: 0;
+  justify-content: center;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+}
+
+.input-box {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  border: 0;
+  font-family: inherit;
+  padding: 16px 12px 0 12px;
+  height: 56px;
+  font-size: 16px;
+  font-weight: 400;
+  background: rgba(0, 0, 0, 0.02);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+  color: #000;
+  transition: all 0.15s ease;
+}
+
+
+/* Define button styles */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #333;
+  /* Text color */
+  border: 1px solid #333;
+  /* Border */
+  border-radius: 5px;
+  /* Rounded edges */
+  cursor: pointer;
+}
+
+/* Define button press effect */
+.button:active {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  /* Add a shadow on press */
+}
+
+
+.list2{
+padding-bottom: 6px;
+padding-top: 4px;
+box-sizing: border-box;
+/* top: 100%; */
+background-color: #FFFFFF;
+/* position: absolute; */
+width: 100%;
+box-sizing: border-box;
+border-radius: 7px;
+box-shadow: 0px 0px 12px rgba(0,0,0,0.19);
+margin-top: 8px;
+z-index: 2;
+border: 6px solid transparent;
+max-height: 50vh;
+overflow-y: auto;
+padding-left: 0px;
+margin-bottom: 8px;
+}
