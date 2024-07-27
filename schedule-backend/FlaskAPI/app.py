@@ -10,7 +10,7 @@ from json_provider import UpdatedJSONProvider
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 import datetime
 import pymysql.cursors
-
+from mcts import *
 
 
 host = os.environ.get('FLASK_SERVER_HOST', conf.HOST)
@@ -822,6 +822,45 @@ def deleteOccupation(id):
 
     except Exception as e:
         abort(HTTPStatus.BAD_REQUEST, description=str(e))
+
+
+# /api/v1/recommend
+@app.route(f"{route_prefix}/recommend", methods=['GET'])
+#@jwt_required()
+def recommend():
+    try:
+        db = Database(conf)
+        
+        events_query = "SELECT * FROM EVENT"
+        rooms_query = "SELECT * FROM ROOM"
+        lecturers_query = "SELECT * FROM LECTURER"
+        restrictions_query = "SELECT * FROM RESTRICTION"
+        occupations_query = "SELECT * FROM OCCUPATION"
+        
+        events = db.run_query(query=events_query)
+        rooms = db.run_query(query=rooms_query)
+        lecturers = db.run_query(query=lecturers_query)
+        restrictions = db.run_query(query=restrictions_query)
+        occupations = db.run_query(query=occupations_query)
+
+        db.close_connection()
+
+        data = {
+            'events': events,
+            'rooms': rooms,
+            'lecturers': lecturers,
+            'restrictions': restrictions,
+            'occupations': occupations
+        }
+
+        mcts = MCTS(data)
+        recommendations = mcts.run_mcts(3)
+        return get_response_msg(recommendations, HTTPStatus.OK)
+    except pymysql.MySQLError as sqle:
+        abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
+    except Exception as e:
+        abort(HTTPStatus.BAD_REQUEST, description=str(e))
+
 
 # /api/v1/health
 @app.route(f"{route_prefix}/health", methods=['GET'])
