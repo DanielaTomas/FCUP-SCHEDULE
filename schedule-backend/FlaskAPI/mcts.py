@@ -2,6 +2,8 @@ from copy import deepcopy
 from random_data import *
 from mcts_node import *
 
+EXPANSION_LIMIT = 5 # adjust if necessary
+
 #TODO remove prints
 
 class MCTS:
@@ -19,7 +21,7 @@ class MCTS:
                 duration = (end_of_day - start_time).total_seconds() / 60.0
                 event["Duration"] = duration
             else:
-                event["Duration"] = 60 #TODO adjust if necessary
+                event["Duration"] = 60 # adjust if necessary
 
 
     def get_room_name_by_id(self, room_id):
@@ -34,7 +36,7 @@ class MCTS:
                 other["WeekDay"] == weekday and
                 start_time < other["EndTime"] and end_time > other["StartTime"])
 
-    def evaluate_timetable(self, timetable): # conflicts
+    def evaluate_timetable(self, timetable):
         penalty = 0
         for event in timetable["events"]:
             room = event["RoomId"]
@@ -60,15 +62,15 @@ class MCTS:
                             penalty += 1
         return -penalty
     
-    #MCTS steps:
+    # MCTS steps:
 
     def selection(self):
         print("Starting selection...")
         current_node = self.root
-        while current_node.is_fully_expanded():
-            print(f"\tCurrent node visits: {current_node.visits}, score: {current_node.score}")
+        while current_node.is_fully_expanded() and len(current_node.children)+1 > EXPANSION_LIMIT:
+            #print(f"\tCurrent node visits: {current_node.visits}, score: {current_node.score}")
             current_node = current_node.best_child()
-        print(f"\tSelected node: visits: {current_node.visits}, score: {current_node.score}")
+        #print(f"\tSelected node: visits: {current_node.visits}, score: {current_node.score}")
         self.current_node = current_node
 
     def expansion(self, timetable):
@@ -88,7 +90,7 @@ class MCTS:
         child_node = MCTSNode(new_timetable, parent=self.current_node)
         self.current_node.children.append(child_node)
         self.current_node = child_node
-        print(f"\tCreated child node with visits: {child_node.visits}, score: {child_node.score}")
+        #print(f"\tCreated child node with visits: {child_node.visits}, score: {child_node.score}")
 
     def simulation(self):
         print("Starting simulation...")
@@ -100,12 +102,10 @@ class MCTS:
         print("Starting backpropagation...")
         node = self.current_node
         while node is not None:
-            print(f"\tUpdating node: visits {node.visits} + 1, score {node.score} + {simulation_result}")
+            #print(f"\tUpdating node: visits {node.visits} + 1, score {node.score} + {simulation_result}")
             node.visits += 1
             node.score += simulation_result
             node = node.parent
-        print("\tBackpropagation complete.")
-
 
     def run_mcts(self, iterations=1000):
         for _ in range(iterations):
