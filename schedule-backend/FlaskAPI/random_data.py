@@ -10,11 +10,10 @@ def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13,
     latest_start_morning = lunch_start - timedelta(minutes=duration)
     latest_start_afternoon = end_of_day - timedelta(minutes=duration)
 
-    if latest_start_morning <= start_of_day and latest_start_afternoon <= lunch_end:
-        raise ValueError("Duration is too long to fit in the available time range.")
+    if latest_start_morning < start_of_day and latest_start_afternoon < lunch_end:
+        raise ValueError(f"Duration is too long to fit in the available time range.")
 
     valid_start_slots = []
-
     current_time = start_of_day
     while current_time <= latest_start_afternoon:
         if (current_time <= latest_start_morning) or (current_time >= lunch_start):
@@ -30,7 +29,9 @@ def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13,
     start_timedelta = start_time - start_of_day
     end_timedelta = end_time - start_of_day
 
-    return start_timedelta, end_timedelta, random.randint(2, 6)
+    weekday = random.randint(2, 6)
+
+    return start_timedelta, end_timedelta, weekday
 
 
 def random_room(occupations, events, start_time, end_time, rooms):
