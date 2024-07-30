@@ -30,11 +30,15 @@ class MCTS:
                 return room["Name"]
         return "Room Not Found"
     
+    def check_conflict_time(self, start_time, other, end_time, weekday):
+        if not all([other.get("EndTime"), other.get("StartTime"), other.get("WeekDay")]): 
+            return False
+        return other["WeekDay"] == weekday and start_time < other["EndTime"] and end_time > other["StartTime"]
+    
     def check_conflict(self, other, start_time, end_time, weekday, room):
         return (self.get_room_name_by_id(room) != "DCC online" and
                 other['RoomId'] == room and
-                other["WeekDay"] == weekday and
-                start_time < other["EndTime"] and end_time > other["StartTime"])
+                self.check_conflict_time(start_time, other, end_time, weekday))
 
     def evaluate_timetable(self, timetable):
         penalty = 0
@@ -43,29 +47,30 @@ class MCTS:
             start_time = event["StartTime"]
             end_time = event["EndTime"]
             weekday = event["WeekDay"]
+            lecturer = event["LecturerId"]
 
-            if room and start_time and end_time and weekday:
+            if start_time and end_time and weekday:
                 for other_event in timetable["events"]:
-                    if (other_event["Id"] != event["Id"] and 
-                        self.check_conflict(other_event, start_time, end_time, weekday, room)):
+                    if other_event["Id"] != event["Id"]:
+                        if room and self.check_conflict(other_event, start_time, end_time, weekday, room):
+                            penalty += 1
+                        if lecturer and other_event["LecturerId"] == lecturer and self.check_conflict_time(start_time, other_event, end_time, weekday):
                             penalty += 1
                 for occupation in timetable["occupations"]:
-                    if (self.check_conflict(occupation, start_time, end_time, weekday, room)):
+                    if room and self.check_conflict(occupation, start_time, end_time, weekday, room):
                             penalty += 1
-                lecturer = event["LecturerId"]
                 if lecturer:
                     for restriction in timetable["restrictions"]:
                         if (restriction["Type"] == 1 and
                             restriction["LecturerId"] == lecturer and 
-                            restriction["WeekDay"] == weekday and
-                            start_time < restriction["EndTime"] and end_time > restriction["StartTime"]):
+                            self.check_conflict_time(start_time, restriction, end_time, weekday)):
                             penalty += 1
         return -penalty
     
     # MCTS steps:
 
     def selection(self):
-        print("Starting selection...")
+        #print("Starting selection...")
         current_node = self.root
         while current_node.is_fully_expanded() and len(current_node.children)+1 > EXPANSION_LIMIT:
             #print(f"\tCurrent node visits: {current_node.visits}, score: {current_node.score}")
@@ -74,9 +79,9 @@ class MCTS:
         self.current_node = current_node
 
     def expansion(self, timetable):
-        print("Starting expansion...")
+        #print("Starting expansion...")
         event = random_event(timetable["events"])
-        print(f"\tExpanding event: {event}")
+        #print(f"\tExpanding event: {event}")
         new_start_time, new_end_time, new_weekday = random_time(event["Duration"])
         new_room = random_room(timetable["occupations"], timetable["events"], new_start_time, new_end_time, timetable["rooms"])
         new_timetable = deepcopy(self.current_node.timetable)
@@ -86,20 +91,20 @@ class MCTS:
                 e["EndTime"] = new_end_time
                 e["RoomId"] = new_room["Id"]
                 e["WeekDay"] = new_weekday
-                print(f"\tEvent updated: {e}")
+                #print(f"\tEvent updated: {e}")
         child_node = MCTSNode(new_timetable, parent=self.current_node)
         self.current_node.children.append(child_node)
         self.current_node = child_node
         #print(f"\tCreated child node with visits: {child_node.visits}, score: {child_node.score}")
 
     def simulation(self):
-        print("Starting simulation...")
+        #print("Starting simulation...")
         result = self.evaluate_timetable(self.current_node.timetable)
-        print(f"\tSimulation result: {result}")
+        #print(f"\tSimulation result: {result}")
         return result
 
     def backpropagation(self, simulation_result):
-        print("Starting backpropagation...")
+        #print("Starting backpropagation...")
         node = self.current_node
         while node is not None:
             #print(f"\tUpdating node: visits {node.visits} + 1, score {node.score} + {simulation_result}")
@@ -120,9 +125,7 @@ class MCTS:
             score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
         else:
             score_visits = "score {node.score}, visits {node.visits}, ratio -inf"
-        
         print("\t" * depth + f"Node: {score_visits}")
-        
         for child in node.children:
             self.print_node_scores(child, depth + 1)
 
@@ -131,6 +134,6 @@ class MCTS:
         if self.root.children:
             self.print_node_scores(self.root)
             best_node = max(self.root.children, key=lambda node: node.score / node.visits if node.visits > 0 else float('-inf'))
-            if best_node: print(f"\tBest solution: visits {best_node.visits}, score {best_node.score}, ratio {best_node.score / best_node.visits:.2f}")
+            if best_node: print(f"Best solution: visits {best_node.visits}, score {best_node.score}, ratio {best_node.score / best_node.visits:.2f}")
             return best_node.timetable if best_node else self.root.timetable
         return self.root.timetable
