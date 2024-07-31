@@ -1,13 +1,14 @@
-module Encoders exposing (login, putBlock, putEvent, putLecturer, putOccupation, putRestriction, putRoom)
+module Encoders exposing (login, putBlock, putStudent, putEvent, putLecturer, putOccupation, putRestriction, putRoom)
 
 import Dict exposing (Dict)
 import Json.Encode as Encode
-import ScheduleObjects.Block exposing (Block, BlockID)
+import ScheduleObjects.Block exposing (Block)
+import ScheduleObjects.Student exposing (Student)
 import ScheduleObjects.Event exposing (Event, EventID)
 import ScheduleObjects.Hide exposing (IsHidden)
 import ScheduleObjects.Id exposing (ID)
 import ScheduleObjects.Lecturer exposing (Lecturer, LecturerID)
-import ScheduleObjects.Occupation as Occupation exposing (Occupation, OccupationID)
+import ScheduleObjects.Occupation exposing (Occupation, OccupationID)
 import ScheduleObjects.Restriction as Restriction exposing (Restriction, RestrictionID)
 import ScheduleObjects.Room exposing (Room, RoomID)
 import ScheduleObjects.WeekTimeConverters exposing (convertHourAndMinute, weekdayToNumber)
@@ -60,6 +61,18 @@ putBlock maybeId events block isHidden =
                , ( "AssociatedEventIds", Encode.list Encode.int (Dict.filter block.cond events |> Dict.toList |> List.map Tuple.first) )
                ]
 
+{-| Encoder for a Student. Can optionally also encode a StudentID
+-}
+putStudent : Maybe ID -> Dict EventID Event -> Student -> IsHidden -> Encode.Value
+putStudent maybeId events student isHidden =
+    Encode.object <|
+        idProperty maybeId
+            ++ [ ( "Hide", hideEncoder isHidden )
+               , ( "Name", Encode.string student.name )
+               , ( "Course", Encode.string student.course )
+               , ( "Number", Encode.int student.number )
+               , ( "AssociatedEventIds", Encode.list Encode.int (Dict.filter student.cond events |> Dict.toList |> List.map Tuple.first) )
+               ]
 
 {-| Encoder for a Lecturer. Can optionally also encode a LecturerID
 -}

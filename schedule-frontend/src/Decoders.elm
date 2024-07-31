@@ -1,4 +1,4 @@
-module Decoders exposing (blockParser, errorToString, eventParser, getBlockAndID, getEventAndID, getLectAndID, getOccupationAndId, getRestrictionAndId, getRoomAndID, lectParser, objectsToDictParser, occupationParser, responseParser, restrictionParser, roomParser, tokenParser)
+module Decoders exposing (blockParser, studentParser, errorToString, eventParser, getBlockAndID, getStudentAndID, getEventAndID, getLectAndID, getOccupationAndId, getRestrictionAndId, getRoomAndID, lectParser, objectsToDictParser, occupationParser, responseParser, restrictionParser, roomParser, tokenParser)
 
 {-| Json Decoders used to interact with the servers REST API
 -}
@@ -9,6 +9,7 @@ import Json.Decode as JD exposing (Decoder)
 import List
 import Maybe.Extra
 import ScheduleObjects.Block exposing (Block)
+import ScheduleObjects.Student exposing (Student)
 import ScheduleObjects.Event exposing (Event, EventID)
 import ScheduleObjects.Hide exposing (IsHidden)
 import ScheduleObjects.Id exposing (ID)
@@ -54,6 +55,9 @@ getBlockAndID : Decoder ( ID, ( Block, IsHidden ) )
 getBlockAndID =
     JD.map2 Tuple.pair (JD.field "Id" JD.int) blockParser
 
+getStudentAndID : Decoder ( ID, ( Student, IsHidden ) )
+getStudentAndID =
+    JD.map2 Tuple.pair (JD.field "Id" JD.int) studentParser
 
 getEventAndID : Decoder ( EventID, ( Event, IsHidden ) )
 getEventAndID =
@@ -114,6 +118,22 @@ blockParser =
         )
         |> addHideProperty
 
+
+studentParser : Decoder ( Student, IsHidden )
+studentParser =
+    JD.map4 Student
+        (JD.field "Name" JD.string)
+        (JD.field "Course" JD.string)
+        (JD.field "Number" JD.int)
+        (JD.field "AssociatedEventIds"
+            (JD.list JD.int
+                |> JD.map
+                    (\eventIds ->
+                        \x _ -> List.member x eventIds
+                    )
+            )
+        )
+        |> addHideProperty
 
 {-| Event Decoder
 -}

@@ -1,4 +1,4 @@
-module Main.List exposing (renderAvailableRooms, renderBlocks, renderEvents, renderLecturers, renderRooms)
+module Main.List exposing (renderAvailableRooms, renderBlocks, renderStudents, renderEvents, renderLecturers, renderRooms)
 
 {-| Responsible for displaying a list of a certain resource (e.g. list of rooms).
 -}
@@ -11,6 +11,7 @@ import Html.Events exposing (onClick)
 import Main.Msg exposing (EditMenu(..), Msg(..), OnItemClick(..))
 import Maybe.Extra exposing (isJust)
 import ScheduleObjects.Block exposing (Block, BlockID)
+import ScheduleObjects.Student exposing (Student, StudentID)
 import ScheduleObjects.Event exposing (Event, EventID)
 import ScheduleObjects.Lecturer exposing (Lecturer, LecturerID)
 import ScheduleObjects.Occupation exposing (Occupation)
@@ -38,6 +39,9 @@ blockTupleComparator : ( Int, Block ) -> ( Int, Block ) -> Order
 blockTupleComparator ( _, block1 ) ( _, block2 ) =
     compare block1.nameAbbr block2.nameAbbr
 
+studentTupleComparator : ( Int, Student ) -> ( Int, Student ) -> Order
+studentTupleComparator ( _, student1 ) ( _, student2 ) =
+    compare student1.name student2.name
 
 {-| Renders all the events into a list.
 -}
@@ -210,6 +214,38 @@ renderHiddenBlock : ( BlockID, Block ) -> Html Msg
 renderHiddenBlock ( id, block ) =
     li [ class "list-item", style "text-decoration" "line-through", attribute "title" block.name, onClick (EditMenu (EditBlock id)) ] [ div [ class "custom-scrollbar", class "list-text" ] [ text block.nameAbbr ] ]
 
+
+renderStudents : Dict StudentID Student -> Dict StudentID Student -> Maybe ( StudentID, Student ) -> Html Msg
+renderStudents students hiddenStudents selectedStudent =
+    let
+        studentsList =
+            Dict.toList students |> List.sortWith studentTupleComparator
+
+        hiddenStudentsList =
+            Dict.toList hiddenStudents |> List.sortWith studentTupleComparator
+
+        modifyIcon =
+            case selectedStudent of
+                Just ( id, _ ) ->
+                    div [ class "gg-pen", onClick (EditMenu (EditStudent id)) ] []
+
+                Nothing ->
+                    div [ style "display" "none" ] []
+    in
+    ul [ class "list custom-scrollbar" ]
+        (ul [ ariaLabel "Estudantes", class "list-title" ] [ modifyIcon, div [ class "gg-add", onClick (EditMenu AddStudent) ] [] ] :: List.map renderStudent studentsList ++ List.map renderHiddenStudent hiddenStudentsList)
+
+
+renderStudent : ( StudentID, Student ) -> Html Msg
+renderStudent ( id, student ) =
+    li [ class "list-item", onClick (ItemClick (OnStudentClick ( id, student ))), attribute "title" student.name ] 
+    [ div [ class "custom-scrollbar", class "list-text" ] [ text (String.fromInt student.number ++ "  " ++  student.course) ] ]
+
+
+renderHiddenStudent : ( StudentID, Student ) -> Html Msg
+renderHiddenStudent ( id, student ) =
+    li [ class "list-item", style "text-decoration" "line-through", attribute "title" student.name, onClick (EditMenu (EditStudent id)) ]
+    [ div [ class "custom-scrollbar", class "list-text" ] [ text (String.fromInt student.number ++ "  " ++  student.course) ] ]
 
 {-| Given a certain event, a list of all rooms and a list of all events, it returns what rooms are available to host that event.
 -}

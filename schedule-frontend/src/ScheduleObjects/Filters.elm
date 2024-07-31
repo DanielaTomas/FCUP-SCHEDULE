@@ -13,7 +13,7 @@ import ScheduleObjects.Restriction exposing (Restriction, RestrictionID)
 The ScheduleFilter holds 3 different filter functions that are only parsed when displaying html.
 -}
 type alias ScheduleFilter =
-    { room : Filter, lect : Filter, block : Filter, occupations : OccupationsFilter, restrictions : RestrictionsFilter }
+    { room : Filter, lect : Filter, block : Filter, student : Filter, occupations : OccupationsFilter, restrictions : RestrictionsFilter }
 
 
 setRoomFilter : Filter -> ScheduleFilter -> ScheduleFilter
@@ -29,6 +29,11 @@ setLectFilter f sf =
 setBlockFilter : Filter -> ScheduleFilter -> ScheduleFilter
 setBlockFilter f sf =
     { sf | block = f }
+
+
+setStudentFilter : Filter -> ScheduleFilter -> ScheduleFilter
+setStudentFilter f sf =
+    { sf | student = f }
 
 
 setOccFilter : OccupationsFilter -> ScheduleFilter -> ScheduleFilter

@@ -2,14 +2,14 @@ module Pages.Load exposing (Model, Msg, page)
 
 {-|
 
-1.  Loads data via GET requests. Fetches events, rooms, lecturers, block resources.
+1.  Loads data via GET requests. Fetches events, rooms, lecturers, students, block resources.
 2.  Updates to `Shared.Model` via `Shared.LoadedData` msg
 3.  Redirect to Pages.Example
 
 -}
 
 import Array exposing (Array)
-import Decoders exposing (blockParser, eventParser, lectParser, objectsToDictParser, occupationParser, restrictionParser, roomParser)
+import Decoders exposing (blockParser, studentParser, eventParser, lectParser, objectsToDictParser, occupationParser, restrictionParser, roomParser)
 import Dict exposing (Dict)
 import Effect exposing (Effect)
 import Html
@@ -18,6 +18,7 @@ import Json.Decode exposing (Decoder)
 import Page exposing (Page)
 import Route exposing (Route)
 import ScheduleObjects.Block exposing (Block)
+import ScheduleObjects.Student exposing (Student)
 import ScheduleObjects.Data exposing (Data, Token)
 import ScheduleObjects.Event exposing (Event)
 import ScheduleObjects.Hide exposing (IsHidden)
@@ -28,6 +29,7 @@ import ScheduleObjects.Restriction exposing (Restriction)
 import ScheduleObjects.Room exposing (Room)
 import Shared
 import View exposing (View)
+import Decoders exposing (getStudentAndID)
 
 
 page : Shared.Model -> Route () -> Page Model Msg
@@ -58,6 +60,7 @@ type alias GotData =
     , gotLecturers : Bool
     , gotEvents : Bool
     , gotBlocks : Bool
+    , gotStudents : Bool
     , gotOccupations : Bool
     , gotRestrictions : Bool
     }
@@ -65,7 +68,7 @@ type alias GotData =
 
 receivedAllData : GotData -> Bool
 receivedAllData gotData =
-    gotData.gotRooms && gotData.gotLecturers && gotData.gotEvents && gotData.gotBlocks && gotData.gotOccupations && gotData.gotRestrictions
+    gotData.gotRooms && gotData.gotLecturers && gotData.gotEvents && gotData.gotBlocks && gotData.gotStudents && gotData.gotOccupations && gotData.gotRestrictions
 
 
 handleValidHttpResult : GotData -> Data -> ( Model, Effect Msg )
@@ -85,14 +88,14 @@ init : String -> Token -> () -> ( Model, Effect Msg )
 init backendUrl token () =
     let
         emptyData =
-            Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty token backendUrl
+            Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty token backendUrl
 
         noneReceived =
-            GotData False False False False False False
+            GotData False False False False False False False
 
         getRequests =
             List.map (\req -> req backendUrl)
-                [ getEvents, getLecturers, getRooms, getBlocks, getOccupations, getRestrictions ]
+                [ getEvents, getLecturers, getRooms, getBlocks, getStudents, getOccupations, getRestrictions ]
                 |> List.map (\req -> req token)
     in
     ( Loading emptyData noneReceived, Effect.batch getRequests )
@@ -107,6 +110,7 @@ type Msg
     | GotLecturers (Result Http.Error (Dict ID ( Lecturer, IsHidden )))
     | GotEvents (Result Http.Error (Dict ID ( Event, IsHidden )))
     | GotBlocks (Result Http.Error (Dict ID ( Block, IsHidden )))
+    | GotStudents (Result Http.Error (Dict ID ( Student, IsHidden )))
     | GotOccupations (Result Http.Error (Dict ID Occupation))
     | GotRestrictions (Result Http.Error (Dict ID Restriction))
     | LoadedData Data
@@ -242,6 +246,34 @@ update msg model =
                         state ->
                             ( state, Effect.none )
 
+        GotStudents result ->
+            case result of
+                Err err ->
+                    ( Failed (Decoders.errorToString err), Effect.none )
+
+                Ok students ->
+                    case model of
+                        Loading data state ->
+                            let
+                                exposedStudents =
+                                    Dict.filter notHidden students
+                                        |> removeHiddenMap
+
+                                hiddenStudents =
+                                    Dict.filter hidden students
+                                        |> removeHiddenMap
+
+                                updatedData =
+                                    { data | students = exposedStudents, hiddenStudents = hiddenStudents }
+
+                                newState =
+                                    { state | gotStudents = True }
+                            in
+                            handleValidHttpResult newState updatedData
+
+                        state ->
+                            ( state, Effect.none )
+
         GotOccupations result ->
             case result of
                 Err err ->
@@ -317,6 +349,11 @@ getEvents backendUrl token =
 getBlocks : String -> Token -> Effect Msg
 getBlocks backendUrl token =
     Effect.sendCmd (getResource "blocks" blockParser GotBlocks backendUrl token)
+
+
+getStudents : String -> Token -> Effect Msg
+getStudents backendUrl token =
+    Effect.sendCmd (getResource "students" studentParser GotStudents backendUrl token)
 
 
 getOccupations : String -> Token -> Effect Msg

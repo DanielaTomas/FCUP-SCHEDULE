@@ -50,12 +50,12 @@ init : Result Json.Decode.Error Flags -> Route () -> ( Model, Effect Msg )
 init flagsResult route =
     case flagsResult of
         Ok flags ->
-            ( Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty "" flags.server_url
+            ( Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty "" flags.server_url
             , Effect.pushRoute { path = Route.Path.Home_, query = Dict.empty, hash = Nothing }
             )
 
         Err _ ->
-            ( Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty "" ""
+            ( Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty "" ""
             , Effect.pushRoute { path = Route.Path.Home_, query = Dict.empty, hash = Nothing }
             )
 
@@ -148,6 +148,20 @@ update route msg model =
                     in
                     ( newModel, effect )
 
+                Shared.Msg.UpdateStudent ( studentID, ( student, isHidden ) ) ->
+                    let
+                        cleansedModel =
+                            { model | students = Dict.remove studentID model.students, hiddenStudents = Dict.remove studentID model.hiddenStudents }
+
+                        newModel =
+                            if isHidden then
+                                { cleansedModel | hiddenStudents = Dict.insert studentID student model.hiddenStudents }
+
+                            else
+                                { cleansedModel | students = Dict.insert studentID student model.students }
+                    in
+                    ( newModel, effect )
+
                 Shared.Msg.UpdateRestriction ( restID, rest ) ->
                     ( { model | restrictions = Dict.insert restID rest model.restrictions }
                     , effect
@@ -175,6 +189,11 @@ update route msg model =
 
                 Shared.Msg.DeleteBlock blockID ->
                     ( { model | blocks = Dict.remove blockID model.blocks, hiddenBlocks = Dict.remove blockID model.hiddenBlocks }
+                    , effect
+                    )
+
+                Shared.Msg.DeleteStudent studentID ->
+                    ( { model | students = Dict.remove studentID model.students, hiddenStudents = Dict.remove studentID model.hiddenStudents }
                     , effect
                     )
 

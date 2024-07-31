@@ -1,10 +1,11 @@
-module Main.Model exposing (Model, init, setFilters, setSelectedBlock, setSelectedEvent, setSelectedItems, setSelectedLect, setSelectedRoom)
+module Main.Model exposing (Model, init, setFilters, setSelectedBlock, setSelectedStudent, setSelectedEvent, setSelectedItems, setSelectedLect, setSelectedRoom)
 
 -- import Dict
 
 import Effect exposing (Effect)
 import Main.Msg exposing (Draggable, Msg(..), dnd)
 import ScheduleObjects.Block exposing (Block, BlockID)
+import ScheduleObjects.Student exposing (Student, StudentID)
 import ScheduleObjects.Data exposing (Data)
 import ScheduleObjects.Event exposing (Event, EventID)
 import ScheduleObjects.Filters exposing (ScheduleFilter)
@@ -30,13 +31,14 @@ setFilters filters a =
     { a | filters = filters }
 
 
-{-| Item (can be either an ev, room, lecturer or a block) selected in the lists
+{-| Item (can be either an ev, room, lecturer, student or a block) selected in the lists
 -}
 type alias SelectedItemsInList =
     { room : Maybe ( RoomID, Room )
     , lect : Maybe ( LecturerID, Lecturer )
     , event : Maybe ( EventID, Event )
     , block : Maybe ( BlockID, Block )
+    , student : Maybe ( StudentID, Student )
     }
 
 
@@ -60,11 +62,16 @@ setSelectedBlock block selectedItems =
     { selectedItems | block = block }
 
 
+setSelectedStudent : Maybe ( StudentID, Student ) -> SelectedItemsInList -> SelectedItemsInList
+setSelectedStudent student selectedItems =
+    { selectedItems | student = student }
+
+
 init : Data -> () -> ( Model, Effect Msg )
 init data () =
     ( Model data
-        (ScheduleFilter (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False))
+        (ScheduleFilter (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False))
         dnd.model
-        (SelectedItemsInList Nothing Nothing Nothing Nothing)
+        (SelectedItemsInList Nothing Nothing Nothing Nothing Nothing)
     , Effect.none
     )

@@ -4,7 +4,7 @@ module Effect exposing
     , sendCmd, sendMsg
     , pushRoute, replaceRoute, loadExternalUrl
     , map, toCmd
-    , deleteBlock, deleteEvent, deleteLect, deleteOccupation, deleteRestriction, deleteRoom, loadData, loadToken, updateBlock, updateEvent, updateLect, updateOccupation, updateRestriction, updateRoom
+    , deleteStudent, deleteBlock, deleteEvent, deleteLect, deleteOccupation, deleteRestriction, deleteRoom, loadData, loadToken, updateStudent, updateBlock, updateEvent, updateLect, updateOccupation, updateRestriction, updateRoom
     )
 
 {-|
@@ -23,6 +23,7 @@ import Dict exposing (Dict)
 import Route exposing (Route)
 import Route.Path
 import ScheduleObjects.Block exposing (Block, BlockID)
+import ScheduleObjects.Student exposing (Student, StudentID)
 import ScheduleObjects.Data exposing (Data)
 import ScheduleObjects.Event exposing (Event, EventID)
 import ScheduleObjects.Hide exposing (IsHidden)
@@ -228,6 +229,11 @@ updateBlock ( blockID, block ) mayberoute =
     SendSharedMsg (Shared.Msg.UpdateData (Shared.Msg.UpdateBlock ( blockID, block )) mayberoute)
 
 
+updateStudent : ( StudentID, ( Student, IsHidden ) ) -> Maybe { path : Route.Path.Path, query : Dict String String, hash : Maybe String } -> Effect msg
+updateStudent ( studentID, student ) mayberoute =
+    SendSharedMsg (Shared.Msg.UpdateData (Shared.Msg.UpdateStudent ( studentID, student )) mayberoute)
+
+
 updateRestriction : ( RestrictionID, Restriction ) -> Maybe { path : Route.Path.Path, query : Dict String String, hash : Maybe String } -> Effect msg
 updateRestriction ( restrictionID, restriction ) mayberoute =
     SendSharedMsg (Shared.Msg.UpdateData (Shared.Msg.UpdateRestriction ( restrictionID, restriction )) mayberoute)
@@ -257,6 +263,9 @@ deleteBlock : BlockID -> Maybe { path : Route.Path.Path, query : Dict String Str
 deleteBlock blockID mayberoute =
     SendSharedMsg (Shared.Msg.UpdateData (Shared.Msg.DeleteBlock blockID) mayberoute)
 
+deleteStudent : StudentID -> Maybe { path : Route.Path.Path, query : Dict String String, hash : Maybe String } -> Effect msg
+deleteStudent studentID mayberoute =
+    SendSharedMsg (Shared.Msg.UpdateData (Shared.Msg.DeleteStudent studentID) mayberoute)
 
 deleteRestriction : RestrictionID -> Maybe { path : Route.Path.Path, query : Dict String String, hash : Maybe String } -> Effect msg
 deleteRestriction restrictionID mayberoute =
