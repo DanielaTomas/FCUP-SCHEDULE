@@ -80,6 +80,30 @@ def migrateLecturers(cursor):
         connection.commit()
 
 
+def migrateStudents(cursor):
+    input_file = old_db_folder + "Estudantes.csv"
+    output_file = new_db_folder + "Students.csv"
+
+    # Read the CSV file into a pandas DataFrame
+    df = pd.read_csv(input_file)
+    df.rename(columns={"id": "Id", "nome": "Name", "numero": "Number",
+              "curso": "Course", "ocultar": "Hide"}, inplace=True)
+    df['Hide'] = df['Hide'].replace({False: 0, True: 1})
+
+    df.to_csv(output_file, index=False)
+    # Insert data into the STUDENT table
+    insert_query = '''
+    INSERT INTO STUDENT (Id, Number, Name, Course, Hide)
+    VALUES (%s, %s, %s, %s, %s);
+    '''
+
+    for index, row in df.iterrows():
+        values = (row['Id'], row['Number'],
+                  row['Name'], row['Course'], row['Hide'])
+        cursor.execute(insert_query, values)
+        connection.commit()
+
+
 def migrateRestrictions(cursor):
     input_file = old_db_folder + "Restricoes.csv"
     output_file = new_db_folder + "Restrictions.csv"
@@ -179,6 +203,28 @@ def migrateBlockToEvent(cursor):
         cursor.execute(insert_query, values)
         connection.commit()
 
+
+def migrateStudentEvent(cursor):
+    input_file = old_db_folder + "EstudanteEvento.csv"
+    output_file = new_db_folder + "StudentEvent.csv"
+
+    # Read the CSV file into a pandas DataFrame
+    df = pd.read_csv(input_file)
+    df.rename(columns={"estudante_id": "StudentId",
+              "cadeira_id": "EventId"}, inplace=True)
+        
+    df.to_csv(output_file, index=False)
+    # Insert data into the STUDENT table
+    insert_query = '''
+    INSERT INTO STUDENT_EVENT(StudentId, EventId)
+    VALUES (%s, %s);
+    '''
+
+    for index, row in df.iterrows():
+        values = (int(row['StudentId']), int(row['EventId']))
+        cursor.execute(insert_query, values)
+        connection.commit()
+
 exit_code = 0
 try:
     migrateRooms(cursor)
@@ -187,6 +233,11 @@ except Exception as e:
     exit_code = 1
 try:    
     migrateLecturers(cursor)
+except Exception as e:
+    traceback.print_exc()
+    exit_code = 1
+try:    
+    migrateStudents(cursor)
 except Exception as e:
     traceback.print_exc()
     exit_code = 1
@@ -207,6 +258,11 @@ except Exception as e:
     exit_code = 1
 try:    
     migrateBlockToEvent(cursor)
+except Exception as e:
+    traceback.print_exc()
+    exit_code = 1
+try:    
+    migrateStudentEvent(cursor)
 except Exception as e:
     traceback.print_exc()
     exit_code = 1
