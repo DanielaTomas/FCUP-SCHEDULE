@@ -41,7 +41,9 @@ blockTupleComparator ( _, block1 ) ( _, block2 ) =
 
 studentTupleComparator : ( Int, Student ) -> ( Int, Student ) -> Order
 studentTupleComparator ( _, student1 ) ( _, student2 ) =
-    compare student1.name student2.name
+    case compare (student1.course) (student2.course) of
+            EQ -> compare (student2.number) (student1.number)
+            ord -> ord
 
 {-| Renders all the events into a list.
 -}

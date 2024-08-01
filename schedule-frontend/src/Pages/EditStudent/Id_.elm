@@ -257,8 +257,8 @@ view : Model -> View Msg
 view model =
     { title = "Editar Estudantes"
     , body =
-        [ --input [ class "input-box", style "width" "100%", value (String.fromInt model.student.number), onInput NumberChange, Html.Attributes.placeholder "Número" ] []
-        input [ class "input-box", style "width" "100%", value model.student.name, onInput NameChange, Html.Attributes.placeholder "Nome" ] []
+        [ input [ class "input-box", style "width" "100%", value model.student.name, onInput NameChange, Html.Attributes.placeholder "Nome" ] []
+        , input [ class "input-box", style "width" "100%", value <| String.fromInt model.student.number, onInput (NumberChange << Maybe.Extra.withDefaultLazy (\() -> model.student.number) << String.toInt), Html.Attributes.placeholder "Número" ] []
         , input [ class "input-box", style "width" "100%", value model.student.course, onInput CourseChange, Html.Attributes.placeholder "Course" ] []
         , div [] [ input [ type_ "checkbox", checked model.isHidden, onCheck VisibilityChange ] [], label [] [ text "Esconder Estudante" ] ]
         , button [ style "margin-right" "2%", class "button", onClick Return ] [ text "Retornar" ]

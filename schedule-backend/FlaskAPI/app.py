@@ -170,6 +170,46 @@ def getBlock(id):
     except Exception as e:
         abort(HTTPStatus.BAD_REQUEST, description=str(e))
 
+# Route for getting a specific student by ID
+@app.route(f"{route_prefix}/students/<id>", methods=['GET'])
+@jwt_required()
+def getStudent(id):
+    try:
+        db = Database(conf)
+        query = f"""
+        SELECT
+            s.Id AS Id, 
+            s.Name AS Name,
+            s.Number as Number,
+            s.Course as Course,
+            s.Hide as Hide,
+            GROUP_CONCAT(se.EventId) AS AssociatedEventIds
+        FROM 
+            STUDENT s
+        LEFT JOIN 
+            STUDENT_EVENT se ON s.Id = se.StudentId
+        WHERE
+            s.id = %s
+        GROUP BY 
+            s.Id, s.Name;
+        """
+        records = db.run_query(query=query, args=(id))
+        for record in records:
+            try:
+                record['AssociatedEventIds'] = [
+                    int(event_id) for event_id in record['AssociatedEventIds'].split(',')]
+            except:
+                # case where record['AssociatedEventIds'] = null
+                record['AssociatedEventIds'] = []
+        response = get_response_msg(records[0], HTTPStatus.OK)
+
+        db.close_connection()
+        return response
+    except pymysql.MySQLError as sqle:
+        abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
+    except Exception as e:
+        abort(HTTPStatus.BAD_REQUEST, description=str(e))
+
 # /api/v1/rooms/{Id}
 @app.route(f"{route_prefix}/rooms/<id>", methods=['GET'])
 @jwt_required()
@@ -456,7 +496,7 @@ def createStudent():
     try:
         # Parse the JSON data from the POST request
         data = request.get_json()
-
+        print(data)
         # Create a database connection
         db = Database(conf)
         conn = db.get_connection()
@@ -464,8 +504,9 @@ def createStudent():
         # Insert a new student into the database
         query = """
         INSERT INTO STUDENT (Name, Number, Course, Hide)
-        VALUES (%s, %s, %s)
+        VALUES (%s, %s, %s, %s)
         """
+
         cursor = conn.cursor()
         cursor.execute(query, (data['Name'], data['Number'], data['Course'], data['Hide']))
 
@@ -487,7 +528,7 @@ def createStudent():
         # Close the cursor and database connection
         db.close_connection()
 
-        return getBlock(new_student_id), HTTPStatus.CREATED
+        return getStudent(new_student_id), HTTPStatus.CREATED
 
     except pymysql.MySQLError as sqle:
         abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
@@ -751,7 +792,7 @@ def updateStudent(id):
     try:
         # Parse the JSON data from the PUT request
         data = request.get_json()
-
+        
         # Create a database connection
         db = Database(conf)
         conn = db.get_connection()
@@ -759,11 +800,11 @@ def updateStudent(id):
         # Update the student's information
         query = """
         UPDATE STUDENT
-        SET Name = %s, Number = %s Course = %s, Hide = %s
+        SET Name = %s, Number = %s, Course = %s, Hide = %s
         WHERE Id = %s
         """
         cursor = conn.cursor()
-        cursor.execute(query, (data['Name'], data['Course'], data['Hide'], id))
+        cursor.execute(query, (data['Name'], data['Number'], data['Course'], data['Hide'], id))
 
         # Update the student's associated events
         if 'AssociatedEventIds' in data:
@@ -788,7 +829,7 @@ def updateStudent(id):
         # Close the cursor and database connection
         db.close_connection()
 
-        return getBlock(id)
+        return getStudent(id)
 
     except pymysql.MySQLError as sqle:
         abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))

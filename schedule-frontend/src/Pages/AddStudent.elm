@@ -14,6 +14,7 @@ import Http
 import Page exposing (Page)
 import Route exposing (Route)
 import Route.Path
+import Maybe.Extra
 import ScheduleObjects.Student exposing (Student, StudentID, setStudentNumber, setStudentCond, setStudentName, setStudentCourse)
 import ScheduleObjects.Data exposing (Data, Token)
 import ScheduleObjects.Event exposing (Event, EventID)
@@ -101,7 +102,7 @@ initEventList data =
 type Msg
     = CourseChange String
     | NameChange String
-    --| NumberChange String
+    | NumberChange Int
     | SelectEvent (Select.Msg ( EventID, Event ))
     | UpdateStudentRequest
     | UpdateStudentResult (Result Http.Error ( StudentID, ( Student, IsHidden ) ))
@@ -140,8 +141,8 @@ update msg model =
             , Effect.sendCmd (Cmd.map SelectEvent selectCmds)
             )
 
-        --NumberChange newNumber ->
-            --( setStudentNumber newNumber model.student |> asStudentIn model, Effect.none )
+        NumberChange newNumber ->
+            ( setStudentNumber newNumber model.student |> asStudentIn model, Effect.none )
 
         NameChange newName ->
             ( setStudentName newName model.student |> asStudentIn model, Effect.none )
@@ -192,6 +193,7 @@ view model =
     { title = "Criar Estudante"
     , body =
         [ input [ class "input-box", style "width" "100%", value model.student.name, onInput NameChange, Html.Attributes.placeholder "Nome" ] []
+        , input [ class "input-box", style "width" "100%", value <| String.fromInt model.student.number, onInput (NumberChange << Maybe.Extra.withDefaultLazy (\() -> model.student.number) << String.toInt), Html.Attributes.placeholder "Número" ] []
         , input [ class "input-box", style "width" "100%", value model.student.course, onInput CourseChange, Html.Attributes.placeholder "Curso" ] []
         , div [] [ input [ type_ "checkbox", checked model.isHidden, onCheck VisibilityChange ] [], label [] [ text "Esconder Estudante" ] ]
         , button [ style "margin-right" "2%", class "button", onClick Return ] [ text "Retornar" ]
