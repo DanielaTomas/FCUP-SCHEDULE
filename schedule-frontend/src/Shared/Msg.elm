@@ -3,6 +3,7 @@ module Shared.Msg exposing (Msg(..), UpdateType(..))
 import Dict exposing (Dict)
 import Route.Path
 import ScheduleObjects.Block exposing (Block, BlockID)
+import ScheduleObjects.Student exposing (Student, StudentID)
 import ScheduleObjects.Data exposing (Data)
 import ScheduleObjects.Event exposing (Event, EventID)
 import ScheduleObjects.Hide exposing (IsHidden)
@@ -37,11 +38,13 @@ type UpdateType
     | UpdateRoom ( RoomID, ( Room, IsHidden ) )
     | UpdateLect ( LecturerID, ( Lecturer, IsHidden ) )
     | UpdateBlock ( BlockID, ( Block, IsHidden ) )
+    | UpdateStudent ( StudentID, ( Student, IsHidden ) )
     | UpdateRestriction ( RestrictionID, Restriction )
     | UpdateOccupation ( OccupationID, Occupation )
     | DeleteEvent EventID
     | DeleteRoom RoomID
     | DeleteLect LecturerID
     | DeleteBlock BlockID
+    | DeleteStudent StudentID
     | DeleteRestriction RestrictionID
     | DeleteOccupation OccupationID

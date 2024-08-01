@@ -174,6 +174,13 @@ updateOnItemClick msg model =
             , Effect.none
             )
 
+        OnStudentClick ( studentId, student ) ->
+            ( model
+                |> setFilters (model.filters |> setStudentFilter student.cond)
+                |> setSelectedItems (model.selectedItems |> setSelectedStudent (Just ( studentId, student )))
+            , Effect.none
+            )
+
         -- Get all events with a certain Room ID and with it update the Room Filter and Abbr.
         OnRoomClick ( id, room ) ->
             ( model
@@ -275,6 +282,9 @@ updateOnMenuEdit msg model =
         EditBlock blockID ->
             ( model, Effect.pushRoute { path = Route.Path.EditBlock_Id_ { id = String.fromInt blockID }, query = Dict.empty, hash = Nothing } )
 
+        EditStudent studentID ->
+            ( model, Effect.pushRoute { path = Route.Path.EditStudent_Id_ { id = String.fromInt studentID }, query = Dict.empty, hash = Nothing } )
+
         AddEvent ->
             ( model, Effect.pushRoute { path = Route.Path.AddEvent, query = Dict.empty, hash = Nothing } )
 
@@ -286,6 +296,9 @@ updateOnMenuEdit msg model =
 
         AddBlock ->
             ( model, Effect.pushRoute { path = Route.Path.AddBlock, query = Dict.empty, hash = Nothing } )
+            
+        AddStudent ->
+            ( model, Effect.pushRoute { path = Route.Path.AddStudent, query = Dict.empty, hash = Nothing })
 
 
 

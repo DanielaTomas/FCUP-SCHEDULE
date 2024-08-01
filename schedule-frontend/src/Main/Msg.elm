@@ -4,6 +4,7 @@ import DnD
 import Http
 import Route exposing (Route)
 import ScheduleObjects.Block exposing (Block, BlockID)
+import ScheduleObjects.Student exposing (Student, StudentID)
 import ScheduleObjects.Data exposing (Data)
 import ScheduleObjects.Event exposing (Event, EventID)
 import ScheduleObjects.Hide exposing (IsHidden)
@@ -26,6 +27,7 @@ type OnItemClick
     | OnLecturerClick ( LecturerID, Lecturer )
     | OnEventClick ( EventID, Event )
     | OnBlockClick ( BlockID, Block )
+    | OnStudentClick ( StudentID, Student )
     | ChangeEventRoomClick EventID RoomID
 
 
@@ -44,6 +46,7 @@ type DropEvent
     = RoomEvent ID
     | LectEvent ID
     | BlockEvent ID
+    | StudentEvent ID
 
 
 type EditMenu
@@ -55,3 +58,5 @@ type EditMenu
     | AddLect
     | EditBlock BlockID
     | AddBlock
+    | EditStudent StudentID
+    | AddStudent

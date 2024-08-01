@@ -1,7 +1,8 @@
-module ScheduleObjects.Data exposing (Data, Token, asDataIn, setData, setDataBlocks, setDataEvents, setDataHiddenBlocks, setDataHiddenEvents, setDataHiddenLect, setDataHiddenRooms, setDataLect, setDataOccupations, setDataRestrictions, setDataRooms)
+module ScheduleObjects.Data exposing (Data, Token, asDataIn, setData, setDataBlocks, setDataStudents, setDataEvents, setDataHiddenBlocks, setDataHiddenStudents, setDataHiddenEvents, setDataHiddenLect, setDataHiddenRooms, setDataLect, setDataOccupations, setDataRestrictions, setDataRooms)
 
 import Dict exposing (Dict)
 import ScheduleObjects.Block exposing (Block)
+import ScheduleObjects.Student exposing (Student)
 import ScheduleObjects.Event exposing (Event, EventID)
 import ScheduleObjects.Id exposing (ID)
 import ScheduleObjects.Lecturer exposing (Lecturer)
@@ -19,10 +20,12 @@ type alias Data =
     , lecturers : Dict ID Lecturer
     , events : Dict EventID Event
     , blocks : Dict ID Block
+    , students : Dict ID Student
     , hiddenRooms : Dict RoomID Room
     , hiddenLecturers : Dict ID Lecturer
     , hiddenEvents : Dict EventID Event
     , hiddenBlocks : Dict ID Block
+    , hiddenStudents : Dict ID Student
     , occupations : Dict OccupationID Occupation
     , restrictions : Dict RestrictionID Restriction
     , token : Token
@@ -60,6 +63,10 @@ setDataBlocks blocks data =
     { data | blocks = blocks }
 
 
+setDataStudents : Dict ID Student -> Data -> Data
+setDataStudents students data =
+    { data | students = students }
+
 setDataHiddenRooms : Dict RoomID Room -> Data -> Data
 setDataHiddenRooms rooms data =
     { data | hiddenRooms = rooms }
@@ -78,6 +85,11 @@ setDataHiddenEvents events data =
 setDataHiddenBlocks : Dict ID Block -> Data -> Data
 setDataHiddenBlocks blocks data =
     { data | hiddenBlocks = blocks }
+
+
+setDataHiddenStudents : Dict ID Student -> Data -> Data
+setDataHiddenStudents students data =
+    { data | hiddenStudents = students }
 
 
 setDataOccupations : Dict OccupationID Occupation -> Data -> Data

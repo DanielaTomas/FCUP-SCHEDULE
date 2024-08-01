@@ -170,6 +170,46 @@ def getBlock(id):
     except Exception as e:
         abort(HTTPStatus.BAD_REQUEST, description=str(e))
 
+# Route for getting a specific student by ID
+@app.route(f"{route_prefix}/students/<id>", methods=['GET'])
+@jwt_required()
+def getStudent(id):
+    try:
+        db = Database(conf)
+        query = f"""
+        SELECT
+            s.Id AS Id, 
+            s.Name AS Name,
+            s.Number as Number,
+            s.Course as Course,
+            s.Hide as Hide,
+            GROUP_CONCAT(se.EventId) AS AssociatedEventIds
+        FROM 
+            STUDENT s
+        LEFT JOIN 
+            STUDENT_EVENT se ON s.Id = se.StudentId
+        WHERE
+            s.id = %s
+        GROUP BY 
+            s.Id, s.Name;
+        """
+        records = db.run_query(query=query, args=(id))
+        for record in records:
+            try:
+                record['AssociatedEventIds'] = [
+                    int(event_id) for event_id in record['AssociatedEventIds'].split(',')]
+            except:
+                # case where record['AssociatedEventIds'] = null
+                record['AssociatedEventIds'] = []
+        response = get_response_msg(records[0], HTTPStatus.OK)
+
+        db.close_connection()
+        return response
+    except pymysql.MySQLError as sqle:
+        abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
+    except Exception as e:
+        abort(HTTPStatus.BAD_REQUEST, description=str(e))
+
 # /api/v1/rooms/{Id}
 @app.route(f"{route_prefix}/rooms/<id>", methods=['GET'])
 @jwt_required()
@@ -405,6 +445,90 @@ def createBlock():
         db.close_connection()
 
         return getBlock(new_block_id), HTTPStatus.CREATED
+
+    except pymysql.MySQLError as sqle:
+        abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
+    except Exception as e:
+        abort(HTTPStatus.BAD_REQUEST, description=str(e))
+
+# /api/v1/students
+@app.route(f"{route_prefix}/students", methods=['GET'])
+@jwt_required()
+def getStudents():
+    try:
+        db = Database(conf)
+        query = f"""
+        SELECT
+            s.Id AS Id, 
+            s.Name AS Name,
+            s.Number as Number,
+            s.Course as Course,
+            s.Hide as Hide,
+            GROUP_CONCAT(se.EventId) AS AssociatedEventIds
+        FROM 
+            STUDENT s
+        LEFT JOIN 
+            STUDENT_EVENT se ON s.Id = se.StudentId
+        GROUP BY 
+            s.Id, s.Name;
+        """
+        records = db.run_query(query=query)
+        for record in records:
+            try:
+                record['AssociatedEventIds'] = [
+                    int(event_id) for event_id in record['AssociatedEventIds'].split(',')]
+            except:
+                # case where record['AssociatedEventIds'] = null
+                record['AssociatedEventIds'] = []
+        response = get_response_msg(records, HTTPStatus.OK)
+
+        db.close_connection()
+        return response
+    except pymysql.MySQLError as sqle:
+        abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
+    except Exception as e:
+        abort(HTTPStatus.BAD_REQUEST, description=str(e))
+
+# Route for creating a new student via POST request
+@app.route(f"{route_prefix}/students", methods=['POST'])
+@jwt_required()
+def createStudent():
+    try:
+        # Parse the JSON data from the POST request
+        data = request.get_json()
+        print(data)
+        # Create a database connection
+        db = Database(conf)
+        conn = db.get_connection()
+
+        # Insert a new student into the database
+        query = """
+        INSERT INTO STUDENT (Name, Number, Course, Hide)
+        VALUES (%s, %s, %s, %s)
+        """
+
+        cursor = conn.cursor()
+        cursor.execute(query, (data['Name'], data['Number'], data['Course'], data['Hide']))
+
+        # Retrieve the ID of the newly created student
+        new_student_id = cursor.lastrowid
+
+        # Update the student's associated events
+        if 'AssociatedEventIds' in data:
+            insert_query = """
+            INSERT INTO STUDENT_EVENT (StudentId, EventId)
+            VALUES (%s, %s)
+            """
+            for event_id in data['AssociatedEventIds']:
+                cursor.execute(insert_query, (new_student_id, event_id))
+
+        # Commit the changes to the database
+        conn.commit()
+
+        # Close the cursor and database connection
+        db.close_connection()
+
+        return getStudent(new_student_id), HTTPStatus.CREATED
 
     except pymysql.MySQLError as sqle:
         abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
@@ -661,6 +785,57 @@ def updateBlock(id):
     except Exception as e:
         abort(HTTPStatus.BAD_REQUEST, description=str(e))
 
+# /api/v1/students/<id>
+@app.route(f"{route_prefix}/students/<id>", methods=['PUT'])
+@jwt_required()
+def updateStudent(id):
+    try:
+        # Parse the JSON data from the PUT request
+        data = request.get_json()
+        
+        # Create a database connection
+        db = Database(conf)
+        conn = db.get_connection()
+
+        # Update the student's information
+        query = """
+        UPDATE STUDENT
+        SET Name = %s, Number = %s, Course = %s, Hide = %s
+        WHERE Id = %s
+        """
+        cursor = conn.cursor()
+        cursor.execute(query, (data['Name'], data['Number'], data['Course'], data['Hide'], id))
+
+        # Update the student's associated events
+        if 'AssociatedEventIds' in data:
+            # First, delete all existing associations for the student
+            delete_query = """
+            DELETE FROM STUDENT_EVENT
+            WHERE StudentId = %s
+            """
+            cursor.execute(delete_query, (id))
+
+            # Then, add the new associations
+            insert_query = """
+            INSERT INTO STUDENT_EVENT (StudentId, EventId)
+            VALUES (%s, %s)
+            """
+            for event_id in data['AssociatedEventIds']:
+                cursor.execute(insert_query, (id, event_id))
+
+        # Commit the changes to the database
+        conn.commit()
+
+        # Close the cursor and database connection
+        db.close_connection()
+
+        return getStudent(id)
+
+    except pymysql.MySQLError as sqle:
+        abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
+    except Exception as e:
+        abort(HTTPStatus.BAD_REQUEST, description=str(e))
+
 # /api/v1/restrictions/<id>
 @app.route(f"{route_prefix}/restrictions/<id>", methods=['PUT'])
 @jwt_required()
@@ -721,6 +896,42 @@ def deleteBlock(id):
         DELETE FROM BLOCK WHERE Id =%s
         """
         cursor.execute(delete_block_query, (id))
+
+        # Commit the changes to the database
+        conn.commit()
+
+        # Close the cursor and database connection
+        db.close_connection()
+
+        return get_response_msg({}, HTTPStatus.OK)
+
+    except pymysql.MySQLError as sqle:
+        abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
+    except Exception as e:
+        abort(HTTPStatus.BAD_REQUEST, description=str(e))
+
+# /api/v1/students/<id>
+@app.route(f"{route_prefix}/students/<id>", methods=['DELETE'])
+@jwt_required()
+def deleteStudent(id):
+    try:
+        # Create a database connection
+        db = Database(conf)
+        conn = db.get_connection()
+
+        cursor = conn.cursor()
+
+        # First, delete all existing associations for the student
+        delete_student_to_events_query = """
+        DELETE FROM STUDENT_EVENT
+        WHERE StudentId = %s
+        """
+        cursor.execute(delete_student_to_events_query, (id))
+        # Then, delete the student
+        delete_student_query = """
+        DELETE FROM STUDENT WHERE Id =%s
+        """
+        cursor.execute(delete_student_query, (id))
 
         # Commit the changes to the database
         conn.commit()
