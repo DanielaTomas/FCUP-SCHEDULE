@@ -31,7 +31,7 @@ setFilters : ScheduleFilter -> { b | filters : ScheduleFilter } -> { b | filters
 setFilters filters a =
     { a | filters = filters }
 
-setRecommendations : List Event -> { b | recommendations : List Event } -> { b | recommendations : List Event }
+setRecommendations : (List Event) -> { b | recommendations : (List Event) } -> { b | recommendations : (List Event) }
 setRecommendations recommendations a =
     { a | recommendations = recommendations }
 

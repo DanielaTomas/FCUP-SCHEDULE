@@ -189,13 +189,7 @@ restrictionParser =
         (JD.field "Type" categoryParser)
 
 recommendationsParser : Decoder (List Event)
-recommendationsParser =
-    JD.field "recommendations"
-        (JD.list
-            (JD.map (\(event, _) -> event) eventParser)
-        )
-
-
+recommendationsParser = JD.list (JD.map Tuple.first eventParser)
 
 {-| Weektime Decoder.
 timeToRead == "StartTime" or "EndTime"

@@ -9,7 +9,7 @@ module Pages.Load exposing (Model, Msg, page)
 -}
 
 import Array exposing (Array)
-import Decoders exposing (blockParser, studentParser, eventParser, lectParser, objectsToDictParser, occupationParser, restrictionParser, roomParser)
+import Decoders exposing (blockParser, studentParser, eventParser, lectParser, objectsToDictParser, occupationParser, restrictionParser, roomParser, recommendationsParser)
 import Dict exposing (Dict)
 import Effect exposing (Effect)
 import Html
@@ -29,7 +29,6 @@ import ScheduleObjects.Restriction exposing (Restriction)
 import ScheduleObjects.Room exposing (Room)
 import Shared
 import View exposing (View)
-import Decoders exposing (getStudentAndID)
 
 
 page : Shared.Model -> Route () -> Page Model Msg
@@ -63,12 +62,13 @@ type alias GotData =
     , gotStudents : Bool
     , gotOccupations : Bool
     , gotRestrictions : Bool
+    , gotRecommendations : Bool
     }
 
 
 receivedAllData : GotData -> Bool
 receivedAllData gotData =
-    gotData.gotRooms && gotData.gotLecturers && gotData.gotEvents && gotData.gotBlocks && gotData.gotStudents && gotData.gotOccupations && gotData.gotRestrictions
+    gotData.gotRooms && gotData.gotLecturers && gotData.gotEvents && gotData.gotBlocks && gotData.gotStudents && gotData.gotOccupations && gotData.gotRestrictions && gotData.gotRecommendations
 
 
 handleValidHttpResult : GotData -> Data -> ( Model, Effect Msg )
@@ -91,11 +91,11 @@ init backendUrl token () =
             Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty [] token backendUrl
 
         noneReceived =
-            GotData False False False False False False False
+            GotData False False False False False False False False
 
         getRequests =
             List.map (\req -> req backendUrl)
-                [ getEvents, getLecturers, getRooms, getBlocks, getStudents, getOccupations, getRestrictions ]
+                [ getEvents, getLecturers, getRooms, getBlocks, getStudents, getOccupations, getRestrictions, getRecommendations ]
                 |> List.map (\req -> req token)
     in
     ( Loading emptyData noneReceived, Effect.batch getRequests )
@@ -113,6 +113,7 @@ type Msg
     | GotStudents (Result Http.Error (Dict ID ( Student, IsHidden )))
     | GotOccupations (Result Http.Error (Dict ID Occupation))
     | GotRestrictions (Result Http.Error (Dict ID Restriction))
+    | GotRecommendations (Result Http.Error (Dict ID (List Event)))
     | LoadedData Data
 
 
@@ -314,6 +315,30 @@ update msg model =
                         state ->
                             ( state, Effect.none )
 
+        GotRecommendations result ->
+            case result of
+                Err err ->
+                    ( Failed (Decoders.errorToString err), Effect.none )
+
+                Ok recommendationsDict ->
+                    case model of
+                        Loading data state ->
+                            let
+                                recommendationsList =
+                                    Dict.values recommendationsDict
+                                    |> List.concat
+
+                                updatedData =
+                                    { data | recommendations = recommendationsList }
+
+                                newState =
+                                    { state | gotRecommendations = True }
+                            in
+                            handleValidHttpResult newState updatedData
+
+                        state ->
+                            ( state, Effect.none )
+
         LoadedData data ->
             ( model, Effect.loadData data )
 
@@ -365,7 +390,9 @@ getRestrictions : String -> Token -> Effect Msg
 getRestrictions backendUrl token =
     Effect.sendCmd (getResource "restrictions" restrictionParser GotRestrictions backendUrl token)
 
-
+getRecommendations : String -> Token -> Effect Msg
+getRecommendations backendUrl token =
+    Effect.sendCmd (getResource "recommend" recommendationsParser GotRecommendations backendUrl token)
 
 -- SUBSCRIPTIONS
 
