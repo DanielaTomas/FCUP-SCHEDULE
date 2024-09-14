@@ -496,7 +496,6 @@ def createStudent():
     try:
         # Parse the JSON data from the POST request
         data = request.get_json()
-        print(data)
         # Create a database connection
         db = Database(conf)
         conn = db.get_connection()

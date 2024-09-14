@@ -88,7 +88,7 @@ init : String -> Token -> () -> ( Model, Effect Msg )
 init backendUrl token () =
     let
         emptyData =
-            Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty token backendUrl
+            Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty [] token backendUrl
 
         noneReceived =
             GotData False False False False False False False

@@ -1,4 +1,4 @@
-module Main.Model exposing (Model, init, setFilters, setSelectedBlock, setSelectedStudent, setSelectedEvent, setSelectedItems, setSelectedLect, setSelectedRoom)
+module Main.Model exposing (Model, init, setRecommendations, setFilters, setSelectedBlock, setSelectedStudent, setSelectedEvent, setSelectedItems, setSelectedLect, setSelectedRoom)
 
 -- import Dict
 
@@ -18,6 +18,7 @@ type alias Model =
     , filters : ScheduleFilter
     , draggable : Draggable
     , selectedItems : SelectedItemsInList
+    , recommendations : List Event
     }
 
 
@@ -30,6 +31,9 @@ setFilters : ScheduleFilter -> { b | filters : ScheduleFilter } -> { b | filters
 setFilters filters a =
     { a | filters = filters }
 
+setRecommendations : List Event -> { b | recommendations : List Event } -> { b | recommendations : List Event }
+setRecommendations recommendations a =
+    { a | recommendations = recommendations }
 
 {-| Item (can be either an ev, room, lecturer, student or a block) selected in the lists
 -}
@@ -69,9 +73,11 @@ setSelectedStudent student selectedItems =
 
 init : Data -> () -> ( Model, Effect Msg )
 init data () =
-    ( Model data
-        (ScheduleFilter (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False))
-        dnd.model
-        (SelectedItemsInList Nothing Nothing Nothing Nothing Nothing)
+    ( { data = data
+        , filters = ScheduleFilter (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False)
+        , draggable = dnd.model
+        , selectedItems = SelectedItemsInList Nothing Nothing Nothing Nothing Nothing
+        , recommendations = []
+      }
     , Effect.none
     )

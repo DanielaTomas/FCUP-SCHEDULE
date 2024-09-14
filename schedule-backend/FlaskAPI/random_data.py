@@ -21,17 +21,13 @@ def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13,
         current_time += timedelta(minutes=30) # 30-minute slots
 
     start_time = random.choice(valid_start_slots)
+    start_hour = int(start_time .strftime("%H")) 
     end_time = start_time + timedelta(minutes=duration)
-
-    start_timedelta = start_time - start_of_day
-    end_timedelta = end_time - start_of_day
-
-    start_timedelta = start_time - start_of_day
-    end_timedelta = end_time - start_of_day
-
+    end_hour = int(end_time .strftime("%H"))
+    
     weekday = random.randint(2, 6)
-
-    return start_timedelta, end_timedelta, weekday
+    
+    return timedelta(hours=start_hour) , timedelta(hours=end_hour), weekday
 
 
 def random_room(occupations, events, start_time, end_time, rooms):

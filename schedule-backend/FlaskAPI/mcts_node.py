@@ -3,8 +3,9 @@ import math
 
 class MCTSNode:
 
-    def __init__(self, timetable, parent = None):
-        self.timetable = deepcopy(timetable)
+    def __init__(self, timetable, changedEvents = [], parent = None):
+        self.timetable = deepcopy(timetable) #TODO keeping deepcopy for now
+        self.changedEvents = changedEvents
         self.parent = parent
         self.children = []
         self.visits = 0

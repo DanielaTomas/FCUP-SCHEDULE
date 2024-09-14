@@ -1,4 +1,4 @@
-module Decoders exposing (blockParser, studentParser, errorToString, eventParser, getBlockAndID, getStudentAndID, getEventAndID, getLectAndID, getOccupationAndId, getRestrictionAndId, getRoomAndID, lectParser, objectsToDictParser, occupationParser, responseParser, restrictionParser, roomParser, tokenParser)
+module Decoders exposing (blockParser, studentParser, errorToString, eventParser, getBlockAndID, getStudentAndID, getEventAndID, getLectAndID, getOccupationAndId, getRestrictionAndId, getRoomAndID, lectParser, objectsToDictParser, occupationParser, responseParser, restrictionParser, roomParser, recommendationsParser, tokenParser)
 
 {-| Json Decoders used to interact with the servers REST API
 -}
@@ -187,6 +187,14 @@ restrictionParser =
         (weektimeDecoder "StartTime")
         (weektimeDecoder "EndTime")
         (JD.field "Type" categoryParser)
+
+recommendationsParser : Decoder (List Event)
+recommendationsParser =
+    JD.field "recommendations"
+        (JD.list
+            (JD.map (\(event, _) -> event) eventParser)
+        )
+
 
 
 {-| Weektime Decoder.

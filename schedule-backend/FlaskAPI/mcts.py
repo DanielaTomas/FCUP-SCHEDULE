@@ -91,8 +91,13 @@ class MCTS:
                 e["EndTime"] = new_end_time
                 e["RoomId"] = new_room["Id"]
                 e["WeekDay"] = new_weekday
+                new_change = e
+                break
                 #print(f"\tEvent updated: {e}")
-        child_node = MCTSNode(new_timetable, parent=self.current_node)
+
+        new_changed_events = deepcopy(self.current_node.changedEvents) + [new_change]
+
+        child_node = MCTSNode(new_timetable, changedEvents=new_changed_events, parent=self.current_node)
         self.current_node.children.append(child_node)
         self.current_node = child_node
         #print(f"\tCreated child node with visits: {child_node.visits}, score: {child_node.score}")
@@ -130,10 +135,23 @@ class MCTS:
             self.print_node_scores(child, depth + 1)
 
     def get_best_solution(self):
-        print("Selecting the best solution...")    
-        if self.root.children:
-            self.print_node_scores(self.root)
-            best_node = max(self.root.children, key=lambda node: node.score / node.visits if node.visits > 0 else float('-inf'))
-            if best_node: print(f"Best solution: visits {best_node.visits}, score {best_node.score}, ratio {best_node.score / best_node.visits:.2f}")
-            return best_node.timetable if best_node else self.root.timetable
-        return self.root.timetable
+        def select_best_terminal_node(node):
+            # If this node has no children, it is a terminal node
+            if not node.children:
+                return node
+            
+            # Select the best child based on score/visits ratio, then recursively continue
+            best_child = max(node.children, key=lambda child: child.score / child.visits if child.visits > 0 else float('-inf'))
+            # Recursively find the best terminal node from this child
+            return select_best_terminal_node(best_child)
+
+        self.print_node_scores(self.root)
+        # Start from the root node and navigate to the best terminal node
+        best_terminal_node = select_best_terminal_node(self.root)
+
+        # Print the best terminal node's changed events and return them
+        print(f"Best solution: visits {best_terminal_node.visits}, score {best_terminal_node.score}, ratio {best_terminal_node.score / best_terminal_node.visits:.2f}")
+        print(f"Changes: {best_terminal_node.changedEvents}")
+
+        # Return the changes (changedEvents) of the best terminal node
+        return best_terminal_node.changedEvents

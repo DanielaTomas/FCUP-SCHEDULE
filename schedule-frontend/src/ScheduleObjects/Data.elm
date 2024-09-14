@@ -1,4 +1,4 @@
-module ScheduleObjects.Data exposing (Data, Token, asDataIn, setData, setDataBlocks, setDataStudents, setDataEvents, setDataHiddenBlocks, setDataHiddenStudents, setDataHiddenEvents, setDataHiddenLect, setDataHiddenRooms, setDataLect, setDataOccupations, setDataRestrictions, setDataRooms)
+module ScheduleObjects.Data exposing (Data, Token, setDataRecommendations, asDataIn, setData, setDataBlocks, setDataStudents, setDataEvents, setDataHiddenBlocks, setDataHiddenStudents, setDataHiddenEvents, setDataHiddenLect, setDataHiddenRooms, setDataLect, setDataOccupations, setDataRestrictions, setDataRooms)
 
 import Dict exposing (Dict)
 import ScheduleObjects.Block exposing (Block)
@@ -28,6 +28,7 @@ type alias Data =
     , hiddenStudents : Dict ID Student
     , occupations : Dict OccupationID Occupation
     , restrictions : Dict RestrictionID Restriction
+    , recommendations : List Event
     , token : Token
     , backendUrl : String
     }
@@ -100,3 +101,7 @@ setDataOccupations occupations data =
 setDataRestrictions : Dict RestrictionID Restriction -> Data -> Data
 setDataRestrictions restrictions data =
     { data | restrictions = restrictions }
+
+setDataRecommendations : List Event -> Data -> Data
+setDataRecommendations recommendations data =
+    { data | recommendations = recommendations }
