@@ -9,6 +9,7 @@ import ScheduleObjects.Lecturer exposing (Lecturer)
 import ScheduleObjects.Occupation exposing (Occupation, OccupationID)
 import ScheduleObjects.Restriction exposing (Restriction, RestrictionID)
 import ScheduleObjects.Room exposing (Room, RoomID)
+import ScheduleObjects.Hide exposing (IsHidden)
 
 
 type alias Token =
@@ -28,7 +29,7 @@ type alias Data =
     , hiddenStudents : Dict ID Student
     , occupations : Dict OccupationID Occupation
     , restrictions : Dict RestrictionID Restriction
-    , recommendations : List Event
+    , recommendations : Dict ID (Event, IsHidden)
     , token : Token
     , backendUrl : String
     }
@@ -102,6 +103,6 @@ setDataRestrictions : Dict RestrictionID Restriction -> Data -> Data
 setDataRestrictions restrictions data =
     { data | restrictions = restrictions }
 
-setDataRecommendations : List Event -> Data -> Data
+setDataRecommendations : Dict ID (Event, IsHidden) -> Data -> Data
 setDataRecommendations recommendations data =
     { data | recommendations = recommendations }

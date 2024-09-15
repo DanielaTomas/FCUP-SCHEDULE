@@ -88,7 +88,7 @@ init : String -> Token -> () -> ( Model, Effect Msg )
 init backendUrl token () =
     let
         emptyData =
-            Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty [] token backendUrl
+            Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty token backendUrl
 
         noneReceived =
             GotData False False False False False False False False
@@ -113,7 +113,7 @@ type Msg
     | GotStudents (Result Http.Error (Dict ID ( Student, IsHidden )))
     | GotOccupations (Result Http.Error (Dict ID Occupation))
     | GotRestrictions (Result Http.Error (Dict ID Restriction))
-    | GotRecommendations (Result Http.Error (Dict ID (List Event)))
+    | GotRecommendations (Result Http.Error (Dict ID ( Event, IsHidden )))
     | LoadedData Data
 
 
@@ -320,16 +320,12 @@ update msg model =
                 Err err ->
                     ( Failed (Decoders.errorToString err), Effect.none )
 
-                Ok recommendationsDict ->
+                Ok recommendations ->
                     case model of
                         Loading data state ->
                             let
-                                recommendationsList =
-                                    Dict.values recommendationsDict
-                                    |> List.concat
-
                                 updatedData =
-                                    { data | recommendations = recommendationsList }
+                                    { data | recommendations = recommendations }
 
                                 newState =
                                     { state | gotRecommendations = True }
@@ -392,7 +388,7 @@ getRestrictions backendUrl token =
 
 getRecommendations : String -> Token -> Effect Msg
 getRecommendations backendUrl token =
-    Effect.sendCmd (getResource "recommend" recommendationsParser GotRecommendations backendUrl token)
+    Effect.sendCmd (getResource "recommend" eventParser GotRecommendations backendUrl token)
 
 -- SUBSCRIPTIONS
 

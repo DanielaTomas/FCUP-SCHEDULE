@@ -1,4 +1,4 @@
-module Main.List exposing (renderAvailableRooms, renderBlocks, renderStudents, renderEvents, renderLecturers, renderRooms)
+module Main.List exposing (renderAvailableRooms, renderBlocks, renderStudents, renderEvents, renderLecturers, renderRooms, renderRecommendations)
 
 {-| Responsible for displaying a list of a certain resource (e.g. list of rooms).
 -}
@@ -330,3 +330,8 @@ renderAvailableRooms_ ( eventId, event ) rooms events occupations =
 renderAvailableRoom : EventID -> ( RoomID, Room ) -> Html Msg
 renderAvailableRoom evId ( roomId, room ) =
     li [ class "list-item", onClick (ItemClick (ChangeEventRoomClick evId roomId)), attribute "title" room.name ] [ div [ class "custom-scrollbar", class "list-text" ] [ text (room.abbr ++ "\t(" ++ String.fromInt room.capacity ++ ")") ] ]
+
+renderRecommendations : List (Int, Event) -> Dict RoomID Room -> Dict LecturerID Lecturer -> Html Msg
+renderRecommendations recommendations rooms lecturers =
+    ul [ ariaLabel ("Recomendações"), class "list custom-scrollbar" ]
+        (List.map (renderEvent rooms lecturers) (List.sortWith eventTupleComparator recommendations))

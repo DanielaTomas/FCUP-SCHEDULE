@@ -61,8 +61,8 @@ img {
   display: grid;
   justify-content: center;
   grid-gap: 1vh;
-  grid-template-columns: 10% 10% 10% 60% 10%;
-  padding: 20px;
+  grid-template-columns: 10% 10% 10% 50% 10% 10%;
+  padding: 25px;
   border: 1px solid #aaa;
   border-radius: 4px;
   background: #eee;
