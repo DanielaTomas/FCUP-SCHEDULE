@@ -18,8 +18,6 @@ import Json.Decode
 import Route exposing (Route)
 import Route.Path
 import ScheduleObjects.Data exposing (Data)
-import ScheduleObjects.Hide exposing (IsHidden)
-import ScheduleObjects.Id exposing (ID)
 import Shared.Model
 import Shared.Msg
 
@@ -50,12 +48,12 @@ init : Result Json.Decode.Error Flags -> Route () -> ( Model, Effect Msg )
 init flagsResult route =
     case flagsResult of
         Ok flags ->
-            ( Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty "" flags.server_url
+            ( Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty [] "" flags.server_url
             , Effect.pushRoute { path = Route.Path.Home_, query = Dict.empty, hash = Nothing }
             )
 
         Err _ ->
-            ( Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty "" ""
+            ( Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty [] "" ""
             , Effect.pushRoute { path = Route.Path.Home_, query = Dict.empty, hash = Nothing }
             )
 

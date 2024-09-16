@@ -92,8 +92,8 @@ class MCTS:
                 e["RoomId"] = new_room["Id"]
                 e["WeekDay"] = new_weekday
                 new_change = e
+                print(f"\tEvent updated: {e}")
                 break
-                #print(f"\tEvent updated: {e}")
 
         new_changed_events = deepcopy(self.current_node.changedEvents) + [new_change]
 
@@ -136,22 +136,15 @@ class MCTS:
 
     def get_best_solution(self):
         def select_best_terminal_node(node):
-            # If this node has no children, it is a terminal node
             if not node.children:
                 return node
-            
-            # Select the best child based on score/visits ratio, then recursively continue
             best_child = max(node.children, key=lambda child: child.score / child.visits if child.visits > 0 else float('-inf'))
-            # Recursively find the best terminal node from this child
             return select_best_terminal_node(best_child)
 
         self.print_node_scores(self.root)
-        # Start from the root node and navigate to the best terminal node
         best_terminal_node = select_best_terminal_node(self.root)
 
-        # Print the best terminal node's changed events and return them
         print(f"Best solution: visits {best_terminal_node.visits}, score {best_terminal_node.score}, ratio {best_terminal_node.score / best_terminal_node.visits:.2f}")
         print(f"Changes: {best_terminal_node.changedEvents}")
 
-        # Return the changes (changedEvents) of the best terminal node
         return best_terminal_node.changedEvents

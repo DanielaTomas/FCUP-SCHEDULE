@@ -29,7 +29,7 @@ type alias Data =
     , hiddenStudents : Dict ID Student
     , occupations : Dict OccupationID Occupation
     , restrictions : Dict RestrictionID Restriction
-    , recommendations : Dict ID (Event, IsHidden)
+    , recommendations : List (Event, IsHidden)
     , token : Token
     , backendUrl : String
     }
@@ -103,6 +103,6 @@ setDataRestrictions : Dict RestrictionID Restriction -> Data -> Data
 setDataRestrictions restrictions data =
     { data | restrictions = restrictions }
 
-setDataRecommendations : Dict ID (Event, IsHidden) -> Data -> Data
+setDataRecommendations : List (Event, IsHidden) -> Data -> Data
 setDataRecommendations recommendations data =
     { data | recommendations = recommendations }

@@ -12,6 +12,7 @@ import Maybe.Extra
 import ScheduleObjects.Id exposing (ID)
 import Main.List exposing (renderRecommendations)
 import ScheduleObjects.Event exposing (Event)
+import ScheduleObjects.Hide exposing (IsHidden)
 
 
 view : Model -> Html Msg
@@ -55,10 +56,8 @@ view model =
         studentName =
             Maybe.map (\( _, s ) -> s.name) model.selectedItems.student |> Maybe.Extra.withDefaultLazy (\() -> "")
 
-        recommendationsList : List (Int, Event)
         recommendationsList =
-            Dict.toList model.data.recommendations
-                |> List.map (\(id, (event, _)) -> (id, event))
+            List.indexedMap (\i (event, _) -> (i, event)) model.data.recommendations
 
         displayOnDrag : ID -> Html Msg
         displayOnDrag id =
@@ -73,7 +72,7 @@ view model =
             , renderAvailableRooms model.selectedItems.event model.data.rooms (Dict.values model.data.events) (Dict.values model.data.occupations)
             , renderBlocks model.data.blocks model.data.hiddenBlocks model.selectedItems.block
             ]
-        , div [ class "listbox-area-recommendation"] [ renderRecommendations recommendationsList model.data.rooms model.data.lecturers ]
+        , div [ class "listbox-area-recommendations"] [ renderRecommendations recommendationsList model.data.rooms model.data.lecturers ]
         , div [ class "grids-container" ] [ renderScheduleAbbr blockList [] [] ("Bloco:" ++ blockName), renderScheduleAbbr roomList occupationsList [] ("Sala:" ++ roomName), renderScheduleAbbr lectList [] restrictionList ("Docente:" ++ lectName), renderScheduleAbbr studentList [] [] ("Estudante:" ++ studentName) ]
         , DnD.dragged
             model.draggable

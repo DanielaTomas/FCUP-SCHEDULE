@@ -8,13 +8,12 @@ module Pages.Load exposing (Model, Msg, page)
 
 -}
 
-import Array exposing (Array)
-import Decoders exposing (blockParser, studentParser, eventParser, lectParser, objectsToDictParser, occupationParser, restrictionParser, roomParser, recommendationsParser)
+import Decoders exposing (blockParser, studentParser, eventParser, lectParser, objectsToDictParser, occupationParser, restrictionParser, roomParser)
 import Dict exposing (Dict)
 import Effect exposing (Effect)
 import Html
 import Http
-import Json.Decode exposing (Decoder)
+import Json.Decode as JD exposing (Decoder)
 import Page exposing (Page)
 import Route exposing (Route)
 import ScheduleObjects.Block exposing (Block)
@@ -88,7 +87,7 @@ init : String -> Token -> () -> ( Model, Effect Msg )
 init backendUrl token () =
     let
         emptyData =
-            Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty token backendUrl
+            Data Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty Dict.empty [] token backendUrl
 
         noneReceived =
             GotData False False False False False False False False
@@ -113,7 +112,7 @@ type Msg
     | GotStudents (Result Http.Error (Dict ID ( Student, IsHidden )))
     | GotOccupations (Result Http.Error (Dict ID Occupation))
     | GotRestrictions (Result Http.Error (Dict ID Restriction))
-    | GotRecommendations (Result Http.Error (Dict ID ( Event, IsHidden )))
+    | GotRecommendations (Result Http.Error (List ( Event, IsHidden )))
     | LoadedData Data
 
 
@@ -388,7 +387,19 @@ getRestrictions backendUrl token =
 
 getRecommendations : String -> Token -> Effect Msg
 getRecommendations backendUrl token =
-    Effect.sendCmd (getResource "recommend" eventParser GotRecommendations backendUrl token)
+    Effect.sendCmd (getResource1 "recommend" eventParser GotRecommendations backendUrl token)
+
+getResource1 : String -> Decoder a -> (Result Http.Error (List a) -> msg) -> String -> Token -> Cmd msg
+getResource1 resource resourceParser resultToMsg backendUrl token =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ token) ]
+        , url = backendUrl ++ resource
+        , body = Http.emptyBody
+        , expect = Http.expectJson resultToMsg (JD.field "data" (JD.list resourceParser))
+        , timeout = Nothing
+        , tracker = Nothing
+        }
 
 -- SUBSCRIPTIONS
 

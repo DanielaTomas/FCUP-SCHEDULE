@@ -334,4 +334,4 @@ renderAvailableRoom evId ( roomId, room ) =
 renderRecommendations : List (Int, Event) -> Dict RoomID Room -> Dict LecturerID Lecturer -> Html Msg
 renderRecommendations recommendations rooms lecturers =
     ul [ ariaLabel ("Recomendações"), class "list custom-scrollbar" ]
-        (List.map (renderEvent rooms lecturers) (List.sortWith eventTupleComparator recommendations))
+        (List.map (renderEvent rooms lecturers) recommendations)
