@@ -4,15 +4,12 @@ import Dict
 import DnD
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Main.List exposing (renderAvailableRooms, renderBlocks, renderStudents, renderEvents, renderLecturers, renderRooms)
+import Main.List exposing (renderAvailableRooms, renderBlocks, renderStudents, renderEvents, renderLecturers, renderRooms, renderRecommendations)
 import Main.Model exposing (Model)
 import Main.Msg exposing (Msg(..))
 import Main.Schedule exposing (..)
 import Maybe.Extra
 import ScheduleObjects.Id exposing (ID)
-import Main.List exposing (renderRecommendations)
-import ScheduleObjects.Event exposing (Event)
-import ScheduleObjects.Hide exposing (IsHidden)
 
 
 view : Model -> Html Msg
