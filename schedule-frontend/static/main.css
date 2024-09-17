@@ -61,8 +61,21 @@ img {
   display: grid;
   justify-content: center;
   grid-gap: 1vh;
-  grid-template-columns: 10% 10% 10% 60% 10%;
+  grid-template-columns: 10% 10% 10% 50% 10% 10%;
+  padding: 25px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background: #eee;
+}
+
+.listbox-area-recommendations {
+  display: grid;
+  justify-content: center;
+  grid-gap: 1vh;
+  grid-template-columns: 50%;
   padding: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border: 1px solid #aaa;
   border-radius: 4px;
   background: #eee;

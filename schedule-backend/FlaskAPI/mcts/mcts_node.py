@@ -1,15 +1,16 @@
 from copy import deepcopy
 import math
+import mcts
 
 class MCTSNode:
 
-    def __init__(self, timetable, parent = None):
-        self.timetable = deepcopy(timetable)
+    def __init__(self, events, parent = None):
+        self.visited_events = events
         self.parent = parent
         self.children = []
         self.visits = 0
         self.score = 0
-
+        
     def is_fully_expanded(self):
         return len(self.children) > 0
 

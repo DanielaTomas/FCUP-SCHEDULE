@@ -187,8 +187,7 @@ restrictionParser =
         (weektimeDecoder "StartTime")
         (weektimeDecoder "EndTime")
         (JD.field "Type" categoryParser)
-
-
+        
 {-| Weektime Decoder.
 timeToRead == "StartTime" or "EndTime"
 -}
