@@ -20,6 +20,8 @@ type Msg
     | OnDrop ( DropEvent, WeekTime ) ID
     | UpdateEvent (Result Http.Error ( EventID, ( Event, IsHidden ) ))
     | EditMenu EditMenu
+    | UpdateRecommendations (Result Http.Error ( List (Event, IsHidden) ))
+    | RefreshRecommendations
 
 
 type OnItemClick

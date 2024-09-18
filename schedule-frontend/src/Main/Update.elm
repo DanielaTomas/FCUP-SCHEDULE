@@ -21,6 +21,7 @@ import ScheduleObjects.Occupation exposing (Occupation, OccupationID)
 import ScheduleObjects.Restriction exposing (Restriction, RestrictionID)
 import ScheduleObjects.WeekTime exposing (WeekTime)
 import Time
+import Json.Decode as JD exposing (Decoder)
 
 
 {-| Update Block / Event / Room / Lecturer filters based on the msg received.
@@ -132,6 +133,38 @@ update msg model =
 
         EditMenu menuMsg ->
             updateOnMenuEdit menuMsg model
+
+        RefreshRecommendations ->
+            let
+                fetchRecommendationsCmd = getRecommendations model.data.backendUrl model.data.token
+            in
+            ( model, fetchRecommendationsCmd )
+
+        UpdateRecommendations result ->
+            case result of
+                Ok newRecommendations ->
+                    ( model |> setData (model.data |> setDataRecommendations newRecommendations) , Effect.none )
+
+                Err _ ->
+                    ( model, Effect.none )
+
+
+getRecommendations : String -> Token -> Effect Msg
+getRecommendations backendUrl token =
+    Effect.sendCmd (getResource1 "recommend" Decoders.eventParser UpdateRecommendations backendUrl token)
+
+
+getResource1 : String -> Decoder a -> (Result Http.Error (List a) -> msg) -> String -> Token -> Cmd msg
+getResource1 resource resourceParser resultToMsg backendUrl token =
+    Http.request
+        { method = "GET"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ token) ]
+        , url = backendUrl ++ resource
+        , body = Http.emptyBody
+        , expect = Http.expectJson resultToMsg (JD.field "data" (JD.list resourceParser))
+        , timeout = Nothing
+        , tracker = Nothing
+        }
 
 
 updateOnItemClick : OnItemClick -> Model -> ( Model, Effect Msg )

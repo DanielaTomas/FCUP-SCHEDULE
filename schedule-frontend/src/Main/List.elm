@@ -331,7 +331,11 @@ renderAvailableRoom : EventID -> ( RoomID, Room ) -> Html Msg
 renderAvailableRoom evId ( roomId, room ) =
     li [ class "list-item", onClick (ItemClick (ChangeEventRoomClick evId roomId)), attribute "title" room.name ] [ div [ class "custom-scrollbar", class "list-text" ] [ text (room.abbr ++ "\t(" ++ String.fromInt room.capacity ++ ")") ] ]
 
+
 renderRecommendations : List (Int, Event) -> Dict RoomID Room -> Dict LecturerID Lecturer -> Html Msg
-renderRecommendations recommendations rooms lecturers =
-    ul [ ariaLabel ("Recomendações"), class "list custom-scrollbar" ]
+renderRecommendations recommendations rooms lecturers = 
+    div [ class "listbox-area-recommendations" ]
+        [ ul [ ariaLabel ("Recomendações"), class "list custom-scrollbar" ]
         (List.map (renderEvent rooms lecturers) recommendations)
+        , button [ onClick RefreshRecommendations ] [ text "Refresh Recommendations" ]
+        ]

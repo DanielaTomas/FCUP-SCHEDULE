@@ -7,7 +7,7 @@ EXPANSION_LIMIT = 5 # adjust if necessary
 
 #TODO remove prints
 
-class MCTS:
+class MCTSLocalSeach:
 
     def __init__(self, current_timetable):
         calculate_event_durations(current_timetable["events"])

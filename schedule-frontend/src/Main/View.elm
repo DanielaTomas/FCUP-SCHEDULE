@@ -69,7 +69,7 @@ view model =
             , renderAvailableRooms model.selectedItems.event model.data.rooms (Dict.values model.data.events) (Dict.values model.data.occupations)
             , renderBlocks model.data.blocks model.data.hiddenBlocks model.selectedItems.block
             ]
-        , div [ class "listbox-area-recommendations"] [ renderRecommendations recommendationsList model.data.rooms model.data.lecturers ]
+        , renderRecommendations recommendationsList model.data.rooms model.data.lecturers
         , div [ class "grids-container" ] [ renderScheduleAbbr blockList [] [] ("Bloco:" ++ blockName), renderScheduleAbbr roomList occupationsList [] ("Sala:" ++ roomName), renderScheduleAbbr lectList [] restrictionList ("Docente:" ++ lectName), renderScheduleAbbr studentList [] [] ("Estudante:" ++ studentName) ]
         , DnD.dragged
             model.draggable
