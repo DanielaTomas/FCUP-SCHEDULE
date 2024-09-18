@@ -33,6 +33,6 @@ def print_node_scores(node, depth=0):
         score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
     else:
         score_visits = "score {node.score}, visits {node.visits}, ratio -inf"
-    print("\t" * depth + f"Node: {score_visits}")
+    print("   " * depth + f"Node: {score_visits}")
     for child in node.children:
         print_node_scores(child, depth + 1)

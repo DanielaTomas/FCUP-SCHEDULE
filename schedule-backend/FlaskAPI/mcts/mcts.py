@@ -26,7 +26,7 @@ class MCTS:
 
     def evaluate_timetable(self, visited_events): #TODO Add students and soft constraints
         penalty = 0
-        for event in visited_events:
+        for i, event in enumerate(visited_events):
             room = event["RoomId"]
             start_time = event["StartTime"]
             end_time = event["EndTime"]
@@ -34,7 +34,7 @@ class MCTS:
             lecturer = event["LecturerId"]
 
             if start_time and end_time and weekday:
-                for other_event in visited_events:
+                for other_event in visited_events[i+1:]:
                     if other_event["Id"] != event["Id"]:
                         if room and check_conflict(other_event, start_time, end_time, weekday, room, self.timetable["rooms"]):
                             penalty += 1
@@ -108,9 +108,12 @@ class MCTS:
     
     def run_mcts(self, iterations=1000):
         for _ in range(iterations):
-            self.selection()
             unvisited_nodes = self.get_unvisited_events(self.current_node.visited_events)
-            if (unvisited_nodes) : self.expansion(unvisited_nodes)
+            self.selection()
+            if (len(unvisited_nodes) == 0) : 
+                self.current_node = self.root
+                unvisited_nodes = self.timetable["events"]
+            self.expansion(unvisited_nodes)
             simulation_result = self.simulation()
             self.backpropagation(simulation_result)
         return self.get_best_solution()
