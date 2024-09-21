@@ -3,7 +3,7 @@ from mcts.random_data import *
 from mcts.mcts_node_local_search import *
 from mcts.utils import *
 
-EXPANSION_LIMIT = 5 # adjust if necessary
+EXPANSION_LIMIT = 10 # adjust if necessary
 
 #TODO remove prints
 
@@ -116,7 +116,7 @@ class MCTSLocalSeach:
         def select_best_terminal_node(node):
             if not node.children:
                 return node
-            best_child = max(node.children, key=lambda child: child.score / child.visits if child.visits > 0 else float('-inf'))
+            best_child = max(node.children, key=lambda child: (child.score / child.visits if child.visits > 0 else float('-inf'), child.visits))
             return select_best_terminal_node(best_child)
 
         print_node_scores(self.root)

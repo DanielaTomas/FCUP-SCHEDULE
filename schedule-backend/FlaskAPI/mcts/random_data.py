@@ -1,6 +1,16 @@
 import random
 from datetime import datetime, timedelta
 
+def get_valid_start_slots(start_of_day, lunch_end, latest_start_morning, latest_start_afternoon):
+    valid_start_slots = []
+    current_time = start_of_day
+    while current_time <= latest_start_afternoon:
+        if (current_time <= latest_start_morning) or (current_time >= lunch_end):
+            valid_start_slots.append(current_time)
+        current_time += timedelta(minutes=30)  # 30-minute slots
+    return valid_start_slots
+
+
 def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13, launch_end_hour = 14):
     start_of_day = datetime(2025, 1, 1, start_hour, 0)
     end_of_day = datetime(2025, 1, 1, end_hour, 0)
@@ -13,21 +23,21 @@ def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13,
     if latest_start_morning < start_of_day and latest_start_afternoon < lunch_end:
         raise ValueError(f"Duration is too long to fit in the available time range.")
 
-    valid_start_slots = []
-    current_time = start_of_day
-    while current_time <= latest_start_afternoon:
-        if (current_time <= latest_start_morning) or (current_time >= lunch_start):
-            valid_start_slots.append(current_time)
-        current_time += timedelta(minutes=30) # 30-minute slots
+    valid_start_slots = get_valid_start_slots(
+        start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
+    )
 
     start_time = random.choice(valid_start_slots)
-    start_hour = int(start_time .strftime("%H")) 
+    start_hour = int(start_time .strftime("%H"))
+    start_minute = int(start_time .strftime("%M"))
+    
     end_time = start_time + timedelta(minutes=duration)
     end_hour = int(end_time .strftime("%H"))
+    end_minute = int(end_time .strftime("%M"))
     
     weekday = random.randint(2, 6)
     
-    return timedelta(hours=start_hour) , timedelta(hours=end_hour), weekday
+    return timedelta(hours=start_hour, minutes=start_minute) , timedelta(hours=end_hour, minutes=end_minute), weekday
 
 
 def random_room(occupations, events, start_time, end_time, rooms):
