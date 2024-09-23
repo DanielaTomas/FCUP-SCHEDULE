@@ -1,4 +1,5 @@
 def calculate_event_durations(events): #TODO Add duration field to database
+    events_to_visit = []
     for event in events:
         start_time = event["StartTime"]
         end_of_day = event["EndTime"]
@@ -6,7 +7,9 @@ def calculate_event_durations(events): #TODO Add duration field to database
             duration = (end_of_day - start_time).total_seconds() / 60.0
             event["Duration"] = duration
         else:
-            event["Duration"] = 60 # adjust if necessary
+            event["Duration"] = 120 # adjust if necessary
+            events_to_visit.append(event)
+    return events_to_visit
 
 
 def get_room_name_by_id(room_id, rooms):

@@ -1062,8 +1062,8 @@ def recommend():
             'occupations': occupations
         }
 
-        mcts = MCTSLocalSeach(data)
-        recommendations = mcts.run_mcts(100) # adjust if necessary
+        mcts = MCTS(data)
+        recommendations = mcts.run_mcts(20) # adjust if necessary
         return get_response_msg(recommendations, HTTPStatus.OK)
     except pymysql.MySQLError as sqle:
         abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))

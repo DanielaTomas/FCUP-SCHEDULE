@@ -1,18 +1,21 @@
 from copy import deepcopy
 import math
-import mcts
+from mcts.random_data import *
 
 class MCTSNode:
 
-    def __init__(self, events, parent = None):
-        self.visited_events = events
+    def __init__(self, timetable, parent = None, depth = 0):
+        self.timetable = deepcopy(timetable)
         self.parent = parent
+        self.depth = depth
         self.children = []
         self.visits = 0
         self.score = 0
         
-    def is_fully_expanded(self):
-        return len(self.children) > 0
+
+    def is_fully_expanded(self, num_slots):
+        return len(self.children) == num_slots
+    
 
     def best_child(self, c_param = 1.4):
         choices_weights = [

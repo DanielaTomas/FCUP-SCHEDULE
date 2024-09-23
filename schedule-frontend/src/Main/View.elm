@@ -4,12 +4,14 @@ import Dict
 import DnD
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Main.List exposing (renderAvailableRooms, renderBlocks, renderStudents, renderEvents, renderLecturers, renderRooms, renderRecommendations)
+import Main.List exposing (renderEventsWithoutTime, renderAvailableRooms, renderBlocks, renderStudents, renderEvents, renderLecturers, renderRooms, renderRecommendations)
 import Main.Model exposing (Model)
 import Main.Msg exposing (Msg(..))
 import Main.Schedule exposing (..)
 import Maybe.Extra
 import ScheduleObjects.Id exposing (ID)
+import Maybe.Extra exposing (isNothing)
+import ScheduleObjects.Event exposing (Event)
 
 
 view : Model -> Html Msg
@@ -56,6 +58,11 @@ view model =
         recommendationsList =
             List.indexedMap (\i (event, _) -> (i, event)) model.data.recommendations
 
+        filteredEvents = 
+            model.data.events
+                |> Dict.toList
+                |> filterEventsWithoutTime
+
         displayOnDrag : ID -> Html Msg
         displayOnDrag id =
             div [] [ id |> String.fromInt |> text ]
@@ -69,9 +76,16 @@ view model =
             , renderAvailableRooms model.selectedItems.event model.data.rooms (Dict.values model.data.events) (Dict.values model.data.occupations)
             , renderBlocks model.data.blocks model.data.hiddenBlocks model.selectedItems.block
             ]
-        , renderRecommendations recommendationsList model.data.rooms model.data.lecturers
+        , div[ class "listbox-area-recommendations"]
+            [ renderEventsWithoutTime filteredEvents model.data.rooms model.data.lecturers 
+            , renderRecommendations recommendationsList model.data.rooms model.data.lecturers
+            ]
         , div [ class "grids-container" ] [ renderScheduleAbbr blockList [] [] ("Bloco:" ++ blockName), renderScheduleAbbr roomList occupationsList [] ("Sala:" ++ roomName), renderScheduleAbbr lectList [] restrictionList ("Docente:" ++ lectName), renderScheduleAbbr studentList [] [] ("Estudante:" ++ studentName) ]
         , DnD.dragged
             model.draggable
             displayOnDrag
         ]
+
+filterEventsWithoutTime : List (Int, Event) -> List (Int, Event)
+filterEventsWithoutTime events =
+    List.filter (\(_, event) -> isNothing event.start_time && isNothing event.end_time) events

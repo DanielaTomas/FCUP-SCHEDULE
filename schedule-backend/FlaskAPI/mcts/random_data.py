@@ -1,6 +1,21 @@
 import random
 from datetime import datetime, timedelta
 
+def calculate_time_bounds(duration, start_hour=8, end_hour=20, launch_start_hour=13, launch_end_hour=14):
+    start_of_day = datetime(2025, 1, 1, start_hour, 0)
+    end_of_day = datetime(2025, 1, 1, end_hour, 0)
+    lunch_start = datetime(2025, 1, 1, launch_start_hour, 0)
+    lunch_end = datetime(2025, 1, 1, launch_end_hour, 0)
+
+    latest_start_morning = lunch_start - timedelta(minutes=duration)
+    latest_start_afternoon = end_of_day - timedelta(minutes=duration)
+
+    if latest_start_morning < start_of_day and latest_start_afternoon < lunch_end:
+        raise ValueError(f"Duration is too long to fit in the available time range.")
+
+    return start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
+
+
 def get_valid_start_slots(start_of_day, lunch_end, latest_start_morning, latest_start_afternoon):
     valid_start_slots = []
     current_time = start_of_day
@@ -12,17 +27,8 @@ def get_valid_start_slots(start_of_day, lunch_end, latest_start_morning, latest_
 
 
 def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13, launch_end_hour = 14):
-    start_of_day = datetime(2025, 1, 1, start_hour, 0)
-    end_of_day = datetime(2025, 1, 1, end_hour, 0)
-    lunch_start = datetime(2025, 1, 1, launch_start_hour, 0)
-    lunch_end = datetime(2025, 1, 1, launch_end_hour, 0) # earliest start afternoon
+    start_of_day, lunch_end, latest_start_morning, latest_start_afternoon = calculate_time_bounds(duration, start_hour, end_hour, launch_start_hour, launch_end_hour)
     
-    latest_start_morning = lunch_start - timedelta(minutes=duration)
-    latest_start_afternoon = end_of_day - timedelta(minutes=duration)
-
-    if latest_start_morning < start_of_day and latest_start_afternoon < lunch_end:
-        raise ValueError(f"Duration is too long to fit in the available time range.")
-
     valid_start_slots = get_valid_start_slots(
         start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
     )

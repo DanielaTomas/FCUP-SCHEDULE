@@ -72,7 +72,7 @@ img {
   display: grid;
   justify-content: center;
   grid-gap: 1vh;
-  grid-template-columns: 55%;
+  grid-template-columns: 45% 55%;
   padding: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
