@@ -53,31 +53,32 @@ class MCTS:
             start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
         )
         current_node = self.root
-        while current_node.is_fully_expanded(len(valid_start_slots)): #TODO
+        while current_node.is_fully_expanded(len(valid_start_slots)*5): #TODO
             current_node = current_node.best_child()
         self.current_node = current_node
 
 
     def expansion(self):
         event = self.events_to_visit[self.current_node.depth]
+
         start_of_day, lunch_end, latest_start_morning, latest_start_afternoon = calculate_time_bounds(event["Duration"])
         valid_start_slots = get_valid_start_slots(
             start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
         )
+
         slot = len(self.current_node.children)
-        start_hour = int(valid_start_slots[slot] .strftime("%H"))
-        start_minute = int(valid_start_slots[slot] .strftime("%M"))
+        slot_index = slot % len(valid_start_slots)
+        new_weekday = (slot // len(valid_start_slots)) + 2
         
-        end_time = valid_start_slots[slot] + timedelta(minutes=event["Duration"])
-        end_hour = int(end_time .strftime("%H"))
-        end_minute = int(end_time .strftime("%M"))
-        
-        new_start_time = timedelta(hours=start_hour, minutes=start_minute)
-        new_end_time = timedelta(hours=end_hour, minutes=end_minute)
+        start_time = valid_start_slots[slot_index]
+        end_time = start_time + timedelta(minutes=event["Duration"])
+
+        new_start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
+        new_end_time = timedelta(hours=end_time.hour, minutes=end_time.minute)
+
         new_room = random_room(self.timetable["occupations"], self.timetable["events"], new_start_time, new_end_time, self.timetable["rooms"])
-        #TODO weekday
-        new_weekday = random.randint(2, 6)
-        new_timetable = deepcopy(self.timetable)
+
+        new_timetable = deepcopy(self.current_node.timetable)
         for e in new_timetable["events"]:
             if e["Id"] == event["Id"]:
                 e["StartTime"] = new_start_time

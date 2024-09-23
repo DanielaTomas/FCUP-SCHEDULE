@@ -63,6 +63,12 @@ view model =
                 |> Dict.toList
                 |> filterEventsWithoutTime
 
+        filteredEventNames = 
+            List.map (\(_, event) -> event.subjectAbbr) filteredEvents
+
+        filteredRecommendations = 
+            List.filter (\(_, event) -> List.member event.subjectAbbr filteredEventNames) recommendationsList
+
         displayOnDrag : ID -> Html Msg
         displayOnDrag id =
             div [] [ id |> String.fromInt |> text ]
@@ -78,7 +84,7 @@ view model =
             ]
         , div[ class "listbox-area-recommendations"]
             [ renderEventsWithoutTime filteredEvents model.data.rooms model.data.lecturers 
-            , renderRecommendations recommendationsList model.data.rooms model.data.lecturers
+            , renderRecommendations filteredRecommendations model.data.rooms model.data.lecturers
             ]
         , div [ class "grids-container" ] [ renderScheduleAbbr blockList [] [] ("Bloco:" ++ blockName), renderScheduleAbbr roomList occupationsList [] ("Sala:" ++ roomName), renderScheduleAbbr lectList [] restrictionList ("Docente:" ++ lectName), renderScheduleAbbr studentList [] [] ("Estudante:" ++ studentName) ]
         , DnD.dragged

@@ -336,7 +336,7 @@ renderRecommendations : List (Int, Event) -> Dict RoomID Room -> Dict LecturerID
 renderRecommendations recommendations rooms lecturers = 
     div []
         [ ul [ ariaLabel ("Recomendações"), class "list custom-scrollbar" ]
-        (List.map (renderEvent rooms lecturers) recommendations)
+        (List.map (renderEvent rooms lecturers) (List.sortWith eventTupleComparator recommendations))
         , button [ onClick RefreshRecommendations ] [ text "Refresh Recommendations" ]
         ]
 
