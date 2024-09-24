@@ -8,7 +8,7 @@ class MCTS:
 
     def __init__(self, current_timetable):
         self.timetable = deepcopy(current_timetable)
-        self.events_to_visit = calculate_event_durations(self.timetable["events"])
+        self.events_to_visit = calculate_event_durations(sorted(self.timetable["events"], key=lambda x: x["SubjectAbbr"]))
         self.root = MCTSNode(current_timetable)
         self.current_node = self.root
 
@@ -46,14 +46,16 @@ class MCTS:
 
     def selection(self):
         #print("Starting selection...")
-        event = self.events_to_visit[self.current_node.depth]
+        if self.current_node.parent is None: return
+        event_index = self.current_node.parent.depth
+        event = self.events_to_visit[event_index]
         start_of_day, lunch_end, latest_start_morning, latest_start_afternoon = calculate_time_bounds(event["Duration"])
 
         valid_start_slots = get_valid_start_slots(
             start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
         )
         current_node = self.root
-        while current_node.is_fully_expanded(len(valid_start_slots)*5): #TODO
+        while current_node.is_fully_expanded(len(valid_start_slots)*5):
             current_node = current_node.best_child()
         self.current_node = current_node
 
@@ -75,18 +77,22 @@ class MCTS:
 
         new_start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
         new_end_time = timedelta(hours=end_time.hour, minutes=end_time.minute)
-
-        new_room = random_room(self.timetable["occupations"], self.timetable["events"], new_start_time, new_end_time, self.timetable["rooms"])
-
+        
         new_timetable = deepcopy(self.current_node.timetable)
         for e in new_timetable["events"]:
             if e["Id"] == event["Id"]:
                 e["StartTime"] = new_start_time
                 e["EndTime"] = new_end_time
-                e["RoomId"] = new_room["Id"]
+                if event["RoomId"] is None : 
+                    new_room = random_room(self.timetable["occupations"], self.timetable["events"], new_start_time, new_end_time, self.timetable["rooms"])
+                    e["RoomId"] = new_room["Id"]
+                else: 
+                    e["RoomId"] = event["RoomId"]
                 e["WeekDay"] = new_weekday
+                new_event = e
 
         child_node = MCTSNode(timetable=new_timetable, parent=self.current_node, depth=self.current_node.depth+1)
+        child_node.path = self.current_node.path + [new_event]
         self.current_node.children.append(child_node)
         self.current_node = child_node
 
@@ -117,10 +123,26 @@ class MCTS:
         return self.get_best_solution()
 
 
-    def get_best_solution(self):
+    def get_best_solution1(self):
         if self.root.children:
             print_node_scores(self.root)
-            best_node = max(self.root.children, key=lambda node: node.score / node.visits if node.visits > 0 else float('-inf'))
+            best_node = max(self.root.children, key=lambda node: (node.score / node.visits if node.visits > 0 else float('-inf'), node.visits))
             #if best_node: print(f"Best solution: visits {best_node.visits}, score {best_node.score}, ratio {best_node.score / best_node.visits:.2f}")
-            return best_node.timetable["events"] if best_node else self.root.timetable["events"]
-        return self.root.timetable["events"]
+            return best_node.path if best_node else self.root.path
+        return self.root.path
+    
+
+    def get_best_solution(self):
+        def select_best_terminal_node(node):
+            if not node.children:
+                return node
+            best_child = max(node.children, key=lambda child: (child.score / child.visits if child.visits > 0 else float('-inf'), child.visits))
+            return select_best_terminal_node(best_child)
+
+        print_node_scores(self.root)
+        best_terminal_node = select_best_terminal_node(self.root)
+
+        #print(f"Best terminal node: visits {best_terminal_node.visits}, score {best_terminal_node.score}, ratio {best_terminal_node.score / best_terminal_node.visits:.2f}")
+        #print(f"Changes: {best_terminal_node.changedEvents}")
+
+        return best_terminal_node.path

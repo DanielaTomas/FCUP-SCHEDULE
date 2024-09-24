@@ -9,6 +9,7 @@ class MCTSNode:
         self.parent = parent
         self.depth = depth
         self.children = []
+        self.path = []
         self.visits = 0
         self.score = 0
         
