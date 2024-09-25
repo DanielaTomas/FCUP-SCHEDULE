@@ -18,7 +18,6 @@ type alias Model =
     , filters : ScheduleFilter
     , draggable : Draggable
     , selectedItems : SelectedItemsInList
-    , recommendations : List Event
     }
 
 
@@ -77,7 +76,6 @@ init data () =
         , filters = ScheduleFilter (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False) (\_ _ -> False)
         , draggable = dnd.model
         , selectedItems = SelectedItemsInList Nothing Nothing Nothing Nothing Nothing
-        , recommendations = []
       }
     , Effect.none
     )

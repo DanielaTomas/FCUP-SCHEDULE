@@ -1,12 +1,9 @@
-def calculate_event_durations(events): #TODO Add duration field to database
+def events_to_visit(events):
+    events_to_visit = []
     for event in events:
-        start_time = event["StartTime"]
-        end_of_day = event["EndTime"]
-        if start_time is not None and end_of_day is not None:
-            duration = (end_of_day - start_time).total_seconds() / 60.0
-            event["Duration"] = duration
-        else:
-            event["Duration"] = 60 # adjust if necessary
+        if event["StartTime"] is None and event["EndTime"] is None:
+            events_to_visit.append(event)
+    return events_to_visit
 
 
 def get_room_name_by_id(room_id, rooms):
@@ -33,6 +30,6 @@ def print_node_scores(node, depth=0):
         score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
     else:
         score_visits = "score {node.score}, visits {node.visits}, ratio -inf"
-    print("\t" * depth + f"Node: {score_visits}")
+    print("   " * depth + f"Node: {score_visits}")
     for child in node.children:
         print_node_scores(child, depth + 1)

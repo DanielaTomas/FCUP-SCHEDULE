@@ -13,6 +13,7 @@ CREATE TABLE `EVENT` (
   `EndTime` time,
   `WeekDay` tinyint,
   `Hide` boolean NOT NULL,
+  `Duration` int,
   PRIMARY KEY (`Id`)
 );
 

@@ -10,7 +10,7 @@ from json_provider import UpdatedJSONProvider
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 import pymysql.cursors
 from mcts.mcts import *
-
+from mcts.mcts_local_search import *
 
 host = os.environ.get('FLASK_SERVER_HOST', conf.HOST)
 port = os.environ.get('FLASK_SERVER_PORT', conf.PORT)
@@ -584,9 +584,9 @@ def createEvent():
     try:
         db = Database(conf)
         body = request.get_json()
-        query_part1 = "INSERT INTO EVENT (Subject, SubjectAbbr, "
+        query_part1 = "INSERT INTO EVENT (Subject, SubjectAbbr, Duration, "
         query_part2 = ") VALUES (%s, %s, "
-        params = [body['Subject'], body['SubjectAbbr']]
+        params = [body['Subject'], body['SubjectAbbr'], body['Duration']]
 
         if 'StartTime' in body:
             query_part1 += " StartTime,"
@@ -663,7 +663,7 @@ def updateEvent(id):
     try:
         db = Database(conf)
         body = request.get_json()
-        query = "UPDATE EVENT SET Subject = %s, SubjectAbbr = %s,"
+        query = "UPDATE EVENT SET Subject = %s, SubjectAbbr = %s, "
         params = [body['Subject'], body['SubjectAbbr']]
 
         query += " StartTime = %s,"
@@ -1063,7 +1063,7 @@ def recommend():
         }
 
         mcts = MCTS(data)
-        recommendations = mcts.run_mcts(100) # adjust if necessary
+        recommendations = mcts.run_mcts(1500) # adjust if necessary
         return get_response_msg(recommendations, HTTPStatus.OK)
     except pymysql.MySQLError as sqle:
         abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
