@@ -11,6 +11,7 @@ import ScheduleObjects.Lecturer exposing (Lecturer, LecturerID)
 import ScheduleObjects.Occupation exposing (Occupation, OccupationID)
 import ScheduleObjects.Restriction exposing (Restriction, RestrictionID)
 import ScheduleObjects.Room exposing (Room, RoomID)
+import Main.Msg exposing (Msg(..))
 
 
 {-| Normally, this value would live in "Shared.elm"
@@ -41,6 +42,7 @@ type UpdateType
     | UpdateStudent ( StudentID, ( Student, IsHidden ) )
     | UpdateRestriction ( RestrictionID, Restriction )
     | UpdateOccupation ( OccupationID, Occupation )
+    | UpdateRecommendations ( List ( Event, IsHidden ) )
     | DeleteEvent EventID
     | DeleteRoom RoomID
     | DeleteLect LecturerID

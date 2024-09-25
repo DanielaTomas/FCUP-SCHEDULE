@@ -3,21 +3,21 @@ from mcts.random_data import *
 from mcts.mcts_node_local_search import *
 from mcts.utils import *
 
-EXPANSION_LIMIT = 5 # adjust if necessary
+EXPANSION_LIMIT = 10 # adjust if necessary
 
 #TODO remove prints
 
-class MCTS:
+class MCTSLocalSeach:
 
     def __init__(self, current_timetable):
-        calculate_event_durations(current_timetable["events"])
         self.root = MCTSNodeLocalSearch(current_timetable)
         self.current_node = self.root
 
 
     def evaluate_timetable(self, timetable): #TODO Add students and soft constraints
         penalty = 0
-        for event in timetable["events"]:
+        events = timetable["events"]
+        for i, event in enumerate(events):
             room = event["RoomId"]
             start_time = event["StartTime"]
             end_time = event["EndTime"]
@@ -25,21 +25,25 @@ class MCTS:
             lecturer = event["LecturerId"]
 
             if start_time and end_time and weekday:
-                for other_event in timetable["events"]:
+                for other_event in events[i+1:]:
                     if other_event["Id"] != event["Id"]:
                         if room and check_conflict(other_event, start_time, end_time, weekday, room, self.current_node.timetable["rooms"]):
                             penalty += 1
+                            #print(f"Room \n{other_event}, \n{event}\n\n")
                         if lecturer and other_event["LecturerId"] == lecturer and check_conflict_time(start_time, other_event, end_time, weekday):
                             penalty += 1
                 for occupation in timetable["occupations"]:
                     if room and check_conflict(occupation, start_time, end_time, weekday, room, self.current_node.timetable["rooms"]):
+                            #print(f"Occupations \n{occupation}, \n{event}\n\n")
                             penalty += 1
                 if lecturer:
                     for restriction in timetable["restrictions"]:
                         if (restriction["Type"] == 1 and
                             restriction["LecturerId"] == lecturer and 
                             check_conflict_time(start_time, restriction, end_time, weekday)):
+                            #print(f"Restrictions \n{restriction}, \n{event}\n\n")
                             penalty += 1
+        #print("#####################################\n")
         return -penalty
     
 
@@ -111,13 +115,13 @@ class MCTS:
         def select_best_terminal_node(node):
             if not node.children:
                 return node
-            best_child = max(node.children, key=lambda child: child.score / child.visits if child.visits > 0 else float('-inf'))
+            best_child = max(node.children, key=lambda child: (child.score / child.visits if child.visits > 0 else float('-inf'), child.visits))
             return select_best_terminal_node(best_child)
 
         print_node_scores(self.root)
         best_terminal_node = select_best_terminal_node(self.root)
 
         #print(f"Best terminal node: visits {best_terminal_node.visits}, score {best_terminal_node.score}, ratio {best_terminal_node.score / best_terminal_node.visits:.2f}")
-        print(f"Changes: {best_terminal_node.changedEvents}")
+        #print(f"Changes: {best_terminal_node.changedEvents}")
 
         return best_terminal_node.changedEvents

@@ -385,12 +385,13 @@ getRestrictions : String -> Token -> Effect Msg
 getRestrictions backendUrl token =
     Effect.sendCmd (getResource "restrictions" restrictionParser GotRestrictions backendUrl token)
 
+
 getRecommendations : String -> Token -> Effect Msg
 getRecommendations backendUrl token =
-    Effect.sendCmd (getResource1 "recommend" eventParser GotRecommendations backendUrl token)
+    Effect.sendCmd (getRecommendationsResource "recommend" eventParser GotRecommendations backendUrl token)
 
-getResource1 : String -> Decoder a -> (Result Http.Error (List a) -> msg) -> String -> Token -> Cmd msg
-getResource1 resource resourceParser resultToMsg backendUrl token =
+getRecommendationsResource : String -> Decoder a -> (Result Http.Error (List a) -> msg) -> String -> Token -> Cmd msg
+getRecommendationsResource resource resourceParser resultToMsg backendUrl token =
     Http.request
         { method = "GET"
         , headers = [ Http.header "Authorization" ("Bearer " ++ token) ]

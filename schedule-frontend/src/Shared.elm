@@ -170,6 +170,11 @@ update route msg model =
                     , effect
                     )
 
+                Shared.Msg.UpdateRecommendations newRecommendations ->
+                    ( { model | recommendations = newRecommendations }
+                    , effect
+                    )
+
                 Shared.Msg.DeleteEvent evID ->
                     ( { model | events = Dict.remove evID model.events, hiddenEvents = Dict.remove evID model.hiddenEvents }
                     , effect
