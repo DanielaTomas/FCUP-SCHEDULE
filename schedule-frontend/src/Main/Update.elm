@@ -143,7 +143,7 @@ update msg model =
         UpdateRecommendations result ->
             case result of
                 Ok newRecommendations ->
-                    ( model |> setData (model.data |> setDataRecommendations newRecommendations) , Effect.none )
+                    ( model |> setData (model.data |> setDataRecommendations newRecommendations), Effect.updateRecommendations newRecommendations Nothing )
 
                 Err _ ->
                     ( model, Effect.none )
@@ -151,11 +151,11 @@ update msg model =
 
 getRecommendations : String -> Token -> Effect Msg
 getRecommendations backendUrl token =
-    Effect.sendCmd (getResource1 "recommend" Decoders.eventParser UpdateRecommendations backendUrl token)
+    Effect.sendCmd (getRecommendationsResource "recommend" Decoders.eventParser UpdateRecommendations backendUrl token)
 
 
-getResource1 : String -> Decoder a -> (Result Http.Error (List a) -> msg) -> String -> Token -> Cmd msg
-getResource1 resource resourceParser resultToMsg backendUrl token =
+getRecommendationsResource : String -> Decoder a -> (Result Http.Error (List a) -> msg) -> String -> Token -> Cmd msg
+getRecommendationsResource resource resourceParser resultToMsg backendUrl token =
     Http.request
         { method = "GET"
         , headers = [ Http.header "Authorization" ("Bearer " ++ token) ]

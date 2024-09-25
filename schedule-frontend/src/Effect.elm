@@ -4,7 +4,7 @@ module Effect exposing
     , sendCmd, sendMsg
     , pushRoute, replaceRoute, loadExternalUrl
     , map, toCmd
-    , deleteStudent, deleteBlock, deleteEvent, deleteLect, deleteOccupation, deleteRestriction, deleteRoom, loadData, loadToken, updateStudent, updateBlock, updateEvent, updateLect, updateOccupation, updateRestriction, updateRoom
+    , deleteStudent, deleteBlock, deleteEvent, deleteLect, deleteOccupation, deleteRestriction, deleteRoom, loadData, loadToken, updateStudent, updateBlock, updateEvent, updateLect, updateOccupation, updateRestriction, updateRoom, updateRecommendations
     )
 
 {-|
@@ -242,6 +242,14 @@ updateRestriction ( restrictionID, restriction ) mayberoute =
 updateOccupation : ( OccupationID, Occupation ) -> Maybe { path : Route.Path.Path, query : Dict String String, hash : Maybe String } -> Effect msg
 updateOccupation ( occupationID, occupation ) mayberoute =
     SendSharedMsg (Shared.Msg.UpdateData (Shared.Msg.UpdateOccupation ( occupationID, occupation )) mayberoute)
+
+
+updateRecommendations :
+    List ( Event, IsHidden )
+    -> Maybe { path : Route.Path.Path, query : Dict String String, hash : Maybe String }
+    -> Effect msg
+updateRecommendations recommendations maybeRoute =
+    SendSharedMsg (Shared.Msg.UpdateData (Shared.Msg.UpdateRecommendations recommendations) maybeRoute)
 
 
 deleteEvent : EventID -> Maybe { path : Route.Path.Path, query : Dict String String, hash : Maybe String } -> Effect msg
