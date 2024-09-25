@@ -10,7 +10,6 @@ EXPANSION_LIMIT = 10 # adjust if necessary
 class MCTSLocalSeach:
 
     def __init__(self, current_timetable):
-        calculate_event_durations(current_timetable["events"])
         self.root = MCTSNodeLocalSearch(current_timetable)
         self.current_node = self.root
 

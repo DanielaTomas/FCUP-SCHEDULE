@@ -20,13 +20,15 @@ def convertTime(df: pd.DataFrame):
 
     # Calculate the "EndTime" by adding "hora" and "duracao" columns
     df["EndTime"] = df["hora"] + df["duracao"]
-    df = df.drop(columns=["duracao"])
-
     def timedelta_to_string(td : datetime.timedelta):
         if td is not pd.NaT:
             return f'{td.seconds//3600:02}:{(td.seconds//60)%60:02}:00'
         else:
             return pd.NaT 
+        
+    df["Duration"] = df["duracao"].apply(lambda td: int(td.total_seconds() // 60) if pd.notnull(td) else 0)
+    df = df.drop(columns=["duracao"])
+
     df.rename(columns={"hora": "StartTime"}, inplace=True)
 
     df["StartTime"] = df["StartTime"].apply(lambda td: timedelta_to_string(td))

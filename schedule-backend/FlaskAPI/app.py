@@ -584,9 +584,9 @@ def createEvent():
     try:
         db = Database(conf)
         body = request.get_json()
-        query_part1 = "INSERT INTO EVENT (Subject, SubjectAbbr, "
+        query_part1 = "INSERT INTO EVENT (Subject, SubjectAbbr, Duration, "
         query_part2 = ") VALUES (%s, %s, "
-        params = [body['Subject'], body['SubjectAbbr']]
+        params = [body['Subject'], body['SubjectAbbr'], body['Duration']]
 
         if 'StartTime' in body:
             query_part1 += " StartTime,"
@@ -663,7 +663,7 @@ def updateEvent(id):
     try:
         db = Database(conf)
         body = request.get_json()
-        query = "UPDATE EVENT SET Subject = %s, SubjectAbbr = %s,"
+        query = "UPDATE EVENT SET Subject = %s, SubjectAbbr = %s, "
         params = [body['Subject'], body['SubjectAbbr']]
 
         query += " StartTime = %s,"

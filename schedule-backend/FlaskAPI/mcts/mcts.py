@@ -8,7 +8,8 @@ class MCTS:
 
     def __init__(self, current_timetable):
         self.timetable = deepcopy(current_timetable)
-        self.events_to_visit = calculate_event_durations(sorted(self.timetable["events"], key=lambda x: x["SubjectAbbr"]))
+        self.events_to_visit = events_to_visit(self.timetable["events"])
+        if self.events_to_visit == []: Exception("All the events are allocated. There are no events to visit.")
         self.root = MCTSNode(current_timetable)
         self.current_node = self.root
 
@@ -71,7 +72,6 @@ class MCTS:
         slot = len(self.current_node.children)
         slot_index = slot % len(valid_start_slots)
         new_weekday = (slot // len(valid_start_slots)) + 2
-        
         start_time = valid_start_slots[slot_index]
         end_time = start_time + timedelta(minutes=event["Duration"])
 
@@ -117,6 +117,7 @@ class MCTS:
     def run_mcts(self, iterations=1000):
         for _ in range(iterations):
             self.selection()
+            if self.current_node.depth == len(self.events_to_visit): break
             self.expansion()
             simulation_result = self.simulation()
             self.backpropagation(simulation_result)

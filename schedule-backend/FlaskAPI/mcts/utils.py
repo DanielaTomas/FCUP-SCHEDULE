@@ -1,13 +1,7 @@
-def calculate_event_durations(events): #TODO Add duration field to database
+def events_to_visit(events):
     events_to_visit = []
     for event in events:
-        start_time = event["StartTime"]
-        end_of_day = event["EndTime"]
-        if start_time is not None and end_of_day is not None:
-            duration = (end_of_day - start_time).total_seconds() / 60.0
-            event["Duration"] = duration
-        else:
-            event["Duration"] = 120 # adjust if necessary
+        if event["StartTime"] is None and event["EndTime"] is None:
             events_to_visit.append(event)
     return events_to_visit
 

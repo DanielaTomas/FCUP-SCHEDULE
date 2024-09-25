@@ -148,13 +148,13 @@ def migrateEvents(cursor):
     df.to_csv(output_file, index=False)
     # Insert data into the EVENT table
     insert_query = '''
-    INSERT INTO EVENT (Id, Subject, SubjectAbbr, LecturerId, RoomId, StartTime, EndTime, WeekDay, Hide)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+    INSERT INTO EVENT (Id, Subject, SubjectAbbr, LecturerId, RoomId, StartTime, EndTime, WeekDay, Hide, Duration)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
 
     for index, row in df.iterrows():
         values = (row['Id'], row['Subject'], row['SubjectAbbr'], row['LecturerId'], row['RoomId'],
-                  row['StartTime'], row['EndTime'], row['WeekDay'], row['Hide'])
+                  row['StartTime'], row['EndTime'], row['WeekDay'], row['Hide'], row['Duration'])
         cursor.execute(insert_query, values)
         connection.commit()
 
