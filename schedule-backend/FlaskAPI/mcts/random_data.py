@@ -34,16 +34,13 @@ def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13,
     )
 
     start_time = random.choice(valid_start_slots)
-    start_hour = int(start_time .strftime("%H"))
-    start_minute = int(start_time .strftime("%M"))
-    
     end_time = start_time + timedelta(minutes=duration)
-    end_hour = int(end_time .strftime("%H"))
-    end_minute = int(end_time .strftime("%M"))
-    
+    start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
+    end_time = timedelta(hours=end_time.hour, minutes=end_time.minute)
+
     weekday = random.randint(2, 6)
     
-    return timedelta(hours=start_hour, minutes=start_minute) , timedelta(hours=end_hour, minutes=end_minute), weekday
+    return timedelta(hours=start_time.hour, minutes=start_time.minute) , timedelta(hours=end_time.hour, minutes=end_time.minute), weekday
 
 
 def random_room(occupations, events, start_time, end_time, rooms):
