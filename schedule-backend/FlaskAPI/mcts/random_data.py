@@ -1,5 +1,6 @@
 import random
 from datetime import datetime, timedelta
+from mcts.utils import check_conflict_time, get_room_name_by_id
 
 def calculate_time_bounds(duration, start_hour=8, end_hour=20, launch_start_hour=13, launch_end_hour=14):
     start_of_day = datetime(2025, 1, 1, start_hour, 0)
@@ -43,21 +44,24 @@ def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13,
     return timedelta(hours=start_time.hour, minutes=start_time.minute) , timedelta(hours=end_time.hour, minutes=end_time.minute), weekday
 
 
-def random_room(occupations, events, start_time, end_time, rooms):
-    occupied_rooms = set()
-    for event in events:
-        room = event['RoomId']
-        if room is not None:
-            occupied_rooms.add(room)
+def empty_rooms(occupations, events, event, rooms):
+    empty_rooms = {room["Id"] for room in rooms if room["Id"] is not None}
+    online = []
     
-    empty_rooms = [room for room in rooms if room["Id"] not in occupied_rooms]
-    
+    for e in events:
+        if get_room_name_by_id(e["RoomId"], rooms) == "DCC online": 
+            online.append(e["RoomId"])
+            if e["RoomId"] in empty_rooms:
+                empty_rooms.remove(e["RoomId"])
+        elif e['RoomId'] is not None and check_conflict_time(event["StartTime"], e, event["EndTime"], event["WeekDay"]):
+            empty_rooms.remove(e["RoomId"])
+
     for occupation in occupations:
         room = occupation['RoomId']
-        if room not in empty_rooms and start_time < occupation["EndTime"] and end_time > occupation["StartTime"]:
-            empty_rooms.add(room)
+        if room in empty_rooms and check_conflict_time(event["StartTime"], occupation, event["EndTime"], event["WeekDay"]):
+            empty_rooms.remove(room)
 
-    return random.choice(rooms) if not empty_rooms else random.choice(empty_rooms)
+    return online if not empty_rooms else list(empty_rooms)
 
 
 def random_event(events):

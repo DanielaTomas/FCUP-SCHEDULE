@@ -9,7 +9,7 @@ class MCTS:
     def __init__(self, current_timetable):
         self.timetable = deepcopy(current_timetable)
         self.events_to_visit = events_to_visit(self.timetable["events"])
-        if self.events_to_visit == []: raise Exception("All the events are allocated. There are no events to visit.")
+        if not self.events_to_visit: raise Exception("All the events are allocated. There are no events to visit.")
         self.root = MCTSNode(current_timetable)
         self.current_node = self.root
 
@@ -27,18 +27,9 @@ class MCTS:
 
     # MCTS steps:
 
-
     def selection(self):
-        if self.current_node.parent is None: return
-        event_index = self.current_node.parent.depth
-        event = self.events_to_visit[event_index]
-        start_of_day, lunch_end, latest_start_morning, latest_start_afternoon = calculate_time_bounds(event["Duration"])
-
-        valid_start_slots = get_valid_start_slots(
-            start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
-        )
         current_node = self.root
-        while current_node.is_fully_expanded(len(valid_start_slots)*5):
+        while current_node.is_fully_expanded(self.events_to_visit):
             current_node = current_node.best_child()
         self.current_node = current_node
 
@@ -47,31 +38,29 @@ class MCTS:
         event = self.events_to_visit[self.current_node.depth]
 
         start_of_day, lunch_end, latest_start_morning, latest_start_afternoon = calculate_time_bounds(event["Duration"])
-        valid_start_slots = get_valid_start_slots(
-            start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
-        )
+        valid_start_slots = get_valid_start_slots(start_of_day, lunch_end, latest_start_morning, latest_start_afternoon)
 
         slot = len(self.current_node.children)
         slot_index = slot % len(valid_start_slots)
-        new_weekday = (slot // len(valid_start_slots)) + 2
-        start_time = valid_start_slots[slot_index]
-        end_time = start_time + timedelta(minutes=event["Duration"])
+        new_weekday = (slot // len(valid_start_slots)) % 5 + 2
 
+        start_time = valid_start_slots[slot_index]
         new_start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
-        new_end_time = timedelta(hours=end_time.hour, minutes=end_time.minute)
+        new_end_time = new_start_time + timedelta(minutes=event["Duration"])
+
+        #print(f"Room {event['RoomId']} Weekday {new_weekday} StartTime {new_start_time} Event {event['Id']} Depth {self.current_node.depth}")
         
         new_timetable = deepcopy(self.current_node.timetable)
         for e in new_timetable["events"]:
             if e["Id"] == event["Id"]:
+                e["WeekDay"] = new_weekday
                 e["StartTime"] = new_start_time
                 e["EndTime"] = new_end_time
-                if event["RoomId"] is None : 
-                    new_room = random_room(self.timetable["occupations"], self.timetable["events"], new_start_time, new_end_time, self.timetable["rooms"])
-                    e["RoomId"] = new_room["Id"]
-                else: 
-                    e["RoomId"] = event["RoomId"]
-                e["WeekDay"] = new_weekday
+                if event["RoomId"] is None:
+                    available_rooms = empty_rooms(self.timetable["occupations"], self.timetable["events"], event, self.timetable["rooms"])
+                    e["RoomId"] = (slot // (len(valid_start_slots) * 5)) % len(available_rooms)
                 new_event = e
+                break
 
         child_node = MCTSNode(timetable=new_timetable, parent=self.current_node, depth=self.current_node.depth+1)
         child_node.path = self.current_node.path + [new_event]
@@ -100,14 +89,6 @@ class MCTS:
             simulation_result = self.simulation()
             self.backpropagation(simulation_result)
         return self.get_best_solution()
-
-
-    def get_best_solution1(self):
-        if self.root.children:
-            print_node_scores(self.root)
-            best_node = max(self.root.children, key=lambda node: (node.score / node.visits if node.visits > 0 else float('-inf'), node.visits))
-            return best_node.path if best_node else self.root.path
-        return self.root.path
     
 
     def get_best_solution(self):
