@@ -24,6 +24,13 @@ def get_room_name_by_id(room_id, rooms):
     return None
 
 
+def get_room_type_id_by_id(room_id, rooms):
+    for room in rooms:
+        if room["Id"] == room_id:
+            return room["RoomTypeId"]
+    return None
+
+
 def update_event(event_id, timetable_events, weekday, start_time, end_time):
     for event in timetable_events:
         if event["Id"] == event_id:
@@ -34,14 +41,12 @@ def update_event(event_id, timetable_events, weekday, start_time, end_time):
     return None
 
 
-def check_room_use():
-    #TODO
-    return
-
-
 def print_node_scores(node, depth=0):
     if node.visits > 0:
-        score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
+        if not node.path:
+            score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
+        else:
+            score_visits = f"{node.path[-1]['SubjectAbbr']} {node.path[-1]['WeekDay']} {node.path[-1]['StartTime']} {node.path[-1]['RoomId']} score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
     else:
         score_visits = "score {node.score}, visits {node.visits}, ratio -inf"
     print("   " * depth + f"Node: {score_visits}")

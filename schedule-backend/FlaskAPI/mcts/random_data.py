@@ -1,6 +1,6 @@
 import random
 from datetime import datetime, timedelta
-from mcts.utils import get_room_name_by_id
+from mcts.utils import get_room_name_by_id, get_room_type_id_by_id
 from mcts.check_conflicts import check_conflict_time
 
 
@@ -45,23 +45,31 @@ def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13,
 
 
 def empty_rooms(occupations, events, event, rooms):
-    empty_rooms = {room["Id"] for room in rooms if room["Id"] is not None}
-    online = []
-    
+    available_rooms = {room["Id"] for room in rooms if room["Id"] is not None}
+    online = None
+    suitable_available_rooms = set()
+
     for e in events:
-        if get_room_name_by_id(e["RoomId"], rooms) == "DCC online": 
-            online.append(e["RoomId"])
-            if e["RoomId"] in empty_rooms: 
-                empty_rooms.remove(e["RoomId"])
-        elif e['RoomId'] in empty_rooms and (get_room_name_by_id(e["RoomId"], rooms) == "__________" or check_conflict_time(event["StartTime"], e, event["EndTime"], event["WeekDay"])):
-            empty_rooms.remove(e["RoomId"])
+        room_name = get_room_name_by_id(e["RoomId"], rooms)
+        if room_name == "DCC online": 
+            online = e["RoomId"]
+            available_rooms.discard(e["RoomId"])
+        elif room_name == "__________" or check_conflict_time(event["StartTime"], e, event["EndTime"], event["WeekDay"]):
+            available_rooms.discard(e["RoomId"])
 
     for occupation in occupations:
-        room = occupation['RoomId']
-        if room in empty_rooms and check_conflict_time(event["StartTime"], occupation, event["EndTime"], event["WeekDay"]):
-            empty_rooms.remove(room)
+        if check_conflict_time(event["StartTime"], occupation, event["EndTime"], event["WeekDay"]):
+            available_rooms.discard(occupation['RoomId'])
 
-    return online if not empty_rooms else list(empty_rooms)
+    if event["RoomTypeId"]:
+        for available_room in available_rooms:
+            if event["RoomTypeId"] == get_room_type_id_by_id(available_room, rooms):
+                    suitable_available_rooms.add(available_room)
+
+    if suitable_available_rooms: 
+        return list(suitable_available_rooms)
+
+    return [online] if not available_rooms else list(available_rooms)
 
 
 def random_room(occupations, events, event, rooms):

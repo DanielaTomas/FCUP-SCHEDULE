@@ -50,15 +50,15 @@ class MCTS:
         new_start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
         new_end_time = new_start_time + timedelta(minutes=event["Duration"])
 
-        if event["RoomId"] is not None: print(f"Room {event['RoomId']} Weekday {new_weekday} StartTime {new_start_time} Event {event['Id']} Depth {self.current_node.depth}")
+        #if event["RoomId"] is not None: print(f"Room {event['RoomId']} Weekday {new_weekday} StartTime {new_start_time} Event {event['Id']} Depth {self.current_node.depth}")
         
         new_timetable = deepcopy(self.current_node.timetable)
         new_event = update_event(event["Id"], new_timetable["events"], new_weekday, new_start_time, new_end_time)
         if event["RoomId"] is None:
             rooms = self.timetable["rooms"]
             available_rooms = empty_rooms(self.timetable["occupations"], self.current_node.timetable["events"], event, rooms)
-            new_event["RoomId"] = rooms[(slot // (len(valid_start_slots) * 5)) % len(available_rooms)]["Id"]
-            print(f"Room {(slot // (len(valid_start_slots) * 5)) % len(available_rooms)}:{new_event['RoomId']} Weekday {new_weekday} StartTime {new_start_time} Event {event['Id']} Depth {self.current_node.depth}")
+            new_event["RoomId"] = available_rooms[(slot // (len(valid_start_slots) * 5)) % len(available_rooms)]
+            #print(f"Room {(slot // (len(valid_start_slots) * 5)) % len(available_rooms)}:{new_event['RoomId']} Weekday {new_weekday} StartTime {new_start_time} Event {event['Id']} Depth {self.current_node.depth}")
 
         child_node = MCTSNode(timetable=new_timetable, parent=self.current_node, depth=self.current_node.depth+1)
         child_node.path = self.current_node.path + [new_event]
@@ -68,13 +68,14 @@ class MCTS:
     
     def simulation(self):
         random_timetable = deepcopy(self.current_node.timetable)
+        
         for event in self.events_to_visit[self.current_node.depth:]:
             random_start_time, random_end_time, random_weekday = random_time(event["Duration"])
             new_event = update_event(event, random_timetable["events"], random_weekday, random_start_time, random_end_time)
             if event["RoomId"] is None:
                 new_event["RoomId"] = random_room(self.timetable["occupations"],self.current_node.timetable["events"],event,self.timetable["rooms"])["Id"]
-
         result = self.evaluate_timetable(random_timetable)
+        
         return result
 
 
