@@ -1,6 +1,8 @@
 import random
 from datetime import datetime, timedelta
-from mcts.utils import check_conflict_time, get_room_name_by_id
+from mcts.utils import get_room_name_by_id
+from mcts.check_conflicts import check_conflict_time
+
 
 def calculate_time_bounds(duration, start_hour=8, end_hour=20, launch_start_hour=13, launch_end_hour=14):
     start_of_day = datetime(2025, 1, 1, start_hour, 0)
@@ -30,9 +32,7 @@ def get_valid_start_slots(start_of_day, lunch_end, latest_start_morning, latest_
 def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13, launch_end_hour = 14):
     start_of_day, lunch_end, latest_start_morning, latest_start_afternoon = calculate_time_bounds(duration, start_hour, end_hour, launch_start_hour, launch_end_hour)
     
-    valid_start_slots = get_valid_start_slots(
-        start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
-    )
+    valid_start_slots = get_valid_start_slots(start_of_day, lunch_end, latest_start_morning, latest_start_afternoon)
 
     start_time = random.choice(valid_start_slots)
     end_time = start_time + timedelta(minutes=duration)
@@ -41,7 +41,7 @@ def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13,
 
     weekday = random.randint(2, 6)
     
-    return timedelta(hours=start_time.hour, minutes=start_time.minute) , timedelta(hours=end_time.hour, minutes=end_time.minute), weekday
+    return start_time, end_time, weekday
 
 
 def empty_rooms(occupations, events, event, rooms):
@@ -51,9 +51,9 @@ def empty_rooms(occupations, events, event, rooms):
     for e in events:
         if get_room_name_by_id(e["RoomId"], rooms) == "DCC online": 
             online.append(e["RoomId"])
-            if e["RoomId"] in empty_rooms:
+            if e["RoomId"] in empty_rooms: 
                 empty_rooms.remove(e["RoomId"])
-        elif e['RoomId'] is not None and check_conflict_time(event["StartTime"], e, event["EndTime"], event["WeekDay"]):
+        elif e['RoomId'] in empty_rooms and (get_room_name_by_id(e["RoomId"], rooms) == "__________" or check_conflict_time(event["StartTime"], e, event["EndTime"], event["WeekDay"])):
             empty_rooms.remove(e["RoomId"])
 
     for occupation in occupations:
@@ -62,6 +62,10 @@ def empty_rooms(occupations, events, event, rooms):
             empty_rooms.remove(room)
 
     return online if not empty_rooms else list(empty_rooms)
+
+
+def random_room(occupations, events, event, rooms):
+    return random.choice(empty_rooms(occupations, events, event, rooms))
 
 
 def random_event(events):

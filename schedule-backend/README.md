@@ -7,7 +7,7 @@ The code responsible for the frontend part of the app can be found [here](https:
 ## Database
 The database is based on the old access databased used plus an aditional User table for authentication purposes. A few minor changes were made to the database to make it more suitable for the app. The database is made with Mysql and the schema can be found below.
 
-![Database](./Database/schedule.png)
+![Database](./Database/uml.png)
 
 ### Creating the Database
 The [schedule.sql](./Database/schedule.sql) file contains an sql script to create the database and the tables. By default the database will be named schedule.

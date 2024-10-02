@@ -8,3 +8,4 @@ __pycache__/
 *.columns
 migrate_instance.py
 tmp.py
+Database/tmp.sql
