@@ -1,0 +1,62 @@
+def events_to_visit(events):
+    events_to_visit = []
+    for event in events:
+        if event["StartTime"] is None or event["EndTime"] is None or event["WeekDay"] is None:
+            events_to_visit.append(event)
+    return events_to_visit
+
+
+def get_student_events(student_id, students_events, events):
+    return [get_event_by_id(student_event["EventId"], events) for student_event in students_events if student_event["StudentId"] == student_id]
+
+
+def get_event_by_id(event_id, events):
+    for event in events:
+        if event["Id"] == event_id:
+            return event
+    return None
+
+
+def get_room_name_by_id(room_id, rooms):
+    for room in rooms:
+        if room["Id"] == room_id:
+            return room["Name"]
+    return None
+
+
+def get_room_type_id_by_id(room_id, rooms):
+    for room in rooms:
+        if room["Id"] == room_id:
+            return room["RoomTypeId"]
+    return None
+
+
+def get_event_room_type_ids(event_id, event_room_types):
+    event_room_type_ids = []
+    for event_room_type in event_room_types:
+        if event_room_type["EventId"] == event_id:
+            event_room_type_ids.append(event_room_type["RoomTypeId"])
+    return event_room_type_ids
+
+
+def update_event(event_id, timetable_events, weekday, start_time, end_time):
+    for event in timetable_events:
+        if event["Id"] == event_id:
+            event["WeekDay"] = weekday
+            event["StartTime"] = start_time
+            event["EndTime"] = end_time
+            return event
+    return None
+
+
+def print_node_scores(node, depth=0):
+    if node.visits > 0:
+        if not node.path:
+            score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
+        else:
+            score_visits = f"{node.path[-1]['SubjectAbbr']} {node.path[-1]['WeekDay']} {node.path[-1]['StartTime']} {node.path[-1]['RoomId']} score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
+    else:
+        score_visits = "score {node.score}, visits {node.visits}, ratio -inf"
+    print("   " * depth + f"Node: {score_visits}")
+    for child in node.children:
+        print_node_scores(child, depth + 1)
