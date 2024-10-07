@@ -7,3 +7,5 @@ __pycache__/
 *.csv
 *.columns
 migrate_instance.py
+tmp.py
+Database/tmp.sql

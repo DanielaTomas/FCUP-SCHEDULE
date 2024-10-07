@@ -1,5 +1,8 @@
 import random
 from datetime import datetime, timedelta
+from mcts.utils import get_room_name_by_id, get_room_type_id_by_id
+from mcts.check_conflicts import check_conflict_time
+
 
 def calculate_time_bounds(duration, start_hour=8, end_hour=20, launch_start_hour=13, launch_end_hour=14):
     start_of_day = datetime(2025, 1, 1, start_hour, 0)
@@ -29,38 +32,48 @@ def get_valid_start_slots(start_of_day, lunch_end, latest_start_morning, latest_
 def random_time(duration, start_hour = 8, end_hour = 20, launch_start_hour = 13, launch_end_hour = 14):
     start_of_day, lunch_end, latest_start_morning, latest_start_afternoon = calculate_time_bounds(duration, start_hour, end_hour, launch_start_hour, launch_end_hour)
     
-    valid_start_slots = get_valid_start_slots(
-        start_of_day, lunch_end, latest_start_morning, latest_start_afternoon
-    )
+    valid_start_slots = get_valid_start_slots(start_of_day, lunch_end, latest_start_morning, latest_start_afternoon)
 
     start_time = random.choice(valid_start_slots)
-    start_hour = int(start_time .strftime("%H"))
-    start_minute = int(start_time .strftime("%M"))
-    
     end_time = start_time + timedelta(minutes=duration)
-    end_hour = int(end_time .strftime("%H"))
-    end_minute = int(end_time .strftime("%M"))
-    
+    start_time = timedelta(hours=start_time.hour, minutes=start_time.minute)
+    end_time = timedelta(hours=end_time.hour, minutes=end_time.minute)
+
     weekday = random.randint(2, 6)
     
-    return timedelta(hours=start_hour, minutes=start_minute) , timedelta(hours=end_hour, minutes=end_minute), weekday
+    return start_time, end_time, weekday
 
 
-def random_room(occupations, events, start_time, end_time, rooms):
-    occupied_rooms = set()
-    for event in events:
-        room = event['RoomId']
-        if room is not None:
-            occupied_rooms.add(room)
-    
-    empty_rooms = [room for room in rooms if room["Id"] not in occupied_rooms]
-    
+def empty_rooms(occupations, events, event, rooms):
+    available_rooms = {room["Id"] for room in rooms if room["Id"] is not None}
+    online = None
+    suitable_available_rooms = set()
+
+    for e in events:
+        room_name = get_room_name_by_id(e["RoomId"], rooms)
+        if room_name == "DCC online": 
+            online = e["RoomId"]
+            available_rooms.discard(e["RoomId"])
+        elif room_name == "__________" or check_conflict_time(event["StartTime"], e, event["EndTime"], event["WeekDay"]):
+            available_rooms.discard(e["RoomId"])
+
     for occupation in occupations:
-        room = occupation['RoomId']
-        if room not in empty_rooms and start_time < occupation["EndTime"] and end_time > occupation["StartTime"]:
-            empty_rooms.add(room)
+        if check_conflict_time(event["StartTime"], occupation, event["EndTime"], event["WeekDay"]):
+            available_rooms.discard(occupation['RoomId'])
 
-    return random.choice(rooms) if not empty_rooms else random.choice(empty_rooms)
+    if event["RoomTypeId"]:
+        for available_room in available_rooms:
+            if event["RoomTypeId"] == get_room_type_id_by_id(available_room, rooms):
+                    suitable_available_rooms.add(available_room)
+
+    if suitable_available_rooms: 
+        return list(suitable_available_rooms)
+
+    return [online] if not available_rooms else list(available_rooms)
+
+
+def random_room(occupations, events, event, rooms):
+    return random.choice(empty_rooms(occupations, events, event, rooms))
 
 
 def random_event(events):

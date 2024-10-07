@@ -1040,26 +1040,31 @@ def recommend():
     try:
         db = Database(conf)
         
-        events_query = "SELECT * FROM EVENT"
-        rooms_query = "SELECT * FROM ROOM"
-        lecturers_query = "SELECT * FROM LECTURER"
+        events_query = "SELECT * FROM EVENT WHERE Hide = FALSE"
+        rooms_query = "SELECT * FROM ROOM WHERE Hide = FALSE"
         restrictions_query = "SELECT * FROM RESTRICTION"
         occupations_query = "SELECT * FROM OCCUPATION"
+        students_events_query =  """
+            SELECT se.*
+            FROM Student_Event se
+            JOIN Student s ON se.StudentId = s.Id
+            WHERE s.Hide = FALSE
+        """
         
         events = db.run_query(query=events_query)
         rooms = db.run_query(query=rooms_query)
-        lecturers = db.run_query(query=lecturers_query)
         restrictions = db.run_query(query=restrictions_query)
         occupations = db.run_query(query=occupations_query)
+        students_events = db.run_query(query=students_events_query)
 
         db.close_connection()
 
         data = {
             'events': events,
             'rooms': rooms,
-            'lecturers': lecturers,
             'restrictions': restrictions,
-            'occupations': occupations
+            'occupations': occupations,
+            'students_events': students_events
         }
 
         mcts = MCTS(data)
