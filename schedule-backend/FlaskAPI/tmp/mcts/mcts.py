@@ -71,7 +71,7 @@ class MCTS:
         
         for event in self.events_to_visit[self.current_node.depth:]:
             random_start_time, random_end_time, random_weekday = random_time(event["Duration"])
-            new_event = update_event(event, random_timetable["events"], random_weekday, random_start_time, random_end_time)
+            new_event = update_event(event["Id"], random_timetable["events"], random_weekday, random_start_time, random_end_time)
             if event["RoomId"] is None:
                 new_event["RoomId"] = random_room(self.timetable["occupations"],self.current_node.timetable["events"],event,self.timetable["rooms"],self.timetable["event_room_types"])["Id"]
         result = self.evaluate_timetable(random_timetable)

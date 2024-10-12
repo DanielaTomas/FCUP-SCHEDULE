@@ -1,6 +1,4 @@
 import csv
-from datetime import time
-from copy import deepcopy
 from mcts.mcts import *
 
 db = {
