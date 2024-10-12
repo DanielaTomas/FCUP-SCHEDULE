@@ -8,17 +8,16 @@ def random_time():
 
 
 def empty_rooms(events, event, rooms):
-    available_rooms = set()
+    available_rooms = {room["Id"] for room in rooms if room["Id"] is not None and room["Capacity"] >= event["Capacity"]}
 
-    for room in rooms:
-        if room["Id"] is not None and event["Capacity"] <= room["Capacity"]:
-                available_rooms.add(room["Id"])
+    if not available_rooms:
+        available_rooms = {room["Id"] for room in rooms if room["Id"] is not None}
 
     for e in events:
         if check_conflict_time(e, event["Period"], event["WeekDay"]):
             available_rooms.discard(e["RoomId"])
 
-    return list(available_rooms)
+    return list(available_rooms) if available_rooms else rooms
 
 
 def random_room(events, event, rooms):

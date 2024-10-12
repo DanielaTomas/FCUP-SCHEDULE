@@ -19,30 +19,41 @@ def check_event_conflicts(event, constraints, blocks, other_events, lecturer, pe
 
     for other_event in other_events:
         if other_event["Id"] != event["Id"]:
-            #print(f"{other_event['RoomId']} {event['RoomId']} {other_event['Id']} {other_event['Name']} {event['Id']} {event['Name']}")
             if event["RoomId"] and check_conflict(other_event, period, weekday, event["RoomId"]):
-                penalty += 1
+                penalty += 2
             if lecturer and other_event["Teacher"] == lecturer and check_conflict_time(other_event, period, weekday):
-                penalty += 1
+                penalty += 2
     return penalty
 
 
 def check_event_constraints(event, constraints, period, weekday):
     penalty = 0
     for constraint in constraints:
-        if constraint["Id"] == event["Name"] and check_conflict_time(event, period, weekday):
-            penalty += 1
+        if constraint["Id"] == event["Name"] and check_conflict_time(constraint, period, weekday):
+            penalty += 2
     return penalty
 
 
-def check_block_constraints(event, blocks, events, period, weekday): #TODO events? other_events?
+def check_block_constraints(event, blocks, other_events, period, weekday):
     penalty = 0
     for block in blocks:
         if event["Name"] in block["Events"]:
             for e_name in block["Events"]:
-                evs = get_events_by_name(e_name,events)
+                evs = get_events_by_name(e_name,other_events)
                 for ev in evs:
-                    #print(f"{ev['Period']} {period} {ev['WeekDay']} {weekday} {ev['Id']} {ev['Name']} {event['Id']} {event['Name']} {check_conflict_time(ev, period, weekday)}")
                     if ev["Id"] != event["Id"] and check_conflict_time(ev, period, weekday):
-                        penalty += 1
+                        penalty += 2
+    return penalty
+
+
+def check_min_working_days(event, events, weekday):
+    penalty = 0
+
+    event_days = {ev["WeekDay"] for ev in events if ev["Name"] == event["Name"] and ev["Id"] != event["Id"]}
+    
+    event_days.add(weekday)
+    
+    if len(event_days) < event["MinWorkingDays"]:
+        penalty += 1
+    
     return penalty

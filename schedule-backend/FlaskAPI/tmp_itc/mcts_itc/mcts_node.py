@@ -14,8 +14,12 @@ class MCTSNode:
         self.score = 0
     
     
-    def is_fully_expanded(self,events_to_visit):
-        event = events_to_visit[self.depth]
+    def is_fully_expanded(self,events):
+
+        if self.depth >= len(events):
+            return True
+    
+        event = events[self.depth]
         
         valid_start_slots = [0,1,2,3]
 
@@ -24,8 +28,7 @@ class MCTSNode:
             num_rooms = len(available_rooms)
         else:
             num_rooms = 1
-
-        return len(self.children) >= len(valid_start_slots)*5*num_rooms
+        return len(self.children) < len(valid_start_slots)*5*num_rooms
         
 
     def best_child(self, c_param = 1.4):

@@ -20,6 +20,7 @@ class MCTS:
         penalty = 0
         for i, event in enumerate(timetable["events"]):
             penalty += check_event_conflicts(event,self.timetable["constraints"],self.timetable["blocks"],timetable["events"][i+1:],event["Teacher"],event["Period"],event["WeekDay"])
+            penalty += check_min_working_days(event,timetable["events"][i+1:],event["WeekDay"])
         return -penalty
     
 
@@ -28,13 +29,13 @@ class MCTS:
     
     def selection(self):
         current_node = self.root
-        while current_node.is_fully_expanded(self.timetable["events"]):
+        while not current_node.is_fully_expanded(self.timetable["events"]):
             current_node = current_node.best_child()
         self.current_node = current_node
 
 
     def expansion(self):
-        event = self.timetable["events"][self.current_node.depth]
+        event = deepcopy(self.timetable["events"][self.current_node.depth])
 
         valid_start_slots = [0,1,2,3]
 
@@ -59,16 +60,13 @@ class MCTS:
 
     def simulation(self):
         simulated_timetable = deepcopy(self.current_node.timetable)
-        #print(self.current_node.timetable)
         
-        valid_start_slots = [0, 1, 2, 3]
+        valid_start_slots = [0,1,2,3]
         for event in self.timetable["events"][self.current_node.depth:]:
-            #print(simulated_timetable["events"])
             assigned = False
             for weekday in range(5):
                 for period in valid_start_slots:
                     if check_event_conflicts(event,simulated_timetable["constraints"],simulated_timetable["blocks"],simulated_timetable["events"][:(self.current_node.depth)],event["Teacher"],period,weekday) == 0:
-                        #print(f"{event['Name']} {event['Id']} {period} {weekday}")
                         new_event = update_event(event["Id"],simulated_timetable["events"],weekday,period)
                         assigned = True
                         break
@@ -78,12 +76,8 @@ class MCTS:
                 random_period, random_weekday = random_time()
                 new_event = update_event(event["Id"], simulated_timetable["events"], random_weekday, random_period)
             if event["RoomId"] is None:
-                #new_event = update_event(event["Id"], simulated_timetable["events"], None, None)  # Temporary update
                 new_event["RoomId"] = random_room(self.current_node.timetable["events"], event, self.timetable["rooms"])
         result = self.evaluate_timetable(simulated_timetable)
-        #print(simulated_timetable)
-        #print(result)
-        #print("\n")
         return result
     
 

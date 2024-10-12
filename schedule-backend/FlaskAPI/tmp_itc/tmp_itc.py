@@ -76,5 +76,5 @@ f.close()
 #print(db)
 
 mcts = MCTS(db)
-best_solution = mcts.run_mcts(3500)
+best_solution = mcts.run_mcts(150000)
 print_best_solution(best_solution)
