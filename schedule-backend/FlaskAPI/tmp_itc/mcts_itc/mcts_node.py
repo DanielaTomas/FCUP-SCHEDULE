@@ -2,6 +2,8 @@ from copy import deepcopy
 import math
 from mcts_itc.random_data import *
 
+valid_start_slots = [0,1,2,3]
+
 class MCTSNode:
 
     def __init__(self, timetable, parent = None, depth = 0):
@@ -14,14 +16,12 @@ class MCTSNode:
         self.score = 0
     
     
-    def is_fully_expanded(self,events):
+    def is_fully_expanded(self):
 
-        if self.depth >= len(events):
+        if self.depth >= len(self.timetable["events"]):
             return True
-    
-        event = events[self.depth]
-        
-        valid_start_slots = [0,1,2,3]
+
+        event = self.timetable["events"][self.depth]
 
         if event["RoomId"] is None:
             available_rooms = empty_rooms(self.timetable["events"], event, self.timetable["rooms"])
