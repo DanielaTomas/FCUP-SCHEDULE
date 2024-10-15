@@ -1,11 +1,14 @@
-import copy
+from copy import deepcopy
+
+weekday_range = 5
+period_range = 4
 
 def add_event_ids(events):
     events_to_visit = []
     unique_id = 0
     for event in events:
         for _ in range(event["Lectures"]):
-            new_event = copy.deepcopy(event)
+            new_event = deepcopy(event)
             new_event["Id"] = unique_id
             events_to_visit.append(new_event)
             unique_id += 1
@@ -20,14 +23,28 @@ def get_events_by_name(event_name, events):
     return evs
 
 
-def update_event(event_id, timetable_events, weekday, period):
+def update_event(event_id, timetable_events, room, weekday, period):
     for event in timetable_events:
         if event["Id"] == event_id:
+            event["RoomId"] = room
             event["WeekDay"] = weekday
             event["Period"] = period
             return event
     return None
  
+
+def get_valid_slots(event, constraints):
+    all_slots = set((weekday, period) for weekday in range(weekday_range) for period in range(period_range))
+    available_slots = set(all_slots)
+
+    for constraint in constraints:
+        for weekday in range(weekday_range):
+            for period in range(period_range):
+                if constraint["Id"] == event["Name"] and constraint["WeekDay"] == weekday and constraint["Period"] == period:
+                    available_slots.discard((weekday,period))
+
+    return list(available_slots) if available_slots else list(all_slots)
+
 
 def print_node_scores(node, depth=0):
     if node.visits > 0:

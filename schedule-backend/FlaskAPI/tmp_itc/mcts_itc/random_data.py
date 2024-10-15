@@ -1,9 +1,10 @@
 import random
 from mcts_itc.check_conflicts import check_conflict_time
+from mcts_itc.utils import period_range, weekday_range
 
 def random_time():
-    period = random.randint(0, 3)
-    weekday = random.randint(0, 4)
+    period = random.randint(0, period_range)
+    weekday = random.randint(0, weekday_range)
     return period, weekday
 
 
