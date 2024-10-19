@@ -46,14 +46,16 @@ def get_valid_slots(event, constraints):
     return list(available_slots) if available_slots else list(all_slots)
 
 
-def print_node_scores(node, depth=0):
+def write_node_scores_to_file(node, file, depth=0):
     if node.visits > 0:
         if not node.path:
             score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
         else:
             score_visits = f"{node.path[-1]['Id']} {node.path[-1]['Name']} D{node.path[-1]['WeekDay']} P{node.path[-1]['Period']} R{node.path[-1]['RoomId']} score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
     else:
-        score_visits = "score {node.score}, visits {node.visits}, ratio -inf"
-    print("   " * depth + f"Node: {score_visits}")
+        score_visits = f"score {node.score}, visits {node.visits}, ratio -inf"
+    
+    file.write("   " * depth + f"Node: {score_visits}\n")
+    
     for child in node.children:
-        print_node_scores(child, depth + 1)
+        write_node_scores_to_file(child, file, depth + 1)

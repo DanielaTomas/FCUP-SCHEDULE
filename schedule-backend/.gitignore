@@ -7,6 +7,8 @@ __pycache__/
 *.csv
 *.columns
 migrate_instance.py
-FlaskAPI/tmp_itc/output.txt
+FlaskAPI/tmp_itc/output.out
+FlaskAPI/tmp_itc/*.txt
 FlaskAPI/tmp_itc/input_itc.ctt
 FlaskAPI/tmp_itc/validator.cc
+FlaskAPI/tmp_itc/*.exe

@@ -65,9 +65,9 @@ def parse_input_data(input_data):
             db["constraints"].append({"Id": course_id, "WeekDay": day, "Period": day_period})
 
 
-def print_best_solution(best_solution):
+def write_best_solution_to_file(best_solution, file):
     for solution in best_solution:
-        print(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Period']}")
+        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Period']}\n")
 
 
 f = open("input_itc.ctt", "r")
@@ -76,5 +76,7 @@ f.close()
 #print(db)
 
 mcts = MCTS(db)
-best_solution = mcts.run_mcts(10000)
-print_best_solution(best_solution)
+best_solution = mcts.run_mcts(2500)
+file = open('output.txt', 'w')
+write_best_solution_to_file(best_solution, file)
+file.close()

@@ -93,28 +93,31 @@ class MCTS:
             node = node.parent
 
 
-    def run_mcts(self, iterations=1500, time_limit=300):
+    def run_mcts(self, iterations=1500, time_limit=600):
         start_time = time.time()
 
-        for i in range(iterations):
+        for _ in range(iterations):
             self.selection()
             if self.current_node.depth == len(self.current_node.timetable["events"]) or time.time() - start_time > time_limit: break
             self.expansion()
             simulation_result = self.simulation()
             self.backpropagation(simulation_result)
-
-        print(f"Iterations: {i+1} Time: ~{time.time() - start_time}")
-        return self.get_best_solution()
+        
+        return self.get_best_solution(time.time() - start_time)
     
 
-    def get_best_solution(self):
+    def get_best_solution(self, time):
         def select_best_terminal_node(node):
             if not node.children:
                 return node
             best_child = max(node.children, key=lambda child: (child.score / child.visits if child.visits > 0 else float('-inf'), child.visits))
             return select_best_terminal_node(best_child)
 
-        print_node_scores(self.root)
+        file = open('tree.txt', 'w')
+        file.write(f"Time: ~{time}\n")
+        write_node_scores_to_file(self.root, file)
+        file.close()
+        #print_node_scores(self.root)
         best_terminal_node = select_best_terminal_node(self.root)
 
         return best_terminal_node.path
