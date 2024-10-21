@@ -1,4 +1,5 @@
 from mcts_itc.utils import get_events_by_name
+from mcts_itc.macros import HARD_PENALTY
 
 def check_conflict_time(other, period, weekday):
     if other["Period"] is None or other["WeekDay"] is None: return False
@@ -11,11 +12,13 @@ def check_event_hard_constraints(event, constraints, blocks, other_events, room_
     penalty += check_block_constraints(event, blocks, other_events, period, weekday)
     
     for other_event in other_events:
-        if other_event["Id"] != event["Id"]:
-            if other_event['RoomId'] == room_id and check_conflict_time(other_event, period, weekday):
-                penalty += 10
-            if event["Teacher"] and other_event["Teacher"] == event["Teacher"] and check_conflict_time(other_event, period, weekday):
-                penalty += 10
+        if other_event["Id"] != event["Id"] and check_conflict_time(other_event, period, weekday):
+            if other_event['Name'] == event["Name"]:
+                penalty += HARD_PENALTY
+            if other_event['RoomId'] == room_id:
+                penalty += HARD_PENALTY
+            if other_event["Teacher"] == event["Teacher"]:
+                penalty += HARD_PENALTY
     return penalty
 
 
@@ -32,7 +35,7 @@ def check_event_constraints(event, constraints, period, weekday):
     penalty = 0
     for constraint in constraints:
         if constraint["Id"] == event["Name"] and check_conflict_time(constraint, period, weekday):
-            penalty += 10
+            penalty += HARD_PENALTY
     return penalty
 
 
@@ -44,7 +47,7 @@ def check_block_constraints(event, blocks, other_events, period, weekday):
                 evs = get_events_by_name(e_name,other_events)
                 for ev in evs:
                     if ev["Id"] != event["Id"] and check_conflict_time(ev, period, weekday):
-                        penalty += 10
+                        penalty += HARD_PENALTY
     return penalty
 
 
@@ -82,9 +85,7 @@ def check_block_compactness(event, blocks, other_events, period, weekday):
                     penalty += 5
                 else:
                     penalty += min_gap
-
     return penalty
-
 
 
 def check_room_stability(event, other_events, room_id):

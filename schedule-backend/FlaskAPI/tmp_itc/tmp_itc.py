@@ -73,10 +73,9 @@ def write_best_solution_to_file(best_solution, file):
 f = open("input_itc.ctt", "r")
 parse_input_data(f.read())
 f.close()
-#print(db)
 
 mcts = MCTS(db)
-best_solution = mcts.run_mcts(2500)
-file = open('output.txt', 'w')
+best_solution = mcts.run_mcts(100000)
+file = open('final_output.txt', 'w')
 write_best_solution_to_file(best_solution, file)
 file.close()

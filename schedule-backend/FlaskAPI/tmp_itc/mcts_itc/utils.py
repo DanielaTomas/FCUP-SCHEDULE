@@ -1,18 +1,21 @@
 from copy import deepcopy
+from mcts_itc.macros import DAYS, PERIODS_PER_DAY, ALL_SLOTS
 
-weekday_range = 5
-period_range = 4
-
-def add_event_ids(events):
+def add_event_ids(events, blocks):
     events_to_visit = []
     unique_id = 0
     for event in events:
         for _ in range(event["Lectures"]):
             new_event = deepcopy(event)
             new_event["Id"] = unique_id
+            new_event["NumBlocks"] = 0
+            for block in blocks:
+                if new_event["Name"] in block["Events"]:
+                    new_event["NumBlocks"] += 1
             events_to_visit.append(new_event)
             unique_id += 1
-    return events_to_visit
+                     
+    return sorted(events_to_visit, key=lambda event: (event["Lectures"], event["MinWorkingDays"], event["NumBlocks"], event["Capacity"]), reverse=True)
 
 
 def get_events_by_name(event_name, events):
@@ -34,16 +37,15 @@ def update_event(event_id, timetable_events, room, weekday, period):
  
 
 def get_valid_slots(event, constraints):
-    all_slots = set((weekday, period) for weekday in range(weekday_range) for period in range(period_range))
-    available_slots = set(all_slots)
+    available_slots = set(ALL_SLOTS)
 
     for constraint in constraints:
-        for weekday in range(weekday_range):
-            for period in range(period_range):
+        for weekday in range(DAYS):
+            for period in range(PERIODS_PER_DAY):
                 if constraint["Id"] == event["Name"] and constraint["WeekDay"] == weekday and constraint["Period"] == period:
                     available_slots.discard((weekday,period))
 
-    return list(available_slots) if available_slots else list(all_slots)
+    return list(available_slots) if available_slots else list(ALL_SLOTS)
 
 
 def write_node_scores_to_file(node, file, depth=0):
@@ -59,3 +61,9 @@ def write_node_scores_to_file(node, file, depth=0):
     
     for child in node.children:
         write_node_scores_to_file(child, file, depth + 1)
+
+
+def write_best_simulation_result_to_file(events, file):
+    for event in events:
+        file.write(f"{event['Name']} {event['RoomId']} {event['WeekDay']} {event['Period']}\n")
+    

@@ -3,6 +3,7 @@ from mcts_itc.random_data import *
 from mcts_itc.mcts_node import *
 from mcts_itc.utils import *
 from mcts_itc.check_conflicts import *
+from mcts_itc.macros import HARD_WEIGHT
 import time
 
 #TODO remove prints
@@ -10,9 +11,10 @@ import time
 class MCTS:
 
     def __init__(self, current_timetable):
-        current_timetable["events"] = add_event_ids(current_timetable["events"])
+        current_timetable["events"] = add_event_ids(current_timetable["events"], current_timetable["blocks"])
         self.root = MCTSNode(current_timetable)
         self.current_node = self.root
+        self.best_result = float('-inf')
     
 
     # MCTS steps:
@@ -33,7 +35,7 @@ class MCTS:
         slot_index = slot % len(available_slots)
         new_weekday, new_period = available_slots[slot_index]
 
-        available_rooms = empty_rooms(self.current_node.timetable["events"], event, self.current_node.timetable["rooms"])
+        available_rooms = empty_rooms(event, self.current_node.timetable["rooms"], self.current_node.timetable["events"][:self.current_node.depth], new_period, new_weekday)
         new_room = available_rooms[(slot // len(available_slots)) % len(available_rooms)]
         
         new_timetable = deepcopy(self.current_node.timetable)
@@ -47,41 +49,56 @@ class MCTS:
 
     def simulation(self):
 
-        def find_best_room_and_slot(event):
-            best_slot = None
-            best_penalty = float('inf')
-            available_rooms = empty_rooms(simulated_timetable["events"][:self.current_node.depth], event, simulated_timetable["rooms"])
-            for weekday in range(weekday_range):
-                for period in range(period_range):
-                    for room in available_rooms:
-                        if check_event_hard_constraints(event, simulated_timetable["constraints"], simulated_timetable["blocks"], simulated_timetable["events"][:self.current_node.depth], room, period, weekday) == 0:
-                            soft_penalty = check_event_soft_constraints(event, simulated_timetable["blocks"], simulated_timetable["rooms"], simulated_timetable["events"][:self.current_node.depth], room, period, weekday)
-                            if soft_penalty < best_penalty:
-                                best_penalty = soft_penalty
-                                best_slot = (room, weekday, period)
-                                if best_penalty == 0:
-                                    return best_slot
-            return best_slot
+        def find_best_room_and_slot(event,i):
+            best_room_and_slot = None
+            least_conflict_slot = None
+            best_soft_penalty = float('inf')
+            least_conflict_penalty = float('inf')
+            available_slots = get_valid_slots(event,self.current_node.timetable["constraints"])
+            
+            for available_slot in available_slots:
+                weekday = available_slot[0]
+                period = available_slot[1]
+                available_rooms = empty_rooms(event, simulated_timetable["rooms"], simulated_timetable["events"][:i], period, weekday)
+                for room in available_rooms:
+                    hard_penalty = check_event_hard_constraints(event, simulated_timetable["constraints"], simulated_timetable["blocks"], simulated_timetable["events"][:i], room, period, weekday)
+                    soft_penalty = check_event_soft_constraints(event, simulated_timetable["blocks"], simulated_timetable["rooms"], simulated_timetable["events"][:i], room, period, weekday)
+                    total_penalty = HARD_WEIGHT*hard_penalty + soft_penalty
+
+                    if hard_penalty == 0 and soft_penalty < best_soft_penalty:
+                        best_soft_penalty = soft_penalty
+                        best_room_and_slot = (room, weekday, period)
+                        if best_soft_penalty == 0:
+                            return best_room_and_slot
+                    elif best_room_and_slot is None and total_penalty < least_conflict_penalty:
+                        least_conflict_penalty = total_penalty
+                        least_conflict_slot = (room, weekday, period)
+                            
+            return best_room_and_slot if best_room_and_slot else least_conflict_slot
         
 
         def evaluate_timetable(simulated_timetable):
-            penalty = 0
+            hard_penalty = 0
+            soft_penalty = 0
             for i, event in enumerate(simulated_timetable["events"]):
-                penalty += check_event_hard_constraints(event, simulated_timetable["constraints"], simulated_timetable["blocks"], simulated_timetable["events"][i+1:], event["RoomId"], event["Period"], event["WeekDay"])
-                penalty += check_event_soft_constraints(event, simulated_timetable["blocks"], simulated_timetable["rooms"], simulated_timetable["events"][i+1:], event["RoomId"], event["Period"], event["WeekDay"])
-            return -penalty
+                hard_penalty += check_event_hard_constraints(event, simulated_timetable["constraints"], simulated_timetable["blocks"], simulated_timetable["events"][i+1:], event["RoomId"], event["Period"], event["WeekDay"])
+                soft_penalty += check_event_soft_constraints(event, simulated_timetable["blocks"], simulated_timetable["rooms"], simulated_timetable["events"][i+1:], event["RoomId"], event["Period"], event["WeekDay"])
+            return -hard_penalty, -soft_penalty
+        
         
         simulated_timetable = deepcopy(self.current_node.timetable)
-        for event in self.current_node.timetable["events"][self.current_node.depth:]:
-            best_room_and_slot = find_best_room_and_slot(event)                   
-            if best_room_and_slot:
-                update_event(event["Id"], simulated_timetable["events"], best_room_and_slot[0], best_room_and_slot[1], best_room_and_slot[2])
-            else:
-                random_period, random_weekday = random_time()
-                rand_room = random_room()
-                update_event(event["Id"], simulated_timetable["events"], rand_room, random_weekday, random_period)
+        for i, event in enumerate(self.current_node.timetable["events"][self.current_node.depth:]):
+            best_room_and_slot = find_best_room_and_slot(event,i+self.current_node.depth)                   
+            update_event(event["Id"], simulated_timetable["events"], best_room_and_slot[0], best_room_and_slot[1], best_room_and_slot[2])
 
-        result = evaluate_timetable(simulated_timetable)
+        hard_penalty_result, soft_penalty_result = evaluate_timetable(simulated_timetable)
+        result = HARD_WEIGHT*hard_penalty_result + soft_penalty_result
+        if result > self.best_result:
+            self.best_result = result
+            file = open('output.txt', 'w')
+            write_best_simulation_result_to_file(simulated_timetable["events"], file)
+            file.close()
+
         return result
     
 
@@ -117,7 +134,6 @@ class MCTS:
         file.write(f"Time: ~{time}\n")
         write_node_scores_to_file(self.root, file)
         file.close()
-        #print_node_scores(self.root)
         best_terminal_node = select_best_terminal_node(self.root)
 
         return best_terminal_node.path

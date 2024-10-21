@@ -2,6 +2,7 @@ from copy import deepcopy
 import math
 from mcts_itc.random_data import *
 from mcts_itc.utils import get_valid_slots
+
 class MCTSNode:
 
     def __init__(self, timetable, parent = None, depth = 0):
@@ -20,7 +21,7 @@ class MCTSNode:
 
         event = self.timetable["events"][self.depth]
 
-        available_rooms = empty_rooms(self.timetable["events"], event, self.timetable["rooms"])
+        available_rooms = empty_rooms(event, self.timetable["rooms"]) #, self.timetable["events"][:self.depth]
         num_rooms = len(available_rooms)
 
         available_slots = get_valid_slots(event, self.timetable["constraints"])
