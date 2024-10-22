@@ -37,7 +37,7 @@ def parse_input_data(input_data):
                 print(f"Skipping invalid course line: {line}")
                 continue
             course_id, teacher, num_lectures, min_days, num_students = parts[0], parts[1], int(parts[2]), int(parts[3]), int(parts[4])
-            db["events"].append({"Name": course_id, "Teacher": teacher, "Lectures": num_lectures, "MinWorkingDays": min_days, "Capacity": num_students, "Period": None, "WeekDay": None, "RoomId": None})
+            db["events"].append({"Name": course_id, "Teacher": teacher, "Lectures": num_lectures, "MinWorkingDays": min_days, "Capacity": num_students, "Timeslot": None, "WeekDay": None, "RoomId": None})
 
         elif current_section == "rooms":
             parts = line.split()
@@ -61,13 +61,13 @@ def parse_input_data(input_data):
             if len(parts) != 3:
                 print(f"Skipping invalid unavailability constraint line: {line}")
                 continue
-            course_id, day, day_period = parts[0], int(parts[1]), int(parts[2])
-            db["constraints"].append({"Id": course_id, "WeekDay": day, "Period": day_period})
+            course_id, day, day_timeslot = parts[0], int(parts[1]), int(parts[2])
+            db["constraints"].append({"Id": course_id, "WeekDay": day, "Timeslot": day_timeslot})
 
 
 def write_best_solution_to_file(best_solution, file):
     for solution in best_solution:
-        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Period']}\n")
+        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n")
 
 
 f = open("input_itc.ctt", "r")

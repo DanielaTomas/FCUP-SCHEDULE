@@ -1,8 +1,7 @@
 from copy import deepcopy
-from mcts_itc.random_data import *
 from mcts_itc.mcts_node import *
 from mcts_itc.utils import *
-from mcts_itc.check_conflicts import *
+from mcts_itc.check_conflicts import ConflictsChecker
 from mcts_itc.macros import HARD_WEIGHT
 import time
 
@@ -11,7 +10,8 @@ import time
 class MCTS:
 
     def __init__(self, current_timetable):
-        current_timetable["events"] = add_event_ids(current_timetable["events"], current_timetable["blocks"])
+        current_timetable["events"] = add_event_ids(current_timetable["events"], current_timetable["blocks"], current_timetable["constraints"])
+        self.conflicts_checker = ConflictsChecker(current_timetable["constraints"], current_timetable["blocks"], current_timetable["rooms"])
         self.root = MCTSNode(current_timetable)
         self.current_node = self.root
         self.best_result = float('-inf')
@@ -33,13 +33,13 @@ class MCTS:
         available_slots = get_valid_slots(event,self.current_node.timetable["constraints"])
         slot = len(self.current_node.children)
         slot_index = slot % len(available_slots)
-        new_weekday, new_period = available_slots[slot_index]
+        new_weekday, new_timeslot = available_slots[slot_index]
 
-        available_rooms = empty_rooms(event, self.current_node.timetable["rooms"], self.current_node.timetable["events"][:self.current_node.depth], new_period, new_weekday)
+        available_rooms = ConflictsChecker.find_available_rooms(event, self.current_node.timetable["rooms"])
         new_room = available_rooms[(slot // len(available_slots)) % len(available_rooms)]
         
         new_timetable = deepcopy(self.current_node.timetable)
-        new_event = update_event(event["Id"], new_timetable["events"], new_room, new_weekday, new_period)
+        new_event = update_event(event["Id"], new_timetable["events"], new_room, new_weekday, new_timeslot)
 
         child_node = MCTSNode(timetable=new_timetable, parent=self.current_node, depth=self.current_node.depth+1)
         child_node.path = self.current_node.path + [new_event]
@@ -58,21 +58,21 @@ class MCTS:
             
             for available_slot in available_slots:
                 weekday = available_slot[0]
-                period = available_slot[1]
-                available_rooms = empty_rooms(event, simulated_timetable["rooms"], simulated_timetable["events"][:i], period, weekday)
+                timeslot = available_slot[1]
+                available_rooms = ConflictsChecker.find_available_rooms(event, simulated_timetable["rooms"], simulated_timetable["events"][:i], timeslot, weekday)
                 for room in available_rooms:
-                    hard_penalty = check_event_hard_constraints(event, simulated_timetable["constraints"], simulated_timetable["blocks"], simulated_timetable["events"][:i], room, period, weekday)
-                    soft_penalty = check_event_soft_constraints(event, simulated_timetable["blocks"], simulated_timetable["rooms"], simulated_timetable["events"][:i], room, period, weekday)
+                    hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][:i], room, timeslot, weekday)
+                    soft_penalty = self.conflicts_checker.check_event_soft_constraints(event, simulated_timetable["events"][:i], room, timeslot, weekday)
                     total_penalty = HARD_WEIGHT*hard_penalty + soft_penalty
 
                     if hard_penalty == 0 and soft_penalty < best_soft_penalty:
                         best_soft_penalty = soft_penalty
-                        best_room_and_slot = (room, weekday, period)
+                        best_room_and_slot = (room, weekday, timeslot)
                         if best_soft_penalty == 0:
                             return best_room_and_slot
                     elif best_room_and_slot is None and total_penalty < least_conflict_penalty:
                         least_conflict_penalty = total_penalty
-                        least_conflict_slot = (room, weekday, period)
+                        least_conflict_slot = (room, weekday, timeslot)
                             
             return best_room_and_slot if best_room_and_slot else least_conflict_slot
         
@@ -81,8 +81,8 @@ class MCTS:
             hard_penalty = 0
             soft_penalty = 0
             for i, event in enumerate(simulated_timetable["events"]):
-                hard_penalty += check_event_hard_constraints(event, simulated_timetable["constraints"], simulated_timetable["blocks"], simulated_timetable["events"][i+1:], event["RoomId"], event["Period"], event["WeekDay"])
-                soft_penalty += check_event_soft_constraints(event, simulated_timetable["blocks"], simulated_timetable["rooms"], simulated_timetable["events"][i+1:], event["RoomId"], event["Period"], event["WeekDay"])
+                hard_penalty += self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"])
+                soft_penalty += self.conflicts_checker.check_event_soft_constraints(event, simulated_timetable["events"][i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"])
             return -hard_penalty, -soft_penalty
         
         
@@ -111,29 +111,30 @@ class MCTS:
 
 
     def run_mcts(self, iterations=1500, time_limit=600):
-        start_time = time.time()
 
+        def get_best_solution(time):
+            def select_best_terminal_node(node):
+                if not node.children:
+                    return node
+                best_child = max(node.children, key=lambda child: (child.score / child.visits if child.visits > 0 else float('-inf'), child.visits))
+                return select_best_terminal_node(best_child)
+
+            file = open('tree.txt', 'w')
+            file.write(f"Time: ~{time}\n")
+            write_node_scores_to_file(self.root, file)
+            file.close()
+            best_terminal_node = select_best_terminal_node(self.root)
+
+            return best_terminal_node.path
+
+
+        start_time = time.time()
         for _ in range(iterations):
             self.selection()
-            if self.current_node.depth == len(self.current_node.timetable["events"]) or time.time() - start_time > time_limit: break
+            duration = time.time() - start_time
+            if self.current_node.depth == len(self.current_node.timetable["events"]) or duration > time_limit: break
             self.expansion()
             simulation_result = self.simulation()
             self.backpropagation(simulation_result)
         
-        return self.get_best_solution(time.time() - start_time)
-    
-
-    def get_best_solution(self, time):
-        def select_best_terminal_node(node):
-            if not node.children:
-                return node
-            best_child = max(node.children, key=lambda child: (child.score / child.visits if child.visits > 0 else float('-inf'), child.visits))
-            return select_best_terminal_node(best_child)
-
-        file = open('tree.txt', 'w')
-        file.write(f"Time: ~{time}\n")
-        write_node_scores_to_file(self.root, file)
-        file.close()
-        best_terminal_node = select_best_terminal_node(self.root)
-
-        return best_terminal_node.path
+        return get_best_solution(duration)
