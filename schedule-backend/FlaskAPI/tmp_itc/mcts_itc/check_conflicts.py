@@ -103,24 +103,5 @@ class ConflictsChecker:
         penalty = 0
         for room in self.rooms:
             if room["Id"] == room_id and room["Capacity"] < event["Capacity"]:
-                penalty += 1
+                penalty += (event["Capacity"]-room["Capacity"])
         return penalty
-
-
-    @staticmethod
-    def find_available_rooms(event, rooms, events = None, timeslot = None, weekday = None):
-        available_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
-
-        if not available_rooms:
-            available_rooms = {room["Id"] for room in rooms}
-
-        available_rooms_backup = available_rooms.copy()
-
-        if events and weekday and timeslot:
-            for e in events:
-                if ConflictsChecker.check_conflict_time(e, timeslot, weekday):
-                    available_rooms.discard(e["RoomId"])
-                if not available_rooms: 
-                    return list(available_rooms_backup)
-        
-        return list(available_rooms)

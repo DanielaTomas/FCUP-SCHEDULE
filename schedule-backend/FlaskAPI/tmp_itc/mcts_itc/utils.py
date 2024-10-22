@@ -17,6 +17,39 @@ def add_event_ids(events, blocks = None, constraints = None):
     return sorted(events_to_visit, key=lambda event: event["Priority"], reverse=True)
 
 
+def find_available_rooms(event, rooms, events, available_periods):
+    if not available_periods: return {period: {room["Id"] for room in rooms} for period in available_periods}
+
+    period_room_availability = {period: {room["Id"] for room in rooms} for period in available_periods}
+
+    for other_event in events:
+        occupied_period = (other_event["WeekDay"], other_event["Timeslot"])
+        if occupied_period in period_room_availability:
+            period_room_availability[occupied_period].discard(other_event["RoomId"])
+
+    suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
+    
+    for period in available_periods:
+        if period_room_availability[period]:
+            period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period]
+        else:
+            period_room_availability[period] = suitable_rooms if suitable_rooms else {room["Id"] for room in rooms}
+    
+    '''
+    same_event_rooms = set()
+    for other_event in events:
+        if other_event["Name"] == event["Name"] and other_event["RoomId"] in period_room_availability:
+            same_event_rooms.add(other_event["RoomId"])
+
+    for period in available_periods:
+        if period_room_availability[period]:
+            period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period]
+        else:
+            period_room_availability[period] = suitable_rooms if suitable_rooms else {room["Id"] for room in rooms}
+    '''
+    return period_room_availability
+    
+    
 def get_events_by_name(event_name, events):
     evs = []
     for event in events:
@@ -35,16 +68,16 @@ def update_event(event_id, timetable_events, room, weekday, timeslot):
     return None
  
 
-def get_valid_slots(event, constraints):
-    available_slots = set(ALL_SLOTS)
+def get_valid_periods(event, constraints):
+    available_periods = set(ALL_SLOTS)
 
     for constraint in constraints:
         for weekday in range(DAYS):
             for timeslot in range(PERIODS_PER_DAY):
                 if constraint["Id"] == event["Name"] and constraint["WeekDay"] == weekday and constraint["Timeslot"] == timeslot:
-                    available_slots.discard((weekday,timeslot))
+                    available_periods.discard((weekday,timeslot))
 
-    return list(available_slots) if available_slots else list(ALL_SLOTS)
+    return list(available_periods) if available_periods else list(ALL_SLOTS)
 
 
 def write_node_scores_to_file(node, file, depth=0):

@@ -30,18 +30,20 @@ class MCTS:
     def expansion(self):
         event = self.current_node.timetable["events"][self.current_node.depth]
 
-        available_slots = get_valid_slots(event,self.current_node.timetable["constraints"])
-        slot = len(self.current_node.children)
-        slot_index = slot % len(available_slots)
-        new_weekday, new_timeslot = available_slots[slot_index]
+        available_periods = get_valid_periods(event,self.current_node.timetable["constraints"])
+        period = len(self.current_node.children)
+        period_index = period % len(available_periods)
+        new_weekday, new_timeslot = available_periods[period_index]
 
-        available_rooms = ConflictsChecker.find_available_rooms(event, self.current_node.timetable["rooms"])
-        new_room = available_rooms[(slot // len(available_slots)) % len(available_rooms)]
+        available_rooms = find_available_rooms(event, self.current_node.timetable["rooms"], self.current_node.timetable["events"][:self.current_node.depth], [available_periods[period_index]])
+        available_rooms_list = list(list(available_rooms.values())[0])
+        new_room_index = period // len(available_periods) % len(available_rooms_list)
+        new_room = available_rooms_list[new_room_index]
         
         new_timetable = deepcopy(self.current_node.timetable)
         new_event = update_event(event["Id"], new_timetable["events"], new_room, new_weekday, new_timeslot)
 
-        child_node = MCTSNode(timetable=new_timetable, parent=self.current_node, depth=self.current_node.depth+1)
+        child_node = MCTSNode(timetable=new_timetable, expansion_limit=(len(available_periods)*len(available_rooms_list)), parent=self.current_node, depth=self.current_node.depth+1)
         child_node.path = self.current_node.path + [new_event]
         self.current_node.children.append(child_node)
         self.current_node = child_node
@@ -54,13 +56,13 @@ class MCTS:
             least_conflict_slot = None
             best_soft_penalty = float('inf')
             least_conflict_penalty = float('inf')
-            available_slots = get_valid_slots(event,self.current_node.timetable["constraints"])
+            available_periods = get_valid_periods(event,self.current_node.timetable["constraints"])
             
-            for available_slot in available_slots:
-                weekday = available_slot[0]
-                timeslot = available_slot[1]
-                available_rooms = ConflictsChecker.find_available_rooms(event, simulated_timetable["rooms"], simulated_timetable["events"][:i], timeslot, weekday)
-                for room in available_rooms:
+            for available_period in available_periods:
+                weekday, timeslot = available_period
+                available_rooms = find_available_rooms(event, simulated_timetable["rooms"], simulated_timetable["events"][:i], [available_period])
+                available_rooms_list = list(list(available_rooms.values())[0])
+                for room in available_rooms_list:
                     hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][:i], room, timeslot, weekday)
                     soft_penalty = self.conflicts_checker.check_event_soft_constraints(event, simulated_timetable["events"][:i], room, timeslot, weekday)
                     total_penalty = HARD_WEIGHT*hard_penalty + soft_penalty
@@ -126,7 +128,6 @@ class MCTS:
             best_terminal_node = select_best_terminal_node(self.root)
 
             return best_terminal_node.path
-
 
         start_time = time.time()
         for _ in range(iterations):
