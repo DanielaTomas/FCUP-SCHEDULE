@@ -53,7 +53,7 @@ class MCTS:
 
         def find_best_room_and_slot(event,i):
             best_room_and_slot = None
-            least_conflict_slot = None
+            least_conflict_slot_and_room = None
             best_soft_penalty = float('inf')
             least_conflict_penalty = float('inf')
             available_periods = get_valid_periods(event,self.current_node.timetable["constraints"])
@@ -62,9 +62,15 @@ class MCTS:
                 weekday, timeslot = available_period
                 available_rooms = find_available_rooms(event, simulated_timetable["rooms"], simulated_timetable["events"][:i], [available_period])
                 available_rooms_list = list(list(available_rooms.values())[0])
+                
                 for room in available_rooms_list:
                     hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][:i], room, timeslot, weekday)
-                    soft_penalty = self.conflicts_checker.check_event_soft_constraints(event, simulated_timetable["events"][:i], room, timeslot, weekday)
+
+                    soft_penalty = self.conflicts_checker.check_room_capacity(event, room)
+                    soft_penalty += self.conflicts_checker.check_min_working_days(event, simulated_timetable["events"][:i], weekday)
+                    soft_penalty += self.conflicts_checker.check_room_stability(event, simulated_timetable["events"][:i], room)
+                    soft_penalty += self.conflicts_checker.check_block_compactness(event,simulated_timetable["events"][:i], timeslot, weekday)
+
                     total_penalty = HARD_WEIGHT*hard_penalty + soft_penalty
 
                     if hard_penalty == 0 and soft_penalty < best_soft_penalty:
@@ -74,18 +80,28 @@ class MCTS:
                             return best_room_and_slot
                     elif best_room_and_slot is None and total_penalty < least_conflict_penalty:
                         least_conflict_penalty = total_penalty
-                        least_conflict_slot = (room, weekday, timeslot)
+                        least_conflict_slot_and_room = (room, weekday, timeslot)
                             
-            return best_room_and_slot if best_room_and_slot else least_conflict_slot
+            return best_room_and_slot if best_room_and_slot else least_conflict_slot_and_room
         
 
         def evaluate_timetable(simulated_timetable):
             hard_penalty = 0
             soft_penalty = 0
+            name = ""
             for i, event in enumerate(simulated_timetable["events"]):
                 hard_penalty += self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"])
-                soft_penalty += self.conflicts_checker.check_event_soft_constraints(event, simulated_timetable["events"][i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"])
-            return -hard_penalty, -soft_penalty
+                
+                soft_penalty += self.conflicts_checker.check_room_capacity(event, event["RoomId"])
+                soft_penalty += self.conflicts_checker.check_block_compactness(event,simulated_timetable["events"], event["Timeslot"], event["WeekDay"])
+                if event["Name"] != name:
+                    soft_penalty += self.conflicts_checker.check_min_working_days(event,simulated_timetable["events"][i+1:],event["WeekDay"])
+                    soft_penalty += self.conflicts_checker.check_room_stability(event, simulated_timetable["events"][i+1:], event["RoomId"])
+                name = event["Name"]
+
+            #print(f"{hard_penalty} {soft_penalty}")
+
+            return -(hard_penalty), -(soft_penalty)
         
         
         simulated_timetable = deepcopy(self.current_node.timetable)
@@ -112,7 +128,7 @@ class MCTS:
             node = node.parent
 
 
-    def run_mcts(self, iterations=1500, time_limit=600):
+    def run_mcts(self, iterations=1500, time_limit=60):
 
         def get_best_solution(time):
             def select_best_terminal_node(node):

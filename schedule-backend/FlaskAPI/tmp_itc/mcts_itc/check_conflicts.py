@@ -1,5 +1,5 @@
 from mcts_itc.utils import get_events_by_name
-from mcts_itc.macros import HARD_PENALTY
+from mcts_itc.macros import HARD_PENALTY, MIN_WORKING_DAYS_PENALTY, CURRICULUM_COMPACTNESS_PENALTY, ROOM_STABILITY_PENALTY, ROOM_CAPACITY_PENALTY
 
 class ConflictsChecker:
 
@@ -32,15 +32,6 @@ class ConflictsChecker:
         return penalty
 
 
-    def check_event_soft_constraints(self, event, other_events, room_id, timeslot, weekday):
-        penalty = 0
-        penalty += self.check_min_working_days(event, other_events, weekday)
-        penalty += self.check_block_compactness(event, other_events, timeslot, weekday)
-        penalty += self.check_room_stability(event, other_events, room_id)
-        penalty += self.check_room_capacity(event, room_id)
-        return penalty
-
-
     def check_event_unavailability_constraints(self, event, timeslot, weekday):
         penalty = 0
         for constraint in self.constraints:
@@ -61,12 +52,15 @@ class ConflictsChecker:
         return penalty
 
 
+    # Soft Constraints:
+
+
     def check_min_working_days(self, event, events, weekday):
         penalty = 0
         event_days = {ev["WeekDay"] for ev in events if ev["Name"] == event["Name"] and ev["Id"] != event["Id"]}
         event_days.add(weekday)
         if len(event_days) < event["MinWorkingDays"]:
-            penalty += (event["MinWorkingDays"] - len(event_days)) * 5
+            penalty += (event["MinWorkingDays"] - len(event_days)) * MIN_WORKING_DAYS_PENALTY
         return penalty
 
 
@@ -87,16 +81,16 @@ class ConflictsChecker:
                         break
                 
                 if not adjacent_found:
-                    penalty += 2
+                    penalty += CURRICULUM_COMPACTNESS_PENALTY
         return penalty
 
 
     def check_room_stability(self, event, other_events, room_id):
-        penalty = 0
+        different_rooms = set()
         for other_event in other_events:
             if other_event["Id"] != event["Id"] and other_event["Name"] == event["Name"] and other_event["RoomId"] != room_id:
-                penalty += 1
-        return penalty
+                different_rooms.add(other_event["RoomId"])
+        return len(different_rooms)
     
     
     def check_room_capacity(self, event, room_id):
@@ -104,4 +98,46 @@ class ConflictsChecker:
         for room in self.rooms:
             if room["Id"] == room_id and room["Capacity"] < event["Capacity"]:
                 penalty += (event["Capacity"]-room["Capacity"])
+                break
         return penalty
+
+'''
+    def get_max_penalies(self, events): #FIXME
+
+        def max_conflict_violations(events): #Lectures, RoomOccupancy, SameTeacher
+            return ((len(events)) + (len(events) - 1)*2) * HARD_PENALTY
+
+        def max_curriculum_violations(blocks):
+            return (sum(len(block["Events"]) - 1 for block in blocks)) * HARD_PENALTY
+        
+        def max_unavailability_violations(constraints):
+            return len(constraints) * HARD_PENALTY
+        
+        def max_room_capacity_violations(events):
+            smallest_room_capacity = min(room["Capacity"] for room in self.rooms)
+            return sum(max(0, event["Capacity"] - smallest_room_capacity) * ROOM_CAPACITY_PENALTY for event in events)
+        
+        def max_room_stability_violations(blocks):
+            return sum((len(block["Events"]) - 1) * ROOM_STABILITY_PENALTY for block in blocks)
+    
+        def max_curriculum_compactness_violations(blocks):
+            return sum((len(block["Events"]) - 1) * CURRICULUM_COMPACTNESS_PENALTY for block in blocks)
+        
+        def max_min_working_days_violations(events):
+            return sum((event["MinWorkingDays"]) * MIN_WORKING_DAYS_PENALTY for event in events)
+        
+        max_hard_penalty = 0
+        max_hard_penalty += max_conflict_violations(events)
+        max_hard_penalty += max_curriculum_violations(self.blocks)
+        max_hard_penalty += max_unavailability_violations(self.constraints)
+
+        max_soft_penalty = 0
+        max_soft_penalty += max_room_capacity_violations(events)
+        max_soft_penalty += max_room_stability_violations(self.blocks)
+        max_soft_penalty += max_curriculum_compactness_violations(self.blocks)
+        max_soft_penalty += max_min_working_days_violations(events)
+
+        print(f"{max_hard_penalty} {max_soft_penalty}")
+
+        return max_hard_penalty, max_soft_penalty
+'''
