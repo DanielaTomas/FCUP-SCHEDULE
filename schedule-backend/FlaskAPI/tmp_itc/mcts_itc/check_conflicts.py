@@ -16,6 +16,9 @@ class ConflictsChecker:
         return other["WeekDay"] == weekday and other["Timeslot"] == timeslot
 
 
+    # Hard Constraints:
+
+    
     def check_event_hard_constraints(self, event, other_events, room_id, timeslot, weekday):
         penalty = 0
         penalty += self.check_event_unavailability_constraints(event, timeslot, weekday)
@@ -41,15 +44,15 @@ class ConflictsChecker:
 
 
     def check_block_constraints(self, event, other_events, timeslot, weekday):
-        penalty = 0
+        conflict = set()
         for block in self.blocks:
             if event["Name"] in block["Events"]:
                 for e_name in block["Events"]:
                     evs = get_events_by_name(e_name, other_events)
                     for ev in evs:
                         if ev["Id"] != event["Id"] and self.check_conflict_time(ev, timeslot, weekday):
-                            penalty += HARD_PENALTY
-        return penalty
+                            conflict.add((event["Id"], ev["Id"]))
+        return len(conflict)
 
 
     # Soft Constraints:
@@ -101,8 +104,9 @@ class ConflictsChecker:
                 break
         return penalty
 
+
 '''
-    def get_max_penalies(self, events): #FIXME
+    def get_max_penalies(self, events):
 
         def max_conflict_violations(events): #Lectures, RoomOccupancy, SameTeacher
             return ((len(events)) + (len(events) - 1)*2) * HARD_PENALTY
