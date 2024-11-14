@@ -75,7 +75,6 @@ parse_input_data(f.read())
 f.close()
 
 mcts = MCTS(db)
-best_solution = mcts.run_mcts(40000)
-file = open('final_output.txt', 'w')
-write_best_solution_to_file(best_solution, file)
-file.close()
+best_solution = mcts.run_mcts(100000000000000)
+with open('final_output.txt', 'w') as file:
+    write_best_solution_to_file(best_solution, file)

@@ -9,6 +9,7 @@ def add_event_ids(events, blocks = None, constraints = None):
             new_event = deepcopy(event)
             new_event["Id"] = unique_id
             new_event["Available_Periods"] = get_valid_periods(event, constraints)
+            new_event["Available_Periods"].sort(key=len)
             new_event["Priority"] =  (event["MinWorkingDays"]*4 + event["Capacity"]*2
                                 + sum(1 for constraint in constraints if constraint["Id"] == event["Name"])*3
                                 + sum(1 for block in blocks if new_event["Name"] in block["Events"])
@@ -19,36 +20,33 @@ def add_event_ids(events, blocks = None, constraints = None):
     return sorted(events_to_visit, key=lambda event: event["Priority"], reverse=True)
 
 
-def find_available_rooms(event, rooms, events, available_periods):
-    if not available_periods: return {period: {room["Id"] for room in rooms} for period in available_periods}
+def root_expansion_limit(event, rooms, events):
+        available_rooms = find_available_rooms(event, rooms, events, event["Available_Periods"])
+        available_rooms_list = list(list(available_rooms.values())[0]) if available_rooms else []
+        return len(event["Available_Periods"]) * len(available_rooms_list)
 
-    period_room_availability = {period: {room["Id"] for room in rooms} for period in available_periods}
+
+def find_available_rooms(event, rooms, events, available_periods):
+    period_room_availability = {period: {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]} for period in available_periods}
+    #period_room_availability = {period: {room["Id"] for room in rooms} for period in available_periods}
 
     for other_event in events:
         occupied_period = (other_event["WeekDay"], other_event["Timeslot"])
         if occupied_period in period_room_availability:
             period_room_availability[occupied_period].discard(other_event["RoomId"])
 
-    suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
-    
-    for period in available_periods:
-        if period_room_availability[period]:
-            period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period]
-        else:
-            period_room_availability[period] = suitable_rooms if suitable_rooms else {room["Id"] for room in rooms}
-    
-    '''
-    same_event_rooms = set()
-    for other_event in events:
-        if other_event["Name"] == event["Name"] and other_event["RoomId"] in period_room_availability:
-            same_event_rooms.add(other_event["RoomId"])
+    #suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
+
+    room_capacities = {room["Id"]: room["Capacity"] for room in rooms}
 
     for period in available_periods:
-        if period_room_availability[period]:
+        """ if period_room_availability[period]:
             period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period]
         else:
-            period_room_availability[period] = suitable_rooms if suitable_rooms else {room["Id"] for room in rooms}
-    '''
+            period_room_availability[period] = suitable_rooms if suitable_rooms else None """
+
+        period_room_availability[period] = sorted(period_room_availability[period], key=lambda room_id: room_capacities[room_id]-event["Capacity"])
+
     return period_room_availability
     
     
@@ -79,17 +77,17 @@ def get_valid_periods(event, constraints):
                 if constraint["Id"] == event["Name"] and constraint["WeekDay"] == weekday and constraint["Timeslot"] == timeslot:
                     available_periods.discard((weekday,timeslot))
 
-    return list(available_periods) if available_periods else list(ALL_SLOTS)
+    return list(available_periods) if available_periods else None
 
 
 def write_node_scores_to_file(node, file, depth=0):
     if node.visits > 0:
         if not node.path:
-            score_visits = f"score {node.score_soft + node.score_hard}, visits {node.visits}, ratio {(node.score_soft + node.score_hard) / node.visits:.2f}"
+            score_visits = f"score {node.score_hard} {node.score_soft} , visits {node.visits}, ratio {node.score_hard / node.visits:.2f}"
         else:
-            score_visits = f"{node.path[-1]['Id']} {node.path[-1]['Name']} D{node.path[-1]['WeekDay']} P{node.path[-1]['Timeslot']} R{node.path[-1]['RoomId']} score {node.score_soft + node.score_hard}, visits {node.visits}, ratio {(node.score_soft + node.score_hard) / node.visits:.2f}"
+            score_visits = f"{node.path[-1]['Id']} {node.path[-1]['Name']} D{node.path[-1]['WeekDay']} P{node.path[-1]['Timeslot']} R{node.path[-1]['RoomId']} score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio {node.score_hard / node.visits:.2f}"
     else:
-        score_visits = f"score {node.score_soft + node.score_hard}, visits {node.visits}, ratio -inf"
+        score_visits = f"score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio -inf"
     
     file.write("   " * depth + f"Node: {score_visits}\n")
     
@@ -99,5 +97,6 @@ def write_node_scores_to_file(node, file, depth=0):
 
 def write_best_simulation_result_to_file(events, file):
     for event in events:
-        file.write(f"{event['Name']} {event['RoomId']} {event['WeekDay']} {event['Timeslot']}\n")
+        if event['RoomId'] is not None or event['WeekDay'] is not None or event['Timeslot'] is not None:
+            file.write(f"{event['Name']} {event['RoomId']} {event['WeekDay']} {event['Timeslot']}\n")
     
