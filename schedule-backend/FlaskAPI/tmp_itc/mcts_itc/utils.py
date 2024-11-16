@@ -9,7 +9,6 @@ def add_event_ids(events, blocks = None, constraints = None):
             new_event = deepcopy(event)
             new_event["Id"] = unique_id
             new_event["Available_Periods"] = get_valid_periods(event, constraints)
-            new_event["Available_Periods"].sort(key=len)
             new_event["Priority"] =  (event["MinWorkingDays"]*4 + event["Capacity"]*2
                                 + sum(1 for constraint in constraints if constraint["Id"] == event["Name"])*3
                                 + sum(1 for block in blocks if new_event["Name"] in block["Events"])
@@ -27,23 +26,22 @@ def root_expansion_limit(event, rooms, events):
 
 
 def find_available_rooms(event, rooms, events, available_periods):
-    period_room_availability = {period: {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]} for period in available_periods}
-    #period_room_availability = {period: {room["Id"] for room in rooms} for period in available_periods}
+    period_room_availability = {period: {room["Id"] for room in rooms} for period in available_periods}
 
     for other_event in events:
         occupied_period = (other_event["WeekDay"], other_event["Timeslot"])
         if occupied_period in period_room_availability:
             period_room_availability[occupied_period].discard(other_event["RoomId"])
 
-    #suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
+    suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
 
     room_capacities = {room["Id"]: room["Capacity"] for room in rooms}
 
     for period in available_periods:
-        """ if period_room_availability[period]:
+        if period_room_availability[period]:
             period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period]
         else:
-            period_room_availability[period] = suitable_rooms if suitable_rooms else None """
+            period_room_availability[period] = suitable_rooms if suitable_rooms else {period: {room["Id"] for room in rooms} for period in available_periods}
 
         period_room_availability[period] = sorted(period_room_availability[period], key=lambda room_id: room_capacities[room_id]-event["Capacity"])
 
@@ -76,8 +74,12 @@ def get_valid_periods(event, constraints):
             for timeslot in range(PERIODS_PER_DAY):
                 if constraint["Id"] == event["Name"] and constraint["WeekDay"] == weekday and constraint["Timeslot"] == timeslot:
                     available_periods.discard((weekday,timeslot))
-
-    return list(available_periods) if available_periods else None
+                    
+    if available_periods:                
+        available_periods_list = list(available_periods)
+        available_periods_list.sort()
+        return available_periods_list
+    return None
 
 
 def write_node_scores_to_file(node, file, depth=0):

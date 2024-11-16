@@ -2,9 +2,7 @@ from copy import deepcopy
 from mcts_itc.mcts_node import *
 from mcts_itc.utils import *
 from mcts_itc.check_conflicts import ConflictsChecker
-from mcts_itc.macros import DISCREPANCY_LIMIT
 import time
-#import random
 
 #TODO remove prints
 
