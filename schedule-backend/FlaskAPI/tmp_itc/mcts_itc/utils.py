@@ -22,7 +22,8 @@ def add_event_ids(events, blocks = None, constraints = None):
 def root_expansion_limit(event, rooms, events):
         available_rooms = find_available_rooms(event, rooms, events, event["Available_Periods"])
         available_rooms_list = list(list(available_rooms.values())[0]) if available_rooms else []
-        return len(event["Available_Periods"]) * len(available_rooms_list)
+        available_periods = event["Available_Periods"] if event["Available_Periods"] else []
+        return len(available_periods) * len(available_rooms_list)
 
 
 def find_available_rooms(event, rooms, events, available_periods):
