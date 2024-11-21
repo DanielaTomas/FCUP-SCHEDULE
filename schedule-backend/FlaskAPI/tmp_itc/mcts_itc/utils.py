@@ -1,5 +1,6 @@
 from copy import deepcopy
 from mcts_itc.macros import DAYS, PERIODS_PER_DAY, ALL_SLOTS
+import random
 
 def add_event_ids(events, blocks = None, constraints = None):
     events_to_visit = []
@@ -36,15 +37,14 @@ def find_available_rooms(event, rooms, events, available_periods):
 
     suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
 
-    room_capacities = {room["Id"]: room["Capacity"] for room in rooms}
-
     for period in available_periods:
         if period_room_availability[period]:
             period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period]
         else:
             period_room_availability[period] = suitable_rooms if suitable_rooms else {period: {room["Id"] for room in rooms} for period in available_periods}
 
-        period_room_availability[period] = sorted(period_room_availability[period], key=lambda room_id: room_capacities[room_id]-event["Capacity"])
+        period_room_availability[period] = list(period_room_availability[period])
+        random.shuffle(period_room_availability[period])
 
     return period_room_availability
     
@@ -78,7 +78,7 @@ def get_valid_periods(event, constraints):
                     
     if available_periods:                
         available_periods_list = list(available_periods)
-        available_periods_list.sort()
+        random.shuffle(available_periods_list)
         return available_periods_list
     return None
 

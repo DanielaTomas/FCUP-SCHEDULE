@@ -58,8 +58,8 @@ class MCTS:
         new_weekday, new_timeslot = available_periods[period_index]
         available_rooms = find_available_rooms(event, self.current_node.timetable["rooms"], self.current_node.timetable["events"][:self.current_node.depth()], [available_periods[period_index]])
         available_rooms_list = list(list(available_rooms.values())[0])
-        if not available_rooms_list:
-            return
+        #if not available_rooms_list:
+            #return
         new_room_index = period // len(available_periods) % len(available_rooms_list)
         new_room = available_rooms_list[new_room_index]
         
@@ -73,7 +73,7 @@ class MCTS:
 
     def simulation(self):
 
-        def find_best_room_and_period(event,i):
+        def find_best_room_and_period(event, i, simulated_timetable):
             if not event["Available_Periods"]: return None
 
             best_room_and_period = None
@@ -82,15 +82,17 @@ class MCTS:
             least_conflict_hard_penalty = float('inf')
             least_conflict_soft_penalty = float('inf')
 
+            compactness_weight = min(1, i / (len(simulated_timetable["events"])-1))
+
             for available_period in event["Available_Periods"]:
                 weekday, timeslot = available_period
                 available_rooms = find_available_rooms(event, simulated_timetable["rooms"], simulated_timetable["events"][:i], [available_period])
-                if not available_rooms: continue
+                #if not available_rooms: continue
                 for room in list(list(available_rooms.values())[0]):
                     hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][:i], room, timeslot, weekday)
                     soft_penalty = (
                         self.conflicts_checker.check_room_capacity(event, room)
-                        + self.conflicts_checker.check_block_compactness(event, simulated_timetable["events"][:i], timeslot, weekday)
+                        + compactness_weight * self.conflicts_checker.check_block_compactness(event, simulated_timetable["events"][:i], timeslot, weekday)
                         + self.conflicts_checker.check_min_working_days(event, simulated_timetable["events"][:i], weekday)
                         + self.conflicts_checker.check_room_stability(event, simulated_timetable["events"][:i], room)
                     )
@@ -138,7 +140,7 @@ class MCTS:
 
         simulated_timetable = deepcopy(self.current_node.timetable)
         for i, event in enumerate(self.current_node.timetable["events"][self.current_node.depth():]):
-            best_room_and_period = find_best_room_and_period(event,i+self.current_node.depth())
+            best_room_and_period = find_best_room_and_period(event, i+self.current_node.depth(), simulated_timetable)
             if best_room_and_period:
                 room, weekday, timeslot = best_room_and_period               
                 update_event(event["Id"], simulated_timetable["events"], room, weekday, timeslot)
