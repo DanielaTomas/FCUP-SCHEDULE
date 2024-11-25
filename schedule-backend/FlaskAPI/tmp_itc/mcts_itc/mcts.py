@@ -96,7 +96,6 @@ class MCTS:
                         + self.conflicts_checker.check_min_working_days(event, simulated_timetable["events"][:i], weekday)
                         + self.conflicts_checker.check_room_stability(event, simulated_timetable["events"][:i], room)
                     )
-
                     if hard_penalty == 0 and soft_penalty < min_soft_penalty:
                         min_soft_penalty = soft_penalty
                         best_room_and_period = (room, weekday, timeslot)
@@ -115,16 +114,17 @@ class MCTS:
             hard_penalty = 0
             soft_penalty = 0
             last_event_name = None
-            
+            room_conflicts = {}
+
             for i, event in enumerate(simulated_timetable["events"]):
-                hard_penalty += self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"])   
+                hard_penalty += self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"], room_conflicts)   
                 soft_penalty += (self.conflicts_checker.check_room_capacity(event, event["RoomId"])
                              + self.conflicts_checker.check_block_compactness(event,simulated_timetable["events"], event["Timeslot"], event["WeekDay"]))
                 if event["Name"] != last_event_name:
                     soft_penalty += (self.conflicts_checker.check_min_working_days(event,simulated_timetable["events"][i+1:],event["WeekDay"])
                                  + self.conflicts_checker.check_room_stability(event, simulated_timetable["events"][i+1:], event["RoomId"]))
                 last_event_name = event["Name"]
-
+            hard_penalty += self.conflicts_checker.check_room_conflicts(room_conflicts)
             return -hard_penalty, -soft_penalty
         
         

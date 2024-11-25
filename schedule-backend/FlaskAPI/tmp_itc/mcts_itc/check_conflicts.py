@@ -18,8 +18,7 @@ class ConflictsChecker:
 
     # Hard Constraints:
 
-    
-    def check_event_hard_constraints(self, event, other_events, room_id, timeslot, weekday):
+    def check_event_hard_constraints(self, event, other_events, room_id, timeslot, weekday, room_conflicts = None):
         if timeslot is None or weekday is None or room_id is None: return HARD_PENALTY
 
         penalty = (
@@ -33,10 +32,24 @@ class ConflictsChecker:
                     penalty += HARD_PENALTY
                 else:
                     if other_event['RoomId'] == room_id:
-                        penalty += HARD_PENALTY
+                        if room_conflicts is not None: self.room_conflicts(other_event, room_conflicts)
+                        else: penalty += HARD_PENALTY
                     if other_event["Teacher"] == event["Teacher"]:
                         penalty += HARD_PENALTY
         return penalty
+    
+    
+    def check_room_conflicts(self, room_conflicts):
+        penalty = 0
+        for room_penalty in room_conflicts.values():
+            penalty += room_penalty
+        return penalty
+    
+
+    def room_conflicts(self, other_event, room_conflicts):
+            conflict_key = (other_event['Id'], other_event['RoomId'], other_event["WeekDay"], other_event["Timeslot"])
+            if conflict_key not in room_conflicts:
+                room_conflicts[conflict_key] = HARD_PENALTY
 
 
     def check_event_unavailability_constraints(self, event, timeslot, weekday):
