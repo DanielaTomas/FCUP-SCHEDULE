@@ -1,20 +1,27 @@
 from mcts_itc.mcts import *
 
-db = {
-    "events": [],
-    "blocks": [],
-    "rooms": [],
-    "constraints": []
+def reset_db():
+    return {
+        "events": [],
+        "blocks": [],
+        "rooms": [],
+        "constraints": []
 }
 
-def parse_input_data(input_data):
+def parse_input_data(input_data, db):
     lines = input_data.strip().split('\n')
-    
     current_section = None
 
     for line in lines:
         line = line.strip()
-        if not line or line.startswith("Name:") or line.startswith("Courses:") or line.startswith("Rooms:") or line.startswith("Days:") or line.startswith("Periods_per_day:") or line.startswith("Curricula:") or line.startswith("Constraints:"):
+        if not line or line.startswith("Name:") or line.startswith("Courses:") or line.startswith("Rooms:") or line.startswith("Curricula:") or line.startswith("Constraints:"):
+            continue
+        if line.startswith("Days:"):
+            parts = line.split()
+            days = int(parts[1])
+        if line.startswith("Periods_per_day:"):
+            parts = line.split()
+            periods_per_day = int(parts[1])
             continue
         if line.startswith("COURSES:"):
             current_section = "courses"
@@ -63,6 +70,7 @@ def parse_input_data(input_data):
                 continue
             course_id, day, day_timeslot = parts[0], int(parts[1]), int(parts[2])
             db["constraints"].append({"Id": course_id, "WeekDay": day, "Timeslot": day_timeslot})
+    return days, periods_per_day
 
 
 def write_best_solution_to_file(best_solution, file):
@@ -70,11 +78,22 @@ def write_best_solution_to_file(best_solution, file):
         file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n")
 
 
-f = open("input_itc.ctt", "r")
-parse_input_data(f.read())
-f.close()
+#input_files = [f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)]
+input_files = ["comp01.ctt"]
 
-mcts = MCTS(db)
-best_solution = mcts.run_mcts(100000000000000)
-with open('final_output.txt', 'w') as file:
-    write_best_solution_to_file(best_solution, file)
+for input_file in input_files:
+    print(f"Processing {input_file}...")
+    with open(f"input\{input_file}", "r") as f:
+        db = reset_db()
+        days, periods_per_day = parse_input_data(f.read(), db)
+
+    output_file = f"output\{input_file.split('.')[0]}_output.txt"
+    
+    mcts = MCTS(db, days, periods_per_day, output_file)
+    best_solution = mcts.run_mcts(1000000000000000)
+
+    output_file = f"final_output\{input_file.split('.')[0]}_final_output.txt"
+    with open(output_file, 'w') as file:
+        write_best_solution_to_file(best_solution, file)
+
+    print(f"Finished processing {input_file}, output saved to {output_file}.")

@@ -8,8 +8,8 @@ import time
 
 class MCTS:
 
-    def __init__(self, current_timetable):
-        current_timetable["events"] = add_event_ids(current_timetable["events"], current_timetable["blocks"], current_timetable["constraints"])
+    def __init__(self, current_timetable, days, periods_per_day, output_filename = "output\output.txt"):
+        current_timetable["events"] = add_event_ids(current_timetable["events"], days, periods_per_day, current_timetable["blocks"], current_timetable["constraints"])
         self.conflicts_checker = ConflictsChecker(current_timetable["constraints"], current_timetable["blocks"], current_timetable["rooms"])
         self.root = MCTSNode(current_timetable, root_expansion_limit(current_timetable["events"][0], current_timetable["rooms"], current_timetable["events"][:0]))
         self.current_node = self.root
@@ -20,6 +20,8 @@ class MCTS:
         self.worst_hard_penalty = float('inf')
         self.best_soft_penalty = float('-inf')
         self.worst_soft_penalty = float('inf')
+
+        self.output_filename = output_filename
 
 
     def normalize_hard(self, result):
@@ -155,7 +157,7 @@ class MCTS:
         if (hard_penalty_result > self.best_result_hard) or (hard_penalty_result == self.best_result_hard and soft_penalty_result > self.best_result_soft):
             self.best_result_hard = hard_penalty_result
             self.best_result_soft = soft_penalty_result
-            with open('output.txt', 'w') as file:
+            with open(self.output_filename, 'w') as file:
                 write_best_simulation_result_to_file(simulated_timetable["events"], file)
 
         simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty_result)
@@ -182,10 +184,10 @@ class MCTS:
                 best_child = max(node.children, key=lambda child: (child.score_hard, child.score_soft))
                 return select_best_terminal_node(best_child)
 
-            file = open('tree.txt', 'w')
-            file.write(f"Time: ~{time}\n")
-            write_node_scores_to_file(self.root, file)
-            file.close()
+            #file = open('tree.txt', 'w')
+            #file.write(f"Time: ~{time}\n")
+            #write_node_scores_to_file(self.root, file)
+            #file.close()
             best_terminal_node = select_best_terminal_node(self.root)
 
             return best_terminal_node.path

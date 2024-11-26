@@ -1,15 +1,14 @@
 from copy import deepcopy
-from mcts_itc.macros import DAYS, PERIODS_PER_DAY, ALL_SLOTS
 import random
 
-def add_event_ids(events, blocks = None, constraints = None):
+def add_event_ids(events, days, periods_per_day, blocks = None, constraints = None):
     events_to_visit = []
     unique_id = 0
     for event in events:
         for _ in range(event["Lectures"]):
             new_event = deepcopy(event)
             new_event["Id"] = unique_id
-            new_event["Available_Periods"] = get_valid_periods(event, constraints)
+            new_event["Available_Periods"] = get_valid_periods(event, constraints, days, periods_per_day)
             new_event["Priority"] =  (event["MinWorkingDays"]*4 + event["Capacity"]*2
                                 + sum(1 for constraint in constraints if constraint["Id"] == event["Name"])*3
                                 + sum(1 for block in blocks if new_event["Name"] in block["Events"])
@@ -67,12 +66,13 @@ def update_event(event_id, timetable_events, room, weekday, timeslot):
     return None
  
 
-def get_valid_periods(event, constraints):
-    available_periods = set(ALL_SLOTS)
+def get_valid_periods(event, constraints, days, periods_per_day):
+    all_slots = set((weekday, timeslot) for weekday in range(days) for timeslot in range(periods_per_day))
+    available_periods = set(all_slots)
 
     for constraint in constraints:
-        for weekday in range(DAYS):
-            for timeslot in range(PERIODS_PER_DAY):
+        for weekday in range(days):
+            for timeslot in range(periods_per_day):
                 if constraint["Id"] == event["Name"] and constraint["WeekDay"] == weekday and constraint["Timeslot"] == timeslot:
                     available_periods.discard((weekday,timeslot))
                     
