@@ -92,8 +92,8 @@ for input_file in input_files:
     mcts = MCTS(db, days, periods_per_day, output_file)
     best_solution = mcts.run_mcts(1000000000000000)
 
-    output_file = f"final_output\{input_file.split('.')[0]}_final_output.txt"
+    """ output_file = f"final_output\{input_file.split('.')[0]}_final_output.txt"
     with open(output_file, 'w') as file:
         write_best_solution_to_file(best_solution, file)
-
+    """
     print(f"Finished processing {input_file}, output saved to {output_file}.")
