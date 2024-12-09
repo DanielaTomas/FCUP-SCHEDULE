@@ -92,6 +92,6 @@ view model =
             displayOnDrag
         ]
 
-filterEventsWithoutTime : List (Int, Event) -> List (Int, Event)
+filterEventsWithoutTime : List (Int, Event) -> List (Int, Event) --TODO colocar em List.elm
 filterEventsWithoutTime events =
     List.filter (\(_, event) -> isNothing event.start_time && isNothing event.end_time) events

@@ -1,33 +1,52 @@
 def events_to_visit(events):
     events_to_visit = []
     for event in events:
-        if event["StartTime"] is None and event["EndTime"] is None:
+        if event["StartTime"] is None or event["EndTime"] is None or event["WeekDay"] is None:
             events_to_visit.append(event)
     return events_to_visit
+
+
+def get_student_events(student_id, students_events, events):
+    return [get_event_by_id(student_event["EventId"], events) for student_event in students_events if student_event["StudentId"] == student_id]
+
+
+def get_event_by_id(event_id, events):
+    for event in events:
+        if event["Id"] == event_id:
+            return event
+    return None
 
 
 def get_room_name_by_id(room_id, rooms):
     for room in rooms:
         if room["Id"] == room_id:
             return room["Name"]
-    return "Room Not Found"
+    return None
 
 
-def check_conflict_time(start_time, other, end_time, weekday):
-    if not all([other.get("EndTime"), other.get("StartTime"), other.get("WeekDay")]): 
-        return False
-    return other["WeekDay"] == weekday and start_time < other["EndTime"] and end_time > other["StartTime"]
+def get_room_type_id_by_id(room_id, rooms):
+    for room in rooms:
+        if room["Id"] == room_id:
+            return room["RoomTypeId"]
+    return None
 
 
-def check_conflict(other, start_time, end_time, weekday, room, rooms):
-    return (get_room_name_by_id(room, rooms) != "DCC online" and
-            other['RoomId'] == room and
-            check_conflict_time(start_time, other, end_time, weekday))
+def update_event(event_id, timetable_events, weekday, start_time, end_time):
+    for event in timetable_events:
+        if event["Id"] == event_id:
+            event["WeekDay"] = weekday
+            event["StartTime"] = start_time
+            event["EndTime"] = end_time
+            return event
+    return None
 
 
 def print_node_scores(node, depth=0):
     if node.visits > 0:
-        score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
+        if not node.path:
+            score_visits = f"score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
+        else:
+            score_visits = f"{node.path[-1]['SubjectAbbr']} {node.path[-1]['WeekDay']} {node.path[-1]['StartTime']} {node.path[-1]['RoomId']} score {node.score}, visits {node.visits}, ratio {node.score / node.visits:.2f}"
     else:
         score_visits = "score {node.score}, visits {node.visits}, ratio -inf"
     print("   " * depth + f"Node: {score_visits}")
