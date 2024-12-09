@@ -34,15 +34,9 @@ def find_available_rooms(event, rooms, events, available_periods):
             period_room_availability[occupied_period].discard(other_event["RoomId"])
 
     suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
-
     for period in available_periods:
         if period_room_availability[period]:
             period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period]
-        else:
-            period_room_availability[period] = suitable_rooms if suitable_rooms else {period: {room["Id"] for room in rooms} for period in available_periods}
-
-        period_room_availability[period] = list(period_room_availability[period])
-        random.shuffle(period_room_availability[period])
 
     return period_room_availability
     
