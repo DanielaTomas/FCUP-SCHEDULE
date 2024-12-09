@@ -78,8 +78,8 @@ def write_best_solution_to_file(best_solution, file):
         file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n")
 
 
-#input_files = [f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)]
-input_files = ["comp01.ctt"]
+input_files = [f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)]
+#input_files = ["comp1.ctt"]
 
 for input_file in input_files:
     print(f"Processing {input_file}...")

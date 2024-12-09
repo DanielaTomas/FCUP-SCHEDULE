@@ -21,6 +21,7 @@ class MCTS:
         self.best_soft_penalty = float('-inf')
         self.worst_soft_penalty = float('inf')
 
+        self.unassigned_events = []
         self.output_filename = output_filename
 
 
@@ -67,7 +68,15 @@ class MCTS:
         
         new_timetable = deepcopy(self.current_node.timetable)
         new_event = update_event(event["Id"], new_timetable["events"], new_room, new_weekday, new_timeslot)
-        child_node = MCTSNode(timetable=new_timetable, expansion_limit=(len(available_periods)*len(available_rooms_list)), parent=self.current_node)
+        next_event = self.current_node.timetable["events"][self.current_node.depth()+1] if self.current_node.depth()+1 < len(self.current_node.timetable["events"]) else None
+        if next_event is None:
+            expansion_limit = 0
+        else:
+            expansion_limit = sum(
+                len(rooms) for rooms in find_available_rooms(next_event, self.current_node.timetable["rooms"], self.current_node.timetable["events"][:self.current_node.depth()], next_event["Available_Periods"]
+                ).values()
+            )
+        child_node = MCTSNode(timetable=new_timetable, expansion_limit=(expansion_limit), parent=self.current_node)
         child_node.path = self.current_node.path + [new_event]
         self.current_node.children.append(child_node)
         self.current_node = child_node
@@ -78,7 +87,6 @@ class MCTS:
         def find_best_room_and_period(event, i, simulated_timetable):
             if not event["Available_Periods"]: return None
 
-            min_hard_penalty = float('inf')
             min_soft_penalty = float('inf')
             candidates = []
 
@@ -87,7 +95,7 @@ class MCTS:
             for available_period in event["Available_Periods"]:
                 weekday, timeslot = available_period
                 available_rooms = find_available_rooms(event, simulated_timetable["rooms"], simulated_timetable["events"][:i], [available_period])
-                #if not available_rooms: continue
+                if not available_rooms: continue
                 for room in list(list(available_rooms.values())[0]):
                     hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][:i], room, timeslot, weekday)
                     if hard_penalty == 0:
@@ -102,25 +110,23 @@ class MCTS:
                             candidates = [(room, weekday, timeslot)]
                         elif soft_penalty == min_soft_penalty:
                             candidates.append((room, weekday, timeslot))
-                    elif hard_penalty < min_hard_penalty:
-                        min_hard_penalty = hard_penalty
             return random.choice(candidates) if candidates else None
         
 
         def evaluate_timetable(simulated_timetable):
             hard_penalty = 0
             soft_penalty = 0
-            last_event_name = None
+            event_names = []
             room_conflicts = {}
 
             for i, event in enumerate(simulated_timetable["events"]):
                 hard_penalty += self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable["events"][i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"], room_conflicts)   
                 soft_penalty += (self.conflicts_checker.check_room_capacity(event, event["RoomId"])
-                             + self.conflicts_checker.check_block_compactness(event,simulated_timetable["events"], event["Timeslot"], event["WeekDay"]))
-                if event["Name"] != last_event_name:
-                    soft_penalty += (self.conflicts_checker.check_min_working_days(event,simulated_timetable["events"][i+1:],event["WeekDay"])
+                             + self.conflicts_checker.check_block_compactness(event, simulated_timetable["events"], event["Timeslot"], event["WeekDay"]))
+                if event["Name"] not in event_names: 
+                    soft_penalty += (self.conflicts_checker.check_min_working_days(event, simulated_timetable["events"][i+1:], event["WeekDay"])
                                  + self.conflicts_checker.check_room_stability(event, simulated_timetable["events"][i+1:], event["RoomId"]))
-                last_event_name = event["Name"]
+                event_names.append(event["Name"])
             hard_penalty += self.conflicts_checker.check_room_conflicts(room_conflicts)
             return -hard_penalty, -soft_penalty
         
@@ -136,16 +142,19 @@ class MCTS:
 
 
         simulated_timetable = deepcopy(self.current_node.timetable)
+        simulated_timetable["events"][self.current_node.depth():] = sorted(simulated_timetable["events"][self.current_node.depth():], key=lambda event: (event["Id"] in self.unassigned_events, event["Priority"], random.random()), reverse=True)
         for i, event in enumerate(simulated_timetable["events"][self.current_node.depth():]):
             best_room_and_period = find_best_room_and_period(event, i+self.current_node.depth(), simulated_timetable)
             if best_room_and_period:
-                room, weekday, timeslot = best_room_and_period               
+                room, weekday, timeslot = best_room_and_period              
                 update_event(event["Id"], simulated_timetable["events"], room, weekday, timeslot)
+            elif event["Id"] not in self.unassigned_events: 
+                self.unassigned_events.append(event["Id"])
 
         hard_penalty_result, soft_penalty_result = evaluate_timetable(simulated_timetable)
         update_penalties(hard_penalty_result, soft_penalty_result)
         
-        print(f"{hard_penalty_result} {soft_penalty_result} {self.normalize_hard(self.current_node.best_hard_penalty_result)} {self.normalize_soft(self.current_node.best_soft_penalty_result)}")
+        #print(f"{hard_penalty_result} {soft_penalty_result} {self.normalize_hard(self.current_node.best_hard_penalty_result)} {self.normalize_soft(self.current_node.best_soft_penalty_result)}")
 
         if (hard_penalty_result > self.best_result_hard) or (hard_penalty_result == self.best_result_hard and soft_penalty_result > self.best_result_soft):
             self.best_result_hard = hard_penalty_result

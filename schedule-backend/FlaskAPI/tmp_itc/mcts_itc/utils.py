@@ -16,14 +16,13 @@ def add_event_ids(events, days, periods_per_day, blocks = None, constraints = No
             events_to_visit.append(new_event)
             unique_id += 1
     
-    return sorted(events_to_visit, key=lambda event: event["Priority"], reverse=True)
+    return sorted(events_to_visit, key=lambda event: (event["Priority"], random.random()), reverse=True)
 
 
 def root_expansion_limit(event, rooms, events):
         available_rooms = find_available_rooms(event, rooms, events, event["Available_Periods"])
-        available_rooms_list = list(list(available_rooms.values())[0]) if available_rooms else []
-        available_periods = event["Available_Periods"] if event["Available_Periods"] else []
-        return len(available_periods) * len(available_rooms_list)
+        expansion_limit = sum(len(rooms) for rooms in available_rooms.values())
+        return expansion_limit
 
 
 def find_available_rooms(event, rooms, events, available_periods):
