@@ -43,11 +43,11 @@ class MCTSNode:
         return best_children[choices_weights.index(max(choices_weights))]
 
 
-    '''
+    """
     def best_child(self, c_param=1.4, hard_weight=0.7, soft_weight=0.3):
         choices_weights = [
             (hard_weight*child.score_hard + soft_weight*child.score_soft) + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
             for child in self.children
         ]
         return self.children[choices_weights.index(max(choices_weights))]
-    '''
+    """
