@@ -3,11 +3,10 @@ import math
 
 class MCTSNode:
 
-    def __init__(self, timetable, expansion_limit, parent = None):
-        self.timetable = deepcopy(timetable)
+    def __init__(self, expansion_limit, path = [], parent = None):
         self.parent = parent
         self.children = []
-        self.path = []
+        self.path = path
         self.visits = 0
         self.score_hard = 0
         self.score_soft = 0
@@ -21,8 +20,8 @@ class MCTSNode:
         return len(self.path)
     
 
-    def is_fully_expanded(self):
-        if self.depth() >= len(self.timetable["events"]): return True
+    def is_fully_expanded(self, num_events):
+        if self.depth() >= num_events: return True
         return len(self.children) < self.expansion_limit
         
 

@@ -9,8 +9,10 @@ def add_event_ids(events, days, periods_per_day, blocks = None, constraints = No
             new_event = deepcopy(event)
             new_event["Id"] = unique_id
             new_event["Available_Periods"] = get_valid_periods(event, constraints, days, periods_per_day)
-            new_event["Priority"] =  (event["MinWorkingDays"]*4 + event["Capacity"]*2
-                                + sum(1 for constraint in constraints if constraint["Id"] == event["Name"])*3
+            new_event["Priority"] =  (
+                                (new_event["Lectures"]-new_event["MinWorkingDays"])*4 #-new_event["Lectures"]
+                                - len(new_event["Available_Periods"])*3
+                                + new_event["Capacity"]*2
                                 + sum(1 for block in blocks if new_event["Name"] in block["Events"])
                                 )
             events_to_visit.append(new_event)
@@ -20,12 +22,12 @@ def add_event_ids(events, days, periods_per_day, blocks = None, constraints = No
 
 
 def root_expansion_limit(event, rooms, events):
-        available_rooms = find_available_rooms(event, rooms, events, event["Available_Periods"])
+        available_rooms = find_available_rooms(event["Capacity"], rooms, events, event["Available_Periods"])
         expansion_limit = sum(len(rooms) for rooms in available_rooms.values())
         return expansion_limit
 
 
-def find_available_rooms(event, rooms, events, available_periods):
+def find_available_rooms(event_capacity, rooms, events, available_periods):
     period_room_availability = {period: {room["Id"] for room in rooms} for period in available_periods}
 
     for other_event in events:
@@ -33,11 +35,10 @@ def find_available_rooms(event, rooms, events, available_periods):
         if occupied_period in period_room_availability:
             period_room_availability[occupied_period].discard(other_event["RoomId"])
 
-    suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event["Capacity"]}
+    suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event_capacity}
     for period in available_periods:
         if period_room_availability[period]:
-            period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period]
-
+            period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period] 
     return period_room_availability
     
     
@@ -47,17 +48,27 @@ def get_events_by_name(event_name, events):
         if event["Name"] == event_name:
             evs.append(event)
     return evs
-
-
-def update_event(event_id, timetable_events, room, weekday, timeslot):
-    for event in timetable_events:
-        if event["Id"] == event_id:
-            event["RoomId"] = room
-            event["WeekDay"] = weekday
-            event["Timeslot"] = timeslot
-            return event
-    return None
  
+
+""" def get_available_periods(event, events):
+    available_periods = set(event["Available_Periods"])
+    periods_to_remove = set()
+
+    for other_event in events:
+        for available_period in available_periods:
+            weekday,timeslot = available_period
+            if other_event["Id"] != event["Id"] and other_event["WeekDay"] is not None and other_event["Timeslot"] is not None and other_event["WeekDay"] == weekday and other_event["Timeslot"] == timeslot:
+                if other_event['Name'] == event["Name"]:
+                    periods_to_remove.add((weekday,timeslot))
+
+    available_periods -= periods_to_remove
+               
+    if available_periods:                
+        available_periods_list = list(available_periods)
+        random.shuffle(available_periods_list)
+        return available_periods_list
+    return None """
+
 
 def get_valid_periods(event, constraints, days, periods_per_day):
     all_slots = set((weekday, timeslot) for weekday in range(days) for timeslot in range(periods_per_day))
