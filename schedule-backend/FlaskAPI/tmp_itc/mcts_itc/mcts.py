@@ -1,4 +1,4 @@
-from copy import copy, deepcopy
+from copy import copy
 from mcts_itc.mcts_node import *
 from mcts_itc.utils import *
 from mcts_itc.check_conflicts import ConflictsChecker
@@ -14,7 +14,7 @@ class MCTS:
         self.rooms = current_timetable["rooms"]
         self.blocks = current_timetable["blocks"]
         self.constraints = current_timetable["constraints"]
-        self.events = add_event_ids(current_timetable["events"], days, periods_per_day, self.blocks, self.constraints)
+        self.events = add_event_ids_and_priority(current_timetable["events"], days, periods_per_day, self.blocks, self.constraints)
         self.root = MCTSNode(root_expansion_limit(self.events[0], self.rooms, self.events[:0]))
         self.current_node = self.root
         
@@ -154,7 +154,7 @@ class MCTS:
 
 
         simulated_timetable = copy(self.current_node.path)
-        simulated_timetable[self.current_node.depth():] = sorted(deepcopy(self.events[self.current_node.depth():]), key=lambda event: (event["Id"] in self.unassigned_events, event["Priority"], random.random()), reverse=True)
+        simulated_timetable[self.current_node.depth():] = sorted(self.events[self.current_node.depth():], key=lambda event: (event["Id"] in self.unassigned_events, event["Priority"], random.random()), reverse=True)
         
         for i, event in enumerate(simulated_timetable[self.current_node.depth():]):
             best_room_and_period = find_best_room_and_period(event, i+self.current_node.depth(), simulated_timetable)

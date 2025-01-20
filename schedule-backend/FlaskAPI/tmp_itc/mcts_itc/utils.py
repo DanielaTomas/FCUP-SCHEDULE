@@ -1,12 +1,11 @@
-from copy import deepcopy
 import random
 
-def add_event_ids(events, days, periods_per_day, blocks = None, constraints = None):
+def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraints):
     events_to_visit = []
     unique_id = 0
     for event in events:
         for _ in range(event["Lectures"]):
-            new_event = deepcopy(event)
+            new_event = {**event, "RoomId": None, "WeekDay": None, "Timeslot": None}
             new_event["Id"] = unique_id
             new_event["Available_Periods"] = get_valid_periods(event, constraints, days, periods_per_day)
             new_event["Priority"] =  (
@@ -43,11 +42,7 @@ def find_available_rooms(event_capacity, rooms, events, available_periods):
     
     
 def get_events_by_name(event_name, events):
-    evs = []
-    for event in events:
-        if event["Name"] == event_name:
-            evs.append(event)
-    return evs
+    return [event for event in events if event["Name"] == event_name]
  
 
 """ def get_available_periods(event, events):
@@ -90,9 +85,9 @@ def get_valid_periods(event, constraints, days, periods_per_day):
 def write_node_scores_to_file(node, file, depth=0):
     if node.visits > 0:
         if not node.path:
-            score_visits = f"score {node.score_hard} {node.score_soft} , visits {node.visits}, ratio {node.score_hard / node.visits:.2f}"
+            score_visits = f"score {node.score_hard} {node.score_soft} , visits {node.visits}, ratio {node.score_hard / node.visits:.2f} {node.score_soft / node.visits:.2f}"
         else:
-            score_visits = f"{node.path[-1]['Id']} {node.path[-1]['Name']} D{node.path[-1]['WeekDay']} P{node.path[-1]['Timeslot']} R{node.path[-1]['RoomId']} score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio {node.score_hard / node.visits:.2f}"
+            score_visits = f"{node.path[-1]['Id']} {node.path[-1]['Name']} D{node.path[-1]['WeekDay']} P{node.path[-1]['Timeslot']} R{node.path[-1]['RoomId']} score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio {node.score_hard / node.visits:.2f} {node.score_soft / node.visits:.2f}"
     else:
         score_visits = f"score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio -inf"
     

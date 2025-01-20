@@ -1,5 +1,5 @@
 from mcts_itc.utils import get_events_by_name
-from mcts_itc.macros import HARD_PENALTY, MIN_WORKING_DAYS_PENALTY, CURRICULUM_COMPACTNESS_PENALTY #, ROOM_STABILITY_PENALTY, ROOM_CAPACITY_PENALTY
+from mcts_itc.macros import HARD_PENALTY, MIN_WORKING_DAYS_PENALTY, CURRICULUM_COMPACTNESS_PENALTY
 
 class ConflictsChecker:
 
