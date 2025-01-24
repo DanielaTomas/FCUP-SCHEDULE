@@ -1,6 +1,7 @@
-from copy import copy, deepcopy
+from copy import deepcopy
 import random, time
 from mcts_itc.utils import find_available_rooms, write_best_simulation_result_to_file, get_events_by_name
+from mcts_itc.macros import HC_IDLE
 
 class HillClimbing:
 
@@ -175,17 +176,14 @@ class HillClimbing:
         return None
 
 
-    def run_hill_climbing(self, best_timetable, i, best_result_soft, start_time, time_limit, max_idle_iterations):
+    def run_hill_climbing(self, best_timetable, i, best_result_soft, start_time, time_limit):
         self.best_result_soft = best_result_soft
 
         neighborhoods = [self.period_move, self.room_move, self.event_move, self.room_stability_move, self.min_working_days_move, self.curriculum_compactness_move]
         idle_iterations = 0
 
-        while idle_iterations < max_idle_iterations and (time.time() - start_time <= time_limit):
+        while idle_iterations < HC_IDLE and (time.time() - start_time <= time_limit):
             current_neighborhood = random.choice(neighborhoods)
-            """ new_timetable = []
-            new_timetable[:i] = copy(best_timetable[:i])
-            new_timetable[i:] = deepcopy(best_timetable[i:]) """
             modified_timetable = current_neighborhood(deepcopy(best_timetable), i)
 
             if not modified_timetable:

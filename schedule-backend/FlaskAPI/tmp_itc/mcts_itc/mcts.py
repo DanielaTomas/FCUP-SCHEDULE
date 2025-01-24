@@ -5,7 +5,6 @@ from mcts_itc.check_conflicts import ConflictsChecker
 from mcts_itc.hill_climbing import HillClimbing
 import time
 import cProfile, pstats, io
-from mcts_itc.macros import HCIdle
 
 #TODO remove prints and profile
 
@@ -173,7 +172,7 @@ class MCTS:
             with open(self.output_filename, 'w') as file:
                 write_best_simulation_result_to_file(simulated_timetable, file)
             if hard_penalty_result == 0:
-                self.best_result_soft = self.hill_climber.run_hill_climbing(simulated_timetable, self.current_node.depth(), self.best_result_soft, start_time, time_limit, HCIdle)
+                self.best_result_soft = self.hill_climber.run_hill_climbing(simulated_timetable, self.current_node.depth(), self.best_result_soft, start_time, time_limit)
                 update_penalties(self.best_result_soft)
 
         simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty_result)
