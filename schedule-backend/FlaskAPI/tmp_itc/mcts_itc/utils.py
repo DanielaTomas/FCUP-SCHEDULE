@@ -42,7 +42,13 @@ def find_available_rooms(event_capacity, rooms, events, available_periods):
     
     
 def get_events_by_name(event_name, events):
-    return [event for event in events if event["Name"] == event_name]
+    evs = []
+    for event in events:
+        if event["Name"] == event_name:
+            evs.append(event)
+            if len(evs) == event["Lectures"]:
+                return evs
+    return evs
  
 
 """ def get_available_periods(event, events):

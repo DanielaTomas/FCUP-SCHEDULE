@@ -1,58 +1,61 @@
 from copy import copy, deepcopy
-import random
+import random, time
 from mcts_itc.utils import find_available_rooms, write_best_simulation_result_to_file, get_events_by_name
 
 class HillClimbing:
 
-    def __init__(self, conflicts_checker, blocks, rooms, output_filename="output/output.txt"):
+    def __init__(self, conflicts_checker, blocks, rooms, days, output_filename="output/output.txt"):
         self.blocks = blocks
         self.rooms = rooms
         self.conflicts_checker = conflicts_checker
+        self.days = days
         self.output_filename = output_filename
-        self.best_result_hard= float('-inf')
         self.best_result_soft = float('-inf')
         
 
     def evaluate_timetable(self, simulated_events):
-        hard_penalty = 0
+        #hard_penalty = 0
         soft_penalty = 0
         event_names = []
-        room_conflicts = {}
+        #room_conflicts = {}
 
         for i, event in enumerate(simulated_events):
-            hard_penalty += self.conflicts_checker.check_event_hard_constraints(event, simulated_events[i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"], room_conflicts)
+            #hard_penalty += self.conflicts_checker.check_event_hard_constraints(event, simulated_events[i+1:], event["RoomId"], event["Timeslot"], event["WeekDay"], room_conflicts)
             soft_penalty += (
                 self.conflicts_checker.check_room_capacity(event, event["RoomId"]) +
                 self.conflicts_checker.check_block_compactness(event, simulated_events, event["Timeslot"], event["WeekDay"])
             )
+            #if hard_penalty != 0: print(f"ola1 {hard_penalty}");return None
             if event["Name"] not in event_names:
                 soft_penalty += (
                     self.conflicts_checker.check_min_working_days(event, simulated_events[i+1:], event["WeekDay"]) +
                     self.conflicts_checker.check_room_stability(event, simulated_events[i+1:], event["RoomId"])
                 )
+            if -soft_penalty <= self.best_result_soft: return None
             event_names.append(event["Name"])
-            if -hard_penalty < self.best_result_hard or (-hard_penalty == self.best_result_hard and -soft_penalty < self.best_result_soft): return None
-        hard_penalty += self.conflicts_checker.check_room_conflicts(room_conflicts)
-        return -hard_penalty, -soft_penalty
+        #hard_penalty += self.conflicts_checker.check_room_conflicts(room_conflicts)
+        #return -hard_penalty, -soft_penalty
+        return -soft_penalty
+    
 
 
     def period_move(self, timetable, i):
-        event = random.choice(timetable[i:])
-        for new_period in event["Available_Periods"]:
+        random_event = random.choice(timetable[i:])
+        for new_period in random_event["Available_Periods"]:
             new_weekday, new_timeslot = new_period
-            if new_period != (event["WeekDay"], event["Timeslot"]) and self.conflicts_checker.check_event_hard_constraints(event, timetable, event["RoomId"], new_timeslot, new_weekday) <= -self.best_result_hard:
-                event["WeekDay"], event["Timeslot"] = new_weekday, new_timeslot
+            if new_period != (random_event["WeekDay"], random_event["Timeslot"]) and self.conflicts_checker.check_event_hard_constraints(random_event, timetable, random_event["RoomId"], new_timeslot, new_weekday) == 0:
+                random_event["WeekDay"], random_event["Timeslot"] = new_weekday, new_timeslot
                 return timetable
         return None
 
 
     def room_move(self, timetable, i):
-        event = random.choice(timetable[i:])
-        available_rooms = find_available_rooms(event["Capacity"], self.rooms, timetable, [(event["WeekDay"], event["Timeslot"])])
+        random_event = random.choice(timetable[i:])
+        available_rooms = find_available_rooms(random_event["Capacity"], self.rooms, timetable, [(random_event["WeekDay"], random_event["Timeslot"])])
         if available_rooms.values() != [set()]:
             for new_room in list(list(available_rooms.values())[0]):
-                if new_room != event["RoomId"] and self.conflicts_checker.check_event_hard_constraints(event, timetable, new_room, event["Timeslot"], event["WeekDay"]) <= -self.best_result_hard:
-                    event["RoomId"] = new_room
+                if new_room != random_event["RoomId"] and self.conflicts_checker.check_event_hard_constraints(random_event, timetable, new_room, random_event["Timeslot"], random_event["WeekDay"]) == 0:
+                    random_event["RoomId"] = new_room
                     return timetable
         return None
 
@@ -70,7 +73,7 @@ class HillClimbing:
 
             for new_room in list(list(available_rooms.values())[0]):
                 if new_room == random_event["RoomId"]: continue
-                elif self.conflicts_checker.check_event_hard_constraints(random_event, timetable, new_room, new_timeslot, new_weekday) <= -self.best_result_hard:
+                elif self.conflicts_checker.check_event_hard_constraints(random_event, timetable, new_room, new_timeslot, new_weekday) == 0:
                     original_weekday, original_timeslot, original_room = random_event["WeekDay"], random_event["Timeslot"], random_event["RoomId"]
                     random_event["WeekDay"], random_event["Timeslot"], random_event["RoomId"] = new_weekday, new_timeslot, new_room
 
@@ -83,54 +86,51 @@ class HillClimbing:
                 if not conflict_event:
                     return timetable
 
-                if (self.conflicts_checker.check_event_hard_constraints(random_event, timetable, conflict_event["RoomId"], conflict_event["Timeslot"], conflict_event["WeekDay"]) <= -self.best_result_hard and 
-                    self.conflicts_checker.check_event_hard_constraints(conflict_event, timetable, original_room, original_timeslot, original_weekday) <= -self.best_result_hard):
-                    random_event["RoomId"], random_event["Timeslot"], random_event["WeekDay"] = conflict_event["RoomId"], conflict_event["Timeslot"], conflict_event["WeekDay"]
-                    conflict_event["RoomId"], conflict_event["Timeslot"], conflict_event["WeekDay"] = original_room, original_timeslot, original_weekday
+                random_event["RoomId"], random_event["Timeslot"], random_event["WeekDay"] = conflict_event["RoomId"], conflict_event["Timeslot"], conflict_event["WeekDay"]
+                conflict_event["RoomId"], conflict_event["Timeslot"], conflict_event["WeekDay"] = original_room, original_timeslot, original_weekday
+
+                if (self.conflicts_checker.check_event_hard_constraints(random_event, timetable, random_event["RoomId"], random_event["Timeslot"], random_event["WeekDay"]) == 0 and 
+                    self.conflicts_checker.check_event_hard_constraints(conflict_event, timetable, conflict_event["RoomId"], conflict_event["Timeslot"], conflict_event["WeekDay"]) == 0):
                     return timetable
         return None
     
 
     def room_stability_move(self, timetable, i):
         course_events = []
-        event = random.choice(timetable[i:])
-        event_name = event["Name"]
+        random_event = random.choice(timetable[i:])
 
-        course_events = get_events_by_name(event_name, timetable[i:])
+        course_events = get_events_by_name(random_event["Name"], timetable[i:])
 
-        if len(course_events) < event["Lectures"]: return None
+        if len(course_events) < random_event["Lectures"]: return None
 
         target_room = random.choice(self.rooms)
-        original_assignments = []
 
         for e in course_events:
             if e["RoomId"] == target_room["Id"]: continue
 
-            original_assignments.append((e, e["RoomId"]))
-
-            if self.conflicts_checker.check_event_hard_constraints(e, timetable, target_room["Id"], e["Timeslot"], e["WeekDay"]) <= -self.best_result_hard:
+            if self.conflicts_checker.check_event_hard_constraints(e, timetable, target_room["Id"], e["Timeslot"], e["WeekDay"]) == 0:
                 e["RoomId"] = target_room["Id"]
             else:
-                for orig_event, orig_room in original_assignments:
-                    orig_event["RoomId"] = orig_room
                 return None
 
         return timetable
     
 
     def curriculum_compactness_move(self, timetable, i):
-        block = random.choice(self.blocks)
+        random_block = random.choice(self.blocks)
 
         isolated_events = []
-        events = []
-        for event_name in block["Events"]:
+        block_events = []
+        for event_name in random_block["Events"]:
             for ev in get_events_by_name(event_name, timetable):
-                events.append(ev)
+                block_events.append(ev)
+                if ev in timetable[i:]:
+                    isolated_events.append(ev)
         
-        for j, event in enumerate(events):
-            if j+1 < len(events) and not(event["WeekDay"] == events[j+1]["WeekDay"] and abs(ev["Timeslot"] - events[j+1]["Timeslot"]) == 1):
-                if event in timetable[i:]:
-                    isolated_events.append(event)
+        for j, event in enumerate(block_events):
+            if j+1 < len(block_events) and event["WeekDay"] == block_events[j+1]["WeekDay"] and abs(ev["Timeslot"] - block_events[j+1]["Timeslot"]) == 1:
+                if event in isolated_events:
+                    isolated_events.remove(event)
 
         if not isolated_events: return None
 
@@ -140,7 +140,7 @@ class HillClimbing:
         for period in event_to_move["Available_Periods"]:
             weekday, timeslot = period
             if (weekday, timeslot) != (event_to_move["WeekDay"], event_to_move["Timeslot"]):
-                adjacent_events = [e for e in events if e["Id"] != event["Id"] and e["WeekDay"] == weekday and abs(e["Timeslot"] - timeslot) == 1]
+                adjacent_events = [e for e in block_events if e["Id"] != event_to_move["Id"] and e["WeekDay"] == weekday and abs(e["Timeslot"] - timeslot) == 1]
                 if adjacent_events:
                     available_periods.append((weekday, timeslot))
 
@@ -152,44 +152,42 @@ class HillClimbing:
         if available_rooms.values() == [set()]: return None
         
         for new_room in list(list(available_rooms.values())[0]):
-            if self.conflicts_checker.check_event_hard_constraints(event_to_move, timetable, new_room, new_timeslot, new_weekday) <= -self.best_result_hard:
+            if self.conflicts_checker.check_event_hard_constraints(event_to_move, timetable, new_room, new_timeslot, new_weekday) == 0:
                 event_to_move["WeekDay"], event_to_move["Timeslot"], event_to_move["RoomId"] = new_weekday, new_timeslot, new_room
                 return timetable
         return None
 
     
     """ def min_working_days_move(self, timetable, i):
-
         penalized_events = [
             event for event in timetable[i:]
-            if self.conflicts_checker.check_min_working_days(event, timetable[i:], event["WeekDay"]) > 0
+            if self.conflicts_checker.check_min_working_days(event, timetable, event["WeekDay"]) > 0
         ]
 
         if not penalized_events: return None
 
         event_to_move = random.choice(penalized_events)
-        all_course = get_events_by_name(event_to_move["Name"], timetable)
-        course = get_events_by_name(event_to_move["Name"], timetable[i:])
 
         events_by_day = {}
-        for event in all_course:
-            if event["WeekDay"] not in events_by_day:
-                events_by_day[event["WeekDay"]] = []
-            events_by_day[event["WeekDay"]].append(event)
+        for event in timetable:
+            if event["Name"] == event_to_move["Name"]:
+                if event["WeekDay"] not in events_by_day:
+                    events_by_day[event["WeekDay"]] = []
+                events_by_day[event["WeekDay"]].append(event)
 
         candidate_days = [day for day, events in events_by_day.items() if len(events) > 1]
         if not candidate_days:
             return None
 
-        source_day = random.choice(candidate_days)
-        events_to_move = [event for event in events_by_day[source_day] if event in course]
+        random_candidate_day = random.choice(candidate_days)
+        events_to_move = [event for event in events_by_day[random_candidate_day] if event_to_move["Name"] == event["Name"] and event in timetable[i:]]
 
         if not events_to_move:
             return None
         
         event_to_move = random.choice(events_to_move)
 
-        all_days = set(range(5))
+        all_days = set(range(self.days))
         taught_days = set(events_by_day.keys())
         available_days = all_days - taught_days
 
@@ -198,25 +196,24 @@ class HillClimbing:
 
         new_weekday = random.choice(list(available_days))
 
-        if self.conflicts_checker.check_event_hard_constraints(event_to_move, timetable, event_to_move["RoomId"], event_to_move["Timeslot"], new_weekday) <= -self.best_result_hard:
+        if self.conflicts_checker.check_event_hard_constraints(event_to_move, timetable, event_to_move["RoomId"], event_to_move["Timeslot"], new_weekday) == 0:
             event_to_move["WeekDay"] = new_weekday
             return timetable
-
         return None """
 
 
-    def run_hill_climbing(self, timetable, i, best_result_hard, best_result_soft, max_idle_iterations):
-        self.best_result_hard = best_result_hard
+    def run_hill_climbing(self, best_timetable, i, best_result_soft, start_time, time_limit, max_idle_iterations):
         self.best_result_soft = best_result_soft
 
         neighborhoods = [self.period_move, self.room_move, self.event_move, self.room_stability_move, self.curriculum_compactness_move]
         idle_iterations = 0
-        best_timetable = copy(timetable)
 
-        while idle_iterations < max_idle_iterations:
+        while idle_iterations < max_idle_iterations and (time.time() - start_time <= time_limit):
             current_neighborhood = random.choice(neighborhoods)
-            new_timetable = deepcopy(timetable)
-            modified_timetable = current_neighborhood(new_timetable, i)
+            """ new_timetable = []
+            new_timetable[:i] = copy(best_timetable[:i])
+            new_timetable[i:] = deepcopy(best_timetable[i:]) """
+            modified_timetable = current_neighborhood(deepcopy(best_timetable), i)
 
             if not modified_timetable:
                 idle_iterations += 1
@@ -225,12 +222,11 @@ class HillClimbing:
             result = self.evaluate_timetable(modified_timetable)
 
             if result is not None: 
-                new_hard, new_soft = result
-                if new_hard >= self.best_result_hard and new_soft > self.best_result_soft:
-                    print(f"({current_neighborhood.__name__}): {self.best_result_hard} -> {new_hard} , {self.best_result_soft} -> {new_soft}") # ------- DEBUG
+                #new_hard, new_soft = result
+                if result > self.best_result_soft:
+                    print(f"({current_neighborhood.__name__}): {self.best_result_soft} -> {result}") # ------- DEBUG
+                    self.best_result_soft = result
                     best_timetable = modified_timetable
-                    self.best_result_hard = new_hard
-                    self.best_result_soft = new_soft
                     with open(self.output_filename, 'w') as file:
                         write_best_simulation_result_to_file(best_timetable, file)
                     idle_iterations = 0
@@ -239,4 +235,4 @@ class HillClimbing:
             else:
                 idle_iterations += 1
 
-        return best_timetable, self.best_result_hard, self.best_result_soft
+        return self.best_result_soft

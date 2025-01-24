@@ -19,7 +19,7 @@ class MCTS:
         self.current_node = self.root
         
         self.conflicts_checker = ConflictsChecker(self.constraints, self.blocks, self.rooms)
-        self.hill_climber = HillClimbing(self.conflicts_checker, self.blocks, self.rooms, output_filename)
+        self.hill_climber = HillClimbing(self.conflicts_checker, self.blocks, self.rooms, days, output_filename)
         
         self.best_result_hard= float('-inf')
         self.best_result_soft = float('-inf')
@@ -95,7 +95,7 @@ class MCTS:
         self.current_node = child_node
 
 
-    def simulation(self):
+    def simulation(self, start_time, time_limit):
 
         def find_best_room_and_period(event, i, simulated_timetable):
             if not event["Available_Periods"]: return None
@@ -144,12 +144,13 @@ class MCTS:
             return -hard_penalty, -soft_penalty
             
 
-        def update_penalties(hard_penalty, soft_penalty):
-            self.best_hard_penalty = max(hard_penalty, self.best_hard_penalty)
-            self.worst_hard_penalty = min(hard_penalty, self.worst_hard_penalty)
+        def update_penalties(soft_penalty, hard_penalty = None):
+            if hard_penalty is not None:
+                self.best_hard_penalty = max(hard_penalty, self.best_hard_penalty)
+                self.worst_hard_penalty = min(hard_penalty, self.worst_hard_penalty)
+                self.current_node.best_hard_penalty_result = max(hard_penalty, self.current_node.best_hard_penalty_result)
             self.best_soft_penalty = max(soft_penalty, self.best_soft_penalty)
             self.worst_soft_penalty = min(soft_penalty, self.worst_soft_penalty)
-            self.current_node.best_hard_penalty_result = max(hard_penalty, self.current_node.best_hard_penalty_result)
             self.current_node.best_soft_penalty_result = max(soft_penalty, self.current_node.best_soft_penalty_result)
 
 
@@ -164,7 +165,7 @@ class MCTS:
                 self.unassigned_events.append(event["Id"])
 
         hard_penalty_result, soft_penalty_result = evaluate_timetable(simulated_timetable)
-        update_penalties(hard_penalty_result, soft_penalty_result)
+        update_penalties(soft_penalty_result, hard_penalty_result)
         
         if (hard_penalty_result > self.best_result_hard) or (hard_penalty_result == self.best_result_hard and soft_penalty_result > self.best_result_soft):
             self.best_result_hard = hard_penalty_result
@@ -172,8 +173,8 @@ class MCTS:
             with open(self.output_filename, 'w') as file:
                 write_best_simulation_result_to_file(simulated_timetable, file)
             if hard_penalty_result == 0:
-                simulated_timetable, self.best_result_hard, self.best_result_soft = self.hill_climber.run_hill_climbing(simulated_timetable, self.current_node.depth(), self.best_result_hard, self.best_result_soft, 1000)
-                update_penalties(self.best_result_hard, self.best_result_soft)
+                self.best_result_soft = self.hill_climber.run_hill_climbing(simulated_timetable, self.current_node.depth(), self.best_result_soft, start_time, time_limit, 1000)
+                update_penalties(self.best_result_soft)
 
         simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty_result)
         simulation_result_soft = self.normalize_soft(self.current_node.best_soft_penalty_result)
@@ -191,7 +192,7 @@ class MCTS:
             node = node.parent
 
 
-    def run_mcts(self, iterations=1500, time_limit=300):
+    def run_mcts(self, iterations=None, time_limit=300):
         profiler = cProfile.Profile()
         profiler.enable()
 
@@ -213,13 +214,16 @@ class MCTS:
 
         start_time = time.time()
         try:
-            for _ in range(iterations):
+            duration = time.time() - start_time
+            i = 0
+            while (iterations is None or i < iterations) and (duration <= time_limit):
                 self.selection()
-                duration = time.time() - start_time
-                if self.current_node.depth() == len(self.events) or duration > time_limit: break
+                if self.current_node.depth() == len(self.events): break
                 self.expansion()
-                simulation_hard, simulation_soft = self.simulation()
+                simulation_hard, simulation_soft = self.simulation(start_time, time_limit)
                 self.backpropagation(simulation_hard, simulation_soft)
+                duration = time.time() - start_time
+                i += 1
         except KeyboardInterrupt:
             print("Execution interrupted by user. Returning the best solution found so far...")
             duration = time.time() - start_time
