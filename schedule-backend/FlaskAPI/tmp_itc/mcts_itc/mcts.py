@@ -5,6 +5,7 @@ from mcts_itc.check_conflicts import ConflictsChecker
 from mcts_itc.hill_climbing import HillClimbing
 import time
 import cProfile, pstats, io
+from mcts_itc.macros import HCIdle
 
 #TODO remove prints and profile
 
@@ -105,9 +106,8 @@ class MCTS:
 
             compactness_weight = min(1, i / (len(simulated_timetable)-1))
 
-            for available_period in event["Available_Periods"]:
-                weekday, timeslot = available_period
-                available_rooms = find_available_rooms(event["Capacity"], self.rooms, simulated_timetable[:i], [available_period])
+            for weekday, timeslot in event["Available_Periods"]:
+                available_rooms = find_available_rooms(event["Capacity"], self.rooms, simulated_timetable[:i], [(weekday,timeslot)])
                 if available_rooms.values() != [set()]:
                     for room in list(list(available_rooms.values())[0]):
                         hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, simulated_timetable[:i], room, timeslot, weekday)
@@ -173,7 +173,7 @@ class MCTS:
             with open(self.output_filename, 'w') as file:
                 write_best_simulation_result_to_file(simulated_timetable, file)
             if hard_penalty_result == 0:
-                self.best_result_soft = self.hill_climber.run_hill_climbing(simulated_timetable, self.current_node.depth(), self.best_result_soft, start_time, time_limit, 1000)
+                self.best_result_soft = self.hill_climber.run_hill_climbing(simulated_timetable, self.current_node.depth(), self.best_result_soft, start_time, time_limit, HCIdle)
                 update_penalties(self.best_result_soft)
 
         simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty_result)
