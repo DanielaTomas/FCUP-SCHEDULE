@@ -1,8 +1,8 @@
 from copy import copy
-from mcts_itc.mcts_node import *
-from mcts_itc.utils import *
-from mcts_itc.check_conflicts import ConflictsChecker
-from mcts_itc.hill_climbing import HillClimbing
+from algorithm.mcts_node import *
+from algorithm.utils import *
+from algorithm.check_conflicts import ConflictsChecker
+from algorithm.hill_climbing import HillClimbing
 import time
 import cProfile, pstats, io
 
@@ -12,14 +12,12 @@ class MCTS:
 
     def __init__(self, current_timetable, days, periods_per_day, output_filename = "output\output.txt"):
         self.rooms = current_timetable["rooms"]
-        self.blocks = current_timetable["blocks"]
-        self.constraints = current_timetable["constraints"]
-        self.events = add_event_ids_and_priority(current_timetable["events"], days, periods_per_day, self.blocks, self.constraints)
+        self.events = add_event_ids_and_priority(current_timetable["events"], days, periods_per_day, current_timetable["blocks"], current_timetable["constraints"])
         self.root = MCTSNode(root_expansion_limit(self.events[0], self.rooms, self.events[:0]))
         self.current_node = self.root
         
-        self.conflicts_checker = ConflictsChecker(self.constraints, self.blocks, self.rooms)
-        self.hill_climber = HillClimbing(self.conflicts_checker, self.blocks, self.rooms, days, output_filename)
+        self.conflicts_checker = ConflictsChecker(current_timetable["constraints"], current_timetable["blocks"], self.rooms)
+        self.hill_climber = HillClimbing(self.conflicts_checker, current_timetable["blocks"], self.rooms, days, output_filename)
         
         self.best_result_hard= float('-inf')
         self.best_result_soft = float('-inf')

@@ -12,7 +12,7 @@ def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraint
                                 (new_event["Lectures"]-new_event["MinWorkingDays"])*4 #-new_event["Lectures"]
                                 - len(new_event["Available_Periods"])*3
                                 + new_event["Capacity"]*2
-                                + sum(1 for block in blocks if new_event["Name"] in block["Events"])
+                                + sum(1 for block in blocks.values() if event["Name"] in block["Events"])
                                 )
             events_to_visit.append(new_event)
             unique_id += 1
@@ -27,14 +27,13 @@ def root_expansion_limit(event, rooms, events):
 
 
 def find_available_rooms(event_capacity, rooms, events, available_periods):
-    period_room_availability = {period: {room["Id"] for room in rooms} for period in available_periods}
-
+    period_room_availability = {period: set(rooms.keys()) for period in available_periods}
     for other_event in events:
         occupied_period = (other_event["WeekDay"], other_event["Timeslot"])
         if occupied_period in period_room_availability:
             period_room_availability[occupied_period].discard(other_event["RoomId"])
 
-    suitable_rooms = {room["Id"] for room in rooms if room["Capacity"] >= event_capacity}
+    suitable_rooms = {room_id for room_id, room in rooms.items() if room["Capacity"] >= event_capacity}
     for period in available_periods:
         if period_room_availability[period]:
             period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period] 
@@ -49,42 +48,20 @@ def get_events_by_name(event_name, events):
             if len(evs) == event["Lectures"]:
                 return evs
     return evs
- 
 
-""" def get_available_periods(event, events):
-    available_periods = set(event["Available_Periods"])
-    periods_to_remove = set()
 
-    for other_event in events:
-        for available_period in available_periods:
-            weekday,timeslot = available_period
-            if other_event["Id"] != event["Id"] and other_event["WeekDay"] is not None and other_event["Timeslot"] is not None and other_event["WeekDay"] == weekday and other_event["Timeslot"] == timeslot:
-                if other_event['Name'] == event["Name"]:
-                    periods_to_remove.add((weekday,timeslot))
+def get_valid_periods(event, constraints, days, periods_per_day): #TODO debug
+    available_periods = set((weekday, timeslot) for weekday in range(days) for timeslot in range(periods_per_day))
 
-    available_periods -= periods_to_remove
-               
-    if available_periods:                
+    event_constraints = constraints.get(event["Name"], [])
+    restricted_slots = set((constraint["WeekDay"], constraint["Timeslot"]) for constraint in event_constraints)
+    available_periods -= restricted_slots
+    
+    if available_periods:
         available_periods_list = list(available_periods)
         random.shuffle(available_periods_list)
         return available_periods_list
-    return None """
-
-
-def get_valid_periods(event, constraints, days, periods_per_day):
-    all_slots = set((weekday, timeslot) for weekday in range(days) for timeslot in range(periods_per_day))
-    available_periods = set(all_slots)
-
-    for constraint in constraints:
-        for weekday in range(days):
-            for timeslot in range(periods_per_day):
-                if constraint["Id"] == event["Name"] and constraint["WeekDay"] == weekday and constraint["Timeslot"] == timeslot:
-                    available_periods.discard((weekday,timeslot))
-                    
-    if available_periods:                
-        available_periods_list = list(available_periods)
-        random.shuffle(available_periods_list)
-        return available_periods_list
+    
     return None
 
 

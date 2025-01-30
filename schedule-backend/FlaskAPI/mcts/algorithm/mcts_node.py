@@ -9,7 +9,6 @@ class MCTSNode:
         self.visits = 0
         self.score_hard = 0
         self.score_soft = 0
-        self.discrepancy = 0
         self.best_hard_penalty_result = float("-inf")
         self.best_soft_penalty_result = float("-inf")
         self.expansion_limit = expansion_limit

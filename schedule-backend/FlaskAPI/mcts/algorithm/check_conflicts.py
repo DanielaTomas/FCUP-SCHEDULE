@@ -1,11 +1,11 @@
-from mcts_itc.utils import get_events_by_name
-from mcts_itc.macros import HARD_PENALTY, MIN_WORKING_DAYS_PENALTY, CURRICULUM_COMPACTNESS_PENALTY
+from algorithm.utils import get_events_by_name
+from algorithm.macros import HARD_PENALTY, MIN_WORKING_DAYS_PENALTY, CURRICULUM_COMPACTNESS_PENALTY
 
 class ConflictsChecker:
 
     def __init__(self, constraints, blocks, rooms):
         self.constraints = constraints
-        self.blocks = blocks
+        self.blocks = blocks.values()
         self.rooms = rooms
 
 
@@ -54,8 +54,10 @@ class ConflictsChecker:
 
     def check_event_unavailability_constraints(self, event, timeslot, weekday):
         penalty = 0
-        for constraint in self.constraints:
-            if constraint["Id"] == event["Name"] and self.check_conflict_time(constraint, timeslot, weekday):
+        event_constraints = self.constraints.get(event["Name"], [])
+
+        for constraint in event_constraints:
+            if self.check_conflict_time(constraint, timeslot, weekday):
                 penalty += HARD_PENALTY
         return penalty
 
@@ -87,6 +89,7 @@ class ConflictsChecker:
     def check_block_compactness(self, event, other_events, timeslot, weekday):
         if weekday is None or timeslot is None: return 0
         penalty = 0
+        
         for block in self.blocks:
             if event["Name"] in block["Events"]:
                 adjacent_found = False
@@ -118,9 +121,8 @@ class ConflictsChecker:
     
     
     def check_room_capacity(self, event, room_id):
-        for room in self.rooms:
-            if room["Id"] == room_id: 
-                if room["Capacity"] < event["Capacity"]:
-                    return event["Capacity"] - room["Capacity"]
-                break
+        room = self.rooms.get(room_id)
+        if room is None: return 0
+        if room["Capacity"] < event["Capacity"]:
+            return event["Capacity"] - room["Capacity"]
         return 0

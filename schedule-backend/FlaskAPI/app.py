@@ -9,7 +9,7 @@ from config import DevelopmentConfig as conf
 from json_provider import UpdatedJSONProvider
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 import pymysql.cursors
-from tmp_itc.mcts_itc import *
+from mcts.algorithm import *
 
 host = os.environ.get('FLASK_SERVER_HOST', conf.HOST)
 port = os.environ.get('FLASK_SERVER_PORT', conf.PORT)
