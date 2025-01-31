@@ -1,12 +1,12 @@
-from algorithm.utils import get_events_by_name
 from algorithm.macros import HARD_PENALTY, MIN_WORKING_DAYS_PENALTY, CURRICULUM_COMPACTNESS_PENALTY
 
 class ConflictsChecker:
 
-    def __init__(self, constraints, blocks, rooms):
+    def __init__(self, constraints, blocks, rooms, name_to_event_ids):
         self.constraints = constraints
         self.blocks = blocks.values()
         self.rooms = rooms
+        self.name_to_event_ids = name_to_event_ids
 
 
     @staticmethod
@@ -17,7 +17,7 @@ class ConflictsChecker:
 
 
     # Hard Constraints:
-
+    
     def check_event_hard_constraints(self, event, other_events, room_id, timeslot, weekday, room_conflicts = None):
         if timeslot is None or weekday is None or room_id is None: return HARD_PENALTY
 
@@ -26,8 +26,8 @@ class ConflictsChecker:
             + self.check_block_constraints(event, other_events, timeslot, weekday)
         )
         
-        for other_event in other_events:
-            if other_event["Id"] != event["Id"] and self.check_conflict_time(other_event, timeslot, weekday):
+        for other_event in other_events.values():
+            if self.check_conflict_time(other_event, timeslot, weekday):
                 if other_event['Name'] == event["Name"]:
                     penalty += HARD_PENALTY
                 else:
@@ -38,7 +38,30 @@ class ConflictsChecker:
                         penalty += HARD_PENALTY
         return penalty
     
+
+    def check_event_unavailability_constraints(self, event, timeslot, weekday):
+        penalty = 0
+        event_constraints = self.constraints.get(event["Name"], [])
+
+        for constraint in event_constraints:
+            if self.check_conflict_time(constraint, timeslot, weekday):
+                penalty += HARD_PENALTY
+        return penalty
     
+
+    def check_block_constraints(self, event, other_events, timeslot, weekday):
+        conflict = set()
+        for block in self.blocks:
+            if event["Name"] in block["Events"]:
+                for e_name in block["Events"]:
+                    evs = self.name_to_event_ids.get(e_name)
+                    for ev in evs:
+                        ev = other_events.get(ev)
+                        if ev is not None and ev["Id"] != event["Id"] and self.check_conflict_time(ev, timeslot, weekday):
+                            conflict.add((event["Id"], ev["Id"]))
+        return len(conflict)
+    
+
     def check_room_conflicts(self, room_conflicts):
         penalty = 0
         for room_penalty in room_conflicts.values():
@@ -52,39 +75,23 @@ class ConflictsChecker:
                 room_conflicts[conflict_key] = HARD_PENALTY
 
 
-    def check_event_unavailability_constraints(self, event, timeslot, weekday):
-        penalty = 0
-        event_constraints = self.constraints.get(event["Name"], [])
-
-        for constraint in event_constraints:
-            if self.check_conflict_time(constraint, timeslot, weekday):
-                penalty += HARD_PENALTY
-        return penalty
-
-
-    def check_block_constraints(self, event, other_events, timeslot, weekday):
-        conflict = set()
-        for block in self.blocks:
-            if event["Name"] in block["Events"]:
-                for e_name in block["Events"]:
-                    evs = get_events_by_name(e_name, other_events)
-                    for ev in evs:
-                        if ev["Id"] != event["Id"] and self.check_conflict_time(ev, timeslot, weekday):
-                            conflict.add((event["Id"], ev["Id"]))
-        return len(conflict)
-
-
     # Soft Constraints:
 
 
     def check_min_working_days(self, event, events, weekday):
-        event_days = {ev["WeekDay"] for ev in events if ev["Name"] == event["Name"] and ev["Id"] != event["Id"] and ev["WeekDay"] is not None}
+        evs = self.name_to_event_ids.get(event["Name"])
+        event_days = set()
+        for ev in evs:
+            ev = events.get(ev, None)
+            if ev is not None and ev["WeekDay"] is not None and ev["Id"] != event["Id"]:
+                event_days.add(ev["WeekDay"])
+
         if weekday is not None:
             event_days.add(weekday)
         if len(event_days) < event["MinWorkingDays"]:
             return (event["MinWorkingDays"] - len(event_days)) * MIN_WORKING_DAYS_PENALTY
         return 0
-
+    
 
     def check_block_compactness(self, event, other_events, timeslot, weekday):
         if weekday is None or timeslot is None: return 0
@@ -95,8 +102,10 @@ class ConflictsChecker:
                 adjacent_found = False
 
                 for e_name in block["Events"]:
-                    for ev in get_events_by_name(e_name, other_events):
-                        if ev["Id"] != event["Id"]:
+                    evs = self.name_to_event_ids.get(e_name)
+                    for ev in evs:
+                        ev = other_events.get(ev)
+                        if ev is not None and ev["Id"] != event["Id"]:
                             if ev["Id"] == event["Id"] or ev["WeekDay"] is None or ev["Timeslot"] is None:
                                 continue
                             if ev["WeekDay"] == weekday and abs(timeslot - ev["Timeslot"]) == 1:
@@ -110,13 +119,16 @@ class ConflictsChecker:
                     penalty += CURRICULUM_COMPACTNESS_PENALTY
         return penalty
 
-
+    
     def check_room_stability(self, event, other_events, room_id):
         if room_id is None: return 0
         different_rooms = set()
-        for other_event in other_events:
-            if other_event["RoomId"] is not None and other_event["Id"] != event["Id"] and other_event["Name"] == event["Name"] and other_event["RoomId"] != room_id:
-                different_rooms.add(other_event["RoomId"])
+        evs = self.name_to_event_ids.get(event["Name"])
+
+        for ev in evs:
+            ev = other_events.get(ev)
+            if ev is not None and ev["RoomId"] is not None and ev["Id"] != event["Id"] and ev["RoomId"] != room_id:
+                different_rooms.add(ev["RoomId"])
         return len(different_rooms)
     
     

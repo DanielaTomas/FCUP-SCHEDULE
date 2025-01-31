@@ -44,7 +44,7 @@ def parse_input_data(input_data, db):
                 print(f"Skipping invalid course line: {line}")
                 continue
             course_id, teacher, num_lectures, min_days, num_students = parts[0], parts[1], int(parts[2]), int(parts[3]), int(parts[4])
-            db["events"].append({"Name": course_id, "Teacher": teacher, "Lectures": num_lectures, "MinWorkingDays": min_days, "Capacity": num_students, "Timeslot": None, "WeekDay": None, "RoomId": None})
+            db["events"].append({"Name": course_id, "Teacher": teacher, "Lectures": num_lectures, "MinWorkingDays": min_days, "Capacity": num_students})
 
         elif current_section == "rooms":
             parts = line.split()
