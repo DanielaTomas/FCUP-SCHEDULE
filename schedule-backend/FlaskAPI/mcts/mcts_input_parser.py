@@ -1,11 +1,11 @@
-from mcts_itc.mcts import *
+from algorithm.mcts import *
 
 def reset_db():
     return {
         "events": [],
-        "blocks": [],
-        "rooms": [],
-        "constraints": []
+        "blocks": {},
+        "rooms": {},
+        "constraints": {}
 }
 
 def parse_input_data(input_data, db):
@@ -44,7 +44,7 @@ def parse_input_data(input_data, db):
                 print(f"Skipping invalid course line: {line}")
                 continue
             course_id, teacher, num_lectures, min_days, num_students = parts[0], parts[1], int(parts[2]), int(parts[3]), int(parts[4])
-            db["events"].append({"Name": course_id, "Teacher": teacher, "Lectures": num_lectures, "MinWorkingDays": min_days, "Capacity": num_students, "Timeslot": None, "WeekDay": None, "RoomId": None})
+            db["events"].append({"Name": course_id, "Teacher": teacher, "Lectures": num_lectures, "MinWorkingDays": min_days, "Capacity": num_students})
 
         elif current_section == "rooms":
             parts = line.split()
@@ -52,7 +52,7 @@ def parse_input_data(input_data, db):
                 print(f"Skipping invalid room line: {line}")
                 continue
             room_id, capacity = parts[0], int(parts[1])
-            db["rooms"].append({"Id": room_id, "Capacity": capacity})
+            db["rooms"][room_id] = {"Capacity": capacity}
 
         elif current_section == "curricula":
             parts = line.split()
@@ -61,7 +61,7 @@ def parse_input_data(input_data, db):
                 continue
             curriculum_id, num_courses = parts[0], int(parts[1])
             member_ids = parts[2:2 + num_courses]
-            db["blocks"].append({"Id": curriculum_id, "Events": member_ids})
+            db["blocks"][curriculum_id] = {"Events": member_ids}
 
         elif current_section == "unavailability_constraints":
             parts = line.split()
@@ -69,7 +69,10 @@ def parse_input_data(input_data, db):
                 print(f"Skipping invalid unavailability constraint line: {line}")
                 continue
             course_id, day, day_timeslot = parts[0], int(parts[1]), int(parts[2])
-            db["constraints"].append({"Id": course_id, "WeekDay": day, "Timeslot": day_timeslot})
+            if course_id not in db["constraints"]:
+                db["constraints"][course_id] = []
+            db["constraints"][course_id].append({"WeekDay": day, "Timeslot": day_timeslot})
+
     return days, periods_per_day
 
 
@@ -90,7 +93,7 @@ for input_file in input_files:
     output_file = f"output\{input_file.split('.')[0]}_output.txt"
     
     mcts = MCTS(db, days, periods_per_day, output_file)
-    best_solution = mcts.run_mcts(1000000000000000)
+    best_solution = mcts.run_mcts()
 
     """ output_file = f"final_output\{input_file.split('.')[0]}_final_output.txt"
     with open(output_file, 'w') as file:

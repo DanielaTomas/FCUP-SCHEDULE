@@ -1,17 +1,14 @@
-from copy import deepcopy
 import math
 
 class MCTSNode:
 
-    def __init__(self, timetable, expansion_limit, parent = None):
-        self.timetable = deepcopy(timetable)
+    def __init__(self, expansion_limit, path = [], parent = None):
         self.parent = parent
         self.children = []
-        self.path = []
+        self.path = path
         self.visits = 0
         self.score_hard = 0
         self.score_soft = 0
-        self.discrepancy = 0
         self.best_hard_penalty_result = float("-inf")
         self.best_soft_penalty_result = float("-inf")
         self.expansion_limit = expansion_limit
@@ -21,8 +18,8 @@ class MCTSNode:
         return len(self.path)
     
 
-    def is_fully_expanded(self):
-        if self.depth() >= len(self.timetable["events"]): return True
+    def is_fully_expanded(self, num_events):
+        if self.depth() >= num_events: return True
         return len(self.children) < self.expansion_limit
         
 
@@ -43,11 +40,11 @@ class MCTSNode:
         return best_children[choices_weights.index(max(choices_weights))]
 
 
-    '''
+    """
     def best_child(self, c_param=1.4, hard_weight=0.7, soft_weight=0.3):
         choices_weights = [
             (hard_weight*child.score_hard + soft_weight*child.score_soft) + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
             for child in self.children
         ]
         return self.children[choices_weights.index(max(choices_weights))]
-    '''
+    """
