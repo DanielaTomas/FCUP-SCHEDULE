@@ -20,12 +20,12 @@ class HillClimbing:
         event_names = []
 
         for event in simulated_events.values():
-            events_to_check = dict_slice(simulated_events, event["Id"], True)
             soft_penalty += (
                 self.conflicts_checker.check_room_capacity(event, event["RoomId"]) +
                 self.conflicts_checker.check_block_compactness(event, simulated_events, event["Timeslot"], event["WeekDay"])
             )
             if event["Name"] not in event_names:
+                events_to_check = dict_slice(simulated_events, event["Id"], True)
                 soft_penalty += (
                     self.conflicts_checker.check_min_working_days(event, events_to_check, event["WeekDay"]) +
                     self.conflicts_checker.check_room_stability(event, events_to_check, event["RoomId"])
@@ -35,8 +35,8 @@ class HillClimbing:
         return -soft_penalty
     
 
-    def period_move(self, timetable, unsecheduled_events):
-        random_event = random.choice(list(unsecheduled_events.values()))
+    def period_move(self, timetable, unscheduled_events):
+        random_event = random.choice(list(unscheduled_events.values()))
 
         for new_period in random_event["Available_Periods"]:
             new_weekday, new_timeslot = new_period
@@ -46,8 +46,8 @@ class HillClimbing:
         return None
 
 
-    def room_move(self, timetable, unsecheduled_events):
-        random_event = random.choice(list(unsecheduled_events.values()))
+    def room_move(self, timetable, unscheduled_events):
+        random_event = random.choice(list(unscheduled_events.values()))
 
         available_rooms = find_available_rooms(random_event["Capacity"], self.rooms, timetable.values(), [(random_event["WeekDay"], random_event["Timeslot"])])
         if available_rooms.values() != [set()]:
@@ -58,8 +58,8 @@ class HillClimbing:
         return None
 
 
-    def event_move(self, timetable, unsecheduled_events):
-        random_event = random.choice(list(unsecheduled_events.values()))
+    def event_move(self, timetable, unscheduled_events):
+        random_event = random.choice(list(unscheduled_events.values()))
 
         for new_weekday, new_timeslot in random_event["Available_Periods"]:
             if (new_weekday, new_timeslot) == (random_event["WeekDay"], random_event["Timeslot"]): continue
@@ -90,19 +90,17 @@ class HillClimbing:
         return None
     
 
-    def room_stability_move(self, timetable, unsecheduled_events):
-        course_events = []
-        random_event = random.choice(list(unsecheduled_events.values()))
+    def room_stability_move(self, timetable, unscheduled_events):
+        random_event = random.choice(list(unscheduled_events.values()))
 
         course_events = self.name_to_event_ids.get(random_event["Name"])
+        course_events = [unscheduled_events.get(event_id) for event_id in course_events if event_id in unscheduled_events]
 
-        course_events = {unsecheduled_events.get(event_id) for event_id in course_events if event_id in unsecheduled_events.keys()}
-        
         if len(course_events) < random_event["Lectures"]: return None
 
         target_room_id = random.choice(list(self.rooms.keys()))
 
-        for e in course_events.values():
+        for e in course_events:
             if e["RoomId"] != target_room_id:
                 if self.conflicts_checker.check_event_hard_constraints(e, timetable, target_room_id, e["Timeslot"], e["WeekDay"]) == 0:
                     e["RoomId"] = target_room_id
@@ -112,15 +110,17 @@ class HillClimbing:
         return timetable
 
 
-    def curriculum_compactness_move(self, timetable, i):
+    def curriculum_compactness_move(self, timetable, unscheduled_events):
         random_block = random.choice(list(self.blocks))
 
         isolated_events = []
         block_events = []
         for event_name in random_block["Events"]:
-            for ev in get_events_by_name(event_name, timetable):
+            evs = self.name_to_event_ids.get(event_name)
+            for ev in evs:
+                ev = timetable.get(ev)
                 block_events.append(ev)
-                if ev in timetable[i:]:
+                if ev["Id"] in unscheduled_events:
                     isolated_events.append(ev)
         
         for j, event in enumerate(block_events):
@@ -142,7 +142,7 @@ class HillClimbing:
         if not available_periods: return None
 
         new_weekday, new_timeslot = random.choice(available_periods)
-        available_rooms = find_available_rooms(event_to_move["Capacity"], self.rooms, timetable, [(new_weekday, new_timeslot)])
+        available_rooms = find_available_rooms(event_to_move["Capacity"], self.rooms, timetable.values(), [(new_weekday, new_timeslot)])
 
         if available_rooms.values() == [set()]: return None
         
@@ -153,9 +153,9 @@ class HillClimbing:
         return None
 
     
-    def min_working_days_move(self, timetable, i):
+    def min_working_days_move(self, timetable, unscheduled_events):
         penalized_events = [
-            event for event in timetable[i:]
+            event for event in unscheduled_events.values()
             if self.conflicts_checker.check_min_working_days(event, timetable, event["WeekDay"]) > 0
         ]
 
@@ -163,7 +163,8 @@ class HillClimbing:
 
         event_to_move = random.choice(penalized_events)
 
-        taught_days = {day for event in timetable if event["Name"] == event_to_move["Name"] for day in [event["WeekDay"]]}
+        course = self.name_to_event_ids.get(event_to_move["Name"])
+        taught_days = {timetable.get(event_id)["WeekDay"] for event_id in course}
 
         available_days = set(range(self.days)) - taught_days
 
@@ -172,7 +173,7 @@ class HillClimbing:
 
         for new_weekday, new_timeslot in event_to_move["Available_Periods"]:
             if new_weekday in available_days:
-                available_rooms = find_available_rooms(event_to_move["Capacity"], self.rooms, timetable, [(new_weekday,new_timeslot)])
+                available_rooms = find_available_rooms(event_to_move["Capacity"], self.rooms, timetable.values(), [(new_weekday,new_timeslot)])
                 if available_rooms.values() == [set()]: return None
                 for new_room in list(list(available_rooms.values())[0]):
                     if self.conflicts_checker.check_event_hard_constraints(event_to_move, timetable, new_room, new_timeslot, new_weekday) == 0:
@@ -184,15 +185,15 @@ class HillClimbing:
     def run_hill_climbing(self, best_timetable, start_key, best_result_soft, start_time, time_limit):
         self.best_result_soft = best_result_soft
 
-        #neighborhoods = [(self.period_move,1), (self.room_move,1), (self.event_move,0.9), (self.room_stability_move,0.7), (self.min_working_days_move,0.3), (self.curriculum_compactness_move,0.7)]
-        neighborhoods = [(self.period_move,1), (self.room_move,1), (self.event_move,0.9)]
+        neighborhoods = [(self.period_move,1), (self.room_move,1), (self.event_move,1), (self.room_stability_move,0.7), (self.min_working_days_move,0.3), (self.curriculum_compactness_move,0.7)]
+
         idle_iterations = 0
 
         while idle_iterations < HC_IDLE and (time.time() - start_time <= time_limit):
             current_neighborhood, _ = random.choices(neighborhoods, weights=[weight for _, weight in neighborhoods], k=1)[0]
             timetable = deepcopy(best_timetable)
-            unsecheduled_events = dict_slice(timetable, start_key)
-            modified_timetable = current_neighborhood(timetable, unsecheduled_events)
+            unscheduled_events = dict_slice(timetable, start_key)
+            modified_timetable = current_neighborhood(timetable, unscheduled_events)
 
             if not modified_timetable:
                 idle_iterations += 1

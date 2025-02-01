@@ -27,7 +27,7 @@ class ConflictsChecker:
         )
         
         for other_event in other_events.values():
-            if self.check_conflict_time(other_event, timeslot, weekday):
+            if other_event["Id"] != event["Id"] and self.check_conflict_time(other_event, timeslot, weekday):
                 if other_event['Name'] == event["Name"]:
                     penalty += HARD_PENALTY
                 else:

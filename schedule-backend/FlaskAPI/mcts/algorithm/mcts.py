@@ -160,6 +160,7 @@ class MCTS:
                 event["RoomId"], event["WeekDay"], event["Timeslot"] = best_room_and_period  
                 assigned_events[event["Id"]] = event 
             else: 
+                #event["Priority"] *= 2
                 self.unassigned_events.add(event["Id"])
                 event["RoomId"], event["WeekDay"], event["Timeslot"] = None, None, None
                 assigned_events[event["Id"]] = event 
@@ -172,9 +173,9 @@ class MCTS:
             self.best_result_soft = soft_penalty_result
             with open(self.output_filename, 'w') as file:
                 write_best_simulation_result_to_file(list(assigned_events.values()), file)
-            #if hard_penalty_result == 0:
-                #self.best_result_soft = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.best_result_soft, start_time, time_limit)
-                #update_penalties(self.best_result_soft)
+            if hard_penalty_result == 0:
+                self.best_result_soft = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.best_result_soft, start_time, time_limit)
+                update_penalties(self.best_result_soft)
 
         simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty_result)
         simulation_result_soft = self.normalize_soft(self.current_node.best_soft_penalty_result)
