@@ -1,6 +1,6 @@
 from copy import deepcopy
 import random, time
-from algorithm.utils import find_available_rooms, write_best_simulation_result_to_file, get_events_by_name, dict_slice
+from algorithm.utils import find_available_rooms, write_best_simulation_result_to_file, dict_slice
 from algorithm.macros import HC_IDLE
 
 class HillClimbing:
@@ -184,15 +184,15 @@ class HillClimbing:
 
     def run_hill_climbing(self, best_timetable, start_key, best_result_soft, start_time, time_limit):
         self.best_result_soft = best_result_soft
-
-        neighborhoods = [(self.period_move,1), (self.room_move,1), (self.event_move,1), (self.room_stability_move,0.7), (self.min_working_days_move,0.3), (self.curriculum_compactness_move,0.7)]
-
+        neighborhoods = [(self.period_move,1), (self.room_move,1), (self.event_move,1), (self.room_stability_move,0.7), (self.min_working_days_move,0.5), (self.curriculum_compactness_move,0.7)]
         idle_iterations = 0
+        modified_timetable = best_timetable
 
         while idle_iterations < HC_IDLE and (time.time() - start_time <= time_limit):
             current_neighborhood, _ = random.choices(neighborhoods, weights=[weight for _, weight in neighborhoods], k=1)[0]
-            timetable = deepcopy(best_timetable)
-            unscheduled_events = dict_slice(timetable, start_key)
+            if modified_timetable:
+                timetable = deepcopy(best_timetable)
+                unscheduled_events = dict_slice(timetable, start_key)
             modified_timetable = current_neighborhood(timetable, unscheduled_events)
 
             if not modified_timetable:

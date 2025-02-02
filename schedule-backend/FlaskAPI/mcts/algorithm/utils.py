@@ -9,8 +9,6 @@ def dict_slice(d, start_key, next_iteration = False):
 
 
 def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraints):
-    #events_to_visit_ids = []
-    #events_to_visit = {}
     events_to_visit = []
     name_to_event_ids = {}
     unique_id = 0
@@ -25,8 +23,6 @@ def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraint
                                     + new_event["Capacity"] * 2
                                     + sum(1 for block in blocks.values() if event["Name"] in block["Events"])
                                     )
-            #events_to_visit[unique_id] = new_event
-            #events_to_visit_ids.append((unique_id,new_event["Priority"]))
             events_to_visit.append(new_event)
 
             if event["Name"] not in name_to_event_ids:
@@ -34,9 +30,7 @@ def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraint
             name_to_event_ids[event["Name"]].add(unique_id)
             
             unique_id += 1
-    
-    #sorted_event_ids = sorted(events_to_visit_ids, key=lambda event: (event[1], random.random()), reverse=True)
-    #sorted_events = dict(sorted(events_to_visit.items(), key=lambda item: (item[1]["Priority"], random.random()), reverse=True))
+
     sorted_events = sorted(events_to_visit, key=lambda event: (event["Priority"], random.random()), reverse=True)
 
     return sorted_events, name_to_event_ids
@@ -60,16 +54,6 @@ def find_available_rooms(event_capacity, rooms, events, available_periods):
         if period_room_availability[period]:
             period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period] 
     return period_room_availability
-    
-    
-def get_events_by_name(event_name, events):
-    evs = []
-    for event in events:
-        if event["Name"] == event_name:
-            evs.append(event)
-            if len(evs) == event["Lectures"]:
-                return evs
-    return evs
 
 
 def get_valid_periods(event, constraints, days, periods_per_day):
