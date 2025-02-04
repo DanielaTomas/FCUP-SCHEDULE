@@ -25,7 +25,7 @@ class MCTS:
         self.best_soft_penalty = float('-inf')
         self.worst_soft_penalty = float('inf')
 
-        self.unassigned_events = set()
+        self.previous_unassigned_events = set()
         self.output_filename = output_filename
 
 
@@ -119,7 +119,7 @@ class MCTS:
             return random.choice(candidates) if candidates else None
         
 
-        def evaluate_timetable(simulated_timetable):
+        def evaluate_timetable(simulated_timetable, unassigned_events = []):
             hard_penalty = 0
             soft_penalty = 0
             event_names = []
@@ -134,7 +134,7 @@ class MCTS:
                     soft_penalty += (self.conflicts_checker.check_min_working_days(event, events_to_check, event["WeekDay"])
                                  + self.conflicts_checker.check_room_stability(event, events_to_check, event["RoomId"]))
                 event_names.append(event["Name"])
-            hard_penalty += self.conflicts_checker.check_room_conflicts(room_conflicts)
+            hard_penalty += self.conflicts_checker.check_room_conflicts(room_conflicts) + len(unassigned_events)
             return -hard_penalty, -soft_penalty
             
 
@@ -148,19 +148,20 @@ class MCTS:
 
 
         assigned_events = {event["Id"]: event for event in self.current_node.path}  #TODO path -> dict?
-        remaining_events = sorted(self.events[self.current_node.depth():], key=lambda event: (event["Id"] in self.unassigned_events, event["Priority"], random.random()), reverse=True)
+        unassigned_events = set()
+        remaining_events = sorted(self.events[self.current_node.depth():], key=lambda event: (event["Id"] in self.previous_unassigned_events, event["Priority"], random.random()), reverse=True)
 
         for i, event in enumerate(remaining_events):
             best_room_and_period = find_best_room_and_period(event, i+self.current_node.depth(), assigned_events)
             if best_room_and_period:
                 event["RoomId"], event["WeekDay"], event["Timeslot"] = best_room_and_period  
+                assigned_events[event["Id"]] = event 
             else: 
-                self.unassigned_events.add(event["Id"])
-                event["Priority"] *= 2
-                event["RoomId"], event["WeekDay"], event["Timeslot"] = None, None, None
-            assigned_events[event["Id"]] = event 
+                self.previous_unassigned_events.add(event["Id"])
+                unassigned_events.add(event["Id"])
+                #event["Priority"] *= 2
 
-        hard_penalty_result, soft_penalty_result = evaluate_timetable(assigned_events)
+        hard_penalty_result, soft_penalty_result = evaluate_timetable(assigned_events, unassigned_events)
         update_penalties(soft_penalty_result, hard_penalty_result)
         
         if (hard_penalty_result > self.global_best_hard_penalty) or (hard_penalty_result == self.global_best_hard_penalty and soft_penalty_result > self.global_best_soft_penalty):
@@ -168,7 +169,7 @@ class MCTS:
             self.global_best_soft_penalty = soft_penalty_result
             with open(self.output_filename, 'w') as file:
                 write_best_simulation_result_to_file(list(assigned_events.values()), file)
-            if hard_penalty_result == 0:
+            if len(unassigned_events) == 0 and hard_penalty_result == 0:
                 self.global_best_soft_penalty = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
                 update_penalties(self.global_best_soft_penalty)
 

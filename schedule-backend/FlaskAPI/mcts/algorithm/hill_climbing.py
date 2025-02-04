@@ -186,13 +186,13 @@ class HillClimbing:
         self.best_result_soft = best_result_soft
         neighborhoods = [(self.period_move,1), (self.room_move,1), (self.event_move,1), (self.room_stability_move,0.7), (self.min_working_days_move,0.5), (self.curriculum_compactness_move,0.7)]
         idle_iterations = 0
-        modified_timetable = best_timetable
+        #modified_timetable = best_timetable
 
         while idle_iterations < HC_IDLE and (time.time() - start_time <= time_limit):
             current_neighborhood, _ = random.choices(neighborhoods, weights=[weight for _, weight in neighborhoods], k=1)[0]
-            if modified_timetable:
-                timetable = deepcopy(best_timetable)
-                unscheduled_events = dict_slice(timetable, start_key)
+            #if modified_timetable:
+            timetable = deepcopy(best_timetable)
+            unscheduled_events = dict_slice(timetable, start_key)
             modified_timetable = current_neighborhood(timetable, unscheduled_events)
 
             if not modified_timetable:
