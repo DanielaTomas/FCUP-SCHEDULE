@@ -19,7 +19,7 @@ class MCTSNode:
     
 
     def is_fully_expanded(self, num_events):
-        if self.depth() >= num_events: return True
+        if self.expansion_limit == 0 or self.depth() >= num_events: return True
         return len(self.children) < self.expansion_limit
         
 

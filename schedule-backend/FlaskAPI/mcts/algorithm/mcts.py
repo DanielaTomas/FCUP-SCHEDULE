@@ -66,10 +66,14 @@ class MCTS:
         new_weekday, new_timeslot = available_periods[period_index]
 
         available_rooms = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path[:self.current_node.depth()], [available_periods[period_index]])
-        if available_rooms.values() == [set()]: 
+        available_rooms_list = list(available_rooms.values())
+        if available_rooms_list == [set()]: 
             self.current_node.expansion_limit = 0
             return
-        available_rooms_list = list(list(available_rooms.values())[0])
+        available_rooms_list = list(available_rooms_list[0])
+        if len(available_rooms_list) == 0:
+            self.current_node.expansion_limit = 0
+            return
         new_room_index = period // len(available_periods) % len(available_rooms_list)
         new_room = available_rooms_list[new_room_index]
         
@@ -84,7 +88,7 @@ class MCTS:
                 ).values()
             )
             
-        child_node = MCTSNode(expansion_limit=(expansion_limit), parent=self.current_node, path=self.current_node.path+[new_event])
+        child_node = MCTSNode(expansion_limit=expansion_limit, parent=self.current_node, path=self.current_node.path+[new_event])
         self.current_node.children.append(child_node)
         self.current_node = child_node
 
@@ -169,7 +173,7 @@ class MCTS:
             self.global_best_soft_penalty = soft_penalty_result
             with open(self.output_filename, 'w') as file:
                 write_best_simulation_result_to_file(list(assigned_events.values()), file)
-            if len(unassigned_events) == 0 and hard_penalty_result == 0:
+            if len(unassigned_events) == 0 and hard_penalty_result == 0 and soft_penalty_result != 0:
                 self.global_best_soft_penalty = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
                 update_penalties(self.global_best_soft_penalty)
 
@@ -219,9 +223,12 @@ class MCTS:
             i = 0
             while (iterations is None or i < iterations) and (duration <= time_limit):
                 self.selection()
-                if self.current_node.depth() == len(self.events): break
+                if self.current_node.expansion_limit == 0 or self.current_node.depth() == len(self.events): break
                 self.expansion()
                 simulation_hard, simulation_soft = self.simulation(start_time, time_limit)
+                if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
+                    print("Optimal solution found!")
+                    break
                 self.backpropagation(simulation_hard, simulation_soft)
                 duration = time.time() - start_time
                 i += 1
