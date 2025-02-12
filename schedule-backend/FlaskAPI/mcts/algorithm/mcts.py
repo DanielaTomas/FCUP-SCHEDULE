@@ -1,5 +1,6 @@
 from algorithm.mcts_node import *
 from algorithm.utils import *
+from algorithm.debug import *
 from algorithm.check_conflicts import ConflictsChecker
 from algorithm.hill_climbing import HillClimbing
 import time
@@ -28,6 +29,14 @@ class MCTS:
         self.previous_unassigned_events = set()
         self.output_filename = output_filename
 
+        # ---- DEBUG ---- 
+        self.iterations_data = []
+        self.current_hard_values = []
+        self.best_hard_values = []
+        self.current_soft_values = []
+        self.best_soft_values = []
+        # ----
+
 
     def normalize_hard(self, result):
         if self.global_best_hard_penalty == 0 and self.worst_hard_penalty == 0: return 1.0
@@ -48,7 +57,8 @@ class MCTS:
 
     def selection(self):
         current_node = self.root
-        while not current_node.is_fully_expanded(len(self.events)):
+        while not current_node.is_terminal_node(len(self.events)):
+            if not current_node.is_fully_expanded(): break
             best_child = current_node.best_child()
             current_node = best_child
         self.current_node = current_node
@@ -58,9 +68,7 @@ class MCTS:
         event = self.events[self.current_node.depth()]
 
         available_periods = event["Available_Periods"]
-        if not available_periods: 
-            self.current_node.expansion_limit = 0
-            return
+
         period = len(self.current_node.children)
         period_index = period % len(available_periods)
         new_weekday, new_timeslot = available_periods[period_index]
@@ -166,6 +174,9 @@ class MCTS:
                 #event["Priority"] *= 2
 
         hard_penalty_result, soft_penalty_result = evaluate_timetable(assigned_events, unassigned_events)
+        self.current_hard_values.append(hard_penalty_result)
+        self.current_soft_values.append(soft_penalty_result)
+
         update_penalties(soft_penalty_result, hard_penalty_result)
         
         if (hard_penalty_result > self.global_best_hard_penalty) or (hard_penalty_result == self.global_best_hard_penalty and soft_penalty_result > self.global_best_soft_penalty):
@@ -231,6 +242,9 @@ class MCTS:
                     break
                 self.backpropagation(simulation_hard, simulation_soft)
                 duration = time.time() - start_time
+                self.iterations_data.append(i+1)
+                self.best_hard_values.append(self.global_best_hard_penalty)
+                self.best_soft_values.append(self.global_best_soft_penalty)
                 i += 1
         except KeyboardInterrupt:
             print("Execution interrupted by user. Returning the best solution found so far...")
@@ -246,6 +260,10 @@ class MCTS:
         ps.print_stats()
         with open('profile_output.txt', 'w') as f:
             f.write(s.getvalue())
+
+        plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values)
+        
+        #visualize_tree(self.root)
         # ----
 
         return best_solution

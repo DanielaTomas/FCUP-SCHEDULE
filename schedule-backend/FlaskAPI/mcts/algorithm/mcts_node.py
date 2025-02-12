@@ -18,10 +18,13 @@ class MCTSNode:
         return len(self.path)
     
 
-    def is_fully_expanded(self, num_events):
-        if self.expansion_limit == 0 or self.depth() >= num_events: return True
-        return len(self.children) < self.expansion_limit
-        
+    def is_fully_expanded(self):
+        return self.expansion_limit == 0 or len(self.children) == self.expansion_limit
+
+
+    def is_terminal_node(self, num_events):
+        return self.expansion_limit == 0 or self.depth() == num_events
+    
 
     def best_child(self, c_param=1.4):
         choices_weights = [

@@ -71,23 +71,7 @@ def get_valid_periods(event, constraints, days, periods_per_day):
     return None
 
 
-def write_node_scores_to_file(node, file, depth=0):
-    if node.visits > 0:
-        if not node.path:
-            score_visits = f"score {node.score_hard} {node.score_soft} , visits {node.visits}, ratio {node.score_hard / node.visits:.2f} {node.score_soft / node.visits:.2f}"
-        else:
-            score_visits = f"{node.path[-1]['Id']} {node.path[-1]['Name']} D{node.path[-1]['WeekDay']} P{node.path[-1]['Timeslot']} R{node.path[-1]['RoomId']} score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio {node.score_hard / node.visits:.2f} {node.score_soft / node.visits:.2f}"
-    else:
-        score_visits = f"score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio -inf"
-    
-    file.write("   " * depth + f"Node: {score_visits}\n")
-    
-    for child in node.children:
-        write_node_scores_to_file(child, file, depth + 1)
-
-
 def write_best_simulation_result_to_file(events, file):
     for event in events:
         if event['RoomId'] is not None or event['WeekDay'] is not None or event['Timeslot'] is not None:
             file.write(f"{event['Name']} {event['RoomId']} {event['WeekDay']} {event['Timeslot']}\n")
-    

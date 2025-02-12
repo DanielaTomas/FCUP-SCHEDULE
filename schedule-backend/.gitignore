@@ -12,3 +12,5 @@ FlaskAPI/mcts/input
 FlaskAPI/mcts/output
 FlaskAPI/mcts/validator.cc
 FlaskAPI/mcts/*.exe
+FlaskAPI/mcts/*.png
+FlaskAPI/mcts/*.pdf
