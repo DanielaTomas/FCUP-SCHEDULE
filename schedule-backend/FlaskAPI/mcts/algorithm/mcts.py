@@ -174,6 +174,12 @@ class MCTS:
                 #event["Priority"] *= 2
 
         hard_penalty_result, soft_penalty_result = evaluate_timetable(assigned_events, unassigned_events)
+        
+        # ---- DEBUG ----
+        self.current_node.hard_result = hard_penalty_result
+        self.current_node.soft_result = soft_penalty_result
+        # -----
+
         self.current_hard_values.append(hard_penalty_result)
         self.current_soft_values.append(soft_penalty_result)
 
@@ -218,10 +224,10 @@ class MCTS:
                 return select_best_terminal_node(best_child)
 
             # ---- DEBUG ---- 
-            file = open('tree.txt', 'w')
+            """ file = open('tree.txt', 'w')
             file.write(f"Time: ~{time}\n")
             write_node_scores_to_file(self.root, file)
-            file.close()
+            file.close() """
             # ----
 
             best_terminal_node = select_best_terminal_node(self.root)
@@ -261,7 +267,7 @@ class MCTS:
         with open('profile_output.txt', 'w') as f:
             f.write(s.getvalue())
 
-        plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values)
+        #plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values)
         
         #visualize_tree(self.root)
         # ----

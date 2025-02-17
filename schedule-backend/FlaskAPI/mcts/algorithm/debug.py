@@ -21,7 +21,7 @@ def visualize_tree(root, filename="mcts_tree.png"):
     dot = graphviz.Digraph(comment='MCTS Tree')
 
     def add_nodes_edges(node):
-        label = f"score {node.score_hard:.2f} {node.score_soft:.2f}, visits {node.visits}"
+        label = f"H {node.hard_result:.2f} S {node.soft_result:.2f}, visits {node.visits}" #{node.score_hard:.2f} {node.score_soft:.2f}, visits {node.visits}"
         if node.path:
             last_event = node.path[-1]
             label += f"\n{last_event['Id']} {last_event.get('Name', 'Unnamed')} D{last_event.get('WeekDay', '?')} P{last_event.get('Timeslot', '?')} R{last_event.get('RoomId', '?')}"

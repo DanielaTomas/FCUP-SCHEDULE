@@ -1,0 +1,252 @@
+\glsdefs@newdocentry{fcup}%
+{%
+name={\acronymfont {\glsentryshort {fcup}}},%
+sort={FCUP},%
+type={acronym},%
+first={FCUP},%
+firstplural={FCUPs},%
+text={FCUP},%
+plural={FCUPs},%
+description={Faculty of Sciences of the University of Porto},%
+descriptionplural={Faculty of Sciences of the University of Porto},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Faculty of Sciences of the University of Porto},%
+longplural={Faculty of Sciences of the University of Portos},%
+short={FCUP},%
+shortplural={FCUPs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{ucttp}%
+{%
+name={\acronymfont {\glsentryshort {ucttp}}},%
+sort={UCTTP},%
+type={acronym},%
+first={UCTTP},%
+firstplural={UCTTPs},%
+text={UCTTP},%
+plural={UCTTPs},%
+description={University Course Timetabling Problem},%
+descriptionplural={University Course Timetabling Problem},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={University Course Timetabling Problem},%
+longplural={University Course Timetabling Problems},%
+short={UCTTP},%
+shortplural={UCTTPs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{mcts}%
+{%
+name={\acronymfont {\glsentryshort {mcts}}},%
+sort={MCTS},%
+type={acronym},%
+first={MCTS},%
+firstplural={MCTSs},%
+text={MCTS},%
+plural={MCTSs},%
+description={Monte Carlo Tree Search},%
+descriptionplural={Monte Carlo Tree Search},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Monte Carlo Tree Search},%
+longplural={Monte Carlo Tree Searchs},%
+short={MCTS},%
+shortplural={MCTSs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{itc}%
+{%
+name={\acronymfont {\glsentryshort {itc}}},%
+sort={ITC},%
+type={acronym},%
+first={ITC},%
+firstplural={ITCs},%
+text={ITC},%
+plural={ITCs},%
+description={International Timetabling Competition},%
+descriptionplural={International Timetabling Competition},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={International Timetabling Competition},%
+longplural={International Timetabling Competitions},%
+short={ITC},%
+shortplural={ITCs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{itc-2007}%
+{%
+name={\acronymfont {\glsentryshort {itc-2007}}},%
+sort={ITC-2007},%
+type={acronym},%
+first={ITC-2007},%
+firstplural={ITC-2007s},%
+text={ITC-2007},%
+plural={ITC-2007s},%
+description={Second International Timetabling Competition},%
+descriptionplural={Second International Timetabling Competition},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Second International Timetabling Competition},%
+longplural={Second International Timetabling Competitions},%
+short={ITC-2007},%
+shortplural={ITC-2007s},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{patat}%
+{%
+name={\acronymfont {\glsentryshort {patat}}},%
+sort={PATAT},%
+type={acronym},%
+first={PATAT},%
+firstplural={PATATs},%
+text={PATAT},%
+plural={PATATs},%
+description={International Conference on the Practice and Theory of Automated Timetabling},%
+descriptionplural={International Conference on the Practice and Theory of Automated Timetabling},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={International Conference on the Practice and Theory of Automated Timetabling},%
+longplural={International Conference on the Practice and Theory of Automated Timetablings},%
+short={PATAT},%
+shortplural={PATATs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{uct}%
+{%
+name={\acronymfont {\glsentryshort {uct}}},%
+sort={UCT},%
+type={acronym},%
+first={UCT},%
+firstplural={UCTs},%
+text={UCT},%
+plural={UCTs},%
+description={Upper Confidence Bounds for Trees},%
+descriptionplural={Upper Confidence Bounds for Trees},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Upper Confidence Bounds for Trees},%
+longplural={Upper Confidence Bounds for Treess},%
+short={UCT},%
+shortplural={UCTs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{cb-ctt}%
+{%
+name={\acronymfont {\glsentryshort {cb-ctt}}},%
+sort={CB-CTT},%
+type={acronym},%
+first={CB-CTT},%
+firstplural={CB-CTTs},%
+text={CB-CTT},%
+plural={CB-CTTs},%
+description={Curriculum-based Course Timetabling},%
+descriptionplural={Curriculum-based Course Timetabling},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Curriculum-based Course Timetabling},%
+longplural={Curriculum-based Course Timetablings},%
+short={CB-CTT},%
+shortplural={CB-CTTs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{hc}%
+{%
+name={\acronymfont {\glsentryshort {hc}}},%
+sort={HC},%
+type={acronym},%
+first={HC},%
+firstplural={HCs},%
+text={HC},%
+plural={HCs},%
+description={Hill Climbing},%
+descriptionplural={Hill Climbing},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Hill Climbing},%
+longplural={Hill Climbings},%
+short={HC},%
+shortplural={HCs},%
+counter={page},%
+parent={},%
+%
+}%
+

@@ -1,0 +1,63 @@
+% Introduction
+
+% Main chapter title
+%\chapter[toc version]{doc version}
+\chapter{Introduction}
+
+% Short version of the title for the header
+%\chaptermark{version for header}
+
+% Chapter Label
+% For referencing this chapter elsewhere, use \ref{ChapterTemplate}
+\label{Introduction}
+
+% Write text in here
+% Use \subsection and \subsubsection to organize text
+
+\ac{ucttp} is a complex combinatorial optimization problem that consists of allocating events, rooms, lecturers, and students to weekly schedules while meeting certain constraints. A particular focus of this research is on \ac{cb-ctt}, a variant of \ac{ucttp} where scheduling is centered around courses. Consider, for instance, two courses, "Introduction to Programming" and "Calculus I", both with weekly theoretical and practical lectures. "Introduction to Programming" may require a medium-sized lecture auditorium with multimedia facilities for the theoretical lectures and a computer laboratory for the practical lectures, while the second course, "Calculus I," may require a larger auditorium to accommodate more students for both types of lectures. These courses often have additional requirements, such as ensuring a lecturer is not scheduled for two courses simultaneously or that students enrolled in both courses have non-overlapping schedules. 
+
+Moreover, when considering a complete bachelor’s or master’s degree, which spans several years and involves numerous courses, each with multiple classes and unique requirements, the challenge intensifies. Due to the size and complexity of the problem, obtaining an optimal solution in usable time is not always feasible. Nevertheless, heuristic algorithms have proved capable of producing approximate and good-quality solutions efficiently. 
+
+\section{Objective}
+
+The process of building timetables at \ac{fcup} each semester is currently time-consuming, not automated, and the final results are not always the most satisfactory. In general, existing tools focus primarily on visualizing timetables or on basic conflict detection. This situation not only results in suboptimal schedules but also increases the workload for administrative staff and impacts the satisfaction of both lecturers and students. Therefore, the primary objective of this dissertation is to enhance the efficiency and quality of \ac{fcup}'s weekly timetable development by providing step-by-step interactive recommendations and detecting potential conflicts during its construction. This functionality must be integrated into a timetable visualization interface that was previously developed using reactive programming.
+
+\section{Contributions}
+
+In the academic year 2021/2022, \ac{fcup} enrolled more than 4300 students, offered 127 different curricula, and coordinated 589 collaborators \cite{fcup_em_numeros}, underscoring the need for an efficient timetabling system that can manage such scale. The approach in use is not only inefficient but also prone to errors and conflicts. To address the problem, the \ac{mcts} heuristic search algorithm was chosen, as it has been applied to various optimization problems and has proven to be particularly effective in games. \ac{hc} was also chosen to be used in conjunction with \ac{mcts} for local optimization. Although \ac{mcts} has shown positive results in relevant areas, its application to \ac{ucttp} remains largely unexplored, presenting an opportunity to advance the state of the art and help in further studies. Therefore, this dissertation proposes a novel hybrid approach that combines the global exploration capabilities of \ac{mcts} with the local optimization offered by \ac{hc}.
+
+\section{Dissertation layout}
+
+The remainder of the dissertation is organized as follows:
+
+\begin{itemize}
+\item \textbf{Chapter~\ref{Background} - Background:}
+\item \textbf{Chapter~\ref{Related Work} -  Related Work:}
+\item \textbf{Chapter~\ref{Development} -  Development:}
+\item \textbf{Chapter~\ref{Tests} - Tests:}
+\item \textbf{Chapter~\ref{Results} -  Results:}
+\item \textbf{Chapter~\ref{Conclusion} - Conclusion:} Summarizes the findings, discusses the contributions, and outlines potential future enhancements.
+\end{itemize}
+
+
+%TODO
+%CBT acronym
+
+
+
+
+
+%Details the design of the proposed hybrid optimization system, including algorithmic formulation and system architecture.
+%Describes the implementation of the system, experimental setup, and benchmarking using ITC-2007 inspired datasets.
+%Presents and analyzes the experimental results, comparing the proposed method against existing approaches.
+%This chapter reviews existing timetabling methodologies and heuristic algorithms, with a focus on \ac{mcts} and local search techniques.
+
+
+
+%University Course Timetabling Problem (UCTTP) is a combinatorial optimization problem that consists of allocating events, rooms, lecturers, and students to weekly schedules while meeting certain constraints. Due to the size and complexity of the problem, obtaining an optimal solution in usable time is not always feasible. However, using heuristic algorithms, it is possible to get approximate and good-quality solutions efficiently. The Monte Carlo Tree Search (MCTS) heuristic search algorithm was chosen to construct the timetables, as it has been applied to various optimization problems and has proven to be particularly effective in games. Although it has shown positive results in various areas, in the context of UCTTP, to my knowledge, there are no studies that use MCTS.
+
+%At the moment, the process of building timetables at Faculty of Sciences of the University of Porto (FCUP) each semester is time-consuming, not automated, and the final results are not always the most satisfactory. In general, the currently available tools focus primarily on visualizing timetables or on basic conflict detection without offering optimized solutions. There is a clear need for improvements in the process, which would benefit both lecturers and students.
+
+%Therefore, the main objective of this dissertation is to improve the efficiency and quality of FCUP’s weekly timetable development by providing step-by-step interactive recommendations and detecting potential conflicts during its construction. This functionality must be integrated into a timetable visualization interface that was previously developed using reactive programming.
+
+%O Capítulo~\ref{} aborda conceitos que são necessários para uma melhor contextualização e compreensão do problema em questão e dos algoritmos utilizados para obter o resultado final.
