@@ -1,5 +1,6 @@
 from algorithm.mcts_node import *
 from algorithm.utils import *
+from algorithm.debug import *
 from algorithm.check_conflicts import ConflictsChecker
 from algorithm.hill_climbing import HillClimbing
 import time
@@ -18,23 +19,29 @@ class MCTS:
         self.conflicts_checker = ConflictsChecker(current_timetable["constraints"], current_timetable["blocks"], self.rooms, name_to_event_ids)
         self.hill_climber = HillClimbing(self.conflicts_checker, current_timetable["blocks"], self.rooms, days, name_to_event_ids, output_filename)
         
-        self.best_result_hard= float('-inf')
-        self.best_result_soft = float('-inf')
+        self.global_best_hard_penalty = float('-inf')
+        self.global_best_soft_penalty = float('-inf')
 
-        self.best_hard_penalty = float('-inf')
         self.worst_hard_penalty = float('inf')
         self.best_soft_penalty = float('-inf')
         self.worst_soft_penalty = float('inf')
 
-        self.unassigned_events = set()
+        self.previous_unassigned_events = set()
         self.output_filename = output_filename
+
+        # ---- DEBUG ---- 
+        self.iterations_data = []
+        self.current_hard_values = []
+        self.best_hard_values = []
+        self.current_soft_values = []
+        self.best_soft_values = []
+        # ----
 
 
     def normalize_hard(self, result):
-        if self.best_hard_penalty == 0 and self.worst_hard_penalty == 0: return 1.0
-        elif self.best_hard_penalty == self.worst_hard_penalty: return 0.5
-        a = (result - self.worst_hard_penalty)/(self.best_hard_penalty - self.worst_hard_penalty)
-        #return ((math.exp(a) - 1) / (math.e - 1))*0.5 + 0.5
+        if self.global_best_hard_penalty == 0 and self.worst_hard_penalty == 0: return 1.0
+        elif self.global_best_hard_penalty == self.worst_hard_penalty: return 0.5
+        a = (result - self.worst_hard_penalty)/(self.global_best_hard_penalty - self.worst_hard_penalty)
         return (math.exp(a) - 1) / (math.e - 1)
 
 
@@ -42,7 +49,6 @@ class MCTS:
         if self.best_soft_penalty == 0 and self.worst_soft_penalty == 0: return 1.0
         if self.best_soft_penalty == self.worst_soft_penalty: return 0.5
         a = (result - self.worst_soft_penalty)/(self.best_soft_penalty - self.worst_soft_penalty)
-        #return ((math.exp(a) - 1) / (math.e - 1))*0.5
         return (math.exp(a) - 1) / (math.e - 1)
     
     
@@ -51,7 +57,8 @@ class MCTS:
 
     def selection(self):
         current_node = self.root
-        while not current_node.is_fully_expanded(len(self.events)):
+        while not current_node.is_terminal_node(len(self.events)):
+            if not current_node.is_fully_expanded(): break
             best_child = current_node.best_child()
             current_node = best_child
         self.current_node = current_node
@@ -61,33 +68,36 @@ class MCTS:
         event = self.events[self.current_node.depth()]
 
         available_periods = event["Available_Periods"]
-        if not available_periods: 
-            self.current_node.expansion_limit = 0
-            return
+
         period = len(self.current_node.children)
         period_index = period % len(available_periods)
         new_weekday, new_timeslot = available_periods[period_index]
 
-        available_rooms = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path[:self.current_node.depth()], [available_periods[period_index]])
-        if available_rooms.values() == [set()]: 
+        available_rooms = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path.values(), [available_periods[period_index]])
+        available_rooms_list = list(available_rooms.values())
+        if available_rooms_list == [set()]: 
             self.current_node.expansion_limit = 0
             return
-        available_rooms_list = list(list(available_rooms.values())[0])
+        available_rooms_list = list(available_rooms_list[0])
+        if len(available_rooms_list) == 0:
+            self.current_node.expansion_limit = 0
+            return
         new_room_index = period // len(available_periods) % len(available_rooms_list)
         new_room = available_rooms_list[new_room_index]
         
-        new_event = {**event, "RoomId": new_room, "WeekDay": new_weekday, "Timeslot": new_timeslot}
+        new_path = self.current_node.path.copy()
+        new_path[event["Id"]] = {**event, "RoomId": new_room, "WeekDay": new_weekday, "Timeslot": new_timeslot}
 
         next_event = self.events[self.current_node.depth()+1] if self.current_node.depth()+1 < len(self.events) else None
         if next_event is None:
             expansion_limit = 0
         else:
             expansion_limit = sum(
-                len(rooms) for rooms in find_available_rooms(next_event["Capacity"], self.rooms, self.current_node.path[:self.current_node.depth()], next_event["Available_Periods"]
+                len(rooms) for rooms in find_available_rooms(next_event["Capacity"], self.rooms, self.current_node.path.values(), next_event["Available_Periods"]
                 ).values()
             )
-            
-        child_node = MCTSNode(expansion_limit=(expansion_limit), parent=self.current_node, path=self.current_node.path+[new_event])
+        
+        child_node = MCTSNode(expansion_limit=expansion_limit, parent=self.current_node, path=new_path)
         self.current_node.children.append(child_node)
         self.current_node = child_node
 
@@ -122,7 +132,7 @@ class MCTS:
             return random.choice(candidates) if candidates else None
         
 
-        def evaluate_timetable(simulated_timetable):
+        def evaluate_timetable(simulated_timetable, unassigned_events = []):
             hard_penalty = 0
             soft_penalty = 0
             event_names = []
@@ -137,22 +147,22 @@ class MCTS:
                     soft_penalty += (self.conflicts_checker.check_min_working_days(event, events_to_check, event["WeekDay"])
                                  + self.conflicts_checker.check_room_stability(event, events_to_check, event["RoomId"]))
                 event_names.append(event["Name"])
-            hard_penalty += self.conflicts_checker.check_room_conflicts(room_conflicts)
+            hard_penalty += self.conflicts_checker.check_room_conflicts(room_conflicts) + len(unassigned_events)
             return -hard_penalty, -soft_penalty
             
 
         def update_penalties(soft_penalty, hard_penalty = None):
             if hard_penalty is not None:
-                self.best_hard_penalty = max(hard_penalty, self.best_hard_penalty)
                 self.worst_hard_penalty = min(hard_penalty, self.worst_hard_penalty)
-                self.current_node.best_hard_penalty_result = max(hard_penalty, self.current_node.best_hard_penalty_result)
+                self.current_node.best_hard_penalty = max(hard_penalty, self.current_node.best_hard_penalty)
             self.best_soft_penalty = max(soft_penalty, self.best_soft_penalty)
             self.worst_soft_penalty = min(soft_penalty, self.worst_soft_penalty)
-            self.current_node.best_soft_penalty_result = max(soft_penalty, self.current_node.best_soft_penalty_result)
+            self.current_node.best_soft_penalty = max(soft_penalty, self.current_node.best_soft_penalty)
 
 
-        assigned_events = {event["Id"]: event for event in self.current_node.path}  #TODO path -> dict?
-        remaining_events = sorted(self.events[self.current_node.depth():], key=lambda event: (event["Id"] in self.unassigned_events, event["Priority"], random.random()), reverse=True)
+        assigned_events = self.current_node.path.copy()
+        unassigned_events = set()
+        remaining_events = sorted(self.events[self.current_node.depth():], key=lambda event: (event["Id"] in self.previous_unassigned_events, event["Priority"], random.random()), reverse=True)
 
         for i, event in enumerate(remaining_events):
             best_room_and_period = find_best_room_and_period(event, i+self.current_node.depth(), assigned_events)
@@ -160,25 +170,33 @@ class MCTS:
                 event["RoomId"], event["WeekDay"], event["Timeslot"] = best_room_and_period  
                 assigned_events[event["Id"]] = event 
             else: 
+                self.previous_unassigned_events.add(event["Id"])
+                unassigned_events.add(event["Id"])
                 #event["Priority"] *= 2
-                self.unassigned_events.add(event["Id"])
-                event["RoomId"], event["WeekDay"], event["Timeslot"] = None, None, None
-                assigned_events[event["Id"]] = event 
 
-        hard_penalty_result, soft_penalty_result = evaluate_timetable(assigned_events)
+        hard_penalty_result, soft_penalty_result = evaluate_timetable(assigned_events, unassigned_events)
+        
+        # ---- DEBUG ----
+        self.current_node.hard_result = hard_penalty_result
+        self.current_node.soft_result = soft_penalty_result
+        # -----
+
+        self.current_hard_values.append(hard_penalty_result)
+        self.current_soft_values.append(soft_penalty_result)
+
         update_penalties(soft_penalty_result, hard_penalty_result)
         
-        if (hard_penalty_result > self.best_result_hard) or (hard_penalty_result == self.best_result_hard and soft_penalty_result > self.best_result_soft):
-            self.best_result_hard = hard_penalty_result
-            self.best_result_soft = soft_penalty_result
+        if (hard_penalty_result > self.global_best_hard_penalty) or (hard_penalty_result == self.global_best_hard_penalty and soft_penalty_result > self.global_best_soft_penalty):
+            self.global_best_hard_penalty = hard_penalty_result
+            self.global_best_soft_penalty = soft_penalty_result
             with open(self.output_filename, 'w') as file:
                 write_best_simulation_result_to_file(list(assigned_events.values()), file)
-            if hard_penalty_result == 0:
-                self.best_result_soft = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.best_result_soft, start_time, time_limit)
-                update_penalties(self.best_result_soft)
+            if len(unassigned_events) == 0 and hard_penalty_result == 0 and soft_penalty_result != 0:
+                self.global_best_soft_penalty = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
+                update_penalties(self.global_best_soft_penalty)
 
-        simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty_result)
-        simulation_result_soft = self.normalize_soft(self.current_node.best_soft_penalty_result)
+        simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty)
+        simulation_result_soft = self.normalize_soft(self.current_node.best_soft_penalty)
         print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}") # ---- DEBUG ---- 
 
         return simulation_result_hard, simulation_result_soft
@@ -194,8 +212,10 @@ class MCTS:
 
 
     def run_mcts(self, iterations=None, time_limit=300):
+        # ---- DEBUG ---- 
         profiler = cProfile.Profile()
         profiler.enable()
+        # ----
 
         def get_best_solution(time):
             def select_best_terminal_node(node):
@@ -205,12 +225,14 @@ class MCTS:
                 return select_best_terminal_node(best_child)
 
             # ---- DEBUG ---- 
-            file = open('tree.txt', 'w')
+            """ file = open('tree.txt', 'w')
             file.write(f"Time: ~{time}\n")
             write_node_scores_to_file(self.root, file)
-            file.close()
-            best_terminal_node = select_best_terminal_node(self.root)
+            file.close() """
+            # ----
 
+            best_terminal_node = select_best_terminal_node(self.root)
+            
             return best_terminal_node.path
 
         start_time = time.time()
@@ -219,11 +241,17 @@ class MCTS:
             i = 0
             while (iterations is None or i < iterations) and (duration <= time_limit):
                 self.selection()
-                if self.current_node.depth() == len(self.events): break
+                if self.current_node.expansion_limit == 0 or self.current_node.depth() == len(self.events): break
                 self.expansion()
                 simulation_hard, simulation_soft = self.simulation(start_time, time_limit)
+                if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
+                    print("Optimal solution found!")
+                    break
                 self.backpropagation(simulation_hard, simulation_soft)
                 duration = time.time() - start_time
+                self.iterations_data.append(i+1)
+                self.best_hard_values.append(self.global_best_hard_penalty)
+                self.best_soft_values.append(self.global_best_soft_penalty)
                 i += 1
         except KeyboardInterrupt:
             print("Execution interrupted by user. Returning the best solution found so far...")
@@ -231,6 +259,7 @@ class MCTS:
         
         best_solution = get_best_solution(duration)
 
+        # ---- DEBUG ---- 
         profiler.disable()
         s = io.StringIO()
         sortby = 'cumulative'
@@ -238,5 +267,10 @@ class MCTS:
         ps.print_stats()
         with open('profile_output.txt', 'w') as f:
             f.write(s.getvalue())
+
+        plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values)
+        
+        visualize_tree(self.root)
+        # ----
 
         return best_solution

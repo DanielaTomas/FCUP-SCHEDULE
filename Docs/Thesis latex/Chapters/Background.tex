@@ -1,0 +1,60 @@
+% Background
+
+% Main chapter title
+%\chapter[toc version]{doc version}
+\chapter{Background}
+
+% Short version of the title for the header
+%\chaptermark{version for header}
+
+% Chapter Label
+% For referencing this chapter elsewhere, use \ref{ChapterTemplate}
+\label{Background}
+
+This chapter will cover the concepts needed to contextualize and understand the University Course Timetabling Problem and the algorithms used to obtain the final result, namely the Monte Carlo Tree Search heuristic.
+
+%\section Terminology
+
+\section{Combinatorial Optimization Problem}
+
+Finding a solution for maximizing or minimizing a value is common in several real world problems.
+
+\section{University Course Timetabling Problem}
+%\subsection{Educational Timetabling}
+
+\subsection{Hard and Soft Constraints}
+
+In the context of \ac{ucttp}, constraints are divided into two different types: hard constraints and soft constraints. Hard constraints ensure the feasibility of the timetable and must be strictly satisfied. Typically, a hard constraint includes avoiding overlapping events for the same student or a lecturer. Soft constraints, on the other hand, represent preferences to improve the quality of the solution without being mandatory. An example of a soft constraint is minimizing gaps in students' timetables to ensure a more compact timetable.
+
+\subsection{Curriculum-Based and Post-Enrollment Course Timetabling}
+
+\subsection{International Timetabling Competition (ITC)}
+
+Since 2002, the \ac{patat}\footnote{https://patatconference.org/communityService.html} has supported timetabling competitions to encourage research in this field. There have already been five \ac{itc}, but only three of them have focused on university timetables.
+
+\subsubsection{Benchmark datasets}
+
+\ac{itc} provides benchmark datasets that serve to evaluate timetable algorithms. %The most relevant dataset for the \ac{ucttp} is the \ac{itc-2007} dataset, which %presents real-world constraints and objectives commonly found in academic scheduling. These datasets help researchers compare the performance of different algorithms on the same problem instances, ensuring fair and reproducible results.
+
+\section{Monte Carlo Tree Search}
+
+\subsection{Monte Carlo Tree Search Phases}
+%TODO cite: "A Survey of Monte Carlo Tree Search Methods"
+\ac{mcts} is composed of the four following phases, which are repeated at each iteration:
+
+\begin{enumerate}
+	\item \textbf{Selection:} The tree is traversed from the root node until it finds a node that is not completely expanded, i.e., represents a non-terminal state and has unvisited children. The child selection is based on a policy that balances exploration and exploitation. Typically, the policy used is the \ac{uct}, which selects nodes that maximize the following formula: \begin{equation}UCT = \overline{X_i} + 2C\sqrt{\frac{2\ln{n}}{n_i}},\label{uct_formula}\end{equation} where \(\overline{X_i}\) is the total reward of all playouts through this state by the number of visits, \(C\) is a constant greater than zero, \(n_i\) is the number of visits of child node \(i\), and \(n\) is the number of visits of the parent node.
+    \item \textbf{Expansion:} One or more child nodes are added to the node previously reached in the selection phase.
+    \item \textbf{Simulation:} From the new node(s), a simulation is run according to the default policy, which may include random moves until a terminal node is reached.
+    \item \textbf{Backpropagation:} The simulation result is then propagated through the traversed nodes, where the number of visits and the average reward of the nodes are updated until it reaches the root.
+\end{enumerate}
+
+\section{Local Search}
+
+\subsection{Reactive Programming}
+
+\subsubsection{Elm}
+
+\section{Previous Work}
+
+

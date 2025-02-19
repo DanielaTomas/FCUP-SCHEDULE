@@ -1,0 +1,191 @@
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  27 NOV 2024 20:19
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**vars.tex
+(./vars.tex
+LaTeX2e <2024-11-01> patch level 1
+L3 programming layer <2024-11-02>
+! Undefined control sequence.
+l.9 \thesistitle
+                {An interactive tool for supporting university timetabling}
+? 
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.9 \thesistitle{A
+                  n interactive tool for supporting university timetabling}
+? 
+Missing character: There is no A ("41) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no f ("66) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no y ("79) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no n ("6E) in font nullfont!
+Missing character: There is no g ("67) in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 9--10
+[]
+ []
+
+! Undefined control sequence.
+l.12 \thesistype
+                {Masters Thesis}
+? 
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.12 \thesistype{M
+                  asters Thesis}
+? 
+Missing character: There is no M ("4D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no r ("72) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no T ("54) in font nullfont!
+Missing character: There is no h ("68) in font nullfont!
+Missing character: There is no e ("65) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no s ("73) in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 12--13
+[]
+ []
+
+! Undefined control sequence.
+l.15 \supervisor
+                [mailto:jpp@fc.up.pt]{João \textsc{Pedroso}}
+? 
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 \supervisor[
+                 mailto:jpp@fc.up.pt]{João \textsc{Pedroso}}
+? 
+Missing character: There is no [ ("5B) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no : ("3A) in font nullfont!
+Missing character: There is no j ("6A) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no @ ("40) in font nullfont!
+Missing character: There is no f ("66) in font nullfont!
+Missing character: There is no c ("63) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no u ("75) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no . ("2E) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no ] ("5D) in font nullfont!
+Missing character: There is no J ("4A) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no ã ("E3) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 15--16
+[]
+ []
+
+
+Overfull \hbox (16.78pt too wide) in paragraph at lines 15--16
+\TU/lmr/m/sc/10 Pe-
+ []
+
+
+Overfull \hbox (29.34pt too wide) in paragraph at lines 15--16
+\TU/lmr/m/sc/10 droso 
+ []
+
+! Undefined control sequence.
+l.19 \cosupervisor
+                  [mailto:pbvascon@fc.up.pt]{Pedro \textsc{Vasconcelos}}
+? 
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.19 \cosupervisor[
+                   mailto:pbvascon@fc.up.pt]{Pedro \textsc{Vasconcelos}}
+? 
+Missing character: There is no [ ("5B) in font nullfont!
+Missing character: There is no m ("6D) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing character: There is no i ("69) in font nullfont!
+Missing character: There is no l ("6C) in font nullfont!
+Missing character: There is no t ("74) in font nullfont!
+Missing character: There is no o ("6F) in font nullfont!
+Missing character: There is no : ("3A) in font nullfont!
+Missing character: There is no p ("70) in font nullfont!
+Missing character: There is no b ("62) in font nullfont!
+Missing character: There is no v ("76) in font nullfont!
+Missing character: There is no a ("61) in font nullfont!
+Missing cha
