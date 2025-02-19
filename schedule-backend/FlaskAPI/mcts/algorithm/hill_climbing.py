@@ -1,4 +1,3 @@
-from copy import deepcopy
 import random, time
 from algorithm.utils import find_available_rooms, write_best_simulation_result_to_file, dict_slice
 from algorithm.macros import HC_IDLE

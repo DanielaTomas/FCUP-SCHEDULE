@@ -1,4 +1,6 @@
 from algorithm.mcts import *
+import argparse
+import os
 
 def reset_db():
     return {
@@ -19,6 +21,7 @@ def parse_input_data(input_data, db):
         if line.startswith("Days:"):
             parts = line.split()
             days = int(parts[1])
+            continue
         if line.startswith("Periods_per_day:"):
             parts = line.split()
             periods_per_day = int(parts[1])
@@ -76,27 +79,49 @@ def parse_input_data(input_data, db):
     return days, periods_per_day
 
 
-def write_best_solution_to_file(best_solution, file):
+""" def write_best_solution_to_file(best_solution, file):
     for solution in best_solution:
-        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n")
+        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n") """
 
 
-#input_files = [f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)]
-input_files = ["comp01.ctt"]
+def main():
+    parser = argparse.ArgumentParser(description="Run MCTS for timetabling.")
+    parser.add_argument("--time_limit", type=int, default=300, help="Time limit in seconds for the MCTS run")
+    parser.add_argument("--iterations", type=int, default=None, help="Number of iterations for the MCTS run")
+    parser.add_argument("--input_files", nargs="+", default=[f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)], help="List of input files to process (default: comp01.ctt - comp21.ctt)")
+    args = parser.parse_args()
 
-for input_file in input_files:
-    print(f"Processing {input_file}...")
-    with open(f"input\{input_file}", "r") as f:
-        db = reset_db()
-        days, periods_per_day = parse_input_data(f.read(), db)
+    input_dir = "input"
+    if not os.path.exists(input_dir):
+        raise FileNotFoundError(f"Input folder '{input_dir}' does not exist. Please create it and add your input files.")
 
-    output_file = f"output\{input_file.split('.')[0]}_output.txt"
-    
-    mcts = MCTS(db, days, periods_per_day, output_file)
-    best_solution = mcts.run_mcts()
+    output_dir = "output"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
-    """ output_file = f"final_output\{input_file.split('.')[0]}_final_output.txt"
-    with open(output_file, 'w') as file:
-        write_best_solution_to_file(best_solution, file)
-    """
-    print(f"Finished processing {input_file}, output saved to {output_file}.")
+    for input_file in args.input_files:
+        input_file_path = os.path.join(input_dir, input_file)
+
+        if not os.path.exists(input_file_path):
+            print(f"Warning: The input file '{input_file_path}' does not exist. Skipping.")
+            continue
+
+        print(f"Processing {input_file}...")
+        with open(input_file_path, "r") as f:
+            db = reset_db()
+            days, periods_per_day = parse_input_data(f.read(), db)
+
+        output_file = os.path.join(output_dir, f"{input_file.split('.')[0]}_output.txt")
+        
+        mcts = MCTS(db, days, periods_per_day, output_file)
+        best_solution = mcts.run_mcts(iterations=args.iterations, time_limit=args.time_limit)
+
+        """ output_file = f"final_output\{input_file.split('.')[0]}_final_output.txt"
+        with open(output_file, 'w') as file:
+            write_best_solution_to_file(best_solution, file)
+        """
+        print(f"Finished processing {input_file}, output saved to {output_file}.")
+
+
+if __name__ == "__main__":
+    main()

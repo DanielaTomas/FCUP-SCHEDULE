@@ -4,9 +4,10 @@ from algorithm.debug import *
 from algorithm.check_conflicts import ConflictsChecker
 from algorithm.hill_climbing import HillClimbing
 import time
-import cProfile, pstats, io
+#import cProfile, pstats, io
 
-#TODO remove prints and profile
+#TODO remove prints; debug
+#TODO documentation
 
 class MCTS:
 
@@ -212,9 +213,9 @@ class MCTS:
 
 
     def run_mcts(self, iterations=None, time_limit=300):
-        # ---- DEBUG ---- 
-        profiler = cProfile.Profile()
-        profiler.enable()
+        # ---- DEBUG PROFILE ---- 
+        """ profiler = cProfile.Profile()
+        profiler.enable() """
         # ----
 
         def get_best_solution(time):
@@ -223,13 +224,6 @@ class MCTS:
                     return node
                 best_child = max(node.children, key=lambda child: (child.score_hard, child.score_soft))
                 return select_best_terminal_node(best_child)
-
-            # ---- DEBUG ---- 
-            """ file = open('tree.txt', 'w')
-            file.write(f"Time: ~{time}\n")
-            write_node_scores_to_file(self.root, file)
-            file.close() """
-            # ----
 
             best_terminal_node = select_best_terminal_node(self.root)
             
@@ -259,18 +253,23 @@ class MCTS:
         
         best_solution = get_best_solution(duration)
 
-        # ---- DEBUG ---- 
-        profiler.disable()
+        # ---- DEBUG PROFILE ---- 
+        """ profiler.disable()
         s = io.StringIO()
         sortby = 'cumulative'
         ps = pstats.Stats(profiler, stream=s).sort_stats(sortby)
         ps.print_stats()
-        with open('profile_output.txt', 'w') as f:
-            f.write(s.getvalue())
+        with open(f'{self.output_filename}_profile_output.txt', 'w') as f:
+            f.write(s.getvalue()) """
+        # ----
 
-        plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values)
+        # ---- DEBUG ---- 
+        _, tail = os.path.split(self.output_filename)
+        input_file_name = tail.split('_')[0]
+
+        plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values, f"{input_file_name}_constraint_progress.html")
         
-        visualize_tree(self.root)
+        visualize_tree(self.root, f"{input_file_name}_tree")
         # ----
 
         return best_solution
