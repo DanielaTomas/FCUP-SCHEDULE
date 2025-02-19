@@ -2,7 +2,7 @@ import math
 
 class MCTSNode:
 
-    def __init__(self, expansion_limit, path = [], parent = None):
+    def __init__(self, expansion_limit, path = {}, parent = None):
         self.parent = parent
         self.children = []
         self.path = path

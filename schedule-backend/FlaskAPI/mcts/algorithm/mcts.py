@@ -73,7 +73,7 @@ class MCTS:
         period_index = period % len(available_periods)
         new_weekday, new_timeslot = available_periods[period_index]
 
-        available_rooms = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path[:self.current_node.depth()], [available_periods[period_index]])
+        available_rooms = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path.values(), [available_periods[period_index]])
         available_rooms_list = list(available_rooms.values())
         if available_rooms_list == [set()]: 
             self.current_node.expansion_limit = 0
@@ -85,18 +85,19 @@ class MCTS:
         new_room_index = period // len(available_periods) % len(available_rooms_list)
         new_room = available_rooms_list[new_room_index]
         
-        new_event = {**event, "RoomId": new_room, "WeekDay": new_weekday, "Timeslot": new_timeslot}
+        new_path = self.current_node.path.copy()
+        new_path[event["Id"]] = {**event, "RoomId": new_room, "WeekDay": new_weekday, "Timeslot": new_timeslot}
 
         next_event = self.events[self.current_node.depth()+1] if self.current_node.depth()+1 < len(self.events) else None
         if next_event is None:
             expansion_limit = 0
         else:
             expansion_limit = sum(
-                len(rooms) for rooms in find_available_rooms(next_event["Capacity"], self.rooms, self.current_node.path[:self.current_node.depth()], next_event["Available_Periods"]
+                len(rooms) for rooms in find_available_rooms(next_event["Capacity"], self.rooms, self.current_node.path.values(), next_event["Available_Periods"]
                 ).values()
             )
-            
-        child_node = MCTSNode(expansion_limit=expansion_limit, parent=self.current_node, path=self.current_node.path+[new_event])
+        
+        child_node = MCTSNode(expansion_limit=expansion_limit, parent=self.current_node, path=new_path)
         self.current_node.children.append(child_node)
         self.current_node = child_node
 
@@ -159,7 +160,7 @@ class MCTS:
             self.current_node.best_soft_penalty = max(soft_penalty, self.current_node.best_soft_penalty)
 
 
-        assigned_events = {event["Id"]: event for event in self.current_node.path}  #TODO path -> dict?
+        assigned_events = self.current_node.path.copy()
         unassigned_events = set()
         remaining_events = sorted(self.events[self.current_node.depth():], key=lambda event: (event["Id"] in self.previous_unassigned_events, event["Priority"], random.random()), reverse=True)
 
@@ -267,9 +268,9 @@ class MCTS:
         with open('profile_output.txt', 'w') as f:
             f.write(s.getvalue())
 
-        #plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values)
+        plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values)
         
-        #visualize_tree(self.root)
+        visualize_tree(self.root)
         # ----
 
         return best_solution

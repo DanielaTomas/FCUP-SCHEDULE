@@ -7,7 +7,10 @@ def write_node_scores_to_file(node, file, depth=0):
         if not node.path:
             score_visits = f"score {node.score_hard} {node.score_soft} , visits {node.visits}, ratio {node.score_hard / node.visits:.2f} {node.score_soft / node.visits:.2f}"
         else:
-            score_visits = f"{node.path[-1]['Id']} {node.path[-1]['Name']} D{node.path[-1]['WeekDay']} P{node.path[-1]['Timeslot']} R{node.path[-1]['RoomId']} score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio {node.score_hard / node.visits:.2f} {node.score_soft / node.visits:.2f}"
+            last_event_id = max(node.path.keys())
+            last_event = node.path[last_event_id]
+            
+            score_visits = f"{last_event['Id']} {last_event['Name']} D{last_event['WeekDay']} P{last_event['Timeslot']} R{last_event['RoomId']} score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio {node.score_hard / node.visits:.2f} {node.score_soft / node.visits:.2f}"
     else:
         score_visits = f"score {node.score_hard} {node.score_soft}, visits {node.visits}, ratio -inf"
     
@@ -23,8 +26,11 @@ def visualize_tree(root, filename="mcts_tree.png"):
     def add_nodes_edges(node):
         label = f"H {node.hard_result:.2f} S {node.soft_result:.2f}, visits {node.visits}" #{node.score_hard:.2f} {node.score_soft:.2f}, visits {node.visits}"
         if node.path:
-            last_event = node.path[-1]
+            last_event_id = max(node.path.keys())
+            last_event = node.path[last_event_id]
+
             label += f"\n{last_event['Id']} {last_event.get('Name', 'Unnamed')} D{last_event.get('WeekDay', '?')} P{last_event.get('Timeslot', '?')} R{last_event.get('RoomId', '?')}"
+
         dot.node(str(id(node)), label=label)
 
         for child in node.children:
@@ -33,6 +39,7 @@ def visualize_tree(root, filename="mcts_tree.png"):
 
     add_nodes_edges(root)
     dot.render(filename, view=True)
+
 
 
 def plot_progress(iterations, current_hard, best_hard, current_soft, best_soft):
