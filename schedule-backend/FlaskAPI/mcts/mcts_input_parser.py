@@ -79,9 +79,9 @@ def parse_input_data(input_data, db):
     return days, periods_per_day
 
 
-""" def write_best_solution_to_file(best_solution, file):
-    for solution in best_solution:
-        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n") """
+def write_best_solution_to_file(best_solution, file):
+    for solution in best_solution.values():
+        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n")
 
 
 def main():
@@ -116,10 +116,14 @@ def main():
         mcts = MCTS(db, days, periods_per_day, output_file)
         best_solution = mcts.run_mcts(iterations=args.iterations, time_limit=args.time_limit)
 
-        """ output_file = f"final_output\{input_file.split('.')[0]}_final_output.txt"
-        with open(output_file, 'w') as file:
-            write_best_solution_to_file(best_solution, file)
-        """
+        if best_solution:
+            final_output_dir = "final_output"
+            if not os.path.exists(final_output_dir):
+                os.makedirs(final_output_dir)
+            final_output_file = os.path.join(final_output_dir, f"{input_file.split('.')[0]}_final_output.txt")
+            with open(final_output_file, 'w') as file:
+                write_best_solution_to_file(best_solution, file)
+       
         print(f"Finished processing {input_file}, output saved to {output_file}.")
 
 

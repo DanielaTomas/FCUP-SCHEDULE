@@ -8,7 +8,7 @@ __pycache__/
 *.columns
 migrate_instance.py
 FlaskAPI/mcts/*.txt
-FlaskAPI/mcts/output
+FlaskAPI/mcts/*output
 FlaskAPI/mcts/*.exe
 FlaskAPI/mcts/mcts_tree
 FlaskAPI/mcts/constraint_progress

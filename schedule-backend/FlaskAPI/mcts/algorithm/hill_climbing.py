@@ -227,7 +227,7 @@ class HillClimbing:
 
             if result is not None:
                 if result > self.best_result_soft:
-                    print(f"({current_neighborhood.__name__}): {self.best_result_soft} -> {result}") # ------- DEBUG
+                    #print(f"({current_neighborhood.__name__}): {self.best_result_soft} -> {result}") # ------- DEBUG
                     self.best_result_soft = result
                     best_timetable = modified_timetable
                     with open(self.output_filename, 'w') as file:

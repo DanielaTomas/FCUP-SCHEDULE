@@ -60,9 +60,20 @@ class MCTS:
         current_node = self.root
         while not current_node.is_terminal_node(len(self.events)):
             if not current_node.is_fully_expanded(): break
-            best_child = current_node.best_child()
-            current_node = best_child
+            
+            unflagged_children = [child for child in current_node.children if not child.expansion_limit == 0]
+
+            if not unflagged_children:
+                if current_node.parent:
+                    current_node.expansion_limit = 0
+                    current_node = current_node.parent
+                else:
+                    return False
+            else:
+                best_child = current_node.best_child(unflagged_children)
+                current_node = best_child
         self.current_node = current_node
+        return True
 
 
     def expansion(self):
@@ -77,11 +88,11 @@ class MCTS:
         available_rooms = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path.values(), [available_periods[period_index]])
         available_rooms_list = list(available_rooms.values())
         if available_rooms_list == [set()]: 
-            self.current_node.expansion_limit = 0
+            self.current_node.expansion_limit -= 1
             return
         available_rooms_list = list(available_rooms_list[0])
         if len(available_rooms_list) == 0:
-            self.current_node.expansion_limit = 0
+            self.current_node.expansion_limit -= 1
             return
         new_room_index = period // len(available_periods) % len(available_rooms_list)
         new_room = available_rooms_list[new_room_index]
@@ -198,7 +209,7 @@ class MCTS:
 
         simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty)
         simulation_result_soft = self.normalize_soft(self.current_node.best_soft_penalty)
-        print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}") # ---- DEBUG ---- 
+        #print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}") # ---- DEBUG ---- 
 
         return simulation_result_hard, simulation_result_soft
     
@@ -229,17 +240,21 @@ class MCTS:
             
             return best_terminal_node.path
 
-        start_time = time.time()
         try:
+            start_time = time.time()
             duration = time.time() - start_time
+            complete = False
             i = 0
             while (iterations is None or i < iterations) and (duration <= time_limit):
-                self.selection()
-                if self.current_node.expansion_limit == 0 or self.current_node.depth() == len(self.events): break
+                if not self.selection():
+                    print("Full tree!\n")
+                    complete = True
+                    break
+                if self.current_node.depth() == len(self.events): complete = True
                 self.expansion()
                 simulation_hard, simulation_soft = self.simulation(start_time, time_limit)
                 if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
-                    print("Optimal solution found!")
+                    print("Optimal solution found!\n")
                     break
                 self.backpropagation(simulation_hard, simulation_soft)
                 duration = time.time() - start_time
@@ -248,10 +263,10 @@ class MCTS:
                 self.best_soft_values.append(self.global_best_soft_penalty)
                 i += 1
         except KeyboardInterrupt:
-            print("Execution interrupted by user. Returning the best solution found so far...")
+            print("Execution interrupted by user.\n")
             duration = time.time() - start_time
         
-        best_solution = get_best_solution(duration)
+        best_solution = get_best_solution(duration) if complete else None
 
         # ---- DEBUG PROFILE ---- 
         """ profiler.disable()
