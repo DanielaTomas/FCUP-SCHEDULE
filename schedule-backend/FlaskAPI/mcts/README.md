@@ -34,7 +34,7 @@
             * This folder is only created if the algorithm successfully finds a complete path, which may not happen due to the typically vast search space
             * This solution does not necessarily match the results in the output folder
 
-        * **``constraint_progress`` folder:** Constains HTML plots that display the evolution of hard and soft constraint values over the iterations;
+        * **``constraint_progress`` folder:** Contains HTML plots that display the evolution of hard and soft constraint values over the iterations;
 
         * **``mcts_tree`` folder :** Contains a Graphviz-generated file displaying the tree structure.
             * To include a label in each node, modify the ``visualize_tree`` function in ``debug.py``:      
