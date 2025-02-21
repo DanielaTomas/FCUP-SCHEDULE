@@ -9,8 +9,7 @@ from config import DevelopmentConfig as conf
 from json_provider import UpdatedJSONProvider
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 import pymysql.cursors
-from mcts.mcts import *
-from mcts.mcts_local_search import *
+from mcts.algorithm.mcts import MCTS
 
 host = os.environ.get('FLASK_SERVER_HOST', conf.HOST)
 port = os.environ.get('FLASK_SERVER_PORT', conf.PORT)
@@ -1068,7 +1067,7 @@ def recommend():
         }
 
         mcts = MCTS(data)
-        recommendations = mcts.run_mcts(1500) # adjust if necessary
+        recommendations = mcts.run_mcts() # adjust if necessary
         return get_response_msg(recommendations, HTTPStatus.OK)
     except pymysql.MySQLError as sqle:
         abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
