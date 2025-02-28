@@ -79,14 +79,39 @@ def parse_input_data(input_data, db):
     return days, periods_per_day
 
 
-def write_best_solution_to_file(best_solution, file):
-    for solution in best_solution.values():
-        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n")
+def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_limit):
+    input_file_path = os.path.join(input_dir, input_file)
+    if not os.path.exists(input_file_path):
+        print(f"Warning: The input file '{input_file_path}' does not exist. Skipping.")
+        return
+
+    print(f"Processing {input_file}...")
+    with open(input_file_path, "r") as f:
+        db = reset_db()
+        days, periods_per_day = parse_input_data(f.read(), db)
+
+    output_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_output.txt")
+    log_file = os.path.join(log_dir, f"{os.path.splitext(input_file)[0]}_log.txt")
+    
+    with open(log_file, "w") as file:
+        file.write("")
+    
+    mcts = MCTS(db, days, periods_per_day, output_file)
+    best_solution = mcts.run_mcts(iterations=iterations, time_limit=time_limit)
+
+    if best_solution:
+        final_output_dir = "final_output"
+        directory_exists(final_output_dir)
+        final_output_file = os.path.join(final_output_dir, f"{os.path.splitext(input_file)[0]}_final_output.txt")
+        with open(final_output_file, 'w') as file:
+            write_best_final_solution_to_file(best_solution, file)
+    
+    print(f"Finished processing {input_file}, output saved to {output_file}.")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Run MCTS for timetabling.")
-    parser.add_argument("--time_limit", type=int, default=300, help="Time limit in seconds for the MCTS run")
+    parser.add_argument("--time_limit", type=int, default=300, help="Time limit in seconds for the MCTS run (default: 300 seconds)")
     parser.add_argument("--iterations", type=int, default=None, help="Number of iterations for the MCTS run")
     parser.add_argument("--input_files", nargs="+", default=[f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)], help="List of input files to process (default: comp01.ctt - comp21.ctt)")
     args = parser.parse_args()
@@ -96,35 +121,12 @@ def main():
         raise FileNotFoundError(f"Input folder '{input_dir}' does not exist. Please create it and add your input files.")
 
     output_dir = "output"
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    log_dir = "log"
+    directory_exists(output_dir)
+    directory_exists(log_dir)
 
     for input_file in args.input_files:
-        input_file_path = os.path.join(input_dir, input_file)
-
-        if not os.path.exists(input_file_path):
-            print(f"Warning: The input file '{input_file_path}' does not exist. Skipping.")
-            continue
-
-        print(f"Processing {input_file}...")
-        with open(input_file_path, "r") as f:
-            db = reset_db()
-            days, periods_per_day = parse_input_data(f.read(), db)
-
-        output_file = os.path.join(output_dir, f"{input_file.split('.')[0]}_output.txt")
-        
-        mcts = MCTS(db, days, periods_per_day, output_file)
-        best_solution = mcts.run_mcts(iterations=args.iterations, time_limit=args.time_limit)
-
-        if best_solution:
-            final_output_dir = "final_output"
-            if not os.path.exists(final_output_dir):
-                os.makedirs(final_output_dir)
-            final_output_file = os.path.join(final_output_dir, f"{input_file.split('.')[0]}_final_output.txt")
-            with open(final_output_file, 'w') as file:
-                write_best_solution_to_file(best_solution, file)
-       
-        print(f"Finished processing {input_file}, output saved to {output_file}.")
+        process_file(input_file, input_dir, output_dir, log_dir, args.iterations, args.time_limit)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import random, time
-from algorithm.utils import find_available_rooms, write_best_simulation_result_to_file, dict_slice
+from algorithm.utils import find_available_rooms, write_simulation_results, dict_slice
 from algorithm.macros import HC_IDLE
 
 class HillClimbing:
@@ -230,8 +230,7 @@ class HillClimbing:
                     #print(f"({current_neighborhood.__name__}): {self.best_result_soft} -> {result}") # ------- DEBUG
                     self.best_result_soft = result
                     best_timetable = modified_timetable
-                    with open(self.output_filename, 'w') as file:
-                        write_best_simulation_result_to_file(best_timetable.values(), file)
+                    write_simulation_results(self.output_filename, best_timetable.values(), start_time, 0, result)
                     if result == 0: return 0
                     idle_iterations = 0
                 else:

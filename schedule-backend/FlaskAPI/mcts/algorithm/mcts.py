@@ -27,10 +27,12 @@ class MCTS:
         self.best_soft_penalty = float('-inf')
         self.worst_soft_penalty = float('inf')
 
+        self.complete = False
+
         self.previous_unassigned_events = set()
         self.output_filename = output_filename
 
-        # ---- DEBUG ---- 
+        # ---- DEBUG PROGRESS ---- 
         self.iterations_data = []
         self.current_hard_values = []
         self.best_hard_values = []
@@ -67,7 +69,9 @@ class MCTS:
                 if current_node.parent:
                     current_node.expansion_limit = 0
                     current_node = current_node.parent
+                    self.complete = True
                 else:
+                    self.complete = True
                     return False
             else:
                 best_child = current_node.best_child(unflagged_children)
@@ -188,7 +192,7 @@ class MCTS:
 
         hard_penalty_result, soft_penalty_result = evaluate_timetable(assigned_events, unassigned_events)
         
-        # ---- DEBUG ----
+        # ---- DEBUG TREE ----
         self.current_node.hard_result = hard_penalty_result
         self.current_node.soft_result = soft_penalty_result
         # -----
@@ -201,8 +205,9 @@ class MCTS:
         if (hard_penalty_result > self.global_best_hard_penalty) or (hard_penalty_result == self.global_best_hard_penalty and soft_penalty_result > self.global_best_soft_penalty):
             self.global_best_hard_penalty = hard_penalty_result
             self.global_best_soft_penalty = soft_penalty_result
-            with open(self.output_filename, 'w') as file:
-                write_best_simulation_result_to_file(list(assigned_events.values()), file)
+            
+            write_simulation_results(self.output_filename, list(assigned_events.values()), start_time, hard_penalty_result, soft_penalty_result)
+
             if len(unassigned_events) == 0 and hard_penalty_result == 0 and soft_penalty_result != 0:
                 self.global_best_soft_penalty = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
                 update_penalties(self.global_best_soft_penalty)
@@ -229,7 +234,7 @@ class MCTS:
         profiler.enable() """
         # ----
 
-        def get_best_solution(time):
+        def get_best_solution():
             def select_best_terminal_node(node):
                 if not node.children:
                     return node
@@ -243,14 +248,11 @@ class MCTS:
         try:
             start_time = time.time()
             duration = time.time() - start_time
-            complete = False
             i = 0
             while (iterations is None or i < iterations) and (duration <= time_limit):
                 if not self.selection():
                     print("Full tree!\n")
-                    complete = True
                     break
-                if self.current_node.depth() == len(self.events): complete = True
                 self.expansion()
                 simulation_hard, simulation_soft = self.simulation(start_time, time_limit)
                 if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
@@ -258,15 +260,17 @@ class MCTS:
                     break
                 self.backpropagation(simulation_hard, simulation_soft)
                 duration = time.time() - start_time
-                self.iterations_data.append(i+1)
+                # ---- DEBUG PROGRESS ---- 
                 self.best_hard_values.append(self.global_best_hard_penalty)
                 self.best_soft_values.append(self.global_best_soft_penalty)
+                self.iterations_data.append(i+1)
+                # ----------
                 i += 1
         except KeyboardInterrupt:
             print("Execution interrupted by user.\n")
             duration = time.time() - start_time
         
-        best_solution = get_best_solution(duration) if complete else None
+        best_solution = get_best_solution() if self.complete else None
 
         # ---- DEBUG PROFILE ---- 
         """ profiler.disable()
@@ -278,13 +282,17 @@ class MCTS:
             f.write(s.getvalue()) """
         # ----
 
-        # ---- DEBUG ---- 
-        _, tail = os.path.split(self.output_filename)
-        input_file_name = tail.split('_')[0]
+        # ---- DEBUG TREE + PROGRESS ---- 
+        try:
+            _, tail = os.path.split(self.output_filename)
+            input_file_name = tail.split('_')[0]
 
-        plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values, f"{input_file_name}_constraint_progress.html")
+            plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values, f"{input_file_name}_constraint_progress.html")
         
-        visualize_tree(self.root, f"{input_file_name}_tree")
+            visualize_tree(self.root, f"{input_file_name}_tree")
+
+        except KeyboardInterrupt:
+            print("Execution interrupted by user.\n")
         # ----
 
         return best_solution

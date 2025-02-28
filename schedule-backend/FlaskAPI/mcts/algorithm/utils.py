@@ -1,6 +1,9 @@
 import random
 from copy import copy
 from itertools import dropwhile
+import os
+import time
+from datetime import datetime
 
 def dict_slice(d, start_key, next_iteration = False):
     iterator = dropwhile(lambda x: x[0] != start_key, d.items())
@@ -71,7 +74,33 @@ def get_valid_periods(event, constraints, days, periods_per_day):
     return None
 
 
-def write_best_simulation_result_to_file(events, file):
-    for event in events:
-        if event['RoomId'] is not None or event['WeekDay'] is not None or event['Timeslot'] is not None:
-            file.write(f"{event['Name']} {event['RoomId']} {event['WeekDay']} {event['Timeslot']}\n")
+# Files:
+
+
+def write_simulation_results(output_filename, assigned_events, start_time, hard_penalty_result, soft_penalty_result):
+    # ----- DEBUG LOG -----
+    _, tail = os.path.split(output_filename)
+    input_file_name = tail.split('_')[0]
+    log_file_name = os.path.join("log", f"{input_file_name}_log.txt")
+    
+    start_dt = datetime.fromtimestamp(start_time)
+    current_dt = datetime.fromtimestamp(time.time())
+
+    with open(log_file_name, 'a') as file:
+        file.write(f"Time: {current_dt - start_dt}, Hard: {hard_penalty_result}, Soft: {soft_penalty_result}\n")
+    # ------------
+    
+    with open(output_filename, 'w') as file:
+        for event in assigned_events:
+            if event['RoomId'] is not None or event['WeekDay'] is not None or event['Timeslot'] is not None:
+                file.write(f"{event['Name']} {event['RoomId']} {event['WeekDay']} {event['Timeslot']}\n")
+
+
+def write_best_final_solution_to_file(best_solution, file):
+    for solution in best_solution.values():
+        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n")
+
+
+def directory_exists(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
