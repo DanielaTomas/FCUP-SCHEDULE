@@ -92,15 +92,13 @@ There are several hard and soft constraints that affect the creation of \ac{fcup
 
 %Maximization problem...
 
-\section{Algorithm}
+\section{Monte Carlo Tree Search}
 
-This section describes the key algorithmic components of the system, particularly the hybrid \ac{mcts} with \ac{hc} approach.
-
-\subsection{Monte Carlo Tree Search}
+%This section describes the key algorithmic components of the system, particularly the hybrid \ac{mcts} with \ac{hc} approach.
 
 (...)
 
-\subsubsection{\ac{mcts} Tree}
+\subsection{\ac{mcts} Tree}
 
 \begin{figure}
       \centering
@@ -129,7 +127,9 @@ The events are sorted in advance so that the most difficult event to place is pl
   \end{aligned}
 \end{equation}
 
-\subsubsection{Tree Nodes}
+%I have tried other priority formulas...
+
+\subsection{Tree Nodes}
 
 A node is composed of the following attributes:
 
@@ -140,7 +140,7 @@ A node is composed of the following attributes:
 
 \item \textbf{Children} is initialized as an empty list at first but will later hold references to the node's child nodes. 
 
-\item The \textbf{expansion limit} specifies the maximum number of children that a node can have, which helps control the expansion process in the \ac{mcts} algorithm. A value of zero indicates that the node cannot be expanded further.
+\item The \textbf{expansion limit} specifies the maximum number of children that a node can have, which helps control the expansion process. It is calculated based on the number of available rooms per period for the next event. A value of zero indicates that the node cannot be expanded further.
 
 \item \textbf{Visits} is initialized to 0, tracking the number of times a node has been visited.
 
@@ -149,9 +149,9 @@ A node is composed of the following attributes:
 \item The \textbf{best hard and soft penalty results} are initialized to negative infinity, representing the best hard and soft penalty results encountered for a node. These attributes will be updated during the algorithm as better results are found. 
 \end{itemize}
 
-\subsubsection{Methodology}
+\subsection{Methodology}
 
-\ref{fig:mcts_steps}(...)
+Figure \ref{fig:mcts_steps}(...)
 
 \begin{figure}[H]
       \centering
@@ -161,23 +161,36 @@ A node is composed of the following attributes:
       \label{fig:mcts_steps}
 \end{figure}
 
-The \(selection\) procedure (Algorithm \ref{selection}) traverses the tree from the root, selecting the best child nodes until reaching a terminal (leaf) node. A node is considered terminal if either it cannot be expanded further (i.e., its \(expansion\_limit\) is 0) or if it has reached the maximum depth (i.e., all the events have been assigned). Conversely, a node is deemed fully expanded if it either has the \(expansion\_limit\) equal to 0 or if the number of its children equals its expansion limit. In the selection process, if a node is not fully expanded, the traversal halts, and that node is selected for further expansion.
+\subsubsection{Selection}
 
-The \(best\_child\) function (Algorithm \ref{best_child}) determines the best child node by applying the \ac{uct} formula (\ref{uct_formula}). Initially, it computes the weights for each child node using the hard score. Among the children with the highest hard score, the weights are recalculated based on the soft score. The child node with the highest weight in this second calculation is selected as the best child.
+The \(selection\) phase (Algorithm \ref{selection}) begins at the root and traverses the tree by iteratively selecting the best child nodes until a terminal (leaf) node is reached. A node is considered terminal if either it cannot be expanded further (i.e., its expansion limit is zero) or if it has reached the maximum depth (i.e., all the events have been assigned). Conversely, a node is deemed fully expanded if either its expansion limit is zero or if the number of its children equals its expansion limit. When the traversal encounters a node that is not fully expanded, the process stops, and that node is selected for further expansion.
+
+The best child node (Algorithm \ref{best_child}) is determined by applying the \ac{uct} formula (\ref{uct_formula}). However, as the problem has two goals, maximizing the hard constraints first and then the soft constraints, the \ac{uct} formula was applied differently. Initially, the algorithm computes the weights for each child node using the hard score. Among the children with the highest hard score, the weights are recalculated based on the soft score. The child node with the highest weight in this second calculation is selected as the best child. However, if all of a node's children have reached their expansion limit, the algorithm backtracks: if the current node has a parent, the parent's expansion limit is set to zero, and it moves up to the parent. Reaching the root indicates that the entire tree is fully expanded.
 
 \begin{algorithm}
 \caption{Selection}\label{selection}
 \begin{algorithmic}[1]
-\Procedure{SELECTION()}{}
-\State \text{current\_node} $\gets$ \text{root}
-\While{\textbf{not} \text{current\_node.}\text{\textit{is\_terminal\_node(len(}events\textit{))}}}
-    \If{\textbf{not} \text{current\_node.}\textit{is\_fully\_expanded()}}
-    \State \text{break}
-    \EndIf
-    \State \text{best\_child} $\gets$ \text{current\_node.}\textit{best\_child()}
-    \State \text{current\_node} $\gets$ \text{best\_child}
-\EndWhile
-\State \text{self.current\_node} $\gets$ \text{current\_node}
+\Procedure{SELECTION}{}
+    \State current\_node $\gets$ root
+    \While{not current\_node.\textit{is\_terminal\_node}(\textit{len}(events))}
+        \If{not current\_node.\textit{is\_fully\_expanded}()}
+            \State \textbf{break}
+        \EndIf
+        \State unflagged\_children $\gets$ [child \textbf{for each} child \textbf{in} current\_node.children \textbf{if} child.expansion\_limit $\neq$ 0]
+        \If{unflagged\_children is empty}
+            \If{current\_node.parent exists}
+                \State current\_node.expansion\_limit $\gets 0$
+                \State current\_node $\gets$ current\_node.parent
+            \Else
+                \State \Return False
+            \EndIf
+        \Else
+            \State best\_child $\gets$ current\_node.\textit{best\_child}(unflagged\_children)
+            \State current\_node $\gets$ best\_child
+        \EndIf
+    \EndWhile
+    \State self.current\_node $\gets$ current\_node
+    \State \Return True
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
@@ -185,88 +198,91 @@ The \(best\_child\) function (Algorithm \ref{best_child}) determines the best ch
 \begin{algorithm}
 \caption{Best Child}\label{best_child}
 \begin{algorithmic}[1]
-\Function{BEST\_CHILD}{\text{c\_param} = 1.4}
-    \State \text{choices\_weights $\gets$ [child.score\_hard $+$ c\_param $\cdot \sqrt{\frac{2 \cdot \log(\text{self.visits})}{\text{child.visits}}}}$
-    \text{\textbf{for each} child \textbf{in} self.children]}
+\Function{BEST\_CHILD}{unflagged\_children, c\_param = 1.4}
+    \State choices\_weights $\gets$ [child.score\_hard $+$ c\_param $\cdot \sqrt{\frac{2\ln(\textit{self.visits})}{child.visits}}$ \textbf{for each} child \textbf{in} unflagged\_children]
     \\
-    \State \text{max\_weight $\gets$ max(choices\_weights)}
-    \State \text{best\_children $\gets$ [self.children[i] \textbf{for} i, weight \textbf{in} enumerate(choices\_weights) \textbf{if}} \text{weight $==$ max\_weight]}
-\\
-    \State \text{choices\_weights $\gets$ [child.score\_soft $+$ c\_param $\cdot \sqrt{\frac{2 \cdot \log(\text{self.visits})}{\text{child.visits}}}}$
-    \text{\textbf{for each} child \textbf{in} best\_children]}
+    \State max\_weight $\gets$ \textit{max}(choices\_weights)
+    \State best\_children $\gets$ [unflagged\_children[i] \textbf{for each} i, weight \textbf{in} \textit{enumerate}(choices\_weights) \textbf{if} weight = max\_weight]
     \\
-    \State \textbf{return} \text{best\_children[choices\_weights.\textit{index(max(}choices\_weights\textit{))}]}
+    \State choices\_weights $\gets$ [child.score\_soft $+$ c\_param $\cdot \sqrt{\frac{2\ln(\textit{self.visits})}{child.visits}}$ \textbf{for each} child \textbf{in} best\_children]
+    \\
+    \State \Return best\_children[\textit{index\_of}(\textit{max}(choices\_weights))]
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-The \(expansion\) procedure (Algorithm \ref{expansion}) is responsible for expanding the node previously selected, \(current\_node\), by adding a new child node. It starts by retrieving the next unvisited event based on the current node's depth, which is the length of its path.
+\subsubsection{Expansion}
 
-If the event has available periods, the algorithm retrieves the corresponding weekday and timeslot. Next, the \(find\_available\_rooms\) function (Algorithm \ref{find_available_rooms}) finds the available rooms per period for the event, removing rooms that are occupied by other events and filtering rooms based on their capacity. If there are available rooms, it selects a room and creates a new event with the selected room, weekday, and timeslot.
+The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. It starts by retrieving the next unvisited event based on the current node's depth, which is the length of its path.
 
-The procedure then calculates the expansion limit for the next event in the timetable, i.e., the number of children that the new current node child can have. If no more events remain, the limit is set to zero. Otherwise, it sums the number of available rooms per period for the next event.
+The algorithm retrieves the corresponding weekday and timeslot and finds the available rooms per period for the event (Algorithm \ref{find_available_rooms}), removing occupied rooms and filtering rooms based on capacity. If rooms are available, it selects the corresponding one and creates a new event with the selected room, weekday, and timeslot. After this selection, the expansion limit for the next event in the timetable is calculated, i.e., the number of children that the new current node child can have. If no more events remain, the limit is set to zero. Otherwise, it sums the number of available rooms per period for the next event.
  
 Finally, a new child node is created and added to the tree. The current node is updated to this newly created node.
 
 \begin{algorithm}
-\caption{Expansion (simplified)}\label{expansion}
+\caption{Expansion}\label{expansion}
 \begin{algorithmic}[1]
-\Procedure{EXPANSION()}{}
-    \State \text{event} $\gets$ \text{events[current\_node.\textit{depth()}]}
-    \State \text{available\_periods} $\gets$ \text{event["Available\_Periods"]}
-	\\
-    \State \text{period} $\gets$ \text{\textit{len(}current\_node.children\textit{)}}
-    \State \text{period\_index} $\gets$ \text{period} \% \text{\textit{len(}available\_periods\textit{)}}
-    \State \text{new\_weekday, new\_timeslot} $\gets$ \text{available\_periods[period\_index]}
+\Procedure{EXPANSION}{}
+    \State event $\gets$ events[current\_node.\textit{depth}()]
+    \State available\_periods $\gets$ event["Available\_Periods"]
     \\
-    \State \text{available\_rooms} $\gets$ \textit{find\_available\_rooms()}
-    \State \text{new\_room\_index} $\gets$ \text{period} // \text{\textit{len(}available\_periods\textit{)}} \% \text{\textit{len(}available\_rooms\textit{)}}
-    \State \text{new\_room} $\gets$ \text{available\_rooms[new\_room\_index]}
+    \State period $\gets$ \textit{len}(current\_node.children)
+    \State period\_index $\gets$ period \% \textit{len}(available\_periods)
+    \State new\_weekday, new\_timeslot $\gets$ available\_periods[period\_index]
     \\
-   \State \text{new\_event $\gets$ \{**event, "RoomId:new\_room, "WeekDay":new\_weekday, "Timeslot":new\_timeslot\}}
-   \State \text{next\_event} $\gets$ \text{events[current\_node.\textit{depth()} + 1] \textbf{if} current\_node.\textit{depth()} + 1 $<$ \textit{len(}events\textit{)}}} \textbf{else} \texttt{None}
-
+    \State available\_rooms $\gets$ \textit{find\_available\_rooms}()
     \\
-\If{\text{next\_event} \textbf{is} \texttt{None}}
-    \State \text{expansion\_limit} $\gets 0$ 
-\Else
-	\State \text{expansion\_limit} $\gets$ \text{\textit{sum(len(}rooms\textit{)} \textbf{for} rooms \textbf{in} \textit{find\_available\_rooms()}\textit{)}}}
-\EndIf
-        \\
-    \State \text{child\_node} $\gets$ \text{MCTSNode(expansion\_limit=expansion\_limit, parent=current\_node,} \text{path=current\_node.path+[new\_event])}
-    \State \text{child\_node.path} $\gets$ \text{current\_node.path} + [\text{new\_event}]
-    \State \text{current\_node.children.\textit{append(}child\_node\textit{)}}
-    \State \text{current\_node} $\gets$ \text{child\_node}
+    \State new\_room\_index $\gets$ period // \textit{len}(available\_periods) \% \textit{len}(available\_rooms)
+    \State new\_room $\gets$ available\_rooms[new\_room\_index]
+    \\
+    \State new\_path $\gets$ \textit{copy}(current\_node.path)
+    \State new\_path[event["Id"]] $\gets$ \{**event, "RoomId": new\_room, "WeekDay": new\_weekday, "Timeslot": new\_timeslot\}
+    \\
+    \State next\_event $\gets$ events[current\_node.\textit{depth}()+1] \textbf{if} current\_node.\textit{depth}() + 1 $<$ \textit{len}(events) \textbf{else} None
+    \\
+    \If {next\_event is None}
+         \State expansion\_limit $\gets$ 0
+    \Else
+         \State expansion\_limit $\gets$ \textit{sum}\big( \textit{len}(rooms) \ \textbf{for each} rooms \ \textbf{in} \textit{find\_available\_rooms}() \big)
+    \EndIf
+    \\
+    \State child\_node $\gets$ MCTSNode(expansion\_limit = expansion\_limit, parent = current\_node, path = new\_path)
+    \State current\_node.children.\textit{append}(child\_node)
+    \State current\_node $\gets$ child\_node
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
 
+
+
 \begin{algorithm}
 \caption{Find Available Rooms}\label{find_available_rooms}
 \begin{algorithmic}[1]
-\Function{find\_available\_rooms}{event\_capacity, rooms, events, available\_periods}
-    \State \text{period\_room\_availability} $\gets$ \{\text{period: \{room["Id"] \textbf{for} room \textbf{in} rooms\}} \textbf{for} period \textbf{in} available\_periods\}
+\Function{FIND\_AVAILABLE\_ROOMS}{event\_capacity, rooms, events, available\_periods}
+    \State period\_room\_availability $\gets$ \{period: \textit{set}(rooms.keys()) \textbf{for each} period \textbf{in} available\_periods\}
     \\
-    \For{\text{other\_event \textbf{in} events}}
-        \State \text{occupied\_period} $\gets$ \text{(other\_event["WeekDay"], other\_event["Timeslot"])}
-        \If{\text{occupied\_period \textbf{in} period\_room\_availability}}
-            \State \text{period\_room\_availability[occupied\_period].\textit{discard(}other\_event["RoomId"]\textit{)}}
+    \For{\textbf{each} other\_event \textbf{in} events}
+        \State occupied\_period $\gets$ (other\_event["WeekDay"], other\_event["Timeslot"])
+        \If{occupied\_period \textbf{in} period\_room\_availability}
+            \State period\_room\_availability[occupied\_period].\textit{discard}(other\_event["RoomId"])
         \EndIf
     \EndFor
     \\
-    \State \text{suitable\_rooms} $\gets$ \text{\{room["Id"] \textbf{for} room \textbf{in} rooms \textbf{if} room["Capacity"] $>=$ event\_capacity\}}
+    \State suitable\_rooms $\gets$ \{room\_id \textbf{for each} room\_id, room \textbf{in} rooms.items() \textbf{if} room["Capacity"] $\geq$ event\_capacity\}
     \\
-    \For{\text{period \textbf{in} available\_periods}}
-        \If{\text{period\_room\_availability[period]}}
-            \State \text{period\_room\_availability[period] $\gets$ period\_room\_availability[period] $\cap$ suitable\_rooms} 
-            \textbf{if} \text{period\_room\_availability[period] $\cap$ suitable\_rooms \textbf{else} period\_room\_availability[period]}
+    \For{\textbf{each} period \textbf{in} available\_periods}
+        \If{period\_room\_availability[period] is not empty}
+            \State period\_room\_availability[period] $\gets$ period\_room\_availability[period] $\cap$ suitable\_rooms 
+            \State \textbf{if empty:} keep original period\_room\_availability[period]
         \EndIf
     \EndFor
     \\
-    \State \Return \text{period\_room\_availability}
+    \State \Return period\_room\_availability
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
+\subsubsection{Simulation}
 
 The simulation phase estimates the value of multiple actions, in this case, distinct event allocations, which will guide the selection and expansion steps in future iterations. 
 
@@ -288,45 +304,55 @@ X(n) = \frac{e^a - 1}{e - 1}, \quad \text{with } a = \frac{\hat{w}^* - \hat{z}_n
 where \(\hat{z}^*\) and \(\hat{w}^*\) represent the best and the worst simulation results in the entire tree, and \(\hat{z}_n^*\) is the best simulation result under node \(n\).
 
 \begin{algorithm}
-\caption{Simulation (simplified)}\label{simulation}
+\caption{Simulation}\label{simulation}
 \begin{algorithmic}[1]
-\Function{SIMULATION}{}
-    \State \text{simulated\_timetable} $\gets$ \text{copy(current\_node.path)}
-    \State \text{simulated\_timetable[self.current\_node.depth():] $\gets$ sorted(events[current\_node.depth():],} \text{key=lambda event: (event["Id"] \textbf{in}} \text{unassigned\_events, event["Priority"], random()), reverse=True)}
-\\
-    \For{\text{i, event} \textbf{in} \text{enumerate(remaining\_events)}}
-        \State \text{best\_room\_and\_period} $\gets$ \textit{find\_best\_room\_and\_period()}
-        \If{\text{best\_room\_and\_period} \textbf{exists}}
-            \State \text{room, weekday, timeslot} $\gets$ \text{best\_room\_and\_period}
-            \State \text{update\_event()}
-        \ElsIf{\text{event["Id"]} \textbf{not in} \text{unassigned\_events}}
-            \State \text{unassigned\_events.append(event["Id"])}
+\Function{SIMULATION}{start\_time, time\_limit}
+    \State assigned\_events $\gets$ current\_node.path.\textit{copy}()
+    \State unassigned\_events $\gets$ \textit{set}()
+    \State remaining\_events $\gets$ \textit{sorted}(events[current\_node.\textit{depth}():], 
+    \Statex \hspace{3cm} \textbf{key} = $\lambda$ event: (event["Id"] \textbf{in} previous\_unassigned\_events, event["Priority"], \textit{random.random()}), 
+    \Statex \hspace{3cm} \textbf{reverse} = True)
+    \\
+    \For{\textbf{each} $i, event$ \textbf{in} \textit{enumerate}(remaining\_events)}
+        \State best\_room\_and\_period $\gets$ \textit{find\_best\_room\_and\_period}()
+        \If{best\_room\_and\_period exists}
+            \State event["RoomId"], event["WeekDay"], event["Timeslot"] $\gets$ best\_room\_and\_period
+            \State assigned\_events[event["Id"]] $\gets$ event
+        \Else
+            \State previous\_unassigned\_events.\textit{add}(event["Id"])
+            \State unassigned\_events.\textit{add}(event["Id"])
         \EndIf
     \EndFor
-\\
-    \State \text{hard\_penalty\_result, soft\_penalty\_result} $\gets$ \text{\textit{evaluate\_timetable(}simulated\_timetable\textit{)}}
-    \State \text{\textit{update\_penalties}(hard\_penalty\_result, soft\_penalty\_result\textit{)}}
-\\
-    \If{\text{hard\_penalty\_result $>$ best\_result\_hard} \textbf{or} 
-         (\text{hard\_penalty\_result $==$ best\_result\_hard} \textbf{and} 
-         \text{soft\_penalty\_result} $>$ \text{best\_result\_soft})}
-        \State \text{best\_result\_hard} $\gets$ \text{hard\_penalty\_result}
-        \State \text{best\_result\_soft} $\gets$ \text{soft\_penalty\_result}
-        \State \textbf{with} \text{\textit{open(}output\_filename, 'w'\textit{)}} \textbf{as} \textit{file}:
-        \State \hskip1em \textit{write\_best\_simulation\_result\_to\_file()}
-	 \If{\text{hard\_'penalty\_result} $==$ \text{0}}
-		\State \text{simulated\_timetable, best\_result\_hard, best\_result\_soft = hill\_climber.\textit{run\_hill\_climbing()}}
-             \State \text{\textit{update\_penalties}(best\_result\_hard, best\_result\_soft\textit{)}}
-       \EndIf
+    \\
+    \State hard\_penalty\_result, soft\_penalty\_result $\gets$ \textit{evaluate\_timetable}(assigned\_events, unassigned\_events)
+    \\
+    \State current\_hard\_values.\textit{append}(hard\_penalty\_result)
+    \State current\_soft\_values.\textit{append}(soft\_penalty\_result)
+    \\
+    \State \textit{update\_penalties}(soft\_penalty\_result, hard\_penalty\_result)
+    \\
+    \If{(hard\_penalty\_result $>$ global\_best\_hard\_penalty) \textbf{or} (hard\_penalty\_result = global\_best\_hard\_penalty \textbf{and} soft\_penalty\_result $>$ global\_best\_soft\_penalty)}
+        \State global\_best\_hard\_penalty $\gets$ hard\_penalty\_result
+        \State global\_best\_soft\_penalty $\gets$ soft\_penalty\_result
+        \State \textbf{with} \textit{open}(output\_filename, 'w') \textbf{as} file:
+            \State \hspace{1cm} \textit{write\_best\_simulation\_result\_to\_file}(\textit{list}(assigned\_events.values()), file)
+        \If{\textit{len}(unassigned\_events) $==$ 0 \textbf{and} hard\_penalty\_result $==$ 0 \textbf{and} soft\_penalty\_result $\neq$ 0}
+            \State global\_best\_soft\_penalty $\gets$ hill\_climber.\textit{run\_hill\_climbing}(assigned\_events, 
+            \Statex \hspace{3cm} events[current\_node.\textit{depth}()]["Id"], 
+            \Statex \hspace{3cm} global\_best\_soft\_penalty, start\_time, time\_limit)
+            \State \textit{update\_penalties}(global\_best\_soft\_penalty)
+        \EndIf
     \EndIf
-\\
-    \State \text{simulation\_result\_hard} $\gets$ \text{\textit{normalize\_hard(}current\_node.best\_hard\_penalty\_result\textit{)}}
-    \State \text{simulation\_result\_soft} $\gets$ \text{\textit{normalize\_soft(}current\_node.best\_soft\_penalty\_result\textit{)}}
-\\
-    \State \Return \text{simulation\_result\_hard, simulation\_result\_soft}
+    \\
+    \State simulation\_result\_hard $\gets$ \textit{normalize\_hard}(current\_node.best\_hard\_penalty)
+    \State simulation\_result\_soft $\gets$ \textit{normalize\_soft}(current\_node.best\_soft\_penalty)
+    \\
+    \State \Return simulation\_result\_hard, simulation\_result\_soft
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
+\subsubsection{Backpropagation}
 
 The \(backpropagation\) procedure (Algorithm \ref{backpropagation}) updates the tree based on the simulation results. 
 
@@ -335,24 +361,25 @@ It starts from the current node, which is the leaf node where the simulation occ
 \begin{algorithm}
 \caption{Backpropagation}\label{backpropagation}
 \begin{algorithmic}[1]
-\Procedure{BACKPROPAGATION}{\text{simulation\_result\_hard}, \text{simulation\_result\_soft}}
-    \State \text{node} $\gets$ \text{current\_node}
-    \While{\text{node} \textbf{is not} \texttt{None}}
-        \State \text{node.visits} $\gets$ \text{node.visits} $+ 1$
-        \State \text{node.score\_hard} $\gets$ \text{node.score\_hard} $+$ \text{simulation\_result\_hard}
-        \State \text{node.score\_soft} $\gets$ \text{node.score\_soft} $+$ \text{simulation\_result\_soft}
-        \State \text{node} $\gets$ \text{node.parent}
+\Function{BACKPROPAGATION}{simulation\_result\_hard, simulation\_result\_soft}
+    \State node $\gets$ current\_node
+    \While{node $\neq$ None}
+        \State node.visits $+=$ 1
+        \State node.score\_hard $+=$ simulation\_result\_hard
+        \State node.score\_soft $+=$ simulation\_result\_soft
+        \State node $\gets$ node.parent
     \EndWhile
-\EndProcedure
+\EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Hill climbing}\label{hill_climbing_section}
+
+\section{Hill climbing}\label{hill_climbing_section}
 
 The \ac{hc} algorithm is applied as a local search method to further optimize the timetable obtained from the \ac{mcts} simulation phase. After finding a feasible solution with \ac{mcts}, \ac{HC} refines the solution by exploring neighboring states. 
 (...)
 
-\subsection{Frontend}
+\section{Frontend}
 
 The development process involved several adaptations and refinements. Initially, the previous work was analyzed and made functional, serving as a baseline for the new system. The \ac{mcts} algorithm was being developed while also being integrated into the frontend. However, as the focus shifted towards adapting it to the \ac{itc-2007} track 3 benchmark for performance evaluation and fine-tuning the algorithm, the frontend development gradually took a backseat. Over time, the algorithm evolved significantly, diverging from its original form, which made it challenging to align with the prior work.
 
