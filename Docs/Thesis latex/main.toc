@@ -48,14 +48,15 @@
 \contentsline {subsection}{\numberline {4.2.1}Constraints}{9}{subsection.4.2.1}%
 \contentsline {section}{\numberline {4.3}Monte Carlo Tree Search}{10}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}\ac {mcts} Tree}{10}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Tree Nodes}{11}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Methodology}{12}{subsection.4.3.3}%
-\contentsline {subsubsection}{\numberline {4.3.3.1}Selection}{13}{subsubsection.4.3.3.1}%
-\contentsline {subsubsection}{\numberline {4.3.3.2}Expansion}{13}{subsubsection.4.3.3.2}%
-\contentsline {subsubsection}{\numberline {4.3.3.3}Simulation}{15}{subsubsection.4.3.3.3}%
-\contentsline {subsubsection}{\numberline {4.3.3.4}Backpropagation}{17}{subsubsection.4.3.3.4}%
-\contentsline {section}{\numberline {4.4}Hill climbing}{19}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Frontend}{19}{section.4.5}%
+\contentsline {subsubsection}{\numberline {4.3.1.1}Tree Nodes}{11}{subsubsection.4.3.1.1}%
+\contentsline {subsection}{\numberline {4.3.2}Methodology}{12}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}Selection}{12}{subsubsection.4.3.2.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.2}Expansion}{14}{subsubsection.4.3.2.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.3}Simulation}{14}{subsubsection.4.3.2.3}%
+\contentsline {subsubsection}{\numberline {4.3.2.4}Backpropagation}{16}{subsubsection.4.3.2.4}%
+\contentsline {subsection}{\numberline {4.3.3}Normalization}{18}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Hill climbing}{18}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Frontend}{18}{section.4.5}%
 \contentsline {chapter}{\numberline {5}Tests}{20}{chapter.5}%
 \contentsline {chapter}{\numberline {6}Results}{21}{chapter.6}%
 \contentsline {chapter}{\numberline {7}Conclusion}{22}{chapter.7}%

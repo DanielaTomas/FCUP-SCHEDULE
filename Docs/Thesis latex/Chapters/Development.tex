@@ -102,7 +102,7 @@ There are several hard and soft constraints that affect the creation of \ac{fcup
 
 \begin{figure}
       \centering
-      \includegraphics[width=0.7\columnwidth]{Development/MCTS_tree.jpg}
+      \includegraphics[width=0.6\columnwidth]{Development/MCTS_tree.jpg}
       \caption[MCTS tree]
       {MCTS tree}
       \label{fig:mcts_tree}
@@ -129,7 +129,7 @@ The events are sorted in advance so that the most difficult event to place is pl
 
 %I have tried other priority formulas...
 
-\subsection{Tree Nodes}
+\subsubsection{Tree Nodes}
 
 A node is composed of the following attributes:
 
@@ -140,7 +140,7 @@ A node is composed of the following attributes:
 
 \item \textbf{Children} is initialized as an empty list at first but will later hold references to the node's child nodes. 
 
-\item The \textbf{expansion limit} specifies the maximum number of children that a node can have, which helps control the expansion process. It is calculated based on the number of available rooms per period for the next event. A value of zero indicates that the node cannot be expanded further.
+\item The \textbf{expansion limit} specifies the maximum number of children that a node can have, which helps control the expansion process. It is estimated based on the number of available rooms per period for the next event. A value of zero indicates that the node cannot be expanded further.
 
 \item \textbf{Visits} is initialized to 0, tracking the number of times a node has been visited.
 
@@ -165,7 +165,7 @@ Figure \ref{fig:mcts_steps}(...)
 
 The \(selection\) phase (Algorithm \ref{selection}) begins at the root and traverses the tree by iteratively selecting the best child nodes until a terminal (leaf) node is reached. A node is considered terminal if either it cannot be expanded further (i.e., its expansion limit is zero) or if it has reached the maximum depth (i.e., all the events have been assigned). Conversely, a node is deemed fully expanded if either its expansion limit is zero or if the number of its children equals its expansion limit. When the traversal encounters a node that is not fully expanded, the process stops, and that node is selected for further expansion.
 
-The best child node (Algorithm \ref{best_child}) is determined by applying the \ac{uct} formula (\ref{uct_formula}). However, as the problem has two goals, maximizing the hard constraints first and then the soft constraints, the \ac{uct} formula was applied differently. Initially, the algorithm computes the weights for each child node using the hard score. Among the children with the highest hard score, the weights are recalculated based on the soft score. The child node with the highest weight in this second calculation is selected as the best child. However, if all of a node's children have reached their expansion limit, the algorithm backtracks: if the current node has a parent, the parent's expansion limit is set to zero, and it moves up to the parent. Reaching the root indicates that the entire tree is fully expanded.
+The best child node (Algorithm \ref{best_child}) is determined by applying the \ac{uct} formula (\ref{uct_formula}). However, as the problem has two goals, maximizing the hard constraints first and then the soft constraints, the \ac{uct} formula was applied differently. Initially, the algorithm computes the weights for each child node using the hard score. Among the children with the highest hard score, the weights are recalculated based on the soft score. The child node with the highest weight in this second calculation is selected as the best child. However, if all of a node's children have reached their expansion limit, the algorithm backtracks: if the current node has a parent, the current node expansion limit is set to zero, and it moves up to the parent. Reaching the root indicates that the entire tree is fully expanded.
 
 \begin{algorithm}
 \caption{Selection}\label{selection}
@@ -213,9 +213,9 @@ The best child node (Algorithm \ref{best_child}) is determined by applying the \
 
 \subsubsection{Expansion}
 
-The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. It starts by retrieving the next unvisited event based on the current node's depth, which is the length of its path.
+The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. It starts by retrieving the next unvisited event based on the current node's depth, which is the length of its path. 
 
-The algorithm retrieves the corresponding weekday and timeslot and finds the available rooms per period for the event (Algorithm \ref{find_available_rooms}), removing occupied rooms and filtering rooms based on capacity. If rooms are available, it selects the corresponding one and creates a new event with the selected room, weekday, and timeslot. After this selection, the expansion limit for the next event in the timetable is calculated, i.e., the number of children that the new current node child can have. If no more events remain, the limit is set to zero. Otherwise, it sums the number of available rooms per period for the next event.
+The algorithm also retrieves the corresponding weekday and timeslot and finds the available rooms per period for the event (Algorithm \ref{find_available_rooms}), removing occupied rooms and filtering rooms based on capacity. If rooms are available, it selects the corresponding one and creates a new event with the selected room, weekday, and timeslot. After this selection, the expansion limit for the next event in the timetable is estimated, i.e., the number of children that the new current node child will probably have. If no more events remain, the limit is set to zero. Otherwise, it sums the number of available rooms per period for the next event.
  
 Finally, a new child node is created and added to the tree. The current node is updated to this newly created node.
 
@@ -286,22 +286,17 @@ Finally, a new child node is created and added to the tree. The current node is 
 
 The simulation phase estimates the value of multiple actions, in this case, distinct event allocations, which will guide the selection and expansion steps in future iterations. 
 
-A random event allocation approach was initially explored but produced suboptimal results. Thus, a more structured method was implemented.
+A random event allocation approach was initially explored but produced suboptimal results. Therefore, a more structured method was implemented.
 
-Therefore, the \(simulation\) function starts to create a copy of the current node's path and adds and sorts all the remaining events (events not yet allocated). They are sorted based on whether they are in the \(unassigned\_events\) list, which are the events not scheduled in the previous simulated timetables, and then based on their priority. This ensures that higher-priority events are scheduled first.
+The \(simulation\) phase starts by creating a copy of the current node's path, which contains the events already scheduled. It then identifies the remaining events, i.e., events that have not been assigned yet. These remaining events are sorted based on two criteria:
+\begin{enumerate}
+\item Whether they were previously unassigned in prior simulations, to prioritize harder-to-schedule events.
+\item Their priority, ensuring that more critical events are allocated first.
+\end{enumerate}
 
-For each unvisited event in the timetable, the \(find\_best\_room\_and\_period\) helper function finds the best available period and room combination. The approach is similar to constraint programming as it iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. The combination with no hard penalties and with the lowest soft penalty is selected as the best option. If more than one combination is found under those conditions, one of them is chosen randomly. The event is then updated with the selected room, weekday, and timeslot. If no suitable room and period are found, the event is added to the list of \(unassigned\_events\).
+For each unvisited event, the best available period and room combination is sought. The approach is similar to constraint programming as it iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. The combination with no hard penalties and the lowest soft penalty is selected as the best option. If multiple optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid allocation is found, the event will have higher priority in the next simulation.
 
-After scheduling all events, the \(evaluate\_timetable\) function calculates the result of the simulation, i.e., the hard and soft penalties of the simulated timetable.
-
-The \(update\_penalties\) procedure is then called to update the best and worst penalty score based on the simulation results. If a new best result is found, the timetable is saved to a file. If a new best result is found and the hard penalty is zero, indicating a feasible solution, the Hill Climbing Algorithm (section \ref{hill_climbing_section}) is used to further optimize the timetable.
-
-The normalization formula \ref{normalization_formula} \cite{pedroso_tree_2015} is applied to standardize the simulation results:
-
-\begin{equation}
-X(n) = \frac{e^a - 1}{e - 1}, \quad \text{with } a = \frac{\hat{w}^* - \hat{z}_n^*}{\hat{w}^* - \hat{z}^*},\label{normalization_formula}
-\end{equation}
-where \(\hat{z}^*\) and \(\hat{w}^*\) represent the best and the worst simulation results in the entire tree, and \(\hat{z}_n^*\) is the best simulation result under node \(n\).
+After scheduling all events, the simulation result is calculated, and the best and worst penalty scores are then updated based on these results. If a new best result is found, the timetable is saved to a file. If a new best result is found and the hard penalty is zero, indicating a feasible solution, the \ac{hc} algorithm (section \ref{hill_climbing_section}) is used to further optimize the timetable.
 
 \begin{algorithm}
 \caption{Simulation}\label{simulation}
@@ -354,7 +349,7 @@ where \(\hat{z}^*\) and \(\hat{w}^*\) represent the best and the worst simulatio
 
 \subsubsection{Backpropagation}
 
-The \(backpropagation\) procedure (Algorithm \ref{backpropagation}) updates the tree based on the simulation results. 
+The \(backpropagation\) phase (Algorithm \ref{backpropagation}) updates the tree based on the simulation results. 
 
 It starts from the current node, which is the leaf node where the simulation occurred, and moves up until reaching the root node. During this process, it performs updates for each node in the path, including incrementing the number of visits and updating the hard and soft scores with the simulation results. 
 
@@ -373,6 +368,16 @@ It starts from the current node, which is the leaf node where the simulation occ
 \end{algorithmic}
 \end{algorithm}
 
+\subsection{Normalization}
+
+The normalization formula \ref{normalization_formula} is applied to both hard and soft constraints to standardize the simulation results \cite{pedroso_tree_2015}:
+
+\begin{equation}
+N(n) = \frac{e^a - 1}{e - 1}, \quad \text{with } a = \frac{best\_penalty_n - worst\_penalty}{ best\_penalty - worst\_penalty},\label{normalization_formula}
+\end{equation}
+where \(best\_penalty\) and \(worst\_penalty\) represent the best and the worst simulation results in the entire tree, and \(best\_penalty_n\) is the best simulation result under node \(n\).
+
+This formulation ensures that the best simulation result is mapped to a value close to one, while the worst is mapped to zero.
 
 \section{Hill climbing}\label{hill_climbing_section}
 
