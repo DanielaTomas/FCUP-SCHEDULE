@@ -15,7 +15,7 @@
 \setcounter {tocdepth}{3}
 \vspace {0.3cm}
 \contentsline {chapter}{List of Figures}{vi}{dummy.5}%
-\contentsline {chapter}{List of Abbreviations}{viii}{section*.3}%
+\contentsline {chapter}{List of Abbreviations}{vii}{section*.3}%
 \vspace {0.3cm}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Objective}{1}{section.1.1}%
