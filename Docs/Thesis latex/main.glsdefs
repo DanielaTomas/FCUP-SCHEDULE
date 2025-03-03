@@ -250,3 +250,31 @@ parent={},%
 %
 }%
 
+\glsdefs@newdocentry{cop}%
+{%
+name={\acronymfont {\glsentryshort {cop}}},%
+sort={COP},%
+type={acronym},%
+first={COP},%
+firstplural={COPs},%
+text={COP},%
+plural={COPs},%
+description={Combinatorial Optimization Problem},%
+descriptionplural={Combinatorial Optimization Problem},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Combinatorial Optimization Problem},%
+longplural={Combinatorial Optimization Problems},%
+short={COP},%
+shortplural={COPs},%
+counter={page},%
+parent={},%
+%
+}%
+

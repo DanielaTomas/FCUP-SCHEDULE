@@ -298,6 +298,8 @@ For each unvisited event, the best available period and room combination is soug
 
 After scheduling all events, the simulation result is calculated, and the best and worst penalty scores are then updated based on these results. If a new best result is found, the timetable is saved to a file. If a new best result is found and the hard penalty is zero, indicating a feasible solution, the \ac{hc} algorithm (section \ref{hill_climbing_section}) is used to further optimize the timetable.
 
+%anytime...
+
 \begin{algorithm}
 \caption{Simulation}\label{simulation}
 \begin{algorithmic}[1]
@@ -382,6 +384,8 @@ This formulation ensures that the best simulation result is mapped to a value cl
 \section{Hill climbing}\label{hill_climbing_section}
 
 The \ac{hc} algorithm is applied as a local search method to further optimize the timetable obtained from the \ac{mcts} simulation phase. After finding a feasible solution with \ac{mcts}, \ac{HC} refines the solution by exploring neighboring states. 
+
+%Only events that were not been allocated in the tree are modified.
 (...)
 
 \section{Frontend}
