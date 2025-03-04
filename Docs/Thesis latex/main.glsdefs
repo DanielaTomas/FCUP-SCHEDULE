@@ -222,6 +222,34 @@ parent={},%
 %
 }%
 
+\glsdefs@newdocentry{pe-ctt}%
+{%
+name={\acronymfont {\glsentryshort {pe-ctt}}},%
+sort={PE-CTT},%
+type={acronym},%
+first={PE-CTT},%
+firstplural={PE-CTTs},%
+text={PE-CTT},%
+plural={PE-CTTs},%
+description={Post-Enrollment Course Timetabling},%
+descriptionplural={Post-Enrollment Course Timetabling},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Post-Enrollment Course Timetabling},%
+longplural={Post-Enrollment Course Timetablings},%
+short={PE-CTT},%
+shortplural={PE-CTTs},%
+counter={page},%
+parent={},%
+%
+}%
+
 \glsdefs@newdocentry{hc}%
 {%
 name={\acronymfont {\glsentryshort {hc}}},%

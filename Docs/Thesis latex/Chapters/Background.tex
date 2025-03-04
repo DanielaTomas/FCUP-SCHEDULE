@@ -39,23 +39,26 @@ Due to the size and complexity of the problem, obtaining an optimal solution in 
 \ac{ucttp} can be categorized into two main types:
 
 \begin{itemize}
-\item \textbf{Curriculum-Based Course Timetabling:} 
-\item \textbf{Post-Enrollment Course Timetabling:}
+\item \textbf{Curriculum-Based Course Timetabling (CB-CTT):} Courses are grouped into predefined curricula, ensuring that no student or lecturer is allocated to overlapping courses within their curriculum. \ac{fcup}'s timetables generation fit into this approach.
+
+\item \textbf{\ac{pe-ctt}:} Events are scheduled after students enroll in their courses, taking into account their preferred event combinations while minimizing conflicts.
 \end{itemize}
+
+These two approaches differ significantly in terms of timing, flexibility, and constraints. \ac{pe-ctt} is performed after the student has enrolled in their courses, while \ac{cb-ctt} is performed first. \ac{pe-ctt} adjusts to the student choices, providing greater flexibility, while \ac{cb-ctt} follows a more rigid and predefined structure. Furthermore, \ac{pe-ctt} often involves more complex constraints due to diverse student preferences, while \ac{cb-ctt} deals with more predictable patterns. As a result, \ac{pe-ctt} is appropriate for institutions with a flexible course enrollment, while \ac{cb-ctt} is ideal for institutions with fixed curricula.
 
 \subsection{Constraints}
 %How can a university/school schedule its classes to make the best use of teachers and classrooms without conflicts?
 In the context of \ac{ucttp}, constraints are often divided into two different types:
 \begin{itemize}
-\item \textbf{Hard constraints} ensure the feasibility of the timetable and must be strictly satisfied. Typically, a hard constraint includes avoiding overlapping events for the same student or a lecturer. 
-\item \textbf{Soft constraints}, on the other hand, represent preferences to improve the quality of the solution without being mandatory. An example of a soft constraint is minimizing gaps in students' timetables to ensure a more compact timetable.
+\item \textbf{Hard constraints:} Ensure the feasibility of the timetable and must be strictly satisfied. Typically, a hard constraint includes avoiding overlapping events for the same student or a lecturer. 
+\item \textbf{Soft constraints:} Represent preferences to improve the quality of the solution without being mandatory. An example of a soft constraint is minimizing gaps in students' timetables to ensure a more compact timetable.
 \end{itemize}
 
-\subsection{International Timetabling Competition (ITC)}
+\section{International Timetabling Competition (ITC)}
 
 Since 2002, the \ac{patat}\footnote{https://patatconference.org/communityService.html} has supported timetabling competitions to encourage research in this field. There have already been five \ac{itc}, but only three of them have focused on university timetables.
 
-\subsubsection{Benchmark datasets}
+\subsection{Benchmark datasets}
 
 \ac{itc} provides benchmark datasets that serve to evaluate timetable algorithms. %The most relevant dataset for the \ac{ucttp} is the \ac{itc-2007} dataset, which %presents real-world constraints and objectives commonly found in academic scheduling. These datasets help researchers compare the performance of different algorithms on the same problem instances, ensuring fair and reproducible results.
 
