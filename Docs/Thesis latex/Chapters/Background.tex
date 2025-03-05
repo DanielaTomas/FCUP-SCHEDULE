@@ -17,7 +17,7 @@ This chapter will cover the concepts needed to contextualize and understand the 
 
 \section{Combinatorial Optimization Problems}
 
-Finding a solution for maximizing or minimizing a value is common in several real world problems. These problems often require searching for the optimal solution from a finite set of possibilities. They are characterized by their discrete nature and the challenge of finding optimal solutions in large search spaces.
+Finding a solution for maximizing or minimizing a value is common in several real world problems. These problems often require searching for an optimal solution from a finite set of possibilities. They are characterized by their discrete nature and the challenge of finding optimal solutions in large search spaces.
 
 \acp{cop} arise in various fields, such as artificial intelligence, machine learning, auction theory, applied mathematics, and so on. Some well-known \acp{cop} include Knapsack Problem, Traveling Salesman Problem, and Graph Coloring. 
 
@@ -29,8 +29,8 @@ To solve these problems, various algorithmic techniques are used, including:
 \end{itemize}
 
 \section{University Course Timetabling Problem}
-%\subsection{Educational Timetabling}
-\ac{ucttp} is a NP-hard \ac{cop} that involves allocating events, rooms, lecturers, and students to weekly schedules while meeting certain predefined constraints. It falls under the broader category of educational timetabling, which also includes other challenging problems such as examination timetabling. 
+s
+\ac{ucttp} is a NP-hard \ac{cop} that involves allocating events, rooms, lecturers, and students to weekly schedules while meeting certain predefined constraints. It falls under the broader category of Educational Timetabling, which also includes other challenging problems such as Examination Timetabling. 
 
 Due to the size and complexity of the problem, obtaining an optimal solution in usable time is typically infeasible. Therefore, it is necessary to employ robust optimization techniques.
 
@@ -39,12 +39,12 @@ Due to the size and complexity of the problem, obtaining an optimal solution in 
 \ac{ucttp} can be categorized into two main types:
 
 \begin{itemize}
-\item \textbf{Curriculum-Based Course Timetabling (CB-CTT):} Courses are grouped into predefined curricula, ensuring that no student or lecturer is allocated to overlapping courses within their curriculum. \ac{fcup}'s timetables generation fit into this approach.
+\item \textbf{Curriculum-Based Course Timetabling (CB-CTT):} Courses are grouped into predefined curricula, ensuring that no student or lecturer is allocated to overlapping courses within their curriculum.
 
 \item \textbf{\ac{pe-ctt}:} Events are scheduled after students enroll in their courses, taking into account their preferred event combinations while minimizing conflicts.
 \end{itemize}
 
-These two approaches differ significantly in terms of timing, flexibility, and constraints. \ac{pe-ctt} is performed after the student has enrolled in their courses, while \ac{cb-ctt} is performed first. \ac{pe-ctt} adjusts to the student choices, providing greater flexibility, while \ac{cb-ctt} follows a more rigid and predefined structure. Furthermore, \ac{pe-ctt} often involves more complex constraints due to diverse student preferences, while \ac{cb-ctt} deals with more predictable patterns. As a result, \ac{pe-ctt} is appropriate for institutions with a flexible course enrollment, while \ac{cb-ctt} is ideal for institutions with fixed curricula.
+These two problems differ significantly in terms of timing, flexibility, and constraints. \ac{pe-ctt} is performed after the student has enrolled in their courses, while \ac{cb-ctt} is performed first. \ac{pe-ctt} adjusts to the student choices, providing greater flexibility, while \ac{cb-ctt} follows a more rigid and predefined structure. Furthermore, \ac{pe-ctt} often involves more complex constraints due to diverse student preferences, whereas \ac{cb-ctt} deals with more predictable patterns. As a result, \ac{pe-ctt} is appropriate for institutions with a flexible course enrollment, while \ac{cb-ctt} is ideal for institutions with fixed curricula. \ac{fcup}'s timetables generation fits into \ac{cb-ctt}
 
 \subsection{Constraints}
 %How can a university/school schedule its classes to make the best use of teachers and classrooms without conflicts?
@@ -56,11 +56,11 @@ In the context of \ac{ucttp}, constraints are often divided into two different t
 
 \section{International Timetabling Competition (ITC)}
 
-Since 2002, the \ac{patat}\footnote{https://patatconference.org/communityService.html} has supported timetabling competitions to encourage research in this field. There have already been five \ac{itc}, but only three of them have focused on university timetables.
+Since 2002, the \ac{patat}\footnote{https://patatconference.org/communityService.html} has supported timetabling competitions to encourage research in this field. There have already been five editions of the \ac{itc}, with three focusing on university timetabling. The third edition, held in 2011, centered on high school timetabling.
 
-\subsection{Benchmark datasets}
+The first \ac{itc} in 2002 focused on the \ac{pe-ctt} problem and utilized artificially generated instances. Over successive editions, the competition introduced problem instances that increasingly reflected real-world constraints and complexities.
 
-\ac{itc} provides benchmark datasets that serve to evaluate timetable algorithms. %The most relevant dataset for the \ac{ucttp} is the \ac{itc-2007} dataset, which %presents real-world constraints and objectives commonly found in academic scheduling. These datasets help researchers compare the performance of different algorithms on the same problem instances, ensuring fair and reproducible results.
+The \ac{itc-2007} was structured into three distinct tracks: Examination Timetabling Problem, Post-enrollment Course Timetabling, and Curriculum-based Course Timetabling. The second one is an extended version of the previous competition. This dissertation focuses on the Curriculum-Based Course Timetabling track (track 3) of the \ac{itc-2007}, as it aligns with the problem under investigation. Even after 18 years, these benchmark datasets remain widely used in academic research and optimization studies, demonstrating their relevance in the field.
 
 \section{Monte Carlo Tree Search}
 

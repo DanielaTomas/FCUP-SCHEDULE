@@ -26,8 +26,7 @@
 \contentsline {section}{\numberline {2.2}University Course Timetabling Problem}{3}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Curriculum-Based and Post-Enrollment Course Timetabling}{4}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Constraints}{4}{subsection.2.2.2}%
-\contentsline {section}{\numberline {2.3}International Timetabling Competition (ITC)}{4}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Benchmark datasets}{5}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.3}International Timetabling Competition (ITC)}{5}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Monte Carlo Tree Search}{5}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Phases}{5}{subsection.2.4.1}%
 \contentsline {section}{\numberline {2.5}Local Search}{6}{section.2.5}%
