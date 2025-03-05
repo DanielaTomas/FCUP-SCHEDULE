@@ -79,7 +79,7 @@ def parse_input_data(input_data, db):
     return days, periods_per_day
 
 
-def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_limit):
+def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_limit, params):
     input_file_path = os.path.join(input_dir, input_file)
     if not os.path.exists(input_file_path):
         print(f"Warning: The input file '{input_file_path}' does not exist. Skipping.")
@@ -96,7 +96,7 @@ def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_li
     with open(log_file, "w") as file:
         file.write("")
     
-    mcts = MCTS(db, days, periods_per_day, output_file)
+    mcts = MCTS(params, db, days, periods_per_day, output_file)
     best_solution = mcts.run_mcts(iterations=iterations, time_limit=time_limit)
 
     if best_solution:
@@ -108,11 +108,15 @@ def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_li
     
     print(f"Finished processing {input_file}, output saved to {output_file}.")
 
+class Params:
+    pass
+
 
 def main():
     parser = argparse.ArgumentParser(description="Run MCTS for timetabling.")
     parser.add_argument("--time_limit", type=int, default=300, help="Time limit in seconds for the MCTS run (default: 300 seconds)")
     parser.add_argument("--iterations", type=int, default=None, help="Number of iterations for the MCTS run")
+    parser.add_argument("--c_param", type=float, default=1.4, help="C parameter for the MCTS run")
     parser.add_argument("--input_files", nargs="+", default=[f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)], help="List of input files to process (default: comp01.ctt - comp21.ctt)")
     args = parser.parse_args()
 
@@ -126,7 +130,9 @@ def main():
     directory_exists(log_dir)
 
     for input_file in args.input_files:
-        process_file(input_file, input_dir, output_dir, log_dir, args.iterations, args.time_limit)
+        params = Params
+        params.c_param = args.c_param
+        process_file(input_file, input_dir, output_dir, log_dir, args.iterations, args.time_limit, params)
 
 
 if __name__ == "__main__":

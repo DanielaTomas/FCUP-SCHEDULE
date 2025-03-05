@@ -11,7 +11,8 @@ import time
 
 class MCTS:
 
-    def __init__(self, current_timetable, days, periods_per_day, output_filename = "output\output.txt"):
+    def __init__(self, params, current_timetable, days, periods_per_day, output_filename = "output\output.txt"):
+        self.params = params
         self.rooms = current_timetable["rooms"]
         self.events, name_to_event_ids = add_event_ids_and_priority(current_timetable["events"], days, periods_per_day, current_timetable["blocks"], current_timetable["constraints"])
         self.root = MCTSNode(root_expansion_limit(self.events[0], self.rooms))
@@ -74,7 +75,7 @@ class MCTS:
                     self.complete = True
                     return False
             else:
-                best_child = current_node.best_child(unflagged_children)
+                best_child = current_node.best_child(unflagged_children, self.params)
                 current_node = best_child
         self.current_node = current_node
         return True

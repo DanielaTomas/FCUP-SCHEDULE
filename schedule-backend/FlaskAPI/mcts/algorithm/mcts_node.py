@@ -31,9 +31,9 @@ class MCTSNode:
         return self.expansion_limit == 0 or self.depth() == num_events
     
 
-    def best_child(self, unflagged_children, c_param=1.4):
+    def best_child(self, unflagged_children, params):
         choices_weights = [
-            child.score_hard + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
+            child.score_hard + params.c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
             for child in unflagged_children
         ]
 
@@ -41,7 +41,7 @@ class MCTSNode:
         best_children = [unflagged_children[i] for i, weight in enumerate(choices_weights) if weight == max_weight]
 
         choices_weights = [
-            child.score_soft + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
+            child.score_soft + params.c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
             for child in best_children
         ]
 

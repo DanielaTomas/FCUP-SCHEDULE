@@ -25,6 +25,8 @@
 
     * **``--iterations`` (optional):** Specifies the maximum number of iterations for the MCTS algorithm (**default:** unlimited unless a stopping condition is met)
 
+    * **``--c_param`` (optional):** Specifies the ``C`` parameter for the MCTS algorithm (**default:** 1.4).
+
     * **``--input_files`` (optional):** Specifies the list of input files to process from the input folder (**default:** processes all 21 competition files from comp01.ctt to comp21.ctt).
 
 * After running the script, the following folders will be created (if they do not already exist) and populated with the respective outputs:
@@ -33,6 +35,8 @@
     * **``final_output`` folder:** Contains the final solution, which is the result obtained by following the tree's best path;
         * This folder is only created if the algorithm successfully finds a complete path, which may not happen due to the typically vast search space
         * This solution does not necessarily match the results in the output folder
+
+    * **``log`` folder :** Contains the best solution found over time;
 
     * **``constraint_progress`` folder:** Contains HTML plots that display the evolution of hard and soft constraint values over the iterations;
 
