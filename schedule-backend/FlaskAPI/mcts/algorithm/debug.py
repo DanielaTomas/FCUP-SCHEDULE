@@ -2,6 +2,9 @@ import graphviz
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 import os
+import openpyxl
+from openpyxl.styles import Font
+import re
 
 def visualize_tree(root, output_file_name = "mcts_tree"):
     print("Processing the tree...")
@@ -61,3 +64,52 @@ def plot_progress(iterations, current_hard, best_hard, current_soft, best_soft, 
     #fig.show()
     print(f"Plot saved successfully to {output_file_name}\n")
 
+
+def save_results_to_excel(results, file_names, filename="test_results.xlsx"):
+    print(f"Saving results to excel...")
+    
+    if os.path.exists(filename):
+        wb = openpyxl.load_workbook(filename)
+        sheet_name = f"Test {len(wb.sheetnames) + 1}"
+        ws = wb.create_sheet(title=sheet_name)
+    else:
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = f"Test 1"
+    
+    header = ["TEST"] + [f"comp{i:02}" for i in range(1, 22)]
+    ws.append(header)
+    
+    best_hard_row = ["Time"] + [results[file][0] for file in file_names]
+    ws.append(best_hard_row)
+    
+    best_soft_row = ["Hard"] + [results[file][1] for file in file_names]
+    ws.append(best_soft_row)
+    
+    iteration_row = ["Soft"] + [results[file][2] for file in file_names]
+    ws.append(iteration_row)
+    
+    for row in ws.iter_rows(min_row=1, max_row=ws.max_row, min_col=1, max_col=1):
+        for cell in row:
+            cell.font = Font(bold=True)
+    
+    wb.save(filename)
+    print(f"Results saved to '{filename}' successfully!\n")
+
+
+def parse_last_log_line(line):
+    match = re.search(r"Time: ([\d:.]+), Hard: (\d+), Soft: (-?\d+)", line)
+    if match:
+        time_value = match.group(1)
+        hard_value = int(match.group(2))
+        soft_value = int(match.group(3))
+        return [time_value, hard_value, soft_value]
+    return None
+
+
+def get_last_log_line(filename):
+    with open(filename, 'rb') as f:
+        f.seek(-2, os.SEEK_END)
+        while f.read(1) != b'\n':
+            f.seek(-2, os.SEEK_CUR)
+        return parse_last_log_line(f.readline().decode())

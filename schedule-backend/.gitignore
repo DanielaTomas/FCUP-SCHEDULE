@@ -13,3 +13,4 @@ FlaskAPI/mcts/*.exe
 FlaskAPI/mcts/mcts_tree
 FlaskAPI/mcts/constraint_progress
 FlaskAPI/mcts/log
+FlaskAPI/mcts/test_results.xlsx

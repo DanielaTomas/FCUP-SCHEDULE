@@ -105,7 +105,7 @@ def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_li
         final_output_file = os.path.join(final_output_dir, f"{os.path.splitext(input_file)[0]}_final_output.txt")
         with open(final_output_file, 'w') as file:
             write_best_final_solution_to_file(best_solution, file)
-    
+
     print(f"Finished processing {input_file}, output saved to {output_file}.")
 
 class Params:
@@ -134,6 +134,12 @@ def main():
         params.c_param = args.c_param
         process_file(input_file, input_dir, output_dir, log_dir, args.iterations, args.time_limit, params)
 
+    log_line = {}
+    for input_file in args.input_files:
+        output_file = os.path.join(log_dir, f"{os.path.splitext(input_file)[0]}_log.txt")
+        log_line[input_file] = get_last_log_line(output_file)
+
+    save_results_to_excel(log_line, args.input_files)
 
 if __name__ == "__main__":
     main()
