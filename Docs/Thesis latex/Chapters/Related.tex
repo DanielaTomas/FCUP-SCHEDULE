@@ -11,7 +11,7 @@
 % For referencing this chapter elsewhere, use \ref{ChapterTemplate}
 \label{Related Work}
 
-The literature on the \ac{ucttp} is vast, so this chapter will cover various approaches to addressing this problem, mostly based on surveys.
+The literature on the \ac{ucttp} is vast, so this chapter will cover various approaches to address this problem, mostly based on surveys.
 
 According to Lewis' survey \cite{lewis_survey_2008}, algorithms can be divided into three categories:
 
@@ -21,11 +21,13 @@ According to Lewis' survey \cite{lewis_survey_2008}, algorithms can be divided i
 	\item \textbf{Multi-stage with relaxation} is divided into multiple stages, with some constraints being relaxed while satisfying others.
 \end{itemize}
 
-Other surveys, such as Abdipoor et al. \cite{abdipoor_meta-heuristic_2023}, categorized \ac{ucttp} into different categories, including operational research, metaheuristics, hyperheuristics, multi-objective, and hybrid approaches.
+Other surveys, such as Abdipoor et al. \cite{abdipoor_meta-heuristic_2023}, categorized \ac{ucttp} into five groups: operational research (or), metaheuristics, hyperheuristics, multi-objective, and hybrid approaches.
 
 \section{Operational Research (OR)}
 
-Operational research approaches, despite their complexity, are simple to implement and can be considered if time and space constraints are not a concern. However, the other types of approaches provide better results \cite{babaei_survey_2015}. As Chen et al. and  Babaei et. al detailed in their surveys \cite{babaei_survey_2015, chen_survey_2021}, OR includes Graph Coloring (GC), Integer and Linear Programming (IP/LP) and Constraint Satisfaction(s) Programming (CSPs) based techniques.
+Operational Research (OR) techniques provide mathematically rigorous solutions. Despite their complexity, these methods are simple to implement and can be considered if time and memory constraints are not a concern \cite{babaei_survey_2015}. However, the other types of approaches provide better quality results. 
+
+As Chen et al. and  Babaei et. al detailed in their surveys \cite{babaei_survey_2015, chen_survey_2021}, OR includes Graph Coloring (GC), Integer and Linear Programming (IP/LP) and Constraint Satisfaction(s) Programming (CSPs) based techniques.
 
 \section{Metaheuristics}
 
@@ -33,11 +35,13 @@ Metaheuristics \textit{provide "acceptable" solutions in a reasonable time for s
 
 Metaheuristics are similarly defined by Du et al. as \textit{a class of intelligent self-learning algorithms for finding near-optimum solutions to hard optimization problems} \cite{du2016search}.
 
-In recent years, metaheuristics have become the most used solution strategy for \ac{ucttp} and can be classified into two categories: Single solution-based and Population-based.
+Metaheuristics, while not guaranteeing global optimality, have become the most used solution strategy for \ac{ucttp} and can be classified into two categories: Single solution-based and Population-based.
 
 \subsection{Single Solution-Based}
 
-Single solution-based metaheuristics, also known as local search algorithms, focus on modifying a single solution throughout the search in order to improve that solution. This metaheuristic approach includes algorithms such as Hill Climbing (HC), Simulated Annealing (SA), Tabu Search (TS), and Iterated Local Search (ILS). Simulated Annealing is perhaps the most effective single solution-based metaheuristic, particularly in benchmark datasets, but Tabu Search has also been shown to be successful in minimizing hard constraints \cite{abdipoor_meta-heuristic_2023}.
+Single solution-based metaheuristics, also known as local search algorithms, focus on modifying a single solution throughout the search in order to improve that solution. 
+
+This metaheuristic approach includes algorithms such as Hill Climbing (HC), Simulated Annealing (SA), Tabu Search (TS), and Iterated Local Search (ILS). Simulated Annealing is perhaps the most effective single solution-based metaheuristic, particularly in benchmark datasets, but Tabu Search has also been shown to be successful in minimizing hard constraints \cite{abdipoor_meta-heuristic_2023}.
 
 \subsection{Population-Based}
 
@@ -49,7 +53,7 @@ Population-based metaheuristics, as opposed to single-solution-based metaheurist
 
 \section{Hyperheuristics}
 
-Heuristic methods have been highly effective in solving a wide range of problems. However, their application to new problems is often challenging due to the vast number of parameter choices and the lack of clear guidance \cite{hyper_heuristics_survey}. To address this problem, hyperheuristics aim to generalize methods by selecting the most suitable heuristic or sequence of heuristics for a specific problem, rather than explicitly solving the problem.
+Heuristic methods have been highly effective in solving a wide range of problems. However, their application to new problems is often challenging due to the vast number of parameter tuning and the lack of clear guidance \cite{hyper_heuristics_survey}. To address this problem, hyperheuristics aim to generalize methods by selecting or combining the most suitable heuristic(s) for a specific problem, rather than explicitly solving the problem.
 
 Hyper-heuristic and multi-objective approaches are less common, possibly due to their performance \cite{chen_survey_2021}.
 
@@ -63,6 +67,10 @@ Hybrid approaches mix algorithms from two or more of the previously mentioned ty
 
 %Hybridization of local search and population-based approaches (also known as the Memetic Algorithm (MA))
 
-In particular, Tomáš Müller, winner of the \ac{itc-2007}\footnote{https://www.eeecs.qub.ac.uk/itc2007/} tracks 1 and 3, developed a hybrid approach for all three tracks \cite{muller_itc2007}, finding feasible solutions for all instances of tracks 1 and 3 and most instances of track 2. The algorithms used included Iterative Forward Search, Hill Climbing, Great Deluge, and optionally Simulated Annealing. During the construction phase, Iterative Forward Search is employed to find a complete solution, followed by Hill climbing to find the local optimum. When a solution cannot be improved further using Hill Climbing, Great Deluge is used to iteratively decrease, based on a cooling rate, a bound that is imposed on the value of the current solution. Optionally, Simulated Annealing can be used when the bound reaches its lower limit.
+In particular, Tomáš Müller, winner of the \ac{itc-2007} tracks 1 and 3, developed a hybrid approach\footnote{https://github.com/tomas-muller/cpsolver-itc2007} for all three tracks \cite{muller_itc2007}, finding feasible solutions for all instances of tracks 1 and 3 and most instances of track 2. 
 
-%Müller [34] solves the problem by applying a constraint-based solver that incorporates several local search algorithms operating in three stages: (i) a construction phase that uses an Iterative Forward Search algorithm to find a feasible solution, (ii) a first search phase delegated to a Hill Climbing algorithm, followed by (iii) a Great Deluge or Simulated Annealing strategy to escape from local minima. The algorithm was not specifically designed for CBCTT but it was intended to be employed on all three tracks of ITC2007 (including, besides CB-CTT and PE-CTT, also Examination Timetabling). The solver was the winner of two out of three competition tracks, and it was among the finalists in the third one
+The algorithms used included Iterative Forward Search, Hill Climbing, Great Deluge, and optionally Simulated Annealing. During the construction phase, Iterative Forward Search is employed to find a complete solution, followed by Hill climbing to find the local optimum. When a solution cannot be improved further using Hill Climbing, Great Deluge is used to iteratively decrease, based on a cooling rate, a bound that is imposed on the value of the current solution. Optionally, Simulated Annealing can be used when the bound reaches its lower limit.
+
+The solver's techniques have been integrated into UniTime\footnote{https://www.unitime.org/} system, which is widely used for scheduling in academic institutions. Furthermore, the principles behind Müller's hybrid methodology are still relevant in modern optimization problems.
+
+While Müller's approach was highly successful in 2007, subsequent research has revealed that other methods may outperform it in some instances. However, it remains a benchmark against which new approaches are often compared.
