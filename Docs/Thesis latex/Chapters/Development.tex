@@ -199,12 +199,12 @@ The best child node (Algorithm \ref{best_child}) is determined by applying the \
 \caption{Best Child}\label{best_child}
 \begin{algorithmic}[1]
 \Function{BEST\_CHILD}{unflagged\_children, c\_param = 1.4}
-    \State choices\_weights $\gets$ [child.score\_hard $+$ c\_param $\cdot \sqrt{\frac{2\ln(\textit{self.visits})}{child.visits}}$ \textbf{for each} child \textbf{in} unflagged\_children]
+    \State choices\_weights $\gets$ [$\frac{child.score\_hard}{child.visits} $+$ c\_param $\cdot \sqrt{\frac{2\ln(self.visits)}{child.visits}}$ \textbf{for each} child \textbf{in} unflagged\_children]
     \\
     \State max\_weight $\gets$ \textit{max}(choices\_weights)
     \State best\_children $\gets$ [unflagged\_children[i] \textbf{for each} i, weight \textbf{in} \textit{enumerate}(choices\_weights) \textbf{if} weight = max\_weight]
     \\
-    \State choices\_weights $\gets$ [child.score\_soft $+$ c\_param $\cdot \sqrt{\frac{2\ln(\textit{self.visits})}{child.visits}}$ \textbf{for each} child \textbf{in} best\_children]
+    \State choices\_weights $\gets$ [$\frac{child.score\_soft}{child.visits} $+$ c\_param $\cdot \sqrt{\frac{2\ln(self.visits)}{child.visits}}$ \textbf{for each} child \textbf{in} best\_children]
     \\
     \State \Return best\_children[\textit{index\_of}(\textit{max}(choices\_weights))]
 \EndFunction

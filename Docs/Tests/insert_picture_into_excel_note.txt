@@ -15,7 +15,7 @@ Sub addPic()
   With ActiveCell.Comment.Shape
      .Fill.Visible = msoTrue
      .Fill.UserPicture (pic_file)
-     .Height = pict.Height / pic_resolution * 945
+     .Height = pict.Height / pic_resolution * 45
      .Width = pict.Width / pic_resolution * 45
    End With
  

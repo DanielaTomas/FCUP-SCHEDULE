@@ -83,8 +83,8 @@ The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_ap
 	\item \textbf{Selection:} The tree is traversed from the root node until it finds a node that is not completely expanded, i.e., a non-terminal node with unvisited children. The selection is guided by a policy that balances exploration and exploitation. Typically, the policy used is \ac{uct}, which selects nodes that maximize formula \ref{uct_formula}.
 	 
 	\begin{equation}
-	UCT = \overline{X_i} + 2C\sqrt{\frac{2\ln{n}}{n_i}},\label{uct_formula}
-	\end{equation} where \(\overline{X_i}\) is the total reward of all playouts through this state by the number of visits, \(C\) is a constant greater than zero (typically \sqrt{2}), \(n_i\) is the number of visits of child node \(i\), and \(n\) is the number of visits of the parent node.
+	UCT = \frac{w_i}{n_i} + 2C\sqrt{\frac{2\ln{n}}{n_i}},\label{uct_formula}
+	\end{equation} where \(w_i\) is the total reward of all playouts through this state, \(n_i\) is the number of visits of child node \(i\), \(C\) is a constant greater than zero (typically \(\sqrt{2}\)), and \(n\) is the number of visits of the parent node.
     \item \textbf{Expansion:} One or more child nodes are added to the node previously reached in the selection phase.
     \item \textbf{Simulation:} From the newly added node(s), a simulation is performed according to a default policy, which may include random moves until a terminal node is reached.
     \item \textbf{Backpropagation:} The simulation result is then propagated back through the traversed nodes, where the number of visits and the average reward for each node are updated until it reaches the root.

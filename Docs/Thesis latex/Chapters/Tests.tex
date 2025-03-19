@@ -1,17 +1,54 @@
-% Introduction
+% Tests
 
 % Main chapter title
 %\chapter[toc version]{doc version}
 \chapter{Tests}
 
-% Short version of the title for the header
-%\chaptermark{version for header}
 
-% Chapter Label
-% For referencing this chapter elsewhere, use \ref{ChapterTemplate}
 \label{Tests}
 
-% Write text in here
-% Use \subsection and \subsubsection to organize text
+This chapter outlines the numerous tests used to evaluate the performance of the final algorithm on instances from the \ac{itc-2007} benchmark. All the tests were executed on a computer with the following characteristics: (...)
+
+%\section{Test Instances}
+
+\section{Test Setup}
+
+The tests were conducted for different values of the parameter \(C\) (Formula \ref{uct_formula}), which affects the exploration-exploitation trade-off in the \ac{mcts} algorithm. A higher \(C\) value increases the weight of the second term, allowing the algorithm explore less-visited nodes with more intensity. On the other hand, a lower \(C\) value favors nodes with a higher average reward, resulting in increased exploitation of known favorable choices. Specifically, we tested the algorithm with some values of C ranging from 0.1 to 1000.
+
+Additionally, an alternative UCT formula was evaluated, modifying the exploitation term to use the accumulated reward instead of the average (Formula \ref{modified_uct}), giving an advantage to the nodes that were exploited first.
+
+\begin{equation}
+UCT = w_i + 2C\sqrt{\frac{2\ln{n}}{n_i}},\label{modified_uct}
+\end{equation} where \(w_i\) is the total reward of all playouts through this state, \(n_i\) is the number of visits of child node \(i\), \(C\) is a constant greater than zero (typically \(\sqrt{2}\)), and \(n\) is the number of visits of the parent node.
+	
+	
+\section{Performance Metrics}
+
+Each test corresponds, therefore, to a different C value, and the performance measurements are recorded for 21 problem instances, denoted as comp01 to comp21. For each instance, the method iterates numerous times until a stopping condition is met, which is usually a time constraint.
+
+For each test, the following key performance metrics were considered:
+
+\begin{itemize}
+\item \textbf{Best hard penalty:} The lowest number of hard constraint violations found during the execution of the algorithm for a given instance. A value of zero indicates a feasible solution that satisfies all hard constraints.
+
+\item \textbf{Best soft penalty:} The lowest soft constraint penalty achieved during the search process for a given instance.
+
+\item \textbf{Iteration of best solution:} The specific iteration at which the best solution (in terms of hard or soft penalties) was found.
+
+\item \textbf{Total number of iterations:} The overall count of iterations performed during the algorithm's execution for each problem instance.
+
+\item \textbf{Time to best solution:} The elapsed time required to reach the best solution for a given instance.
+\end{itemize}
 
 
+\section{Testing Procedure}
+
+To thoroughly evaluate the algorithm's robustness and consistency, two different testing approaches were employed:
+
+\begin{enumerate}
+
+\item \textbf{Without seed (1-hour runs):} The algorithm was executed for 1 hour without a predefined random seed, allowing the algorithm to explore diverse search paths without being constrained by an initial fixed state. The goal was to assess its ability to converge towards high-quality solutions given sufficient runtime.
+
+\item \textbf{With fixed seeds (10-minute runs):} The algorithm was run for 10 minutes using ten different seeds (1-10). Using fixed seeds ensured that the results could be reproduced, allowing for a fair comparison of different parameter settings and configurations. This approach also helped to evaluate the consistency and variability of results across different initializations. 
+
+\end{enumrate}
