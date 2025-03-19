@@ -1,0 +1,25 @@
+Sub addPic()
+'
+' Macro3 Macro
+'
+    Dim pic_file As String
+    Dim pic_resolution As Long
+    Dim pict As Object
+    
+    If ActiveCell.Comment Is Nothing Then ActiveCell.AddComment
+    pic_file = Application.GetOpenFilename("PNG (*.PNG), *.PNG", Title:="Select chord picture: ")
+    Set pict = CreateObject("WIA.ImageFile")
+    pict.loadfile pic_file
+    pic_resolution = pict.VerticalResolution
+    
+  With ActiveCell.Comment.Shape
+     .Fill.Visible = msoTrue
+     .Fill.UserPicture (pic_file)
+     .Height = pict.Height / pic_resolution * 945
+     .Width = pict.Width / pic_resolution * 45
+   End With
+ 
+  Set pict = Nothing
+   
+  ActiveCell.Comment.Visible = False
+End Sub

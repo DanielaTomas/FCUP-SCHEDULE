@@ -108,16 +108,18 @@ def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_li
 
     print(f"Finished processing {input_file}, output saved to {output_file}.")
 
+
 class Params:
     pass
 
 
 def main():
     parser = argparse.ArgumentParser(description="Run MCTS for timetabling.")
+    default_files = [f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)]
     parser.add_argument("--time_limit", type=int, default=300, help="Time limit in seconds for the MCTS run (default: 300 seconds)")
     parser.add_argument("--iterations", type=int, default=None, help="Number of iterations for the MCTS run")
     parser.add_argument("--c_param", type=float, default=1.4, help="C parameter for the MCTS run")
-    parser.add_argument("--input_files", nargs="+", default=[f"comp{str(i+1).zfill(2)}.ctt" for i in range(21)], help="List of input files to process (default: comp01.ctt - comp21.ctt)")
+    parser.add_argument("--input_files", nargs="+", default=default_files, help="List of input files to process (default: comp01.ctt - comp21.ctt)")
     args = parser.parse_args()
 
     input_dir = "input"
@@ -139,7 +141,8 @@ def main():
         output_file = os.path.join(log_dir, f"{os.path.splitext(input_file)[0]}_log.txt")
         log_line[input_file] = get_last_log_line(output_file)
 
-    save_results_to_excel(log_line, args.input_files)
+    if args.input_files == default_files:
+        save_results_to_excel(log_line, args.input_files)
 
 if __name__ == "__main__":
     main()
