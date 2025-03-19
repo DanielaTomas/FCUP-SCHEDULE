@@ -120,8 +120,14 @@ def main():
     parser.add_argument("--iterations", type=int, default=None, help="Number of iterations for the MCTS run")
     parser.add_argument("--c_param", type=float, default=1.4, help="C parameter for the MCTS run")
     parser.add_argument("--input_files", nargs="+", default=default_files, help="List of input files to process (default: comp01.ctt - comp21.ctt)")
+    parser.add_argument("--seed", type=int, default=None, help="Seed for random number generation (default: random seed)")
     args = parser.parse_args()
 
+    if args.seed is not None:
+        random.seed(args.seed)
+    else:
+        random.seed()
+    
     input_dir = "input"
     if not os.path.exists(input_dir):
         raise FileNotFoundError(f"Input folder '{input_dir}' does not exist. Please create it and add your input files.")
