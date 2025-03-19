@@ -19,7 +19,7 @@
 * Run the main script:
     ```SHELL
     $ cd FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts
-    $ pypy mcts_input_parser.py --time_limit <seconds> --iterations <num_iterations> --input_files <file_1> ... <file_n>
+    $ pypy mcts_input_parser.py --time_limit <seconds> --iterations <num_iterations> --c_param <c_parameter> --input_files <file_1> ... <file_n> --seed <random_number>
     ```
     * **``--time_limit`` (optional):** Sets the maximum execution time in seconds (**default:** 300 seconds)
 
@@ -28,6 +28,14 @@
     * **``--c_param`` (optional):** Specifies the ``C`` parameter for the MCTS algorithm (**default:** 1.4).
 
     * **``--input_files`` (optional):** Specifies the list of input files to process from the input folder (**default:** processes all 21 competition files from comp01.ctt to comp21.ctt).
+
+    * **``--seed (optional):`` (optional):** Set the seed for the random number generator to ensure reproducibility (**default:** random).
+
+    * Example:
+        ```SHELL
+        $ pypy mcts_input_parser.py --time_limit 600 --iterations 1000 --input_files comp01.ctt comp02.ctt --seed 42
+        ```
+        * This command will run the MCTS algorithm with a 10-minute time limit, 1000 iterations, on comp01.ctt and comp02.ctt, and with a fixed random seed (42).
 
 * After running the script, the following folders will be created (if they do not already exist) and populated with the respective outputs:
     * **``output`` folder:** Contains the best solution (simulation result) encountered during the execution of the MCTS algorithm;
@@ -57,6 +65,12 @@
 
         visualize_tree(self.root, f"{input_file_name}_tree")
         ```
+
+* After running the script, the ``test_results.xlsx`` file will also be generated.
+    * Contains the log information for all the runs, formatted as an Excel sheet;
+    * Only generated when all 21 instances have been processed;
+    * Each run refers to the processing of all 21 instances (comp01.ctt to comp21.ctt)
+    * If the file already exists, the script will not overwrite it. Instead, it will add a new sheet for each run, ensuring that the existing data is preserved. 
 
 * The [ITC-2007 validator](https://www.eeecs.qub.ac.uk/itc2007/curriculmcourse/course_curriculm_index_files/validation.htm) can be used to verify the correctness of the generated timetables:
     * Ensure you have g++ installed. Then, compile the ``validator.cc`` file:
