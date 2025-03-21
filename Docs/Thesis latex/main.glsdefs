@@ -278,6 +278,62 @@ parent={},%
 %
 }%
 
+\glsdefs@newdocentry{ts}%
+{%
+name={\acronymfont {\glsentryshort {ts}}},%
+sort={TS},%
+type={acronym},%
+first={TS},%
+firstplural={TSs},%
+text={TS},%
+plural={TSs},%
+description={Tabu Search},%
+descriptionplural={Tabu Search},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Tabu Search},%
+longplural={Tabu Searchs},%
+short={TS},%
+shortplural={TSs},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{sa}%
+{%
+name={\acronymfont {\glsentryshort {sa}}},%
+sort={SA},%
+type={acronym},%
+first={SA},%
+firstplural={SAs},%
+text={SA},%
+plural={SAs},%
+description={Simulated Annealing},%
+descriptionplural={Simulated Annealing},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Simulated Annealing},%
+longplural={Simulated Annealings},%
+short={SA},%
+shortplural={SAs},%
+counter={page},%
+parent={},%
+%
+}%
+
 \glsdefs@newdocentry{cop}%
 {%
 name={\acronymfont {\glsentryshort {cop}}},%

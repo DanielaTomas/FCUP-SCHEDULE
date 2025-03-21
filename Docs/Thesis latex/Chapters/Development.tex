@@ -253,8 +253,6 @@ Finally, a new child node is created and added to the tree. The current node is 
 \end{algorithmic}
 \end{algorithm}
 
-
-
 \begin{algorithm}
 \caption{Find Available Rooms}\label{find_available_rooms}
 \begin{algorithmic}[1]
@@ -294,7 +292,7 @@ The \(simulation\) phase starts by creating a copy of the current node's path, w
 \item Their priority, ensuring that more critical events are allocated first.
 \end{enumerate}
 
-For each unvisited event, the best available period and room combination is sought. The approach is similar to constraint programming as it iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. The combination with no hard penalties and the lowest soft penalty is selected as the best option. If multiple optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid allocation is found, the event will have higher priority in the next simulation.
+For each unvisited event, the best available period and room combination is sought. The approach iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. The combination with no hard penalties and the lowest soft penalty is selected as the best option. If multiple optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid allocation is found, the event will have higher priority in the next simulation.
 
 After scheduling all events, the simulation result is calculated, and the best and worst penalty scores are then updated based on these results. If a new best result is found, the timetable is saved to a file. If a new best result is found and the hard penalty is zero, indicating a feasible solution, the \ac{hc} algorithm (section \ref{hill_climbing_section}) is used to further optimize the timetable.
 
@@ -322,9 +320,6 @@ After scheduling all events, the simulation result is calculated, and the best a
     \EndFor
     \\
     \State hard\_penalty\_result, soft\_penalty\_result $\gets$ \textit{evaluate\_timetable}(assigned\_events, unassigned\_events)
-    \\
-    \State current\_hard\_values.\textit{append}(hard\_penalty\_result)
-    \State current\_soft\_values.\textit{append}(soft\_penalty\_result)
     \\
     \State \textit{update\_penalties}(soft\_penalty\_result, hard\_penalty\_result)
     \\
@@ -383,10 +378,89 @@ This formulation ensures that the best simulation result is mapped to a value cl
 
 \section{Hill climbing}\label{hill_climbing_section}
 
-The \ac{hc} algorithm is applied as a local search method to further optimize the timetable obtained from the \ac{mcts} simulation phase. After finding a feasible solution with \ac{mcts}, \ac{HC} refines the solution by exploring neighboring states. 
+The \ac{hc} algorithm (Algorithm \ref{run_hill_climbing}) is applied as a local search method to further optimize the timetable obtained from the \ac{mcts} simulation phase. This approach refines an initially feasible solution by iteratively exploring small modifications to enhance overall quality.
 
-%Only events that were not been allocated in the tree are modified.
-(...)
+To maintain the structure established during the tree search, \ac{hc} only modifies events that were not allocated in the \ac{mcts} phase. This ensures that the global search strategy remains intact while improving suboptimally placed events by the simulation phase.
+
+\subsection{Neighborhoods}
+
+After finding a feasible solution with \ac{mcts}, \ac{hc} refines the solution by exploring neighboring states. The algorithm explores the solution space using six different types of neighbors inspired by the \ac{itc-2007} track 3 winner \cite{muller_itc2007}:
+
+\begin{itemize}
+\item \textbf{Period move:} Change the timeslot and weekday of an event while keeping the same room.
+\item \textbf{Room move:} Change the room of an event while keeping the same timeslot and weekday.
+\item \textbf{Event move:} Change both the room and timeslot of an event.
+\item \textbf{Room stability move:} Assign all events of the same course to the same room if possible.
+\item \textbf{Compactness move:} Move an event to a timeslot adjacent to another event of the same course and curricular year.
+\item \textbf{Minimum working days move:} Spread a course's events across more days to avoid teaching all lectures in a short period.
+\end{itemize}
+
+Each move has a weight, which affects how often it is chosen. Period, room and event moves appear to be the most effective, consequently they have a higher weight than the others.
+
+\subsection{Methodology}
+
+The \ac{hc} approach follows the following steps:
+
+\begin{enumerate}
+\item Starts with an initial complete timetable with no hard constraints violated.
+\item Repeatedly selects a random neighborhood move, based on the assigned weights.
+\item Applies the move and evaluates the new timetable.
+\item If the new timetable is better, it keeps the changes; otherwise, it reverts them.
+\item Stops when:
+	\begin{itemize}
+	\item A timetable satisfying all hard and soft constraints is found.
+	\item No improvements are identified after a predefined number of idle iterations (HC\_IDLE = 5000).
+	\item The time limit is reached.
+	\end{itemize}
+\end{enumerate}
+
+\begin{algorithm}
+\caption{Run Hill Climbing}\label{run_hill_climbing}
+\begin{algorithmic}[1]
+\Function{RUN\_HILL\_CLIMBING}{best\_timetable, start\_key, best\_result\_soft, start\_time, time\_limit}
+    \State best\_result\_soft $\gets$ best\_result\_soft
+    \State neighborhoods $\gets$ [(\textit{period\_move}, 1), (\textit{room\_move}, 1), (\textit{event\_move}, 1), (\textit{room\_stability\_move}, 0.7), (\textit{min\_working\_days\_move}, 0.5), (\textit{curriculum\_compactness\_move}, 0.7)]
+    \\
+    \State idle\_iterations $\gets$ 0
+    \\
+    \While{idle\_iterations $<$ HC\_IDLE \textbf{and} (time.time() - start\_time $\leq$ time\_limit)}
+        \State (current\_neighborhood, \_) \gets$ weighted random choice from neighborhoods
+        \\
+        \State unscheduled\_events $\gets$ \textit{dict\_slice}(best\_timetable, start\_key)
+        \\
+        \State modified\_timetable $\gets$ current\_neighborhood(best\_timetable, unscheduled\_events)
+        \\
+        \If{modified\_timetable is \textbf{None}}
+            \State idle\_iterations $\gets$ idle\_iterations + 1
+            \State \textbf{continue}
+        \EndIf
+        \\
+        \State result $\gets$ \textit{evaluate\_timetable}(modified\_timetable)
+        \\
+        \If{result is not \textbf{None}}
+            \If{result $>$ best\_result\_soft}
+                \State best\_result\_soft $\gets$ result
+                \State best\_timetable $\gets$ modified\_timetable
+                \State \textit{write\_simulation\_results}(output\_filename, best\_timetable.values(), start\_time, 0, result)
+                \If{result $=$ 0}
+                    \State \Return 0
+                \EndIf
+                \State idle\_iterations $\gets$ 0
+            \Else
+                \State \textit{revert\_changes}(best\_timetable)
+                \State idle\_iterations $\gets$ idle\_iterations + 1
+            \EndIf
+        \Else
+            \State \textit{revert\_changes}(best\_timetable)
+            \State idle\_iterations $\gets$ idle\_iterations + 1
+        \EndIf
+    \EndWhile
+    \\
+    \State \Return best\_result\_soft
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
 
 \section{Front-end}
 
