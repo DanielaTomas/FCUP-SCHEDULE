@@ -118,6 +118,8 @@ The events are sorted in advance so that the most difficult event to place is pl
 \item The number of blocks in which the event is, as events that appear in more blocks are more difficult to allocate.
 \end{itemize}
 
+In case of a tie in priority values, the event with the tied priority is chosen randomly.
+
 \begin{equation}
   \begin{aligned}
 	Priority = (\#lectures - \#min\_working\_days) \cdot 4 \\
@@ -213,45 +215,11 @@ The best child node (Algorithm \ref{best_child}) is determined by applying the \
 
 \subsubsection{Expansion}
 
-The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. It starts by retrieving the next unvisited event based on the current node's depth, which is the length of its path. 
+The \(expansion\) phase (Appendix \ref{AppendixA} Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. It starts by retrieving the next unvisited event based on the current node's depth, which is the length of its path. 
 
 The algorithm also retrieves the corresponding weekday and timeslot and finds the available rooms per period for the event (Algorithm \ref{find_available_rooms}), removing occupied rooms and filtering rooms based on capacity. If rooms are available, it selects the corresponding one and creates a new event with the selected room, weekday, and timeslot. After this selection, the expansion limit for the next event in the timetable is estimated, i.e., the number of children that the new current node child will probably have. If no more events remain, the limit is set to zero. Otherwise, it sums the number of available rooms per period for the next event.
  
 Finally, a new child node is created and added to the tree. The current node is updated to this newly created node.
-
-\begin{algorithm}
-\caption{Expansion}\label{expansion}
-\begin{algorithmic}[1]
-\Procedure{EXPANSION}{}
-    \State event $\gets$ events[current\_node.\textit{depth}()]
-    \State available\_periods $\gets$ event["Available\_Periods"]
-    \\
-    \State period $\gets$ \textit{len}(current\_node.children)
-    \State period\_index $\gets$ period \% \textit{len}(available\_periods)
-    \State new\_weekday, new\_timeslot $\gets$ available\_periods[period\_index]
-    \\
-    \State available\_rooms $\gets$ \textit{find\_available\_rooms}()
-    \\
-    \State new\_room\_index $\gets$ period // \textit{len}(available\_periods) \% \textit{len}(available\_rooms)
-    \State new\_room $\gets$ available\_rooms[new\_room\_index]
-    \\
-    \State new\_path $\gets$ \textit{copy}(current\_node.path)
-    \State new\_path[event["Id"]] $\gets$ \{**event, "RoomId": new\_room, "WeekDay": new\_weekday, "Timeslot": new\_timeslot\}
-    \\
-    \State next\_event $\gets$ events[current\_node.\textit{depth}()+1] \textbf{if} current\_node.\textit{depth}() + 1 $<$ \textit{len}(events) \textbf{else} None
-    \\
-    \If {next\_event is None}
-         \State expansion\_limit $\gets$ 0
-    \Else
-         \State expansion\_limit $\gets$ \textit{sum}\big( \textit{len}(rooms) \ \textbf{for each} rooms \ \textbf{in} \textit{find\_available\_rooms}() \big)
-    \EndIf
-    \\
-    \State child\_node $\gets$ MCTSNode(expansion\_limit = expansion\_limit, parent = current\_node, path = new\_path)
-    \State current\_node.children.\textit{append}(child\_node)
-    \State current\_node $\gets$ child\_node
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
 
 \begin{algorithm}
 \caption{Find Available Rooms}\label{find_available_rooms}
@@ -282,11 +250,11 @@ Finally, a new child node is created and added to the tree. The current node is 
 
 \subsubsection{Simulation}
 
-The simulation phase estimates the value of multiple actions, in this case, distinct event allocations, which will guide the selection and expansion steps in future iterations. 
+The \(simulation\) phase estimates the value of multiple actions, in this case, distinct event allocations, which will guide the selection and expansion steps in future iterations. 
 
 A random event allocation approach was initially explored but produced suboptimal results. Therefore, a more structured method was implemented.
 
-The \(simulation\) phase starts by creating a copy of the current node's path, which contains the events already scheduled. It then identifies the remaining events, i.e., events that have not been assigned yet. These remaining events are sorted based on two criteria:
+The \(simulation\) function (Appendix \ref{AppendixA} Algorithm \ref{simulation}) starts by creating a copy of the current node's path, which contains the events already scheduled. It then identifies the remaining events, i.e., events that have not been assigned yet. These remaining events are sorted based on two criteria:
 \begin{enumerate}
 \item Whether they were previously unassigned in prior simulations, to prioritize harder-to-schedule events.
 \item Their priority, ensuring that more critical events are allocated first.
@@ -297,52 +265,6 @@ For each unvisited event, the best available period and room combination is soug
 After scheduling all events, the simulation result is calculated, and the best and worst penalty scores are then updated based on these results. If a new best result is found, the timetable is saved to a file. If a new best result is found and the hard penalty is zero, indicating a feasible solution, the \ac{hc} algorithm (section \ref{hill_climbing_section}) is used to further optimize the timetable.
 
 %anytime...
-
-\begin{algorithm}
-\caption{Simulation}\label{simulation}
-\begin{algorithmic}[1]
-\Function{SIMULATION}{start\_time, time\_limit}
-    \State assigned\_events $\gets$ current\_node.path.\textit{copy}()
-    \State unassigned\_events $\gets$ \textit{set}()
-    \State remaining\_events $\gets$ \textit{sorted}(events[current\_node.\textit{depth}():], 
-    \Statex \hspace{3cm} \textbf{key} = $\lambda$ event: (event["Id"] \textbf{in} previous\_unassigned\_events, event["Priority"], \textit{random.random()}), 
-    \Statex \hspace{3cm} \textbf{reverse} = True)
-    \\
-    \For{\textbf{each} $i, event$ \textbf{in} \textit{enumerate}(remaining\_events)}
-        \State best\_room\_and\_period $\gets$ \textit{find\_best\_room\_and\_period}()
-        \If{best\_room\_and\_period exists}
-            \State event["RoomId"], event["WeekDay"], event["Timeslot"] $\gets$ best\_room\_and\_period
-            \State assigned\_events[event["Id"]] $\gets$ event
-        \Else
-            \State previous\_unassigned\_events.\textit{add}(event["Id"])
-            \State unassigned\_events.\textit{add}(event["Id"])
-        \EndIf
-    \EndFor
-    \\
-    \State hard\_penalty\_result, soft\_penalty\_result $\gets$ \textit{evaluate\_timetable}(assigned\_events, unassigned\_events)
-    \\
-    \State \textit{update\_penalties}(soft\_penalty\_result, hard\_penalty\_result)
-    \\
-    \If{(hard\_penalty\_result $>$ global\_best\_hard\_penalty) \textbf{or} (hard\_penalty\_result = global\_best\_hard\_penalty \textbf{and} soft\_penalty\_result $>$ global\_best\_soft\_penalty)}
-        \State global\_best\_hard\_penalty $\gets$ hard\_penalty\_result
-        \State global\_best\_soft\_penalty $\gets$ soft\_penalty\_result
-        \State \textbf{with} \textit{open}(output\_filename, 'w') \textbf{as} file:
-            \State \hspace{1cm} \textit{write\_best\_simulation\_result\_to\_file}(\textit{list}(assigned\_events.values()), file)
-        \If{\textit{len}(unassigned\_events) $==$ 0 \textbf{and} hard\_penalty\_result $==$ 0 \textbf{and} soft\_penalty\_result $\neq$ 0}
-            \State global\_best\_soft\_penalty $\gets$ hill\_climber.\textit{run\_hill\_climbing}(assigned\_events, 
-            \Statex \hspace{3cm} events[current\_node.\textit{depth}()]["Id"], 
-            \Statex \hspace{3cm} global\_best\_soft\_penalty, start\_time, time\_limit)
-            \State \textit{update\_penalties}(global\_best\_soft\_penalty)
-        \EndIf
-    \EndIf
-    \\
-    \State simulation\_result\_hard $\gets$ \textit{normalize\_hard}(current\_node.best\_hard\_penalty)
-    \State simulation\_result\_soft $\gets$ \textit{normalize\_soft}(current\_node.best\_soft\_penalty)
-    \\
-    \State \Return simulation\_result\_hard, simulation\_result\_soft
-\EndFunction
-\end{algorithmic}
-\end{algorithm}
 
 \subsubsection{Backpropagation}
 
@@ -378,7 +300,7 @@ This formulation ensures that the best simulation result is mapped to a value cl
 
 \section{Hill climbing}\label{hill_climbing_section}
 
-The \ac{hc} algorithm (Algorithm \ref{run_hill_climbing}) is applied as a local search method to further optimize the timetable obtained from the \ac{mcts} simulation phase. This approach refines an initially feasible solution by iteratively exploring small modifications to enhance overall quality.
+The \ac{hc} algorithm (Appendix \ref{AppendixA} Algorithm \ref{run_hill_climbing}) is applied as a local search method to further optimize the timetable obtained from the \ac{mcts} simulation phase. This approach refines an initially feasible solution by iteratively exploring small modifications to enhance overall quality.
 
 To maintain the structure established during the tree search, \ac{hc} only modifies events that were not allocated in the \ac{mcts} phase. This ensures that the global search strategy remains intact while improving suboptimally placed events by the simulation phase.
 
@@ -413,53 +335,6 @@ The \ac{hc} approach follows the following steps:
 	\item The time limit is reached.
 	\end{itemize}
 \end{enumerate}
-
-\begin{algorithm}
-\caption{Run Hill Climbing}\label{run_hill_climbing}
-\begin{algorithmic}[1]
-\Function{RUN\_HILL\_CLIMBING}{best\_timetable, start\_key, best\_result\_soft, start\_time, time\_limit}
-    \State best\_result\_soft $\gets$ best\_result\_soft
-    \State neighborhoods $\gets$ [(\textit{period\_move}, 1), (\textit{room\_move}, 1), (\textit{event\_move}, 1), (\textit{room\_stability\_move}, 0.7), (\textit{min\_working\_days\_move}, 0.5), (\textit{curriculum\_compactness\_move}, 0.7)]
-    \\
-    \State idle\_iterations $\gets$ 0
-    \\
-    \While{idle\_iterations $<$ HC\_IDLE \textbf{and} (time.time() - start\_time $\leq$ time\_limit)}
-        \State (current\_neighborhood, \_) \gets$ weighted random choice from neighborhoods
-        \\
-        \State unscheduled\_events $\gets$ \textit{dict\_slice}(best\_timetable, start\_key)
-        \\
-        \State modified\_timetable $\gets$ current\_neighborhood(best\_timetable, unscheduled\_events)
-        \\
-        \If{modified\_timetable is \textbf{None}}
-            \State idle\_iterations $\gets$ idle\_iterations + 1
-            \State \textbf{continue}
-        \EndIf
-        \\
-        \State result $\gets$ \textit{evaluate\_timetable}(modified\_timetable)
-        \\
-        \If{result is not \textbf{None}}
-            \If{result $>$ best\_result\_soft}
-                \State best\_result\_soft $\gets$ result
-                \State best\_timetable $\gets$ modified\_timetable
-                \State \textit{write\_simulation\_results}(output\_filename, best\_timetable.values(), start\_time, 0, result)
-                \If{result $=$ 0}
-                    \State \Return 0
-                \EndIf
-                \State idle\_iterations $\gets$ 0
-            \Else
-                \State \textit{revert\_changes}(best\_timetable)
-                \State idle\_iterations $\gets$ idle\_iterations + 1
-            \EndIf
-        \Else
-            \State \textit{revert\_changes}(best\_timetable)
-            \State idle\_iterations $\gets$ idle\_iterations + 1
-        \EndIf
-    \EndWhile
-    \\
-    \State \Return best\_result\_soft
-\EndFunction
-\end{algorithmic}
-\end{algorithm}
 
 
 \section{Front-end}

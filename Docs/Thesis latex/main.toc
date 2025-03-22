@@ -49,21 +49,21 @@
 \contentsline {subsection}{\numberline {4.3.1}\ac {mcts} Tree}{16}{subsection.4.3.1}%
 \contentsline {subsubsection}{\numberline {4.3.1.1}Tree Nodes}{17}{subsubsection.4.3.1.1}%
 \contentsline {subsection}{\numberline {4.3.2}Methodology}{18}{subsection.4.3.2}%
-\contentsline {subsubsection}{\numberline {4.3.2.1}Selection}{18}{subsubsection.4.3.2.1}%
-\contentsline {subsubsection}{\numberline {4.3.2.2}Expansion}{20}{subsubsection.4.3.2.2}%
-\contentsline {subsubsection}{\numberline {4.3.2.3}Simulation}{20}{subsubsection.4.3.2.3}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}Selection}{19}{subsubsection.4.3.2.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.2}Expansion}{19}{subsubsection.4.3.2.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.3}Simulation}{21}{subsubsection.4.3.2.3}%
 \contentsline {subsubsection}{\numberline {4.3.2.4}Backpropagation}{22}{subsubsection.4.3.2.4}%
-\contentsline {subsection}{\numberline {4.3.3}Normalization}{24}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}Hill climbing}{24}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Neighborhoods}{24}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Methodology}{25}{subsection.4.4.2}%
-\contentsline {section}{\numberline {4.5}Front-end}{27}{section.4.5}%
-\contentsline {chapter}{\numberline {5}Tests}{28}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Test Setup}{28}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Performance Metrics}{28}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Testing Procedure}{29}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Results}{30}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Conclusion}{31}{chapter.7}%
+\contentsline {subsection}{\numberline {4.3.3}Normalization}{22}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Hill climbing}{23}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Neighborhoods}{23}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Methodology}{24}{subsection.4.4.2}%
+\contentsline {section}{\numberline {4.5}Front-end}{24}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Tests}{25}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Test Setup}{25}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Performance Metrics}{25}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Testing Procedure}{26}{section.5.3}%
+\contentsline {chapter}{\numberline {6}Results}{27}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Conclusion}{28}{chapter.7}%
 \vspace {0.5cm}
-\contentsline {chapter}{Bibliography}{31}{dummy.6}%
+\contentsline {chapter}{Bibliography}{28}{dummy.6}%
 \contentsfinish 
