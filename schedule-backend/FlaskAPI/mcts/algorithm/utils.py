@@ -1,15 +1,6 @@
 import random
 from copy import copy
 from itertools import dropwhile
-import os
-import time
-from datetime import datetime
-
-def dict_slice(d, start_key, next_iteration = False):
-    iterator = dropwhile(lambda x: x[0] != start_key, d.items())
-    if next_iteration: next(iterator, None)
-    return dict(iterator)
-
 
 def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraints):
     events_to_visit = []
@@ -71,36 +62,38 @@ def get_valid_periods(event, constraints, days, periods_per_day):
         random.shuffle(available_periods_list)
         return available_periods_list
     
-    return None
+    return list()
 
 
-# Files:
+def dict_slice(d, start_key, next_iteration = False):
+    iterator = dropwhile(lambda x: x[0] != start_key, d.items())
+    if next_iteration: next(iterator, None)
+    return dict(iterator)
 
 
-def write_simulation_results(output_filename, assigned_events, start_time, hard_penalty_result, soft_penalty_result):
-    # ----- DEBUG LOG -----
-    _, tail = os.path.split(output_filename)
-    input_file_name = tail.split('_')[0]
-    log_file_name = os.path.join("log", f"{input_file_name}_log.txt")
+def evaluate_timetable(conflicts_checker, timetable, unassigned_events = [], full_evaluation = True):
+    hard_penalty = 0
+    soft_penalty = 0
+    room_conflicts = {}
+    event_names = []
+
+    for event in timetable.values():
+        events_to_check = dict_slice(timetable, event["Id"], True)
+        hard_penalty += conflicts_checker.check_event_hard_constraints(event, events_to_check, event["RoomId"], event["Timeslot"], event["WeekDay"], room_conflicts)
+        
+        if full_evaluation:
+            soft_penalty += (conflicts_checker.check_room_capacity(event, event["RoomId"])
+                            + conflicts_checker.check_block_compactness(
+                                event, timetable, event["Timeslot"], event["WeekDay"]
+                            ))
+            if event["Name"] not in event_names:
+                soft_penalty += (conflicts_checker.check_min_working_days(event, events_to_check, event["WeekDay"])
+                                + conflicts_checker.check_room_stability(event, events_to_check, event["RoomId"]))
+                event_names.append(event["Name"])
     
-    start_dt = datetime.fromtimestamp(start_time)
-    current_dt = datetime.fromtimestamp(time.time())
-
-    with open(log_file_name, 'a') as file:
-        file.write(f"Time: {current_dt - start_dt}, Hard: {hard_penalty_result}, Soft: {soft_penalty_result}\n")
-    # ------------
+    hard_penalty += conflicts_checker.check_room_conflicts(room_conflicts)
     
-    with open(output_filename, 'w') as file:
-        for event in assigned_events:
-            if event['RoomId'] is not None or event['WeekDay'] is not None or event['Timeslot'] is not None:
-                file.write(f"{event['Name']} {event['RoomId']} {event['WeekDay']} {event['Timeslot']}\n")
-
-
-def write_best_final_solution_to_file(best_solution, file):
-    for solution in best_solution.values():
-        file.write(f"{solution['Name']} {solution['RoomId']} {solution['WeekDay']} {solution['Timeslot']}\n")
-
-
-def directory_exists(directory):
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    if full_evaluation:
+        hard_penalty += len(unassigned_events)
+        return -hard_penalty, -soft_penalty
+    return -hard_penalty

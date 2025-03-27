@@ -1,4 +1,5 @@
 from algorithm.mcts import *
+from algorithm.simulation_results_writer import write_best_final_solution_to_file, directory_exists
 import argparse
 import os
 
@@ -79,7 +80,7 @@ def parse_input_data(input_data, db):
     return days, periods_per_day
 
 
-def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_limit, params):
+def process_file(input_file, input_dir, output_dir, log_dir, params):
     input_file_path = os.path.join(input_dir, input_file)
     if not os.path.exists(input_file_path):
         print(f"Warning: The input file '{input_file_path}' does not exist. Skipping.")
@@ -96,21 +97,16 @@ def process_file(input_file, input_dir, output_dir, log_dir, iterations, time_li
     with open(log_file, "w") as file:
         file.write("")
     
-    mcts = MCTS(params, db, days, periods_per_day, output_file)
-    best_solution = mcts.run_mcts(iterations=iterations, time_limit=time_limit)
-
-    if best_solution:
-        final_output_dir = "final_output"
-        directory_exists(final_output_dir)
-        final_output_file = os.path.join(final_output_dir, f"{os.path.splitext(input_file)[0]}_final_output.txt")
-        with open(final_output_file, 'w') as file:
-            write_best_final_solution_to_file(best_solution, file)
+    config = MCTSConfig(
+        params = params,
+        days = days,
+        periods_per_day = periods_per_day,
+        output_filename = output_file
+    )
+    mcts = MCTS(db, config)
+    mcts.run_mcts()
 
     print(f"Finished processing {input_file}, output saved to {output_file}.")
-
-
-class Params:
-    pass
 
 
 def main():
@@ -138,9 +134,8 @@ def main():
     directory_exists(log_dir)
 
     for input_file in args.input_files:
-        params = Params
-        params.c_param = args.c_param
-        process_file(input_file, input_dir, output_dir, log_dir, args.iterations, args.time_limit, params)
+        params = Params(args.c_param, args.iterations, args.time_limit)
+        process_file(input_file, input_dir, output_dir, log_dir, params)
 
     log_line = {}
     for input_file in args.input_files:

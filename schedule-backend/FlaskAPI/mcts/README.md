@@ -40,9 +40,9 @@
 * After running the script, the following folders will be created (if they do not already exist) and populated with the respective outputs:
     * **``output`` folder:** Contains the best solution (simulation result) encountered during the execution of the MCTS algorithm;
 
-    * **``final_output`` folder:** Contains the final solution, which is the result obtained by following the tree's best path;
+    <!-- * **``final_output`` folder:** Contains the final solution, which is the result obtained by following the tree's best path;
         * This folder is only created if the algorithm successfully finds a complete path, which may not happen due to the typically vast search space
-        * This solution does not necessarily match the results in the output folder
+        * This solution does not necessarily match the results in the output folder -->
 
     * **``log`` folder :** Contains the best solution found over time;
 

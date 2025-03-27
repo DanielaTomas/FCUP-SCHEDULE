@@ -1,5 +1,6 @@
 import random, time
-from algorithm.utils import find_available_rooms, write_simulation_results, dict_slice
+from algorithm.utils import find_available_rooms, dict_slice
+from algorithm.simulation_results_writer import write_simulation_results
 from algorithm.macros import HC_IDLE
 
 class HillClimbing:

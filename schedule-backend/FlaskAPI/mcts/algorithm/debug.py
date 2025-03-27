@@ -18,8 +18,9 @@ def visualize_tree(root, output_file_name = "mcts_tree"):
         dot.node(str(id(node)), label=label, shape="point", width="0.01", height="0.01")
 
         for child in node.children:
-            dot.edge(str(id(node)), str(id(child)), dir="none", style="solid", penwidth="0.5")
-            add_nodes_edges(child)
+            if child:
+                dot.edge(str(id(node)), str(id(child)), dir="none", style="solid", penwidth="0.5")
+                add_nodes_edges(child)
 
     try:
         add_nodes_edges(root)
@@ -41,17 +42,17 @@ def visualize_tree(root, output_file_name = "mcts_tree"):
         print(f"Unexpected error: {e}")
 
 
-def plot_progress(iterations, current_hard, best_hard, current_soft, best_soft, output_file_name = "constraint_progress.html"):
+def plot_progress(metrics, output_file_name = "constraint_progress.html"):
     print("Processing the constraint progress...")
     fig = make_subplots(rows=1, cols=2, 
                         subplot_titles=("Hard Constraint Progress", "Soft Constraint Progress"),
                         shared_xaxes=True)
 
-    fig.add_trace(go.Scatter(x=iterations, y=current_hard, mode='lines+markers', name='Current Hard', line=dict(color='blue')), row=1, col=1)
-    fig.add_trace(go.Scatter(x=iterations, y=best_hard, mode='lines+markers', name='Best Hard', line=dict(color='green')), row=1, col=1)
+    fig.add_trace(go.Scatter(x=metrics["iterations"], y=metrics["current_hard"], mode='lines+markers', name='Current Hard', line=dict(color='blue')), row=1, col=1)
+    fig.add_trace(go.Scatter(x=metrics["iterations"], y=metrics["best_hard"], mode='lines+markers', name='Best Hard', line=dict(color='green')), row=1, col=1)
     
-    fig.add_trace(go.Scatter(x=iterations, y=current_soft, mode='lines+markers', name='Current Soft', line=dict(color='red')), row=1, col=2)
-    fig.add_trace(go.Scatter(x=iterations, y=best_soft, mode='lines+markers', name='Best Soft', line=dict(color='purple')), row=1, col=2)
+    fig.add_trace(go.Scatter(x=metrics["iterations"], y=metrics["current_soft"], mode='lines+markers', name='Current Soft', line=dict(color='red')), row=1, col=2)
+    fig.add_trace(go.Scatter(x=metrics["iterations"], y=metrics["best_soft"], mode='lines+markers', name='Best Soft', line=dict(color='purple')), row=1, col=2)
 
     fig.update_layout(title="Constraint Progress (Current vs. Best)", showlegend=True)
     fig.update_xaxes(title_text="Iteration")

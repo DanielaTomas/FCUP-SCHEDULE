@@ -1067,7 +1067,8 @@ def recommend():
         }
 
         mcts = MCTS(data)
-        recommendations = mcts.run_mcts() # adjust if necessary
+        mcts.run_mcts()
+        recommendations = None #TODO
         return get_response_msg(recommendations, HTTPStatus.OK)
     except pymysql.MySQLError as sqle:
         abort(HTTPStatus.INTERNAL_SERVER_ERROR, description=str(sqle))
