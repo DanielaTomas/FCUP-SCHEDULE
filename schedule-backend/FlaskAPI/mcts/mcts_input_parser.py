@@ -1,5 +1,6 @@
 from algorithm.mcts import *
-from algorithm.simulation_results_writer import write_best_final_solution_to_file, directory_exists
+from algorithm.simulation_results_writer import directory_exists
+from algorithm.macros import DEBUG_EXCEL, DEBUG_LOG
 import argparse
 import os
 
@@ -92,10 +93,11 @@ def process_file(input_file, input_dir, output_dir, log_dir, params):
         days, periods_per_day = parse_input_data(f.read(), db)
 
     output_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_output.txt")
-    log_file = os.path.join(log_dir, f"{os.path.splitext(input_file)[0]}_log.txt")
     
-    with open(log_file, "w") as file:
-        file.write("")
+    if DEBUG_LOG:
+        log_file = os.path.join(log_dir, f"{os.path.splitext(input_file)[0]}_log.txt")
+        with open(log_file, "w") as file:
+            file.write("")
     
     config = MCTSConfig(
         params = params,
@@ -129,21 +131,25 @@ def main():
         raise FileNotFoundError(f"Input folder '{input_dir}' does not exist. Please create it and add your input files.")
 
     output_dir = "output"
-    log_dir = "log"
     directory_exists(output_dir)
-    directory_exists(log_dir)
+    if DEBUG_LOG:
+        log_dir = "log"
+        directory_exists(log_dir)
+    else:
+        log_dir = None
 
     for input_file in args.input_files:
         params = Params(args.c_param, args.iterations, args.time_limit)
         process_file(input_file, input_dir, output_dir, log_dir, params)
 
-    log_line = {}
-    for input_file in args.input_files:
-        output_file = os.path.join(log_dir, f"{os.path.splitext(input_file)[0]}_log.txt")
-        log_line[input_file] = get_last_log_line(output_file)
+    if DEBUG_EXCEL and DEBUG_LOG: 
+        log_line = {}
+        for input_file in args.input_files:
+            output_file = os.path.join(log_dir, f"{os.path.splitext(input_file)[0]}_log.txt")
+            log_line[input_file] = get_last_log_line(output_file)
 
-    if args.input_files == default_files:
-        save_results_to_excel(log_line, args.input_files)
+        if args.input_files == default_files:
+            save_results_to_excel(log_line, args.input_files)
 
 if __name__ == "__main__":
     main()

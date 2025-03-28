@@ -59,18 +59,27 @@
                 ```PY 
                 dot.node(str(id(node)), label=label, shape="point", width="0.01", height="0.01")
                 ```
-    * **Note:** Generating ``constraint_progress`` and especially ``mcts_tree`` can be time-consuming. To disable them, you can comment out the following lines at the end of the ``mcts.py`` file respectively:
-        ```PY
-        plot_progress(self.iterations_data, self.current_hard_values, self.best_hard_values, self.current_soft_values, self.best_soft_values, f"{input_file_name}_constraint_progress.html")
-
-        visualize_tree(self.root, f"{input_file_name}_tree")
-        ```
 
 * After running the script, the ``test_results.xlsx`` file will also be generated.
     * Contains the log information for all the runs, formatted as an Excel sheet;
     * Only generated when all 21 instances have been processed;
     * Each run refers to the processing of all 21 instances (comp01.ctt to comp21.ctt)
     * If the file already exists, the script will not overwrite it. Instead, it will add a new sheet for each run, ensuring that the existing data is preserved. 
+
+# Debug Options
+
+* You can enable or disable specific debug outputs by setting the following flags to ``False`` in the ``macros.py`` file:
+    ```PY
+    DEBUG_EXCEL = True      # Generates the 'test_results.xlsx' file
+    DEBUG_TREE = True       # Outputs the MCTS tree structure (saved in the 'mcts_tree' folder)
+    DEBUG_PROGRESS = True   # Creates HTML plots of constraint evolution (saved in the 'constraint_progress' folder)
+    DEBUG_LOG = True        # Logs best intermediate and final solutions (saved in the 'log' folder)
+    ```
+    <!-- DEBUG_PRINT = True      # Prints logs to the console during execution -->
+
+* **Note:** If ``DEBUG_LOG = False``, the ``DEBUG_EXCEL = True`` flag will not generate the ``test_results.xlsx`` file because the log data is required for the Excel output. Ensure that ``DEBUG_LOG`` is enabled if you wish to generate the Excel file.
+
+# Validator
 
 * The [ITC-2007 validator](https://www.eeecs.qub.ac.uk/itc2007/curriculmcourse/course_curriculm_index_files/validation.htm) can be used to verify the correctness of the generated timetables:
     * Ensure you have g++ installed. Then, compile the ``validator.cc`` file:

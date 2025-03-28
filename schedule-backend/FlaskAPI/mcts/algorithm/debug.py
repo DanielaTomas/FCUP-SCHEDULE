@@ -1,12 +1,14 @@
+from algorithm.macros import WAIT_TIME, MAX_RETRIES
+from algorithm.simulation_results_writer import directory_exists
 import graphviz
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-from algorithm.macros import WAIT_TIME, MAX_RETRIES
 import os
 import openpyxl
 from openpyxl.styles import Font
 import re
 import time
+import io, pstats
 
 def visualize_tree(root, output_file_name = "mcts_tree"):
     print("Processing the tree...")
@@ -26,7 +28,7 @@ def visualize_tree(root, output_file_name = "mcts_tree"):
         add_nodes_edges(root)
 
         output_dir = "mcts_tree"
-        os.makedirs(output_dir, exist_ok=True)
+        directory_exists(output_dir)
         output_path = os.path.join(output_dir, output_file_name)
 
         dot.render(output_path, format="pdf", cleanup=True)
@@ -59,8 +61,7 @@ def plot_progress(metrics, output_file_name = "constraint_progress.html"):
     fig.update_yaxes(title_text="Constraint Value")
     
     output_dir = "constraint_progress"
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    directory_exists(output_dir)
     output_file_name = os.path.join(output_dir, output_file_name)
 
     fig.write_html(output_file_name)
@@ -136,3 +137,22 @@ def get_last_log_line(filename):
             lines = f.readlines()
             return parse_last_log_line(lines[-1]) if lines else ""
         
+
+def profile_execution(profiler, input_file_name):
+        profiler.disable()
+        
+        print(f"Saving profiler output...")
+        
+        output_dir = "profiler"
+        directory_exists(output_dir)
+        output_file_name = os.path.join(output_dir, input_file_name)
+
+        s = io.StringIO()
+        sortby = 'cumulative'
+        ps = pstats.Stats(profiler, stream=s).sort_stats(sortby)
+        ps.print_stats()
+
+        with open(output_file_name, 'w') as f:
+            f.write(s.getvalue())
+        
+        print(f"Profiler output saved to {output_file_name}\n")

@@ -4,10 +4,10 @@ from algorithm.debug import *
 from algorithm.check_conflicts import ConflictsChecker
 from algorithm.hill_climbing import HillClimbing
 from algorithm.simulation_results_writer import write_simulation_results
-from algorithm.macros import DEFAULT_TIME_LIMIT
+from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER
 from dataclasses import dataclass
+import cProfile
 import time
-#import cProfile, pstats, io
 
 #TODO remove prints; remove debug ?
 #TODO documentation
@@ -45,13 +45,8 @@ class MCTS:
         self.previous_unassigned_events = set()
         self.output_filename = config.output_filename
 
-        self.metrics = { # ---- DEBUG PROGRESS ---- 
-            'iterations': [],
-            'best_hard': [],
-            'best_soft': [],
-            'current_hard': [],
-            'current_soft': []
-        }
+        if DEBUG_PROGRESS:
+            self.metrics = {'iterations': [], 'best_hard': [], 'best_soft': [], 'current_hard': [], 'current_soft': []}
     
 
     def _initialize_penalties(self):
@@ -63,21 +58,14 @@ class MCTS:
         self.best_soft_penalty = float('-inf')
 
 
-    def normalize_hard(self, result):
-        if self.global_best_hard_penalty == 0 and self.worst_hard_penalty == 0: return 1.0
-        elif self.global_best_hard_penalty == self.worst_hard_penalty: return 0.5
-        a = (result - self.worst_hard_penalty)/(self.global_best_hard_penalty - self.worst_hard_penalty)
-        return (math.exp(a) - 1) / (math.e - 1)
-
-
-    def normalize_soft(self, result):
-        if self.best_soft_penalty == 0 and self.worst_soft_penalty == 0: return 1.0
-        if self.best_soft_penalty == self.worst_soft_penalty: return 0.5
-        a = (result - self.worst_soft_penalty)/(self.best_soft_penalty - self.worst_soft_penalty)
+    def normalize(self, result, best, worst):
+        if best == 0 and worst == 0: return 1.0
+        if best == worst: return 0.5
+        a = (result - worst) / (best - worst)
         return (math.exp(a) - 1) / (math.e - 1)
     
 
-    def update_progress_metrics(self, iteration): # ---- DEBUG PROGRESS ----
+    def update_progress_metrics(self, iteration):
         self.metrics['iterations'].append(iteration)
         self.metrics['best_hard'].append(self.global_best_hard_penalty)
         self.metrics['best_soft'].append(self.global_best_soft_penalty)
@@ -100,8 +88,8 @@ class MCTS:
                 else:
                     return False
             else:
-                best_child = current_node.best_child(unflagged_children, self.params.c_param)
-                current_node = best_child
+                current_node = current_node.best_child(unflagged_children, self.params.c_param)
+
         self.current_node = current_node
         return True
 
@@ -209,10 +197,9 @@ class MCTS:
 
         hard_penalty_result, soft_penalty_result = evaluate_timetable(self.conflicts_checker, assigned_events, unassigned_events)
         
-        # ---- DEBUG PROGRESS ----
-        self.metrics["current_hard"].append(hard_penalty_result)
-        self.metrics["current_soft"].append(soft_penalty_result)
-        # -----
+        if DEBUG_PROGRESS:
+            self.metrics["current_hard"].append(hard_penalty_result)
+            self.metrics["current_soft"].append(soft_penalty_result)
 
         update_penalties(soft_penalty_result, hard_penalty_result)
         
@@ -224,9 +211,9 @@ class MCTS:
                 self.global_best_soft_penalty = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
                 update_penalties(self.global_best_soft_penalty)
 
-        simulation_result_hard = self.normalize_hard(self.current_node.best_hard_penalty)
-        simulation_result_soft = self.normalize_soft(self.current_node.best_soft_penalty)
-        #print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}") # ---- DEBUG ---- 
+        simulation_result_hard = self.normalize(self.current_node.best_hard_penalty, self.global_best_hard_penalty, self.worst_hard_penalty)
+        simulation_result_soft = self.normalize(self.current_node.best_soft_penalty, self.best_soft_penalty, self.worst_soft_penalty)
+        #if DEBUG_PRINT: print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}")
 
         return simulation_result_hard, simulation_result_soft
     
@@ -241,10 +228,9 @@ class MCTS:
 
 
     def run_mcts(self):
-        # ---- DEBUG PROFILE ---- 
-        """ profiler = cProfile.Profile()
-        profiler.enable() """
-        # ----
+        if DEBUG_PROFILER:
+            profiler = cProfile.Profile()
+            profiler.enable()
 
         try:
             start_time = time.time()
@@ -261,36 +247,21 @@ class MCTS:
                         break
                     self.backpropagation(simulation_hard, simulation_soft)
                     duration = time.time() - start_time
-                    # ---- DEBUG PROGRESS ---- 
-                    self.metrics['best_hard'].append(self.global_best_hard_penalty)
-                    self.metrics['best_soft'].append(self.global_best_soft_penalty)
-                    self.metrics['iterations'].append(i+1)
-                    # ----------
+                    if DEBUG_PROGRESS: self.update_progress_metrics(i+1)
                 i += 1
         except KeyboardInterrupt:
             print("Execution interrupted by user.\n")
             duration = time.time() - start_time
 
-        # ---- DEBUG PROFILE ---- 
-        """ profiler.disable()
-        s = io.StringIO()
-        sortby = 'cumulative'
-        ps = pstats.Stats(profiler, stream=s).sort_stats(sortby)
-        ps.print_stats()
-        with open(f'{self.output_filename}_profile_output.txt', 'w') as f:
-            f.write(s.getvalue()) """
-        # ----
+        if DEBUG_TREE or DEBUG_PROGRESS or DEBUG_PROFILER:
+            try:
+                _, tail = os.path.split(self.output_filename)
+                input_file_name = tail.split('_')[0]
 
-        # ---- DEBUG TREE + PROGRESS ---- 
-        try:
-            _, tail = os.path.split(self.output_filename)
-            input_file_name = tail.split('_')[0]
+                if DEBUG_PROFILER: profile_execution(profiler, f"{input_file_name}_profiler_outuput.txt")
+                if DEBUG_PROGRESS: plot_progress(self.metrics, f"{input_file_name}_constraint_progress.html")
+                if DEBUG_TREE: visualize_tree(self.root, f"{input_file_name}_tree")
 
-            plot_progress(self.metrics, f"{input_file_name}_constraint_progress.html")
-        
-            visualize_tree(self.root, f"{input_file_name}_tree")
-
-        except KeyboardInterrupt:
-            print("Execution interrupted by user.\n")
-        # ----
+            except KeyboardInterrupt:
+                print("Execution interrupted by user.\n")
 
