@@ -1,0 +1,2380 @@
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=1000
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=500
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=200
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=100
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=50
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=20
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=10
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=5
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=2
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
+pypy3 -u mcts_input_parser.py --time_limit=3600 --c_param=1
+Processing comp01.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp01_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp01_tree.pdf
+
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp02_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp02_tree.pdf
+
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp03_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp03_tree.pdf
+
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp04_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp04_tree.pdf
+
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp05_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp05_tree.pdf
+
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp06.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp06_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp06_tree.pdf
+
+Finished processing comp06.ctt, output saved to output/comp06_output.txt.
+Processing comp07.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp07_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp07_tree.pdf
+
+Finished processing comp07.ctt, output saved to output/comp07_output.txt.
+Processing comp08.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp08_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp08_tree.pdf
+
+Finished processing comp08.ctt, output saved to output/comp08_output.txt.
+Processing comp09.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp09_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp09_tree.pdf
+
+Finished processing comp09.ctt, output saved to output/comp09_output.txt.
+Processing comp10.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp10_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp10_tree.pdf
+
+Finished processing comp10.ctt, output saved to output/comp10_output.txt.
+Processing comp11.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp11_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp11_tree.pdf
+
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Processing comp12.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp12_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp12_tree.pdf
+
+Finished processing comp12.ctt, output saved to output/comp12_output.txt.
+Processing comp13.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp13_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp13_tree.pdf
+
+Finished processing comp13.ctt, output saved to output/comp13_output.txt.
+Processing comp14.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp14_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp14_tree.pdf
+
+Finished processing comp14.ctt, output saved to output/comp14_output.txt.
+Processing comp15.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp15_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp15_tree.pdf
+
+Finished processing comp15.ctt, output saved to output/comp15_output.txt.
+Processing comp16.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp16_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp16_tree.pdf
+
+Finished processing comp16.ctt, output saved to output/comp16_output.txt.
+Processing comp17.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp17_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp17_tree.pdf
+
+Finished processing comp17.ctt, output saved to output/comp17_output.txt.
+Processing comp18.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp18_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp18_tree.pdf
+
+Finished processing comp18.ctt, output saved to output/comp18_output.txt.
+Processing comp19.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp19_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp19_tree.pdf
+
+Finished processing comp19.ctt, output saved to output/comp19_output.txt.
+Processing comp20.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp20_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp20_tree.pdf
+
+Finished processing comp20.ctt, output saved to output/comp20_output.txt.
+Processing comp21.ctt...
+Processing the constraint progress...
+Plot saved successfully to constraint_progress/comp21_constraint_progress.html
+
+Processing the tree...
+Tree successfully saved as mcts_tree/comp21_tree.pdf
+
+Finished processing comp21.ctt, output saved to output/comp21_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+a mcts_tree
+a mcts_tree/comp05_tree.pdf
+a mcts_tree/comp04_tree.pdf
+a mcts_tree/comp18_tree.pdf
+a mcts_tree/comp19_tree.pdf
+a mcts_tree/comp12_tree.pdf
+a mcts_tree/comp13_tree.pdf
+a mcts_tree/comp21_tree.pdf
+a mcts_tree/comp20_tree.pdf
+a mcts_tree/comp15_tree.pdf
+a mcts_tree/comp14_tree.pdf
+a mcts_tree/comp08_tree.pdf
+a mcts_tree/comp09_tree.pdf
+a mcts_tree/comp02_tree.pdf
+a mcts_tree/comp03_tree.pdf
+a mcts_tree/comp11_tree.pdf
+a mcts_tree/comp10_tree.pdf
+a mcts_tree/comp06_tree.pdf
+a mcts_tree/comp07_tree.pdf
+a mcts_tree/comp01_tree.pdf
+a mcts_tree/comp16_tree.pdf
+a mcts_tree/comp17_tree.pdf
+a constraint_progress
+a constraint_progress/comp03_constraint_progress.html
+a constraint_progress/comp07_constraint_progress.html
+a constraint_progress/comp19_constraint_progress.html
+a constraint_progress/comp11_constraint_progress.html
+a constraint_progress/comp15_constraint_progress.html
+a constraint_progress/comp18_constraint_progress.html
+a constraint_progress/comp14_constraint_progress.html
+a constraint_progress/comp10_constraint_progress.html
+a constraint_progress/comp06_constraint_progress.html
+a constraint_progress/comp02_constraint_progress.html
+a constraint_progress/comp12_constraint_progress.html
+a constraint_progress/comp16_constraint_progress.html
+a constraint_progress/comp21_constraint_progress.html
+a constraint_progress/comp04_constraint_progress.html
+a constraint_progress/comp08_constraint_progress.html
+a constraint_progress/comp05_constraint_progress.html
+a constraint_progress/comp01_constraint_progress.html
+a constraint_progress/comp09_constraint_progress.html
+a constraint_progress/comp17_constraint_progress.html
+a constraint_progress/comp20_constraint_progress.html
+a constraint_progress/comp13_constraint_progress.html
+a output
+a output/comp15_output.txt
+a output/comp09_output.txt
+a output/comp18_output.txt
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp10_output.txt
+a output/comp20_output.txt
+a output/comp17_output.txt
+a output/comp06_output.txt
+a output/comp03_output.txt
+a output/comp12_output.txt
+a output/comp11_output.txt
+a output/comp14_output.txt
+a output/comp08_output.txt
+a output/comp19_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a output/comp13_output.txt
+a output/comp21_output.txt
+a output/comp16_output.txt
+a output/comp07_output.txt
