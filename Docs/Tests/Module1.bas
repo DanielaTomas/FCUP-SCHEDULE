@@ -1,7 +1,20 @@
+Attribute VB_Name = "Module1"
+Function CountColor(rng As Range, colorcell As Range) As Long
+    Dim cell As Range
+    Dim clr As Long
+    clr = colorcell.Interior.Color
+    For Each cell In rng
+        If Evaluate("GetColor(" & cell.Address(External:=True) & ")") = clr Then
+            CountColor = CountColor + 1
+        End If
+    Next cell
+End Function
+
+Function GetColor(cell As Range) As Long
+    GetColor = cell.DisplayFormat.Interior.Color
+End Function
+
 Sub addPic()
-'
-' Macro3 Macro
-'
     Dim pic_file As String
     Dim pic_resolution As Long
     Dim pict As Object
