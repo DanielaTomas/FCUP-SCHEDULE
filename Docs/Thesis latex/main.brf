@@ -1,4 +1,4 @@
-\backcite {fcup_em_numeros}{{1}{1.2}{section.1.2}}
+\backcite {fcup_em_numeros}{{1}{1.1}{section.1.1}}
 \backcite {browne_survey_2012}{{5}{2.4.1}{figure.caption.5}}
 \backcite {browne_survey_2012}{{6}{2.1}{figure.caption.5}}
 \backcite {lewis_survey_2008}{{10}{3}{chapter.3}}
@@ -20,5 +20,5 @@
 \backcite {abdipoor_meta-heuristic_2023}{{12}{3.5}{section.3.5}}
 \backcite {muller_itc2007}{{12}{3.5}{section.3.5}}
 \backcite {goh_MCTS}{{13}{3.6}{section.3.6}}
-\backcite {pedroso_tree_2015}{{22}{4.3.3}{subsection.4.3.3}}
-\backcite {muller_itc2007}{{23}{4.4.1}{subsection.4.4.1}}
+\backcite {pedroso_tree_2015}{{24}{4.2.4}{subsection.4.2.4}}
+\backcite {muller_itc2007}{{25}{4.3.1}{subsection.4.3.1}}

@@ -23,17 +23,13 @@
     \State new\_path $\gets$ \textit{copy}(current\_node.path)
     \State new\_path[event["Id"]] $\gets$ \{**event, "RoomId": new\_room, "WeekDay": new\_weekday, "Timeslot": new\_timeslot\}
     \\
-    \State next\_event $\gets$ events[current\_node.\textit{depth}()+1] \textbf{if} current\_node.\textit{depth}() + 1 $<$ \textit{len}(events) \textbf{else} None
-    \\
-    \If {next\_event is None}
-         \State expansion\_limit $\gets$ 0
-    \Else
-         \State expansion\_limit $\gets$ \textit{sum}\big( \textit{len}(rooms) \ \textbf{for each} rooms \ \textbf{in} \textit{find\_available\_rooms}() \big)
-    \EndIf
+    \State new\_expansion\_limit = \textit{calculate\_expansion\_limit}(new\_path)
+    \State \textbf{if} new\_expansion\_limit is None: \Return False
     \\
     \State child\_node $\gets$ MCTSNode(expansion\_limit = expansion\_limit, parent = current\_node, path = new\_path)
     \State current\_node.children.\textit{append}(child\_node)
     \State current\_node $\gets$ child\_node
+    \State \Return True
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
