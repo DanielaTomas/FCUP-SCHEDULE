@@ -113,7 +113,7 @@ class MCTS:
 
         available_periods = event["Available_Periods"]
         if len(available_periods) == 0:
-            self.current_node.children.append(None)
+            self.current_node.expansion_limit = 0
             return False
 
         period_index = len(self.current_node.children) % len(available_periods)

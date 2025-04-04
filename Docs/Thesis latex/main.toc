@@ -53,7 +53,7 @@
 \contentsline {subsection}{\numberline {4.2.3}Methodology}{19}{subsection.4.2.3}%
 \contentsline {subsubsection}{\numberline {4.2.3.1}Selection}{20}{subsubsection.4.2.3.1}%
 \contentsline {subsubsection}{\numberline {4.2.3.2}Expansion}{21}{subsubsection.4.2.3.2}%
-\contentsline {subsubsection}{\numberline {4.2.3.3}Simulation}{22}{subsubsection.4.2.3.3}%
+\contentsline {subsubsection}{\numberline {4.2.3.3}Simulation}{23}{subsubsection.4.2.3.3}%
 \contentsline {subsubsection}{\numberline {4.2.3.4}Backpropagation}{24}{subsubsection.4.2.3.4}%
 \contentsline {subsection}{\numberline {4.2.4}Normalization}{24}{subsection.4.2.4}%
 \contentsline {section}{\numberline {4.3}Hill climbing}{25}{section.4.3}%

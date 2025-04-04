@@ -97,7 +97,7 @@ The problem is defined as a maximization problem, with the algorithm attempting 
 
 \subsection{Search Space}
 
-The search space, \(S\),  for this problem is large as it involves a product of all possible event-period-room combinations: \[S = E \cdot P  \cdot R,\] where \(E\) is the set of events, \(P\) is the set of periods (day,timeslot), and \(R\) is the set of rooms.
+The search space, \(S\),  for this problem is large as it involves a product of all possible event-period-room combinations: \[S = E \cdot P  \cdot R,\] where \(E\) is the set of events, \(P\) is the set of periods (day, timeslot), and \(R\) is the set of rooms.
 
 To reduce the search space, unavailable periods and unavailable rooms for a chosen period are discarded immediately in the \ac{mcts} \(expansion\) phase.
 
@@ -153,13 +153,13 @@ The assignment is determined as follows:
 \item The period of an event is assigned based on: 
 
 	\begin{equation}
-	n \mod AP
-	\end{equation}\label{period_allocation}
+	n \mod AP\label{period_allocation}
+	\end{equation}
 
 \item The room of an event is assigned based on:
 	\begin{equation}
-	\frac{n}{AP} \mod AR
-	\end{equation}\label{room_allocation}
+	\frac{n}{AP} \mod AR\label{room_allocation}
+	\end{equation}
 \end{itemize}
 
 For example, if AP = 3 and AR = 2, the assignment follows:
@@ -172,7 +172,7 @@ For example, if AP = 3 and AR = 2, the assignment follows:
 		n = 2: \quad 2 \mod 3 = 2 $ => $ P2 \\
 		n = 3: \quad 3 \mod 3 = 0 $ => $ P0, \\ \text{and so on.}
 	  \end{aligned}
-	\end{equation}\label{period_allocation}
+	\end{equation}
 	
 	\item Room allocation:
 	\begin{equation}
@@ -215,7 +215,7 @@ The \ac{mcts} algorithm consists of four phases: \(selection\), \(expansion\), \
 
 \begin{figure}[H]
       \centering
-      \includegraphics[width=\columnwidth]{Development/MCTS_steps.jpg}
+      \includegraphics[width=1.1\columnwidth]{Development/MCTS_Steps.jpg}
       \caption[MCTS steps]
       {MCTS steps}
       \label{fig:mcts_steps}
@@ -277,9 +277,9 @@ The \(expansion\) phase (Appendix \ref{AppendixA} Algorithm \ref{expansion}) is 
 
 The algorithm first identifies the next event to schedule, using the current node's depth (i.e., the number of events already assigned) as an index into the event list. %If no more events remain, the expansion limit is set to zero, indicating a terminal node.
 
-For the selected event, the algorithm retrieves the corresponding weekday and timeslot (Formula \ref{period_allocation}). Using the chosen period, the algorithm obtain the available rooms that meet the event’s occupation requirement and, if possible, the capacity requirement (Algorithm \ref{find_available_rooms}) and choose the corresponding one (Formula \ref{room_allocation}). 
+For the selected event, the algorithm retrieves the corresponding weekday and timeslot (Formula \ref{period_allocation}). Using the chosen period, the algorithm obtain the available rooms that meet the event’s occupation requirement and, if possible, the capacity requirement (Algorithm \ref{find_available_rooms}). It then selects a room accordingly to Formula \ref{room_allocation}. 
 
-If no suitable periods or rooms for the chosen period are available, the algorithm appends a null child to the current node and terminates the expansion for this branch.
+If no suitable rooms are available for the chosen period, a null child is added to the current node and expansion is terminated for this particular branch. However, since other periods may still be available for the same event, future branches may select different periods that do have available rooms, allowing the expansion to continue. On the other hand, if no valid periods are available for the event at all, then the node cannot be further expanded in any branch. In this case, the node is marked as terminal, as it is impossible to assign the event without violating constraints.
 
 Before proceeding, the algorithm evaluates the partial timetable (i.e., the new path) against a global hard penalty threshold. If the new assignment violates hard constraints resulting in a penalty below the threshold, a null child is added, and expansion is stopped for that branch. This pruning helps maintain the integrity of the allocation formulas and reduces unnecessary exploration.
 
