@@ -104,7 +104,7 @@ class MCTS:
                 self.current_node.children.append(None)
                 return None
             return sum(
-                len(rooms) for rooms in find_available_rooms(next_event["Capacity"], self.rooms, self.current_node.path.values(), next_event["Available_Periods"]
+                len(rooms) for rooms in find_available_rooms(next_event["Capacity"], self.rooms, new_path.values(), next_event["Available_Periods"]
                 ).values()
             )
 
