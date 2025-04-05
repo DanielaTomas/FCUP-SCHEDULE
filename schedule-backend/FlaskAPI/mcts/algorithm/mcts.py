@@ -101,6 +101,7 @@ class MCTS:
             if next_event is None:
                 return 0
             elif evaluate_timetable(self.conflicts_checker, new_path, full_evaluation=False) < self.global_best_hard_penalty:
+                self.previous_unassigned_events.add(event["Id"])
                 self.current_node.children.append(None)
                 return None
             return sum(
@@ -122,6 +123,7 @@ class MCTS:
         available_rooms = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path.values(), [available_periods[period_index]])
         available_rooms_list = list(available_rooms.values())
         if available_rooms_list == [set()]:
+            self.previous_unassigned_events.add(event["Id"])
             self.current_node.children.append(None)
             return False
 
