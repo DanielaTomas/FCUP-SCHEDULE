@@ -187,7 +187,7 @@ For example, if AP = 3 and AR = 2, the assignment follows:
 
 Following this structured allocation, the sequence of assignments proceeds as: \(E_0P_0R_0\), \(E_0P_1R_0\), \(E_0P_2R_0\), \(E_0P_0R_1\), ...
 
-It is important to note that the order of periods (P) and rooms (R) remains unchanged from the order in which they were initially provided.
+%It is important to note that the order of periods (P) and rooms (R) remains unchanged from the order in which they were initially provided.
 
 \subsubsection{Tree Nodes}
 
@@ -273,7 +273,7 @@ The best child node (Algorithm \ref{best_child}) is determined by applying the \
 
 \subsubsection{Expansion}
 
-The \(expansion\) phase (Appendix \ref{AppendixA} Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. 
+The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. 
 
 The algorithm first identifies the next event to schedule, using the current node's depth (i.e., the number of events already assigned) as an index into the event list. %If no more events remain, the expansion limit is set to zero, indicating a terminal node.
 
@@ -286,6 +286,36 @@ Before proceeding, the algorithm evaluates the partial timetable (i.e., the new 
 If the expansion is not terminated, the algorithm estimates the expansion limit for the next event to schedule. This limit is determined by summing the number of available rooms across all periods for the next event (Algorithm \ref{find_available_rooms}). If no next event exists (i.e., the node is terminal), the limit is set to zero.
 
 Finally, a new child node is created with the updated path (which now includes the event with its assigned period and room) and the computed expansion limit. This new node is added to the tree, and the current node is updated to this newly created node.
+
+\begin{algorithm}
+\caption{Expansion}\label{expansion}
+\begin{algorithmic}[1]
+\Procedure{EXPANSION}{}
+    \State event $\gets$ events[current\_node.\textit{depth}()]
+    \State available\_periods $\gets$ event["Available\_Periods"]
+    \\
+    \State period $\gets$ \textit{len}(current\_node.children)
+    \State period\_index $\gets$ period \% \textit{len}(available\_periods)
+    \State new\_weekday, new\_timeslot $\gets$ available\_periods[period\_index]
+    \\
+    \State available\_rooms $\gets$ \textit{find\_available\_rooms}()
+    \\
+    \State new\_room\_index $\gets$ period // \textit{len}(available\_periods) \% \textit{len}(available\_rooms)
+    \State new\_room $\gets$ available\_rooms[new\_room\_index]
+    \\
+    \State new\_path $\gets$ \textit{copy}(current\_node.path)
+    \State new\_path[event["Id"]] $\gets$ \{**event, "RoomId": new\_room, "WeekDay": new\_weekday, "Timeslot": new\_timeslot\}
+    \\
+    \State new\_expansion\_limit = \textit{calculate\_expansion\_limit}(new\_path)
+    \State \textbf{if} new\_expansion\_limit is None: \Return False
+    \\
+    \State child\_node $\gets$ MCTSNode(expansion\_limit = expansion\_limit, parent = current\_node, path = new\_path)
+    \State current\_node.children.\textit{append}(child\_node)
+    \State current\_node $\gets$ child\_node
+    \State \Return True
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \begin{algorithm}
 \caption{Find Available Rooms}\label{find_available_rooms}
