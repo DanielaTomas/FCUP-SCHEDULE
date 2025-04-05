@@ -7,11 +7,13 @@
     $ pypy -m ensurepip
     ```
     
-* Install ``graphviz`` and ``plotly`` libraries:
+* Install ``graphviz``, ``plotly``, and ``openpyxl`` libraries:
     ```SHELL
     $ pypy -m pip install graphviz # depending on your OS, you may also need to install the Graphviz system package
 
     $ pypy -m pip install plotly
+
+    $ pypy -m pip install openpyxl
     ```
 
 # How to run
