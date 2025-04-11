@@ -25,10 +25,20 @@ def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraint
             
             unique_id += 1
 
+    for event in events_to_visit:
+        event["Available_Periods"] = sort_periods(event, events_to_visit)
+        
     sorted_events = sorted(events_to_visit, key=lambda event: (event["Priority"], random.random()), reverse=True)
 
     return sorted_events, name_to_event_ids
 
+
+def sort_periods(event, events): # periods that are less frequently available across events get higher priority
+    period_conflict_count = {}
+    for period in event["Available_Periods"]:
+        period_conflict_count[period] = sum(period in other["Available_Periods"] for other in events if other["Id"] != event["Id"])
+    return sorted(event["Available_Periods"], key=lambda p: (period_conflict_count[p], p[0], p[1]))
+    
 
 def root_expansion_limit(event, rooms):
         available_rooms = find_available_rooms(event["Capacity"], rooms, [], event["Available_Periods"])
@@ -46,7 +56,13 @@ def find_available_rooms(event_capacity, rooms, events, available_periods):
     suitable_rooms = {room_id for room_id, room in rooms.items() if room["Capacity"] >= event_capacity}
     for period in available_periods:
         if period_room_availability[period]:
-            period_room_availability[period] = period_room_availability[period] & suitable_rooms if period_room_availability[period] & suitable_rooms else period_room_availability[period] 
+            intersected = period_room_availability[period] & suitable_rooms
+            if intersected: 
+                sorted_rooms = sorted(list(intersected), key=lambda room_id: (rooms[room_id]["Capacity"] - event_capacity))
+            else:
+                sorted_rooms = sorted(list(period_room_availability[period]), key=lambda room_id: abs(rooms[room_id]["Capacity"] - event_capacity))
+            period_room_availability[period] = sorted_rooms 
+
     return period_room_availability
 
 

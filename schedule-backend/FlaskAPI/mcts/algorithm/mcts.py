@@ -195,7 +195,7 @@ class MCTS:
             else: 
                 self.previous_unassigned_events.add(event["Id"])
                 unassigned_events.add(event["Id"])
-                #event["Priority"] *= 2
+                event["Priority"] += 50
 
         hard_penalty_result, soft_penalty_result = evaluate_timetable(self.conflicts_checker, assigned_events, unassigned_events)
         
