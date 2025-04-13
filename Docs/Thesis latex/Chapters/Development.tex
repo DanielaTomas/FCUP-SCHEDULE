@@ -72,7 +72,7 @@ There are several hard and soft constraints that affect the creation of \ac{fcup
 \begin{itemize}
 	\item \textbf{H1:} Events belonging to the same course must be scheduled and must be assigned to distinct periods.
 	\item \textbf{H2:} Two events can be scheduled in the same room, but only if they are in different periods.
-	\item \textbf{H3:} Events of the same block, or taught by the same lecturer, must be scheduled in different periods.
+	\item \textbf{H3:} Events of the same curricula, or taught by the same lecturer, must be scheduled in different periods.
 	\item \textbf{H4:} If a lecturer is unavailable in a given period, then no events can be taught by this lecturer in that period.
 %	\item \textbf{TODO H5:} If a room is unavailable in a given period, then no events can be scheduled in that period.
 %	\item \textbf{TODO H6:} Lecturers and students must have a free lunch period.
@@ -82,7 +82,7 @@ There are several hard and soft constraints that affect the creation of \ac{fcup
 
 \begin{itemize}
 	\item \textbf{S1:} Events of the same course should be spread into the given minimum number of days.
-	\item \textbf{S2:} Events belonging to the block should be in consecutive periods.
+	\item \textbf{S2:} Events belonging to the same curriculum should be in consecutive periods.
 	\item \textbf{S3:} The capacity of the room should be higher or equal than the capacity of the event.
 	\item \textbf{S4:} All events of a course should be given in the same room.
 \end{itemize}
@@ -121,7 +121,7 @@ Events are sorted in advance so that the most difficult event to place is placed
 \item The difference between the number of lectures and minimum working days to prioritize events with more lectures spread over fewer days;
 \item The number of available periods, as having more available periods indicates fewer scheduling restrictions;
 \item The capacity of an event, which implies that events with greater capacity have higher priority;
-\item The number of blocks in which the event is, as events that appear in more blocks are more difficult to allocate.
+\item The number of curricula in which the event is, as events that appear in more curricula are more difficult to allocate.
 \end{itemize}
 
 If two or more events have the same priority score, they are ordered randomly.
@@ -411,7 +411,7 @@ After finding a feasible solution with \ac{mcts}, \ac{hc} refines the solution b
 \item \textbf{Room move:} Change the room of an event while keeping the same timeslot and weekday.
 \item \textbf{Event move:} Change both the room and timeslot of an event.
 \item \textbf{Room stability move:} Assign all events of the same course to the same room if possible.
-\item \textbf{Compactness move:} Move an event to a timeslot adjacent to another event of the same block
+\item \textbf{Compactness move:} Move an event to a timeslot adjacent to another event of the same curriculum
 \item \textbf{Minimum working days move:} Spread a course's events across more days to avoid teaching all lectures in a short period.
 \end{itemize}
 

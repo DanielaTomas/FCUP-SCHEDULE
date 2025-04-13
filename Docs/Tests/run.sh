@@ -18,7 +18,7 @@ for CPAR in 1000 500 200 100 50 20 10 5 2 1; do
     for SEED in `seq -f "%02g" 1 10`; do
         echo "C=$CPAR, seed=$SEED"
         pypy3 -u mcts_input_parser.py --time_limit=$TMLIM --c_param=$CPAR --seed=$SEED
-        tar zcvf mcts_time-$TMLIM_C-$CPAR_$SEED.tgz mcts_tree/ constraint_progress/ output/
-        rm -rf mcts_tree/ constraint_progress/ output/
+        tar zcvf mcts_time-$TMLIM-$CPAR-$SEED.tgz mcts_tree/ constraint_progress/ output/ log/
+        rm -rf mcts_tree/ constraint_progress/ output/ log/
     done
 done
