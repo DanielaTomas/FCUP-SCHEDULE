@@ -104,10 +104,8 @@ class MCTS:
                 self.previous_unassigned_events.add(event["Id"])
                 self.current_node.children.append(None)
                 return None
-            return sum(
-                len(rooms) for rooms in find_available_rooms(next_event["Capacity"], self.rooms, new_path.values(), next_event["Available_Periods"]
-                ).values()
-            )
+            rooms_available = find_available_rooms(next_event["Capacity"], self.rooms, new_path.values(), next_event["Available_Periods"])
+            return sum(len(rooms) for rooms in rooms_available.values())
 
 
         event = self.events[self.current_node.depth()]
@@ -117,20 +115,15 @@ class MCTS:
             self.current_node.expansion_limit = 0
             return False
 
-        period_index = len(self.current_node.children) % len(available_periods)
-        new_weekday, new_timeslot = available_periods[period_index]
+        rooms_by_period = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path.values(), available_periods)
 
-        available_rooms = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path.values(), [available_periods[period_index]])
-        available_rooms_list = list(available_rooms.values())
-        if available_rooms_list == [set()]:
-            self.previous_unassigned_events.add(event["Id"])
-            self.current_node.children.append(None)
+        period_room_combinations = [(weekday, timeslot, room) for (weekday, timeslot), rooms in rooms_by_period.items() if rooms for room in rooms]
+
+        if not period_room_combinations or len(self.current_node.children) >= len(period_room_combinations):
+            self.current_node.expansion_limit = 0
             return False
 
-        available_rooms_list = list(available_rooms_list[0])
-
-        new_room_index = len(self.current_node.children) // len(available_periods) % len(available_rooms_list)
-        new_room = available_rooms_list[new_room_index]
+        new_weekday, new_timeslot, new_room = period_room_combinations[len(self.current_node.children)]
         
         new_path = self.current_node.path.copy()
         new_path[event["Id"]] = {**event, "RoomId": new_room, "WeekDay": new_weekday, "Timeslot": new_timeslot}
@@ -138,7 +131,7 @@ class MCTS:
         new_expansion_limit = calculate_expansion_limit(new_path)
         if new_expansion_limit is None: return False
         
-        child_node = MCTSNode(expansion_limit=new_expansion_limit, parent=self.current_node, path=new_path)
+        child_node = MCTSNode(expansion_limit=new_expansion_limit, assignment=(event["Id"], new_weekday, new_timeslot, new_room), parent=self.current_node, path=new_path)
         self.current_node.children.append(child_node)
         self.current_node = child_node
         return True

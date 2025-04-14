@@ -2,7 +2,7 @@ import math
 
 class MCTSNode:
 
-    def __init__(self, expansion_limit, path = {}, parent = None):
+    def __init__(self, expansion_limit, assignment = None, path = {}, parent = None):
         self.parent = parent
         self.children = []
         self.path = path
@@ -12,6 +12,7 @@ class MCTSNode:
         self.best_hard_penalty = float("-inf")
         self.best_soft_penalty = float("-inf")
         self.expansion_limit = expansion_limit
+        self.assignment = assignment #DEBUG
     
 
     def depth(self):
