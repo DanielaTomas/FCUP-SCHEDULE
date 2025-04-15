@@ -113,7 +113,27 @@ To reduce the search space, unavailable periods and unavailable rooms for a chos
 
 Figure \ref{fig:mcts_tree} illustrates the basic structure of the \ac{mcts} tree. The root represents the initial state, where no events have been assigned. The first level corresponds to assigning the first event, \(E_0\), to various \(P\) and \(R\). Each child node represents a specific assignment (\((E_0,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_R_|_-_1)\)). Subsequent levels correspond to the sequential assignment of events \(E_1, E_2, ..., E_|_E_|_-_1\).
 
-\subsubsection{Events Allocation}
+\subsubsection{Tree Nodes}
+
+A node is composed of the following attributes:
+
+\begin{itemize}
+\item A \textbf{path} is a dictionary that represents the sequence of actions leading to a node. The root is the only node that has an empty path.
+
+\item A \textbf{parent} is a reference to the parent node, allowing the tree structure to be navigated upwards. The root is the only node that does not have a parent.
+
+\item \textbf{Children} is initialized as an empty list at first but will later hold references to the node's child nodes. 
+
+\item The \textbf{expansion limit} specifies the maximum number of children that a node can have, which helps control the expansion process. It is estimated based on the number of available rooms per period for the next event. A value of zero indicates that the node cannot be expanded further.
+
+\item \textbf{Visits} is initialized to 0, tracking the number of times a node has been visited.
+
+\item The \textbf{hard and soft scores} are both initialized to 0, representing the cumulative hard and soft scores for a node, which are used to evaluate the quality of the node's state.
+
+\item The \textbf{best hard and soft penalty results} are initialized to negative infinity, representing the best hard and soft penalty results encountered for a node. These attributes will be updated during the algorithm as better results are found. 
+\end{itemize}
+
+\subsection{Events Allocation}
 
 Events are sorted in advance so that the most difficult event to place is placed first in the tree. The priority of an event (Formula \ref{priority}) is calculated based on:
 
@@ -137,77 +157,75 @@ If two or more events have the same priority score, they are ordered randomly.
 
 %I have tried other priority formulas...
 
-\subsubsection{Periods and Rooms Allocation}
+\subsection{Periods and Rooms Allocation}
 
-Each event assignment in the \ac{mcts} tree follows a structured sequence for period and room allocation. Let:
+Initially, our approach to allocating periods and rooms in the \ac{mcts} tree followed a structured sequence. This method aimed to explore all possible (period, room) combinations based on the number of children of the current node being expanded. However, as we progressed, this approach started to fail when the availability of rooms varied across different periods. A refined approach was then developed to address these limitations more robustly.
+
+\subsubsection{Initial Periods and Rooms Allocation Approach}
+
+In the initial approach, each event assignment generated in the \ac{mcts} tree follows a structured sequence for period and room allocation. 
+Let:
 \begin{itemize}
 \item \(n\) be the number of children of the current node being expanded;
 \item \(AP\) the number of available periods;
 \item \(AR\) the number of available rooms. 
-
 \end{itemize}
 
 The assignment is determined as follows:
 
 \begin{itemize}
-\item The period of an event is assigned based on: 
-
-	\begin{equation}
-	n \mod AP\label{period_allocation}
-	\end{equation}
-
-\item The room of an event is assigned based on:
-	\begin{equation}
-	\frac{n}{AP} \mod AR\label{room_allocation}
-	\end{equation}
-\end{itemize}
-
-For example, if AP = 3 and AR = 2, the assignment follows:
-	\begin{itemize}
-	\item Period allocation:
-	\begin{equation}
-	  \begin{aligned}
-		n = 0: \quad 0 \mod 3 = 0 $ => $ P0 \\
-		n = 1: \quad 1 \mod 3 = 1 $ => $ P1 \\
-		n = 2: \quad 2 \mod 3 = 2 $ => $ P2 \\
-		n = 3: \quad 3 \mod 3 = 0 $ => $ P0, \\ \text{and so on.}
-	  \end{aligned}
-	\end{equation}
+	\item The period index was selected using: 
+		\begin{equation}
+		n \mod AP\label{period_allocation}
+		\end{equation}
 	
-	\item Room allocation:
-	\begin{equation}
-	  \begin{aligned}
-		n = 0: \quad \lfloor0 / 3\rfloor \mod 2 = 0 $ => $ R0 \\
-		n = 1: \quad \lfloor1 / 3\rfloor \mod 2 = 0 $ => $ R0 \\
-		n = 2: \quad \lfloor2 / 3\rfloor \mod 2 = 0 $ => $ R0 \\
-		n = 3: \quad \lfloor3 / 3\rfloor \mod 2 = 1 $ => $ R1, \\ \text{and so on.}
-	  \end{aligned}
-	\end{equation}
-	\end{itemize}
-
-Following this structured allocation, the sequence of assignments proceeds as: \(E_0P_0R_0\), \(E_0P_1R_0\), \(E_0P_2R_0\), \(E_0P_0R_1\), ...
-
-%It is important to note that the order of periods (P) and rooms (R) remains unchanged from the order in which they were initially provided.
-
-\subsubsection{Tree Nodes}
-
-A node is composed of the following attributes:
-
-\begin{itemize}
-\item A \textbf{path} is a dictionary that represents the sequence of actions leading to a node. The root is the only node that has an empty path.
-
-\item A \textbf{parent} is a reference to the parent node, allowing the tree structure to be navigated upwards. The root is the only node that does not have a parent.
-
-\item \textbf{Children} is initialized as an empty list at first but will later hold references to the node's child nodes. 
-
-\item The \textbf{expansion limit} specifies the maximum number of children that a node can have, which helps control the expansion process. It is estimated based on the number of available rooms per period for the next event. A value of zero indicates that the node cannot be expanded further.
-
-\item \textbf{Visits} is initialized to 0, tracking the number of times a node has been visited.
-
-\item The \textbf{hard and soft scores} are both initialized to 0, representing the cumulative hard and soft scores for a node, which are used to evaluate the quality of the node's state.
-
-\item The \textbf{best hard and soft penalty results} are initialized to negative infinity, representing the best hard and soft penalty results encountered for a node. These attributes will be updated during the algorithm as better results are found. 
+	\item The room index was selected using:
+		\begin{equation}
+		\frac{n}{AP} \mod AR\label{room_allocation}
+		\end{equation}
 \end{itemize}
+
+This resulted in a deterministic exploration order. For instance, if \(AP = 3\) and \(AR = 2\), the assignment would be:
+\[
+\begin{aligned}
+n = 0 &\Rightarrow P_0, R_0 \\
+n = 1 &\Rightarrow P_1, R_0 \\
+n = 2 &\Rightarrow P_2, R_0 \\
+n = 3 &\Rightarrow P_0, R_1 \\
+n = 4 &\Rightarrow P_1, R_1 \\
+n = 5 &\Rightarrow P_2, R_1 \\
+\end{aligned}
+\]
+
+This approach assumes that the number of children will always perfectly expand all (period, room) combinations, but it fails when the search space is reduced, resulting in different periods having different available rooms.
+
+Consider the following scenario:
+\begin{itemize}
+\item Available Periods = \([(0,1), (3,2)]\)
+\item Rooms at (0,1) = \(['C', 'D', 'E', 'F', 'G']\) (5 rooms)
+\item Rooms at (3,2) = \(['B']\) (1 room)
+\end{itemize}
+
+Here, \(AP = 2\), but the number of available rooms (\(AR\)) depends on the period. The expansion limit is 6, thus we compute assignments from \(n = 0\) to \(n = 5\):
+
+\[
+\begin{aligned}
+n = 0: &\quad P_0 = (0,1),\quad R_0 = 'C' \quad &\text{(Valid)} \\
+n = 1: &\quad P_1 = (3,2),\quad R_0 = 'B' \quad &\text{(Valid)} \\
+n = 2: &\quad P_0 = (0,1),\quad R_1 = 'D' \quad &\text{(Valid)} \\
+n = 3: &\quad P_1 = (3,2),\quad R_0 = 'B' \quad &\text{(Invalid: Duplicate)} \\
+n = 4: &\quad P_0 = (0,1),\quad R_2 = 'E' \quad &\text{(Valid)} \\
+n = 5: &\quad P_1 = (3,2),\quad R_1 = 'B' \quad &\text{(Invalid: Duplicate)} \\
+\end{aligned}
+\]
+
+Because room availability is period-specific, the formula produces duplicate assignments when \(AR\) is not consistent across all periods.
+
+\subsubsection{Final Periods and Rooms Allocation Approach}
+
+To overcome these limitations, instead of computing the (period, room) combinations via index math, we pre-compute all valid combinations once. This method produces a flat list of unique, valid assignments, and expansion always proceeds without duplication.
+
+Moreover, periods that are less frequently available across all events are given higher priority. In this way, the algorithm reduces the risk of future conflicts, guiding the tree toward more constrained decisions early. For each period, available rooms are also sorted by how closely their capacity matches the event’s requirements, minimizing wasted space and increasing flexibility in room usage.
 
 \subsection{Methodology}
 
