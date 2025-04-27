@@ -12,7 +12,7 @@ class MCTSNode:
         self.best_hard_penalty = float("-inf")
         self.best_soft_penalty = float("-inf")
         self.expansion_limit = expansion_limit
-        self.flagged = False
+        #self.flagged = False
         self.assignment = assignment #DEBUG
     
 
