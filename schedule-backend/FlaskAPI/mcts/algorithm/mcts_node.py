@@ -12,6 +12,7 @@ class MCTSNode:
         self.best_hard_penalty = float("-inf")
         self.best_soft_penalty = float("-inf")
         self.expansion_limit = expansion_limit
+        self.flagged = False
         self.assignment = assignment #DEBUG
     
 
@@ -29,7 +30,7 @@ class MCTSNode:
 
     def best_child(self, unflagged_children, c_param):
         choices_weights = [
-            child.score_hard + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
+            child.score_hard / child.visits + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
             for child in unflagged_children
         ]
 
@@ -37,7 +38,7 @@ class MCTSNode:
         best_children = [unflagged_children[i] for i, weight in enumerate(choices_weights) if weight == max_weight]
 
         choices_weights = [
-            child.score_soft + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
+            child.score_soft / child.visits + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
             for child in best_children
         ]
 

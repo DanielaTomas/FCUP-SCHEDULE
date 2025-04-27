@@ -75,20 +75,39 @@ class MCTS:
 
 
     def selection(self):
+        def flag_path_to_root(node):
+            while node is not None:
+                node.flagged = True
+                node = node.parent
+
         current_node = self.root
-        while not current_node.is_terminal_node(len(self.events)):
+
+        while not current_node.is_terminal_node(len(self.events)):  
             if not current_node.is_fully_expanded(): break
-            
-            unflagged_children = [child for child in current_node.children if child and not child.expansion_limit == 0]
+
+            unflagged_children = [child for child in current_node.children if child and child.expansion_limit != 0]
 
             if not unflagged_children:
                 if current_node.parent:
                     current_node.expansion_limit = 0
-                    current_node = current_node.parent
+                    flag_path_to_root(current_node)
+                    current_node = self.root
+                    continue
                 else:
                     return False
-            else:
-                current_node = current_node.best_child(unflagged_children, self.params.c_param)
+            
+            unflagged_children = [child for child in current_node.children if child and child.expansion_limit != 0 and not child.flagged]
+
+            if not unflagged_children:
+                for child in current_node.children:
+                    if child:
+                        child.flagged = False
+                continue
+
+            current_node = max(
+                unflagged_children,
+                key=lambda child: (child.best_hard_penalty, child.best_soft_penalty)
+            )
 
         self.current_node = current_node
         return True
@@ -100,10 +119,10 @@ class MCTS:
             next_event = self.events[self.current_node.depth()+1] if self.current_node.depth()+1 < len(self.events) else None
             if next_event is None:
                 return 0
-            elif evaluate_timetable(self.conflicts_checker, new_path, full_evaluation=False) < self.global_best_hard_penalty:
+            """ elif evaluate_timetable(self.conflicts_checker, new_path, full_evaluation=False) < self.global_best_hard_penalty:
                 self.previous_unassigned_events.add(event["Id"])
                 self.current_node.children.append(None)
-                return None
+                return None """
             rooms_available = find_available_rooms(next_event["Capacity"], self.rooms, new_path.values(), next_event["Available_Periods"])
             return sum(len(rooms) for rooms in rooms_available.values())
 
@@ -208,7 +227,7 @@ class MCTS:
 
         simulation_result_hard = self.normalize(self.current_node.best_hard_penalty, self.global_best_hard_penalty, self.worst_hard_penalty)
         simulation_result_soft = self.normalize(self.current_node.best_soft_penalty, self.best_soft_penalty, self.worst_soft_penalty)
-        #if DEBUG_PRINT: print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}")
+        print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}")
 
         return simulation_result_hard, simulation_result_soft
     
@@ -237,9 +256,9 @@ class MCTS:
                     break
                 if self.expansion():
                     simulation_hard, simulation_soft = self.simulation(start_time, self.params.time_limit)
-                    if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
+                    """ if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
                         print("Optimal solution found!\n")
-                        break
+                        break """
                     self.backpropagation(simulation_hard, simulation_soft)
                     duration = time.time() - start_time
                     if DEBUG_PROGRESS: self.update_progress_metrics(i+1)
