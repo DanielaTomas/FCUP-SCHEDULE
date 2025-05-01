@@ -1,17 +1,17 @@
-% Introduction
-
-% Main chapter title
-%\chapter[toc version]{doc version}
 \chapter{Results}
 
-% Short version of the title for the header
-%\chaptermark{version for header}
-
-% Chapter Label
-% For referencing this chapter elsewhere, use \ref{ChapterTemplate}
 \label{Results}
 
-% Write text in here
-% Use \subsection and \subsubsection to organize text
+This chapter presents the main outcomes of the proposed \ac{mcts}-based system for \ac{cb-ctt}, including its performance, feasibility, and evaluations of enhancements such as the diving strategy.
 
+\section{Feasibility and Performance}
 
+The proposed system consistently produced feasible solutions across all tested configurations.
+
+\section{\(C\) Parameter Behaviour}
+
+The exploration constant \(C\) in the \ac{uct} formula (Formula \ref{uct_formula}) was varied across several orders of magnitude (from 0.1 to 1000), including the modified variant incorporating accumulated rewards (Formula \ref{modified_uct}). Surprisingly, the results showed that varying \(C\) had minimal impact on solution quality, which indicates a lower-than-expected sensitivity to node selection.
+
+\section{Diving strategy}
+
+\section{Competition Results Comparison}

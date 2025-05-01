@@ -30,7 +30,8 @@
 \contentsline {section}{\numberline {2.3}International Timetabling Competition (ITC)}{6}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Monte Carlo Tree Search}{6}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Phases}{6}{subsection.2.4.1}%
-\contentsline {section}{\numberline {2.5}Local Search}{7}{section.2.5}%
+\contentsline {subsection}{\numberline {2.4.2}Properties}{7}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Local Search}{8}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}Hill Climbing}{8}{subsection.2.5.1}%
 \contentsline {section}{\numberline {2.6}Previous Work}{9}{section.2.6}%
 \contentsline {chapter}{\numberline {3}Related Work}{11}{chapter.3}%
@@ -55,19 +56,24 @@
 \contentsline {subsubsection}{\numberline {4.2.4.2}Final Periods and Rooms Allocation Approach}{20}{subsubsection.4.2.4.2}%
 \contentsline {subsection}{\numberline {4.2.5}Methodology}{21}{subsection.4.2.5}%
 \contentsline {subsubsection}{\numberline {4.2.5.1}Selection}{21}{subsubsection.4.2.5.1}%
-\contentsline {subsubsection}{\numberline {4.2.5.2}Expansion}{23}{subsubsection.4.2.5.2}%
+\contentsline {subsubsection}{\numberline {4.2.5.2}Expansion}{22}{subsubsection.4.2.5.2}%
 \contentsline {subsubsection}{\numberline {4.2.5.3}Simulation}{24}{subsubsection.4.2.5.3}%
 \contentsline {subsubsection}{\numberline {4.2.5.4}Backpropagation}{26}{subsubsection.4.2.5.4}%
 \contentsline {subsection}{\numberline {4.2.6}Normalization}{26}{subsection.4.2.6}%
 \contentsline {section}{\numberline {4.3}Hill climbing}{27}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Neighborhoods}{27}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Methodology}{28}{subsection.4.3.2}%
-\contentsline {section}{\numberline {4.4}Front-end}{28}{section.4.4}%
+\contentsline {section}{\numberline {4.4}Diving}{28}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Front-end}{28}{section.4.5}%
 \contentsline {chapter}{\numberline {5}Tests}{29}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Test Setup}{29}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Performance Metrics}{29}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Testing Procedure}{30}{section.5.3}%
 \contentsline {chapter}{\numberline {6}Results}{31}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Feasibility and Performance}{31}{section.6.1}%
+\contentsline {section}{\numberline {6.2}\(C\) Parameter Behaviour}{31}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Diving strategy}{31}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Competition Results Comparison}{31}{section.6.4}%
 \contentsline {chapter}{\numberline {7}Conclusion}{32}{chapter.7}%
 \vspace {0.5cm}
 \contentsline {chapter}{Bibliography}{32}{dummy.6}%

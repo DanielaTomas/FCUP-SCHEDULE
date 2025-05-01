@@ -263,8 +263,7 @@ The best child node (Algorithm \ref{best_child}) is determined by applying the \
                 \State \Return False
             \EndIf
         \Else
-            \State best\_child $\gets$ current\_node.\textit{best\_child}(unflagged\_children)
-            \State current\_node $\gets$ best\_child
+            \State current\_node $\gets$ current\_node.\textit{best\_child}(unflagged\_children)
         \EndIf
     \EndWhile
     \State self.current\_node $\gets$ current\_node
@@ -291,47 +290,52 @@ The best child node (Algorithm \ref{best_child}) is determined by applying the \
 
 \subsubsection{Expansion}
 
-The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. 
+The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by assigning the next event to a valid (period, room) combination and creating a corresponding child node.
 
-The algorithm first identifies the next event to schedule, using the current node's depth (i.e., the number of events already assigned) as an index into the event list. %If no more events remain, the expansion limit is set to zero, indicating a terminal node.
+The next event to schedule is determined by the depth of the current node. For the selected event, the algorithm gathers the available (weekday, timeslot) combinations and filters suitable rooms for each period (Algorithm \ref{find_available_rooms}), based on the event’s capacity requirements and current room occupation.
 
-For the selected event, the algorithm retrieves the corresponding weekday and timeslot (Formula \ref{period_allocation}). Using the chosen period, the algorithm obtain the available rooms that meet the event’s occupation requirement and, if possible, the capacity requirement (Algorithm \ref{find_available_rooms}). It then selects a room accordingly to Formula \ref{room_allocation}. 
+A list of valid (period, room) combinations is generated. If no such combinations exist or the node has already been expanded for all possibilities, expansion is terminated, and the node is marked as fully expanded.  
 
-If no suitable rooms are available for the chosen period, a null child is added to the current node and expansion is terminated for this particular branch. However, since other periods may still be available for the same event, future branches may select different periods that do have available rooms, allowing the expansion to continue. On the other hand, if no valid periods are available for the event at all, then the node cannot be further expanded in any branch. In this case, the node is marked as terminal, as it is impossible to assign the event without violating constraints.
+A combination is selected based on the number of already-expanded children. A new path is constructed by assigning the selected period and room to the event.
 
-Before proceeding, the algorithm evaluates the partial timetable (i.e., the new path) against a global hard penalty threshold. If the new assignment violates hard constraints resulting in a penalty below the threshold, a null child is added, and expansion is stopped for that branch. This pruning helps maintain the integrity of the allocation formulas and reduces unnecessary exploration.
+Before proceeding, the algorithm evaluates the partial timetable (i.e., the new path) against a global hard penalty threshold. If the new assignment violates hard constraints resulting in a penalty below the threshold, a null child is added to indicate that the expansion stopped for that branch. This pruning condition reduces unnecessary exploration.
 
-If the expansion is not terminated, the algorithm estimates the expansion limit for the next event to schedule. This limit is determined by summing the number of available rooms across all periods for the next event (Algorithm \ref{find_available_rooms}). If no next event exists (i.e., the node is terminal), the limit is set to zero.
+If the expansion continues, the algorithm estimates the number of valid (period, room) combinations for the next event. This value is stored as the child’s expansion\_limit to guide future branching.
 
-Finally, a new child node is created with the updated path (which now includes the event with its assigned period and room) and the computed expansion limit. This new node is added to the tree, and the current node is updated to this newly created node.
+Finally, a new child node is created with the updated path and expansion limit. This new node is added to the tree, and the current node is updated to this newly created node.
 
 \begin{algorithm}
 \caption{Expansion}\label{expansion}
 \begin{algorithmic}[1]
-\Procedure{EXPANSION}{}
+\Function{EXPANSION}{}
     \State event $\gets$ events[current\_node.\textit{depth}()]
     \State available\_periods $\gets$ event["Available\_Periods"]
     \\
-    \State period $\gets$ \textit{len}(current\_node.children)
-    \State period\_index $\gets$ period \% \textit{len}(available\_periods)
-    \State new\_weekday, new\_timeslot $\gets$ available\_periods[period\_index]
+    \If{available\_periods is empty}
+        \State current\_node.expansion\_limit $\gets$ 0
+        \State \Return False
+    \EndIf
     \\
-    \State available\_rooms $\gets$ \textit{find\_available\_rooms}()
+    \State rooms\_by\_period $\gets$ \textit{find\_available\_rooms}()
+    \State period\_room\_combinations $\gets$ [(weekday, timeslot, room) \textbf{for} (weekday, timeslot), rooms in room\_by\_period.\textit{items()}]
     \\
-    \State new\_room\_index $\gets$ period // \textit{len}(available\_periods) \% \textit{len}(available\_rooms)
-    \State new\_room $\gets$ available\_rooms[new\_room\_index]
+    \If{period\_room\_combinations is empty \textbf{or} current\_node is fully expanded}
+        \State current\_node.expansion\_limit $\gets$ 0
+        \State \Return False
+    \EndIf
     \\
+    \State new\_weekday, new\_timeslot, new\_room $\gets$ period\_room\_combinations[len(current\_node.children)]
     \State new\_path $\gets$ \textit{copy}(current\_node.path)
     \State new\_path[event["Id"]] $\gets$ \{**event, "RoomId": new\_room, "WeekDay": new\_weekday, "Timeslot": new\_timeslot\}
     \\
-    \State new\_expansion\_limit = \textit{calculate\_expansion\_limit}(new\_path)
+    \State new\_expansion\_limit $\gets$  = \textit{calculate\_expansion\_limit}(new\_path)
     \State \textbf{if} new\_expansion\_limit is None: \Return False
     \\
     \State child\_node $\gets$ MCTSNode(expansion\_limit = expansion\_limit, parent = current\_node, path = new\_path)
     \State current\_node.children.\textit{append}(child\_node)
     \State current\_node $\gets$ child\_node
     \State \Return True
-\EndProcedure
+\EndFunction
 \end{algorithmic}
 \end{algorithm}
 
@@ -340,7 +344,6 @@ Finally, a new child node is created with the updated path (which now includes t
 \begin{algorithmic}[1]
 \Function{FIND\_AVAILABLE\_ROOMS}{event\_capacity, rooms, events, available\_periods}
     \State period\_room\_availability $\gets$ \{period: \textit{set}(rooms.keys()) \textbf{for each} period \textbf{in} available\_periods\}
-    \\
     \For{\textbf{each} other\_event \textbf{in} events}
         \State occupied\_period $\gets$ (other\_event["WeekDay"], other\_event["Timeslot"])
         \If{occupied\_period \textbf{in} period\_room\_availability}
@@ -352,8 +355,13 @@ Finally, a new child node is created with the updated path (which now includes t
     \\
     \For{\textbf{each} period \textbf{in} available\_periods}
         \If{period\_room\_availability[period] is not empty}
-            \State period\_room\_availability[period] $\gets$ period\_room\_availability[period] $\cap$ suitable\_rooms 
-            \State \textbf{if empty:} keep original period\_room\_availability[period]
+            \State intersected $\gets$ period\_room\_availability[period] $\cap$ suitable\_rooms
+            \If{intersected is not empty}
+                \State sorted\_rooms $\gets$ \textit{sort}(intersected, by (room["Capacity"] - event\_capacity))
+            \Else
+                \State sorted\_rooms $\gets$ \textit{sort}(period\_room\_availability[period], by $|$room["Capacity"] - event\_capacity$|$)
+            \EndIf
+            \State period\_room\_availability[period] $\gets$ sorted\_rooms
         \EndIf
     \EndFor
     \\
@@ -374,13 +382,9 @@ The \(simulation\) function (Appendix \ref{AppendixA} Algorithm \ref{simulation}
 \item Their priority, ensuring that more critical events are allocated first.
 \end{enumerate}
 
-%Falar disto: compactness_weight = min(1, i / (len(self.events)-1))
-
-For each unvisited event, the best available period and room combination is sought. The approach iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. The combination with no hard penalties and the lowest soft penalty is selected as the best option. If multiple optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid allocation is found, the event will have higher priority in the next simulation.
+For each unvisited event, the best available period and room combination is sought. The approach iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. During the calculation of the soft penalty, the importance of compactness (i.e., minimizing the time between related events) is adjusted, with a higher weight applied as the algorithm progresses.The combination with no hard penalties and the lowest soft penalty is selected as the best option. If multiple optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid allocation is found, the event will have higher priority in the next simulation.
 
 After scheduling all events, the simulation result is calculated, and the best and worst penalty scores are then updated based on these results. If a new best result is found, the timetable is saved to a file. If a new best result is found and the hard penalty is zero, indicating a feasible solution, the \ac{hc} algorithm (section \ref{hill_climbing_section}) is used to further optimize the timetable.
-
-%anytime...
 
 \subsubsection{Backpropagation}
 
@@ -452,6 +456,9 @@ The \ac{hc} approach follows the following steps:
 	\end{itemize}
 \end{enumerate}
 
+\section{Diving}
+
+To improve effectiveness in timetable generation, we also implemented a diving strategy in \ac{mcts}.
 
 \section{Front-end}
 
