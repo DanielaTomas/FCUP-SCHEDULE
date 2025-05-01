@@ -46,8 +46,8 @@ class MCTS:
         self.output_filename = config.output_filename
 
         self.simulation_path = []
-        self.best_node = None
-        self.flag = True
+        self.best_node = []
+        self.flag = False
 
         if DEBUG_PROGRESS:
             self.metrics = {'iterations': [], 'best_hard': [], 'best_soft': [], 'current_hard': [], 'current_soft': []}
@@ -79,23 +79,29 @@ class MCTS:
 
 
     def selection(self):
-        if self.simulation_path and not self.flag:
-            if self.best_node.parent and not self.best_node.parent.is_fully_expanded():
-                self.current_node = self.best_node.parent
+        """ print("----")
+        for b in self.best_node:
+            print(b.assignment)
+        print("----") """
+        while self.best_node and self.simulation_path:
+            if self.best_node[0].parent and not self.best_node[0].parent.is_fully_expanded():
+                self.current_node = self.best_node[0].parent
                 return True
             else:
-                if self.best_node.is_fully_expanded():
-                    for simulation_node in self.simulation_path:
-                        for child in self.best_node.children:
+                if self.best_node[0].is_fully_expanded():
+                    for simulation_node in self.simulation_path[0]:
+                        for child in self.best_node[0].children:
                             if child and child.assignment == simulation_node:
-                                self.simulation_path.remove(simulation_node)
-                                self.best_node = child
+                                self.simulation_path[0].remove(simulation_node)
+                                self.best_node[0] = child
                                 self.current_node = child
+                                if self.simulation_path and (len(self.simulation_path[0]) == 0): del self.simulation_path[0]
                                 return True
-                    self.simulation_path = []
+                    #self.simulation_path.pop(0)
                 else:
-                    self.current_node = self.best_node
+                    self.current_node = self.best_node[0]
                     return True
+            if self.best_node: del self.best_node[0]
 
         current_node = self.root
 
@@ -130,6 +136,7 @@ class MCTS:
             rooms_available = find_available_rooms(next_event["Capacity"], self.rooms, new_path.values(), next_event["Available_Periods"])
             return sum(len(rooms) for rooms in rooms_available.values())
 
+        self.flag = not self.current_node.is_fully_expanded()
 
         event = self.events[self.current_node.depth()]
 
@@ -230,17 +237,21 @@ class MCTS:
                 update_penalties(self.global_best_soft_penalty)
                 
                 if not self.simulation_path or self.flag:
-                    self.simulation_path = [
+                    new_path = [
                         (event_id, event["WeekDay"], event["Timeslot"], event["RoomId"])
                         for event_id, event in assigned_events.items()
-                        if event_id not in self.current_node.path
+                        if event_id not in self.current_node.path and event_id != self.events[-1]["Id"]
                     ]
-                    del self.simulation_path[-1]
-                    self.best_node = self.current_node
-                    self.flag = True
-
-        if self.current_node.parent and self.current_node.parent.is_fully_expanded(): #??
-            self.flag = False
+                    if new_path:                          
+                        if not self.simulation_path:
+                            self.simulation_path.append(new_path)
+                            self.best_node.append(self.current_node)
+                        elif self.best_node[0].parent == self.current_node.parent:
+                            self.simulation_path[0] = new_path
+                            self.best_node[0] = self.current_node
+                        else:
+                            self.simulation_path.insert(0, new_path)
+                            self.best_node.insert(0, self.current_node)
 
         simulation_result_hard = self.normalize(self.current_node.best_hard_penalty, self.global_best_hard_penalty, self.worst_hard_penalty)
         simulation_result_soft = self.normalize(self.current_node.best_soft_penalty, self.best_soft_penalty, self.worst_soft_penalty)
