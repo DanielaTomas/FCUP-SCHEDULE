@@ -71,10 +71,11 @@
 \contentsline {section}{\numberline {5.3}Performance Metrics}{30}{section.5.3}%
 \contentsline {section}{\numberline {5.4}Testing Procedure}{31}{section.5.4}%
 \contentsline {chapter}{\numberline {6}Results}{32}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Feasibility and Performance}{32}{section.6.1}%
-\contentsline {section}{\numberline {6.2}\(C\) Parameter Behaviour}{32}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Diving strategy}{32}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Competition Results Comparison}{32}{section.6.4}%
+\contentsline {section}{\numberline {6.1}Python vs PyPy Performance}{32}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Feasibility}{32}{section.6.2}%
+\contentsline {section}{\numberline {6.3}\(C\) Parameter Behaviour}{32}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Diving strategy}{32}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Competition Results Comparison}{32}{section.6.5}%
 \contentsline {chapter}{\numberline {7}Conclusion}{33}{chapter.7}%
 \vspace {0.5cm}
 \contentsline {chapter}{Bibliography}{33}{dummy.6}%

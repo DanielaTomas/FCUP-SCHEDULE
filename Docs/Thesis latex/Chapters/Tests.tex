@@ -7,7 +7,7 @@
 
 \label{Tests}
 
-This chapter outlines the numerous tests used to evaluate the performance of the final algorithm on instances from the \ac{itc-2007} benchmark. All the tests were executed on a computer with the following characteristics: (...)
+This chapter outlines the numerous tests used to evaluate the performance of the final algorithm on instances from the \ac{itc-2007} benchmark\footnote{https://www.eeecs.qub.ac.uk/itc2007/Login/SecretPage.php}. %All the tests were executed on a computer with the following characteristics: (...)
 
 \section{Test Instances}
 
@@ -21,7 +21,7 @@ The evaluation used all 21 instances from the \ac{itc-2007} track 3 dataset (\(c
 \textbf{Instance} & \textbf{Curricula} & \textbf{Courses} & \textbf{Rooms} & \textbf{Constraints} & \textbf{Lectures} & \textbf{Periods} & \textbf{Lecturers} \\
 \hline
 comp01                                    & 14                                         & 30                                       & 6                                      & 53                                           & 160                                       & 30                                       & 24                                        \\
-comp02                                    & 70                                         & 82                                       & 16                                     & 513                                          & 283                                       & 25                                       & {\color[HTML]{333333} 71}   \\
+comp02                                    & 70                                         & 82                                       & 16                                     & 513                                          & 283                                       & 25                                       & 71                                     \\
 comp03                                    & 68                                         & 72                                       & 16                                     & 382                                          & 251                                       & 25                                       & 61                                        \\
 comp04                                    & 57                                         & 79                                       & 18                                     & 396                                          & 286                                       & 25                                       & 70                                        \\
 comp05                                    & 139                                        & 54                                       & 9                                      & 771                                          & 152                                       & 36                                       & 47                                        \\
@@ -70,7 +70,11 @@ For each test, the following key performance metrics were considered:
 \begin{itemize}
 \item \textbf{Best hard penalty:} The lowest number of hard constraint violations found during the execution of the algorithm for a given instance. A value of zero indicates a feasible solution that satisfies all hard constraints.
 
+\item \textbf{Worst hard penalty:} The highest number of hard constraint violations found during the execution of the algorithm for a given instance.
+
 \item \textbf{Best soft penalty:} The lowest soft constraint penalty achieved during the search process for a given instance.
+
+\item \textbf{Worst soft penalty:} The highest soft constraint penalty achieved during the search process for a given instance.
 
 \item \textbf{Iteration of best solution:} The specific iteration at which the best solution (in terms of hard or soft penalties) was found.
 

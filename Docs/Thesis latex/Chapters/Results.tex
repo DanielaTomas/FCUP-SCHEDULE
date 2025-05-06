@@ -4,9 +4,15 @@
 
 This chapter presents the main outcomes of the proposed \ac{mcts}-based system for \ac{cb-ctt}, including its performance, feasibility, and evaluations of enhancements such as the diving strategy.
 
-\section{Feasibility and Performance}
+\section{Python vs PyPy Performance}
 
-The proposed system consistently produced feasible solutions across all tested configurations.
+During the development and testing of the system, both standard Python and PyPy\footnote{A Just-In-Time (JIT) compiling alternative. Link: https://pypy.org/} were evaluated for performance. While both interpreters correctly executed the \ac{mcts} algorithm, the performance difference was substantial. PyPy called over 3 times more functions compared to Python.
+
+Given the compute-intensive nature of \ac{mcts}, PyPy was ultimately chosen for running all the experiments and benchmarks.
+
+\section{Feasibility}
+
+The proposed system consistently produced feasible solutions across all tested configurations and datasets.
 
 \section{\(C\) Parameter Behaviour}
 
