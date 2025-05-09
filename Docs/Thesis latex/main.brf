@@ -1,6 +1,7 @@
 \backcite {fcup_em_numeros}{{1}{1.1}{section.1.1}}
-\backcite {browne_survey_2012}{{6}{2.4.1}{figure.caption.5}}
-\backcite {browne_survey_2012}{{7}{2.1}{figure.caption.5}}
+\backcite {browne_survey_2012}{{7}{2.2}{figure.caption.6}}
+\backcite {browne_survey_2012}{{7}{2.4.1}{figure.caption.6}}
+\backcite {browne_survey_2012}{{8}{2.4.2}{subsection.2.4.2}}
 \backcite {lewis_survey_2008}{{11}{3}{chapter.3}}
 \backcite {abdipoor_meta-heuristic_2023}{{11}{3}{chapter.3}}
 \backcite {babaei_survey_2015}{{11}{3.1}{section.3.1}}
@@ -20,5 +21,5 @@
 \backcite {abdipoor_meta-heuristic_2023}{{13}{3.5}{section.3.5}}
 \backcite {muller_itc2007}{{13}{3.5}{section.3.5}}
 \backcite {goh_MCTS}{{14}{3.6}{section.3.6}}
-\backcite {pedroso_tree_2015}{{25}{4.2.4}{subsection.4.2.4}}
-\backcite {muller_itc2007}{{26}{4.3.1}{subsection.4.3.1}}
+\backcite {pedroso_tree_2015}{{26}{4.2.6}{subsection.4.2.6}}
+\backcite {muller_itc2007}{{27}{4.3.1}{subsection.4.3.1}}

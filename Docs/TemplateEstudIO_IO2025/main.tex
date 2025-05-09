@@ -1,0 +1,88 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EstudIO | IO225 | XXIV Congresso da Associação Portuguesa de Investigação Operacional %
+% Template 															%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,10pt,twoside]{article}
+
+% packages
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage[portuguese]{babel} %change to [english]{babel} if submitting in English 
+\usepackage[utf8]{inputenc}
+\usepackage[]{graphicx}
+\usepackage{fancyhdr}
+\usepackage{nopageno}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{booktabs}
+\usepackage{calc}
+\usepackage{rotating}
+\usepackage{amssymb}
+\usepackage{eurosym}
+\usepackage{paralist}
+\usepackage{theorem}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{subfig}
+\usepackage[numbers]{natbib}
+\usepackage{fancyhdr}
+
+%settings
+\newcommand{\info}[3]{
+  \pagebreak
+  \begin{center}
+    \vspace*{2ex}
+    \textbf{\huge #1}\vspace*{2ex}\\
+    {\large #2}\vspace*{2ex}\\
+    \textit{#3}
+    \vspace*{4ex}\\
+    \end{center}
+    }
+    
+\pagestyle{fancyplain}
+\lhead[\fancyplain{}{\bf \thepage}]{\fancyplain{}{\bf IO2025 $\mid$ XXIV Congresso da Associação Portuguesa de Investigação Operacional}}
+\rhead[\fancyplain{}{\bf IO2025 $\mid$ XXIV Congresso da Associação Portuguesa de Investigação Operacional}]{\fancyplain{}{\bf \thepage}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0pt}    
+
+
+\begin{document}
+
+%Preencher com: título, nomes dos autores e afiliação(ões)
+\info{Título}{Autor 1$^*$, Autor 2$^{*\dagger}$ e Autor 3$^{*\dagger}$}{$^{*}$Afiliação 1, $^{\dagger}$Afiliação 2}
+
+
+\section{Descrição do problema}
+
+Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto \citep{ref1,ref2}.
+
+\section{Relevância do problema}
+
+Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto \citep{ref3,ref4}.
+
+\section{Metodologia}
+
+Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+
+Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+
+\section{Resultados}
+
+Esta secção é opcional.
+
+Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+
+\begin{thebibliography}{9}
+
+\bibitem{ref1} Author A, Title of the Paper, \textit{Journal Name}, Volume, Pages, Year.
+\bibitem{ref2} Author B, Title of the Paper, \textit{Journal Name}, Volume, Pages, Year.
+\bibitem{ref3} Author C, Title of the Paper, \textit{Journal Name}, Volume, Pages, Year.
+\bibitem{ref4} Author D and E, Title of the Paper, \textit{Journal Name}, Volume, Pages, Year.
+
+\end{thebibliography}
+
+\end{document}

@@ -39,11 +39,16 @@ Acknowledge ALL the people!
 	degree={Mestrado em Engenharia de Redes e Sistemas Informáticos},
 	nameconnector={por},
         keywordsname={Palavras-chave},
-        keywords={informática (keywords em português)}]
+        keywords={University Course Timetabling Problem, Curriculum-based Course Timetabling, Monte Carlo Tree Search, Hill Climbing, ITC-2007}]
 \begin{otherlanguage}{portuguese}
 
-Este tese é sobre alguma coisa
+A geração de horários para escolas e universidades é um problema de otimização combinatória NP-difícil, caracterizado por um espaço de pesquisa vasto e por restrições. Na Faculdade de Ciências da Universidade do Porto (FCUP), a elaboração dos horários a cada semestre para milhares de estudantes, dezenas de currículos e centenas de docentes é, atualmente, um processo manual, demorado e sujeito a erros.
 
+Esta dissertação aborda a variante Curriculum-Based Course Timetabling (CB-CTT) do University Course Timetabling Problem, apresentando uma abordagem híbrida inovadora que combina Monte Carlo Tree Search (MCTS) com Hill Climbing (HC). O MCTS conduz a pesquisa global, simulando e avaliando múltiplas atribuições de evento, período e sala, priorizando os eventos mais restritos e expandindo os ramos mais promissores. Sempre que o MCTS encontra, durante a fase de simulação, um horário viável melhorado, o HC assume o controlo e aplica seis movimentos de vizinhança para refinar iterativamente a solução, enquanto preserva a sua viabilidade.
+
+Testes com as instâncias do terceiro track da ITC-2007 demonstram que o híbrido MCTS-HC consegue encontrar consistentemente horários viáveis, apesar da sua performance permanecer abaixo dos melhores resultados publicados…
+
+Apesar de algumas melhorias e mudanças introduzidas no algoritmo MCTS padrão, continuam a existir desafios...
 
 
 \end{otherlanguage}
@@ -55,7 +60,13 @@ Este tese é sobre alguma coisa
 \addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
 \begin{abstract}
 
-This thesis is about something, I guess.
+Timetable generation for schools and universities is an NP-hard combinatorial optimization problem with a vast search space and constraints. At the Faculty of Sciences of the University of Porto (FCUP), preparing semester schedules for thousands of students, dozens of curricula, and hundreds of lecturers is currently manual, time-consuming, and prone to errors.
+
+This dissertation addresses the Curriculum-Based Course Timetabling (CB-CTT) variant of the University Course Timetabling Problem by presenting a novel hybrid approach that combines Monte Carlo Tree Search (MCTS) with Hill Climbing (HC). MCTS drives the global search, simulating and evaluating multiple event, period, and room assignments, prioritizing the most constrained events and expanding the most promising branches. Whenever MCTS obtains an improved feasible timetable during simulation, HC takes over and applies six neighborhood moves to iteratively improve the solution while preserving the feasibility.
+
+Tests on the ITC-2007 track 3 instances show that the MCTS-HC hybrid consistently finds feasible timetables, but its performance remains below the best published results...
+
+Despite some improvements and changes to the standard MCTS algorithm, challenges remain...
 
 \end{abstract}
 \addtocontents{toc}{\protect\setcounter{tocdepth}{3}}

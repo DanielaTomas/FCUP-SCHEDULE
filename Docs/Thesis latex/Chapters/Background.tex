@@ -48,11 +48,19 @@ These two problems differ significantly in terms of timing, flexibility, and con
 
 \subsection{Constraints}
 %How can a university/school schedule its classes to make the best use of teachers and classrooms without conflicts?
-In the context of \ac{ucttp}, constraints are often divided into two different types:
+In the context of \ac{ucttp}, constraints are often divided into two different types (Figure \ref{fig:constraints}):
 \begin{itemize}
 \item \textbf{Hard constraints:} Ensure the feasibility of the timetable and must be strictly satisfied. Typically, a hard constraint includes avoiding overlapping events for the same student or a lecturer. 
 \item \textbf{Soft constraints:} Represent preferences to improve the quality of the solution without being mandatory. An example of a soft constraint is minimizing gaps in students' timetables to ensure a more compact timetable.
 \end{itemize}
+
+\begin{figure}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{Background/constraints.jpg}
+      \caption[Hard and soft constraints example]
+      {Hard and soft constraints example}
+      \label{fig:constraints}
+\end{figure}
 
 \section{International Timetabling Competition (ITC)}
 
@@ -67,7 +75,6 @@ The \ac{itc-2007}\footnote{\url{https://www.eeecs.qub.ac.uk/itc2007/}} was struc
 \ac{mcts} is a decision-making algorithm that has been successfully applied in a variety of optimization problems with a huge search space. The algorithm has proven to be particularly effective in games such as Go and Chess, where the algorithm can even outperform the best human players.
 
 \subsection{Phases}
-%TODO \cite{browne_survey_2012}
 
 \begin{figure}
       \centering
@@ -77,7 +84,7 @@ The \ac{itc-2007}\footnote{\url{https://www.eeecs.qub.ac.uk/itc2007/}} was struc
       \label{fig:mcts_approach}
 \end{figure}
 
-The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_approach}  \cite{browne_survey_2012}. These phases are repeated for a predefined number of iterations or until a computational budget (such as time or memory) is reached. The phases are as follows:
+The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_approach} \cite{browne_survey_2012}. These phases are repeated for a predefined number of iterations or until a computational budget (such as time or memory) is reached. The phases are as follows:
 
 \begin{enumerate}
 	\item \textbf{Selection:} The tree is traversed from the root node until it finds a node that is not completely expanded, i.e., a non-terminal node with unvisited children. The selection is guided by a policy that balances exploration and exploitation. Typically, the policy used is \ac{uct}, which selects nodes that maximize formula \ref{uct_formula}.
@@ -89,6 +96,18 @@ The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_ap
     \item \textbf{Simulation:} From the newly added node(s), a simulation is performed according to a default policy, which may include random moves until a terminal node is reached.
     \item \textbf{Backpropagation:} The simulation result is then propagated back through the traversed nodes, where the number of visits and the average reward for each node are updated until it reaches the root.
 \end{enumerate}
+
+\subsection{Properties}
+
+\ac{mcts} has several characteristics that make it especially suitable for solving complex problems \cite{browne_survey_2012}:
+
+\begin{itemize}
+\item \textbf{Aheuristic:} Does not require domain-specific heuristics to be effective, which is specially useful in complex problems. While adding some domain knowledge can improve performance, \ac{mcts} can still yield good results with simple random simulations.
+
+\item \textbf{Anytime:} Can return a valid solution at any point during its execution. Since each iteration immediately updates the search tree, the current best move is always available.
+
+\item \textbf{Asymmetric:} Builds its tree asymmetrically, focusing more on promising areas of the search space. This leads to more efficient exploration and better use of computational resources.
+\end{itemize}
 
 \section{Local Search}
 
@@ -132,7 +151,7 @@ To address these issues, variations of the algorithm have been developed:
       \label{fig:previous_work_uml}
 \end{figure}
 
-A previous project\footnote{\textbf{Front-end:} \url{https://github.com/luismdsleite/schedule} \textbf{Back-end:} \url{https://github.com/luismdsleite/schedule-backend/tree/main}} developed a timetabling visualization tool using Flask and reactive programming principles with the Elm language. Flask facilitated data management and communication between the front-end and the database (Figure \ref{fig:previous_work_uml}), ensuring that timetable updates were efficiently processed and displayed. 
+A previous project\footnote{\textbf{Front-end:} \url{https://github.com/luismdsleite/schedule} \textbf{Back-end:} \url{https://github.com/luismdsleite/schedule-backend}} developed a timetabling visualization tool using Flask and reactive programming principles with the Elm language. Flask facilitated data management and communication between the front-end and the database (Figure \ref{fig:previous_work_uml}), ensuring that timetable updates were efficiently processed and displayed. 
 
 This tool allow users to manually construct and modify schedules while providing a responsive interface (Figure \ref{fig:previous_work_interface}). However, despite its usability, the tool has some limitations that this dissertation attempts to address:
 

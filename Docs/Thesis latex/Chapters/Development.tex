@@ -72,7 +72,7 @@ There are several hard and soft constraints that affect the creation of \ac{fcup
 \begin{itemize}
 	\item \textbf{H1:} Events belonging to the same course must be scheduled and must be assigned to distinct periods.
 	\item \textbf{H2:} Two events can be scheduled in the same room, but only if they are in different periods.
-	\item \textbf{H3:} Events of the same block, or taught by the same lecturer, must be scheduled in different periods.
+	\item \textbf{H3:} Events of the same curricula, or taught by the same lecturer, must be scheduled in different periods.
 	\item \textbf{H4:} If a lecturer is unavailable in a given period, then no events can be taught by this lecturer in that period.
 %	\item \textbf{TODO H5:} If a room is unavailable in a given period, then no events can be scheduled in that period.
 %	\item \textbf{TODO H6:} Lecturers and students must have a free lunch period.
@@ -82,7 +82,7 @@ There are several hard and soft constraints that affect the creation of \ac{fcup
 
 \begin{itemize}
 	\item \textbf{S1:} Events of the same course should be spread into the given minimum number of days.
-	\item \textbf{S2:} Events belonging to the block should be in consecutive periods.
+	\item \textbf{S2:} Events belonging to the same curriculum should be in consecutive periods.
 	\item \textbf{S3:} The capacity of the room should be higher or equal than the capacity of the event.
 	\item \textbf{S4:} All events of a course should be given in the same room.
 \end{itemize}
@@ -113,82 +113,6 @@ To reduce the search space, unavailable periods and unavailable rooms for a chos
 
 Figure \ref{fig:mcts_tree} illustrates the basic structure of the \ac{mcts} tree. The root represents the initial state, where no events have been assigned. The first level corresponds to assigning the first event, \(E_0\), to various \(P\) and \(R\). Each child node represents a specific assignment (\((E_0,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_R_|_-_1)\)). Subsequent levels correspond to the sequential assignment of events \(E_1, E_2, ..., E_|_E_|_-_1\).
 
-\subsubsection{Events Allocation}
-
-Events are sorted in advance so that the most difficult event to place is placed first in the tree. The priority of an event (Formula \ref{priority}) is calculated based on:
-
-\begin{itemize}
-\item The difference between the number of lectures and minimum working days to prioritize events with more lectures spread over fewer days;
-\item The number of available periods, as having more available periods indicates fewer scheduling restrictions;
-\item The capacity of an event, which implies that events with greater capacity have higher priority;
-\item The number of blocks in which the event is, as events that appear in more blocks are more difficult to allocate.
-\end{itemize}
-
-If two or more events have the same priority score, they are ordered randomly.
-
-\begin{equation}
-  \begin{aligned}
-	Priority = (\#lectures - \#min\_working\_days) \cdot 4 \\
-	           - \#available\_periods \cdot 3 \\
-	          + capacity \cdot 2 \\
-	          + \#blocks\label{priority}
-  \end{aligned}
-\end{equation}
-
-%I have tried other priority formulas...
-
-\subsubsection{Periods and Rooms Allocation}
-
-Each event assignment in the \ac{mcts} tree follows a structured sequence for period and room allocation. Let:
-\begin{itemize}
-\item \(n\) be the number of children of the current node being expanded;
-\item \(AP\) the number of available periods;
-\item \(AR\) the number of available rooms. 
-
-\end{itemize}
-
-The assignment is determined as follows:
-
-\begin{itemize}
-\item The period of an event is assigned based on: 
-
-	\begin{equation}
-	n \mod AP\label{period_allocation}
-	\end{equation}
-
-\item The room of an event is assigned based on:
-	\begin{equation}
-	\frac{n}{AP} \mod AR\label{room_allocation}
-	\end{equation}
-\end{itemize}
-
-For example, if AP = 3 and AR = 2, the assignment follows:
-	\begin{itemize}
-	\item Period allocation:
-	\begin{equation}
-	  \begin{aligned}
-		n = 0: \quad 0 \mod 3 = 0 $ => $ P0 \\
-		n = 1: \quad 1 \mod 3 = 1 $ => $ P1 \\
-		n = 2: \quad 2 \mod 3 = 2 $ => $ P2 \\
-		n = 3: \quad 3 \mod 3 = 0 $ => $ P0, \\ \text{and so on.}
-	  \end{aligned}
-	\end{equation}
-	
-	\item Room allocation:
-	\begin{equation}
-	  \begin{aligned}
-		n = 0: \quad \lfloor0 / 3\rfloor \mod 2 = 0 $ => $ R0 \\
-		n = 1: \quad \lfloor1 / 3\rfloor \mod 2 = 0 $ => $ R0 \\
-		n = 2: \quad \lfloor2 / 3\rfloor \mod 2 = 0 $ => $ R0 \\
-		n = 3: \quad \lfloor3 / 3\rfloor \mod 2 = 1 $ => $ R1, \\ \text{and so on.}
-	  \end{aligned}
-	\end{equation}
-	\end{itemize}
-
-Following this structured allocation, the sequence of assignments proceeds as: \(E_0P_0R_0\), \(E_0P_1R_0\), \(E_0P_2R_0\), \(E_0P_0R_1\), ...
-
-%It is important to note that the order of periods (P) and rooms (R) remains unchanged from the order in which they were initially provided.
-
 \subsubsection{Tree Nodes}
 
 A node is composed of the following attributes:
@@ -208,6 +132,100 @@ A node is composed of the following attributes:
 
 \item The \textbf{best hard and soft penalty results} are initialized to negative infinity, representing the best hard and soft penalty results encountered for a node. These attributes will be updated during the algorithm as better results are found. 
 \end{itemize}
+
+\subsection{Events Allocation}
+
+Events are sorted in advance so that the most difficult event to place is placed first in the tree. The priority of an event (Formula \ref{priority}) is calculated based on:
+
+\begin{itemize}
+\item The difference between the number of lectures and minimum working days to prioritize events with more lectures spread over fewer days;
+\item The number of available periods, as having more available periods indicates fewer scheduling restrictions;
+\item The capacity of an event, which implies that events with greater capacity have higher priority;
+\item The number of curricula in which the event is, as events that appear in more curricula are more difficult to allocate.
+\end{itemize}
+
+If two or more events have the same priority score, they are ordered randomly.
+
+\begin{equation}
+  \begin{aligned}
+	Priority = (\#lectures - \#min\_working\_days) \cdot 4 \\
+	           - \#available\_periods \cdot 3 \\
+	          + capacity \cdot 2 \\
+	          + \#blocks\label{priority}
+  \end{aligned}
+\end{equation}
+
+%I have tried other priority formulas...
+
+\subsection{Periods and Rooms Allocation}
+
+Initially, our approach to allocating periods and rooms in the \ac{mcts} tree followed a structured sequence. This method aimed to explore all possible (period, room) combinations based on the number of children of the current node being expanded. However, as we progressed, this approach started to fail when the availability of rooms varied across different periods. A refined approach was then developed to address these limitations more robustly.
+
+\subsubsection{Initial Periods and Rooms Allocation Approach}
+
+In the initial approach, each event assignment generated in the \ac{mcts} tree follows a structured sequence for period and room allocation. 
+Let:
+\begin{itemize}
+\item \(n\) be the number of children of the current node being expanded;
+\item \(AP\) the number of available periods;
+\item \(AR\) the number of available rooms. 
+\end{itemize}
+
+The assignment is determined as follows:
+
+\begin{itemize}
+	\item The period index was selected using: 
+		\begin{equation}
+		n \mod AP\label{period_allocation}
+		\end{equation}
+	
+	\item The room index was selected using:
+		\begin{equation}
+		\frac{n}{AP} \mod AR\label{room_allocation}
+		\end{equation}
+\end{itemize}
+
+This resulted in a deterministic exploration order. For instance, if \(AP = 3\) and \(AR = 2\), the assignment would be:
+\[
+\begin{aligned}
+n = 0 &\Rightarrow P_0, R_0 \\
+n = 1 &\Rightarrow P_1, R_0 \\
+n = 2 &\Rightarrow P_2, R_0 \\
+n = 3 &\Rightarrow P_0, R_1 \\
+n = 4 &\Rightarrow P_1, R_1 \\
+n = 5 &\Rightarrow P_2, R_1 \\
+\end{aligned}
+\]
+
+This approach assumes that the number of children will always perfectly expand all (period, room) combinations, but it fails when the search space is reduced, resulting in different periods having different available rooms.
+
+Consider the following scenario:
+\begin{itemize}
+\item Available Periods = \([(0,1), (3,2)]\)
+\item Rooms at (0,1) = \(['C', 'D', 'E', 'F', 'G']\) (5 rooms)
+\item Rooms at (3,2) = \(['B']\) (1 room)
+\end{itemize}
+
+Here, \(AP = 2\), but the number of available rooms (\(AR\)) depends on the period. The expansion limit is 6, thus we compute assignments from \(n = 0\) to \(n = 5\):
+
+\[
+\begin{aligned}
+n = 0: &\quad P_0 = (0,1),\quad R_0 = 'C' \quad &\text{(Valid)} \\
+n = 1: &\quad P_1 = (3,2),\quad R_0 = 'B' \quad &\text{(Valid)} \\
+n = 2: &\quad P_0 = (0,1),\quad R_1 = 'D' \quad &\text{(Valid)} \\
+n = 3: &\quad P_1 = (3,2),\quad R_0 = 'B' \quad &\text{(Invalid: Duplicate)} \\
+n = 4: &\quad P_0 = (0,1),\quad R_2 = 'E' \quad &\text{(Valid)} \\
+n = 5: &\quad P_1 = (3,2),\quad R_1 = 'B' \quad &\text{(Invalid: Duplicate)} \\
+\end{aligned}
+\]
+
+Because room availability is period-specific, the formula produces duplicate assignments when \(AR\) is not consistent across all periods.
+
+\subsubsection{Final Periods and Rooms Allocation Approach}
+
+To overcome these limitations, instead of computing the (period, room) combinations via index math, we pre-compute all valid combinations once. This method produces a flat list of unique, valid assignments, and expansion always proceeds without duplication.
+
+Moreover, periods that are less frequently available across all events are given higher priority. In this way, the algorithm reduces the risk of future conflicts, guiding the tree toward more constrained decisions early. For each period, available rooms are also sorted by how closely their capacity matches the event’s requirements, minimizing wasted space and increasing flexibility in room usage.
 
 \subsection{Methodology}
 
@@ -245,8 +263,7 @@ The best child node (Algorithm \ref{best_child}) is determined by applying the \
                 \State \Return False
             \EndIf
         \Else
-            \State best\_child $\gets$ current\_node.\textit{best\_child}(unflagged\_children)
-            \State current\_node $\gets$ best\_child
+            \State current\_node $\gets$ current\_node.\textit{best\_child}(unflagged\_children)
         \EndIf
     \EndWhile
     \State self.current\_node $\gets$ current\_node
@@ -273,47 +290,52 @@ The best child node (Algorithm \ref{best_child}) is determined by applying the \
 
 \subsubsection{Expansion}
 
-The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by adding a new child node. 
+The \(expansion\) phase (Algorithm \ref{expansion}) is responsible for expanding the node previously selected by assigning the next event to a valid (period, room) combination and creating a corresponding child node.
 
-The algorithm first identifies the next event to schedule, using the current node's depth (i.e., the number of events already assigned) as an index into the event list. %If no more events remain, the expansion limit is set to zero, indicating a terminal node.
+The next event to schedule is determined by the depth of the current node. For the selected event, the algorithm gathers the available (weekday, timeslot) combinations and filters suitable rooms for each period (Algorithm \ref{find_available_rooms}), based on the event’s capacity requirements and current room occupation.
 
-For the selected event, the algorithm retrieves the corresponding weekday and timeslot (Formula \ref{period_allocation}). Using the chosen period, the algorithm obtain the available rooms that meet the event’s occupation requirement and, if possible, the capacity requirement (Algorithm \ref{find_available_rooms}). It then selects a room accordingly to Formula \ref{room_allocation}. 
+A list of valid (period, room) combinations is generated. If no such combinations exist or the node has already been expanded for all possibilities, expansion is terminated, and the node is marked as fully expanded.  
 
-If no suitable rooms are available for the chosen period, a null child is added to the current node and expansion is terminated for this particular branch. However, since other periods may still be available for the same event, future branches may select different periods that do have available rooms, allowing the expansion to continue. On the other hand, if no valid periods are available for the event at all, then the node cannot be further expanded in any branch. In this case, the node is marked as terminal, as it is impossible to assign the event without violating constraints.
+A combination is selected based on the number of already-expanded children. A new path is constructed by assigning the selected period and room to the event.
 
-Before proceeding, the algorithm evaluates the partial timetable (i.e., the new path) against a global hard penalty threshold. If the new assignment violates hard constraints resulting in a penalty below the threshold, a null child is added, and expansion is stopped for that branch. This pruning helps maintain the integrity of the allocation formulas and reduces unnecessary exploration.
+Before proceeding, the algorithm evaluates the partial timetable (i.e., the new path) against a global hard penalty threshold. If the new assignment violates hard constraints resulting in a penalty below the threshold, a null child is added to indicate that the expansion stopped for that branch. This pruning condition reduces unnecessary exploration.
 
-If the expansion is not terminated, the algorithm estimates the expansion limit for the next event to schedule. This limit is determined by summing the number of available rooms across all periods for the next event (Algorithm \ref{find_available_rooms}). If no next event exists (i.e., the node is terminal), the limit is set to zero.
+If the expansion continues, the algorithm estimates the number of valid (period, room) combinations for the next event. This value is stored as the child’s expansion\_limit to guide future branching.
 
-Finally, a new child node is created with the updated path (which now includes the event with its assigned period and room) and the computed expansion limit. This new node is added to the tree, and the current node is updated to this newly created node.
+Finally, a new child node is created with the updated path and expansion limit. This new node is added to the tree, and the current node is updated to this newly created node.
 
 \begin{algorithm}
 \caption{Expansion}\label{expansion}
 \begin{algorithmic}[1]
-\Procedure{EXPANSION}{}
+\Function{EXPANSION}{}
     \State event $\gets$ events[current\_node.\textit{depth}()]
     \State available\_periods $\gets$ event["Available\_Periods"]
     \\
-    \State period $\gets$ \textit{len}(current\_node.children)
-    \State period\_index $\gets$ period \% \textit{len}(available\_periods)
-    \State new\_weekday, new\_timeslot $\gets$ available\_periods[period\_index]
+    \If{available\_periods is empty}
+        \State current\_node.expansion\_limit $\gets$ 0
+        \State \Return False
+    \EndIf
     \\
-    \State available\_rooms $\gets$ \textit{find\_available\_rooms}()
+    \State rooms\_by\_period $\gets$ \textit{find\_available\_rooms}()
+    \State period\_room\_combinations $\gets$ [(weekday, timeslot, room) \textbf{for} (weekday, timeslot), rooms in room\_by\_period.\textit{items()}]
     \\
-    \State new\_room\_index $\gets$ period // \textit{len}(available\_periods) \% \textit{len}(available\_rooms)
-    \State new\_room $\gets$ available\_rooms[new\_room\_index]
+    \If{period\_room\_combinations is empty \textbf{or} current\_node is fully expanded}
+        \State current\_node.expansion\_limit $\gets$ 0
+        \State \Return False
+    \EndIf
     \\
+    \State new\_weekday, new\_timeslot, new\_room $\gets$ period\_room\_combinations[len(current\_node.children)]
     \State new\_path $\gets$ \textit{copy}(current\_node.path)
     \State new\_path[event["Id"]] $\gets$ \{**event, "RoomId": new\_room, "WeekDay": new\_weekday, "Timeslot": new\_timeslot\}
     \\
-    \State new\_expansion\_limit = \textit{calculate\_expansion\_limit}(new\_path)
+    \State new\_expansion\_limit $\gets$  = \textit{calculate\_expansion\_limit}(new\_path)
     \State \textbf{if} new\_expansion\_limit is None: \Return False
     \\
     \State child\_node $\gets$ MCTSNode(expansion\_limit = expansion\_limit, parent = current\_node, path = new\_path)
     \State current\_node.children.\textit{append}(child\_node)
     \State current\_node $\gets$ child\_node
     \State \Return True
-\EndProcedure
+\EndFunction
 \end{algorithmic}
 \end{algorithm}
 
@@ -322,7 +344,6 @@ Finally, a new child node is created with the updated path (which now includes t
 \begin{algorithmic}[1]
 \Function{FIND\_AVAILABLE\_ROOMS}{event\_capacity, rooms, events, available\_periods}
     \State period\_room\_availability $\gets$ \{period: \textit{set}(rooms.keys()) \textbf{for each} period \textbf{in} available\_periods\}
-    \\
     \For{\textbf{each} other\_event \textbf{in} events}
         \State occupied\_period $\gets$ (other\_event["WeekDay"], other\_event["Timeslot"])
         \If{occupied\_period \textbf{in} period\_room\_availability}
@@ -334,8 +355,13 @@ Finally, a new child node is created with the updated path (which now includes t
     \\
     \For{\textbf{each} period \textbf{in} available\_periods}
         \If{period\_room\_availability[period] is not empty}
-            \State period\_room\_availability[period] $\gets$ period\_room\_availability[period] $\cap$ suitable\_rooms 
-            \State \textbf{if empty:} keep original period\_room\_availability[period]
+            \State intersected $\gets$ period\_room\_availability[period] $\cap$ suitable\_rooms
+            \If{intersected is not empty}
+                \State sorted\_rooms $\gets$ \textit{sort}(intersected, by (room["Capacity"] - event\_capacity))
+            \Else
+                \State sorted\_rooms $\gets$ \textit{sort}(period\_room\_availability[period], by $|$room["Capacity"] - event\_capacity$|$)
+            \EndIf
+            \State period\_room\_availability[period] $\gets$ sorted\_rooms
         \EndIf
     \EndFor
     \\
@@ -356,13 +382,9 @@ The \(simulation\) function (Appendix \ref{AppendixA} Algorithm \ref{simulation}
 \item Their priority, ensuring that more critical events are allocated first.
 \end{enumerate}
 
-%Falar disto: compactness_weight = min(1, i / (len(self.events)-1))
-
-For each unvisited event, the best available period and room combination is sought. The approach iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. The combination with no hard penalties and the lowest soft penalty is selected as the best option. If multiple optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid allocation is found, the event will have higher priority in the next simulation.
+For each unvisited event, the best available period and room combination is sought. The approach iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. During the calculation of the soft penalty, the importance of compactness (i.e., minimizing the time between related events) is adjusted, with a higher weight applied as the algorithm progresses.The combination with no hard penalties and the lowest soft penalty is selected as the best option. If multiple optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid allocation is found, the event will have higher priority in the next simulation.
 
 After scheduling all events, the simulation result is calculated, and the best and worst penalty scores are then updated based on these results. If a new best result is found, the timetable is saved to a file. If a new best result is found and the hard penalty is zero, indicating a feasible solution, the \ac{hc} algorithm (section \ref{hill_climbing_section}) is used to further optimize the timetable.
-
-%anytime...
 
 \subsubsection{Backpropagation}
 
@@ -411,7 +433,7 @@ After finding a feasible solution with \ac{mcts}, \ac{hc} refines the solution b
 \item \textbf{Room move:} Change the room of an event while keeping the same timeslot and weekday.
 \item \textbf{Event move:} Change both the room and timeslot of an event.
 \item \textbf{Room stability move:} Assign all events of the same course to the same room if possible.
-\item \textbf{Compactness move:} Move an event to a timeslot adjacent to another event of the same block
+\item \textbf{Compactness move:} Move an event to a timeslot adjacent to another event of the same curriculum.
 \item \textbf{Minimum working days move:} Spread a course's events across more days to avoid teaching all lectures in a short period.
 \end{itemize}
 
@@ -434,10 +456,25 @@ The \ac{hc} approach follows the following steps:
 	\end{itemize}
 \end{enumerate}
 
+\section{Diving}
+
+To improve effectiveness in timetable generation, we also implemented a diving strategy in \ac{mcts}.
+
+Figure \ref{fig:diving} illustrates the \ac{mcts} process with the diving strategy over seven iterations. Initially, the algorithm begins with the root node and an empty queue. Every time the queue is empty, the \ac{uct} formula is applied. Since the queue is empty, the simulations queue is also empty. 
+
+\begin{figure}
+      \centering
+      \includegraphics[width=\columnwidth]{Development/MCTS_Diving.jpg}
+      \caption[Diving approach]
+      {Diving approach}
+      \label{fig:diving}
+\end{figure}
 
 \section{Front-end}
 
-The development process involved several adaptations and refinements. Initially, the previous work was analyzed and made functional, serving as a baseline for the new system. The \ac{mcts} algorithm was being developed while also being integrated into the frontend. However, as the focus shifted towards adapting it to the \ac{itc-2007} track 3 benchmark for performance evaluation and fine-tuning the algorithm, the frontend development gradually took a backseat. Over time, the algorithm evolved significantly, diverging from its original form, which made it challenging to align with the prior work.
+The development process involved several adaptations and refinements. Initially, the previous work was analyzed and made functional, serving as a baseline for the new system. 
+
+The \ac{mcts} algorithm was being developed while also being integrated into the front-end  interface intended to showcase the project. However, as the focus shifted towards adapting it to the \ac{itc-2007} track 3 benchmark for performance evaluation and fine-tuning the algorithm, the front-end development gradually lost priority. As the algorithm evolved and diverged significantly from its original form, aligning it with the prior work proved difficult. Consequently, continuing its development would be time-consuming and ultimately not worthwhile, as it was primarily intended for demonstration purposes. Instead, the system should be directly integrated into the sigarra\footnote{https://sigarra.up.pt/up/pt/web_page.inicial} website.
 
 %\begin{figure}
 %    \centering

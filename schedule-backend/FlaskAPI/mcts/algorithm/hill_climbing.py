@@ -241,4 +241,4 @@ class HillClimbing:
                 self.revert_changes(best_timetable)
                 idle_iterations += 1
 
-        return self.best_result_soft
+        return self.best_result_soft, best_timetable

@@ -7,9 +7,48 @@
 
 \label{Tests}
 
-This chapter outlines the numerous tests used to evaluate the performance of the final algorithm on instances from the \ac{itc-2007} benchmark. All the tests were executed on a computer with the following characteristics: (...)
+This chapter outlines the numerous tests used to evaluate the performance of the final algorithm on instances from the \ac{itc-2007} benchmark\footnote{https://www.eeecs.qub.ac.uk/itc2007/Login/SecretPage.php}. %All the tests were executed on a computer with the following characteristics: (...)
 
-%\section{Test Instances}
+\section{Test Instances}
+
+The evaluation used all 21 instances from the \ac{itc-2007} track 3 dataset (\(comp01.ctt\) to \(comp21.ctt\)). Each instance includes detailed information about about curricula, courses, rooms, unavailability constraints, lectures, periods and lecturers. The key features of each instance are summarized in Table~\ref{itc_instance_features}.
+
+\begin{table}[h!]
+\footnotesize
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c|c|c| }
+\hline
+\textbf{Instance} & \textbf{Curricula} & \textbf{Courses} & \textbf{Rooms} & \textbf{Constraints} & \textbf{Lectures} & \textbf{Periods} & \textbf{Lecturers} \\
+\hline
+comp01                                    & 14                                         & 30                                       & 6                                      & 53                                           & 160                                       & 30                                       & 24                                        \\
+comp02                                    & 70                                         & 82                                       & 16                                     & 513                                          & 283                                       & 25                                       & 71                                     \\
+comp03                                    & 68                                         & 72                                       & 16                                     & 382                                          & 251                                       & 25                                       & 61                                        \\
+comp04                                    & 57                                         & 79                                       & 18                                     & 396                                          & 286                                       & 25                                       & 70                                        \\
+comp05                                    & 139                                        & 54                                       & 9                                      & 771                                          & 152                                       & 36                                       & 47                                        \\
+comp06                                    & 70                                         & 108                                      & 18                                     & 632                                          & 361                                       & 25                                       & 87                                        \\
+comp07                                    & 77                                         & 131                                      & 20                                     & 667                                          & 434                                       & 25                                       & 99                                        \\
+comp08                                    & 61                                         & 86                                       & 18                                     & 478                                          & 324                                       & 25                                       & 76                                        \\
+comp09                                    & 75                                         & 76                                       & 18                                     & 405                                          & 279                                       & 25                                       & 68                                        \\
+comp10                                    & 67                                         & 115                                      & 18                                     & 694                                          & 370                                       & 25                                       & 88                                        \\
+comp11                                    & 13                                         & 30                                       & 5                                      & 94                                           & 162                                       & 45                                       & 24                                        \\
+comp12                                    & 150                                        & 88                                       & 11                                     & 1368                                         & 218                                       & 36                                       & 74                                        \\
+comp13                                    & 66                                         & 82                                       & 19                                     & 468                                          & 308                                       & 25                                       & 77                                        \\
+comp14                                    & 60                                         & 85                                       & 17                                     & 486                                          & 275                                       & 25                                       & 68                                        \\
+comp15                                    & 68                                         & 72                                       & 16                                     & 382                                          & 251                                       & 25                                       & 61                                        \\
+comp16                                    & 71                                         & 108                                      & 20                                     & 518                                          & 366                                       & 25                                       & 89                                        \\
+comp17                                    & 70                                         & 99                                       & 17                                     & 548                                          & 339                                       & 25                                       & 80                                        \\
+comp18                                    & 52                                         & 47                                       & 9                                      & 594                                          & 138                                       & 36                                       & 47                                        \\
+comp19                                    & 66                                         & 74                                       & 16                                     & 475                                          & 277                                       & 25                                       & 66                                        \\
+comp20                                    & 78                                         & 121                                      & 19                                     & 691                                          & 390                                       & 25                                       & 95                                        \\
+comp21                                    & 78                                         & 94                                       & 18                                     & 463                                          & 327                                       & 25                                       & 76 					\\
+\hline                                      
+\end{tabular}
+\caption{Key features of the \ac{itc-2007} track 3 instances.}
+\label{itc_instance_features}
+\end{center}
+\end{table}
+
+All instances guarantee at least one feasible solution, which means that there are no violations of hard constraints. Additionally, to validate the correctness of a solution, the competition organizers provided a C++ source code that identifies the type of violation and calculates the corresponding penalty.
 
 \section{Test Setup}
 
@@ -31,7 +70,11 @@ For each test, the following key performance metrics were considered:
 \begin{itemize}
 \item \textbf{Best hard penalty:} The lowest number of hard constraint violations found during the execution of the algorithm for a given instance. A value of zero indicates a feasible solution that satisfies all hard constraints.
 
+\item \textbf{Worst hard penalty:} The highest number of hard constraint violations found during the execution of the algorithm for a given instance.
+
 \item \textbf{Best soft penalty:} The lowest soft constraint penalty achieved during the search process for a given instance.
+
+\item \textbf{Worst soft penalty:} The highest soft constraint penalty achieved during the search process for a given instance.
 
 \item \textbf{Iteration of best solution:} The specific iteration at which the best solution (in terms of hard or soft penalties) was found.
 
@@ -47,8 +90,8 @@ To thoroughly evaluate the algorithm's robustness and consistency, two different
 
 \begin{enumerate}
 
-\item \textbf{Without seed (1-hour runs):} The algorithm was executed for 1 hour without a predefined random seed, allowing the algorithm to explore diverse search paths without being constrained by an initial fixed state. The goal was to assess its ability to converge towards high-quality solutions given sufficient runtime.
+\item \textbf{1-hour runs:} The algorithm was executed for 1 hour to assess its ability to converge towards high-quality solutions given sufficient runtime.
 
-\item \textbf{With fixed seeds (10-minute runs):} The algorithm was run for 10 minutes using ten different seeds (1-10). Using fixed seeds ensured that the results could be reproduced, allowing for a fair comparison of different parameter settings and configurations. This approach also helped to evaluate the consistency and variability of results across different initializations. 
+\item \textbf{10-minute runs:} The algorithm was run for 10 minutes using ten different seeds (1-10). Using fixed seeds ensured that the results could be reproduced, allowing for a fair comparison of different parameter settings and configurations. This approach also helped to evaluate the consistency and variability of results across different initializations. 
 
 \end{enumrate}
