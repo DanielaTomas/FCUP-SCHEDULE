@@ -458,10 +458,6 @@ The \ac{hc} approach follows the following steps:
 
 \section{Diving}
 
-To improve effectiveness in timetable generation, we also implemented a diving strategy in \ac{mcts}.
-
-Figure \ref{fig:diving} illustrates the \ac{mcts} process with the diving strategy over seven iterations. Initially, the algorithm begins with the root node and an empty queue. Every time the queue is empty, the \ac{uct} formula is applied. Since the queue is empty, the simulations queue is also empty. 
-
 \begin{figure}
       \centering
       \includegraphics[width=\columnwidth]{Development/MCTS_Diving.jpg}
@@ -470,11 +466,25 @@ Figure \ref{fig:diving} illustrates the \ac{mcts} process with the diving strate
       \label{fig:diving}
 \end{figure}
 
+To improve the effectiveness of timetable generation, we also implemented a diving strategy in \ac{mcts}. This diving strategy enables the algorithm to follow and deepen promising paths, aiming to improve the convergence speed and solution quality.
+
+Figure \ref{fig:diving} illustrates the \ac{mcts} process using the diving strategy over seven iterations. Initially, the algorithm begins with the root node and an empty queue. Whenever the queue is empty, the \ac{uct} formula is applied to select a child for expansion.
+
+During the early iterations, child nodes \(A1\), \(A2\), and \(A3\) are sequentially added under the root. Each of these nodes undergoes a simulation that yields a penalty score. In this example, we assume that there are no hard constraint violations; hence, the score directly reflects the soft constraint penalty. 
+
+While expanding the root, the algorithm tracks the node with the best simulation result and stores it in the queue, along with the corresponding complete timetable generated during the simulation. In the second iteration, node \(A1\) produces the best score and is therefore added to the queue. In the third iteration, node \(A2\) does not outperform \(A1\), so the queue remains unchanged. However, once the root is fully expanded in the fourth iteration, node \(A3\) yields a better score than \(A1\), resulting in \(A1\) being replaced by \(A3\) in the queue. 
+
+As a result, in the fifth iteration, node \(A3\) is the only element in the queue and, is directly selected for further expansion. This continues through the sixth iteration. During the expansion process, whenever a child node is found with a better simulation result than the current best, it is placed at the front of the queue. 
+
+In the sixth iteration, although \(A3\) is fully expanded, none of its children surpass its score of -34. Therefore, the next node selected is \(B1\) because was part of the simulation path associated with \(A3\). Upon expanding \(B1\), the algorithm discovers node \(C1\), which yields a better score than the previous best from \(A3\). Consequently, \(C1\) is placed at the front of the queue.  
+
+The expansion of \(B1\) continues, but once \(B1\) is fully expanded, the algorithm selects \(C1\) for expansion next, since it now holds the highest priority in the queue.
+
 \section{Front-end}
 
 The development process involved several adaptations and refinements. Initially, the previous work was analyzed and made functional, serving as a baseline for the new system. 
 
-The \ac{mcts} algorithm was being developed while also being integrated into the front-end  interface intended to showcase the project. However, as the focus shifted towards adapting it to the \ac{itc-2007} track 3 benchmark for performance evaluation and fine-tuning the algorithm, the front-end development gradually lost priority. As the algorithm evolved and diverged significantly from its original form, aligning it with the prior work proved difficult. Consequently, continuing its development would be time-consuming and ultimately not worthwhile, as it was primarily intended for demonstration purposes. Instead, the system should be directly integrated into the sigarra\footnote{https://sigarra.up.pt/up/pt/web_page.inicial} website.
+The \ac{mcts} algorithm was being developed while also being integrated into the front-end  interface intended to showcase the project. However, as the focus shifted towards adapting it to the \ac{itc-2007} track 3 benchmark for performance evaluation and fine-tuning the algorithm, the front-end development gradually lost priority. As the algorithm evolved and diverged significantly from its original form, aligning it with the prior work proved difficult. Consequently, continuing its development would be time-consuming and ultimately not worthwhile, as it was primarily intended for demonstration purposes. Instead, the system should be directly integrated into the sigarra\footnote{\url{https://sigarra.up.pt/up/pt/web\_page.inicial}} website.
 
 %\begin{figure}
 %    \centering
