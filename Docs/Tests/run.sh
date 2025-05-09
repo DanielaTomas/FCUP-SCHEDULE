@@ -18,7 +18,6 @@ echo "input_file=$FILE, time_limit=$TMLIM, C=$CPAR, seed=$SEED"
 pypy3 -u mcts_input_parser.py --time_limit=$TMLIM --c_param=$CPAR --seed=$SEED --input_files=$FILE
 tar zcvf mcts-$TMLIM-$CPAR-$SEED.tgz mcts_tree/ constraint_progress/ output/ log/ profiler/
 rm -rf mcts_tree/ constraint_progress/ output/ log/ profiler/
-done
 
 <<'
 echo pypy3 -u -mcts_input_parser.py --time_limit=3600 --c_param=100
