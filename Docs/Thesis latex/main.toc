@@ -29,8 +29,8 @@
 \contentsline {subsection}{\numberline {2.2.2}Constraints}{5}{subsection.2.2.2}%
 \contentsline {section}{\numberline {2.3}International Timetabling Competition (ITC)}{6}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Monte Carlo Tree Search}{6}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}Phases}{6}{subsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.4.2}Properties}{7}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.1}Phases}{7}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Properties}{8}{subsection.2.4.2}%
 \contentsline {section}{\numberline {2.5}Local Search}{8}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}Hill Climbing}{8}{subsection.2.5.1}%
 \contentsline {section}{\numberline {2.6}Previous Work}{9}{section.2.6}%
@@ -64,19 +64,19 @@
 \contentsline {subsection}{\numberline {4.3.1}Neighborhoods}{27}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Methodology}{28}{subsection.4.3.2}%
 \contentsline {section}{\numberline {4.4}Diving}{28}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Front-end}{28}{section.4.5}%
-\contentsline {chapter}{\numberline {5}Tests}{29}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Test Instances}{29}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Test Setup}{29}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Performance Metrics}{30}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Testing Procedure}{31}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Results}{32}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Python vs PyPy Performance}{32}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Feasibility}{32}{section.6.2}%
-\contentsline {section}{\numberline {6.3}\(C\) Parameter Behaviour}{32}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Diving strategy}{32}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Competition Results Comparison}{32}{section.6.5}%
-\contentsline {chapter}{\numberline {7}Conclusion}{33}{chapter.7}%
+\contentsline {section}{\numberline {4.5}Front-end}{29}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Tests}{30}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Test Instances}{30}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Test Setup}{30}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Performance Metrics}{31}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Testing Procedure}{32}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Results}{33}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Python vs PyPy Performance}{33}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Feasibility}{33}{section.6.2}%
+\contentsline {section}{\numberline {6.3}\(C\) Parameter Behaviour}{33}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Diving strategy}{33}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Competition Results Comparison}{33}{section.6.5}%
+\contentsline {chapter}{\numberline {7}Conclusion}{34}{chapter.7}%
 \vspace {0.5cm}
-\contentsline {chapter}{Bibliography}{33}{dummy.6}%
+\contentsline {chapter}{Bibliography}{34}{dummy.6}%
 \contentsfinish 

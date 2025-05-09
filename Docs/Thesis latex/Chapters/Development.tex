@@ -460,6 +460,16 @@ The \ac{hc} approach follows the following steps:
 
 To improve effectiveness in timetable generation, we also implemented a diving strategy in \ac{mcts}.
 
+Figure \ref{fig:diving} illustrates the \ac{mcts} process with the diving strategy over seven iterations. Initially, the algorithm begins with the root node and an empty queue. Every time the queue is empty, the \ac{uct} formula is applied. Since the queue is empty, the simulations queue is also empty. 
+
+\begin{figure}
+      \centering
+      \includegraphics[width=\columnwidth]{Development/MCTS_Diving.jpg}
+      \caption[Diving approach]
+      {Diving approach}
+      \label{fig:diving}
+\end{figure}
+
 \section{Front-end}
 
 The development process involved several adaptations and refinements. Initially, the previous work was analyzed and made functional, serving as a baseline for the new system. 
