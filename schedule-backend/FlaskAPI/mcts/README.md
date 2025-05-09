@@ -31,7 +31,7 @@
 
     * **``--input_files`` (optional):** Specifies the list of input files to process from the input folder (**default:** processes all 21 competition files from comp01.ctt to comp21.ctt).
 
-    * **``--seed (optional):`` (optional):** Set the seed for the random number generator to ensure reproducibility (**default:** random).
+    * **``--seed`` (optional):** Set the seed for the random number generator to ensure reproducibility (**default:** random).
 
     * Example:
         ```SHELL
@@ -64,8 +64,6 @@
 
 * After running the script, the ``test_results.xlsx`` file will also be generated.
     * Contains the log information for all the runs, formatted as an Excel sheet;
-    * Only generated when all 21 instances have been processed;
-    * Each run refers to the processing of all 21 instances (comp01.ctt to comp21.ctt)
     * If the file already exists, the script will not overwrite it. Instead, it will add a new sheet for each run, ensuring that the existing data is preserved. 
 
 # Debug Options

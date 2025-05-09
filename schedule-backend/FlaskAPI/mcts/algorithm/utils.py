@@ -75,7 +75,7 @@ def get_valid_periods(event, constraints, days, periods_per_day):
     
     if available_periods:
         available_periods_list = list(available_periods)
-        random.shuffle(available_periods_list)
+        #random.shuffle(available_periods_list)
         return available_periods_list
     
     return list()

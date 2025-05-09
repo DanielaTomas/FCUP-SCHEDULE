@@ -4,7 +4,7 @@ from algorithm.debug import *
 from algorithm.check_conflicts import ConflictsChecker
 from algorithm.hill_climbing import HillClimbing
 from algorithm.simulation_results_writer import write_simulation_results
-from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER, PRUNING
+from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER, PRUNING, DIVING
 from dataclasses import dataclass
 import cProfile
 import time
@@ -45,9 +45,10 @@ class MCTS:
         self.previous_unassigned_events = set()
         self.output_filename = config.output_filename
 
-        self.simulation_path = []
-        self.best_node = []
-        self.flag = False
+        if DIVING:
+            self.simulation_path = []
+            self.best_node = []
+            self.is_current_node_fully_expanded = False
 
         if DEBUG_PROGRESS:
             self.metrics = {'iterations': [], 'best_hard': [], 'best_soft': [], 'current_hard': [], 'current_soft': []}
@@ -79,29 +80,25 @@ class MCTS:
 
 
     def selection(self):
-        """ print("----")
-        for b in self.best_node:
-            print(b.assignment)
-        print("----") """
-        while self.best_node and self.simulation_path:
-            if self.best_node[0].parent and not self.best_node[0].parent.is_fully_expanded():
-                self.current_node = self.best_node[0].parent
-                return True
-            else:
-                if self.best_node[0].is_fully_expanded():
-                    for simulation_node in self.simulation_path[0]:
-                        for child in self.best_node[0].children:
-                            if child and child.assignment == simulation_node:
-                                self.simulation_path[0].remove(simulation_node)
-                                self.best_node[0] = child
-                                self.current_node = child
-                                if self.simulation_path and (len(self.simulation_path[0]) == 0): del self.simulation_path[0]
-                                return True
-                    #self.simulation_path.pop(0)
-                else:
-                    self.current_node = self.best_node[0]
+        if DIVING:
+            while self.best_node and self.simulation_path:
+                if self.best_node[0].parent and not self.best_node[0].parent.is_fully_expanded():
+                    self.current_node = self.best_node[0].parent
                     return True
-            if self.best_node: del self.best_node[0]
+                else:
+                    if self.best_node[0].is_fully_expanded():
+                        for simulation_node in self.simulation_path[0]:
+                            for child in self.best_node[0].children:
+                                if child and child.assignment == simulation_node:
+                                    self.simulation_path[0].remove(simulation_node)
+                                    self.best_node[0] = child
+                                    self.current_node = child
+                                    if self.simulation_path and (len(self.simulation_path[0]) == 0): del self.simulation_path[0]
+                                    return True
+                    else:
+                        self.current_node = self.best_node[0]
+                        return True
+                if self.best_node: del self.best_node[0]
 
         current_node = self.root
 
@@ -113,7 +110,7 @@ class MCTS:
             if not unflagged_children:
                 if current_node.parent:
                     current_node.expansion_limit = 0
-                    current_node = current_node.parent #self.root or current_node.parent?
+                    current_node = current_node.parent
                 else:
                     return False
             else:
@@ -136,7 +133,7 @@ class MCTS:
             rooms_available = find_available_rooms(next_event["Capacity"], self.rooms, new_path.values(), next_event["Available_Periods"])
             return sum(len(rooms) for rooms in rooms_available.values())
 
-        self.flag = not self.current_node.is_fully_expanded()
+        if DIVING: self.is_current_node_fully_expanded = not self.current_node.is_fully_expanded()
 
         event = self.events[self.current_node.depth()]
 
@@ -236,7 +233,7 @@ class MCTS:
                 self.global_best_soft_penalty, assigned_events = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
                 update_penalties(self.global_best_soft_penalty)
                 
-                if not self.simulation_path or self.flag:
+                if DIVING and not self.simulation_path or self.is_current_node_fully_expanded:
                     new_path = [
                         (event_id, event["WeekDay"], event["Timeslot"], event["RoomId"])
                         for event_id, event in assigned_events.items()
@@ -284,9 +281,9 @@ class MCTS:
                     break
                 if self.expansion():
                     simulation_hard, simulation_soft = self.simulation(start_time, self.params.time_limit)
-                    """ if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
+                    if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
                         print("Optimal solution found!\n")
-                        break """
+                        break
                     self.backpropagation(simulation_hard, simulation_soft)
                     duration = time.time() - start_time
                     if DEBUG_PROGRESS: self.update_progress_metrics(i+1)

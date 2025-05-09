@@ -148,8 +148,8 @@ def main():
             output_file = os.path.join(log_dir, f"{os.path.splitext(input_file)[0]}_log.txt")
             log_line[input_file] = get_last_log_line(output_file)
 
-        if args.input_files == default_files:
-            save_results_to_excel(log_line, args.input_files)
+        #if args.input_files == default_files:
+        save_results_to_excel(log_line, args.input_files)
 
 if __name__ == "__main__":
     main()

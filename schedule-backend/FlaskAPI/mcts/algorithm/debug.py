@@ -16,10 +16,10 @@ def visualize_tree(root, output_file_name = "mcts_tree"):
 
     def add_nodes_edges(node):
         if not node: return
-        label = f"{node.assignment} {node.best_hard_penalty} {node.best_soft_penalty}" #{node.expansion_limit}"
-        dot.node(str(id(node)), label=label, shape="plaintext", width="0.01", height="0.01")
-        #label = ""
-        #dot.node(str(id(node)), label=label, shape="point", width="0.01", height="0.01")
+        #label = f"{node.assignment} {node.best_hard_penalty} {node.best_soft_penalty}" #{node.expansion_limit}"
+        #dot.node(str(id(node)), label=label, shape="plaintext", width="0.01", height="0.01")
+        label = ""
+        dot.node(str(id(node)), label=label, shape="point", width="0.01", height="0.01")
 
         for child in node.children:
             if child:
@@ -85,7 +85,7 @@ def save_results_to_excel(results, file_names, filename="test_results.xlsx"):
                 ws = wb.active
                 ws.title = f"Test 1"
             
-            header = ["TEST"] + [f"comp{i:02}" for i in range(1, 22)]
+            header = ["TEST"] + file_names
             ws.append(header)
 
             def get_value(file, index):
