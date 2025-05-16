@@ -233,22 +233,23 @@ class MCTS:
                 self.global_best_soft_penalty, assigned_events = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
                 update_penalties(self.global_best_soft_penalty)
                 
-                if DIVING and not self.simulation_path or self.is_current_node_fully_expanded:
-                    new_path = [
-                        (event_id, event["WeekDay"], event["Timeslot"], event["RoomId"])
-                        for event_id, event in assigned_events.items()
-                        if event_id not in self.current_node.path and event_id != self.events[-1]["Id"]
-                    ]
-                    if new_path:                          
-                        if not self.simulation_path:
-                            self.simulation_path.append(new_path)
-                            self.best_node.append(self.current_node)
-                        elif self.best_node[0].parent == self.current_node.parent:
-                            self.simulation_path[0] = new_path
-                            self.best_node[0] = self.current_node
-                        else:
-                            self.simulation_path.insert(0, new_path)
-                            self.best_node.insert(0, self.current_node)
+                if DIVING:
+                    if not self.simulation_path or self.is_current_node_fully_expanded:
+                        new_path = [
+                            (event_id, event["WeekDay"], event["Timeslot"], event["RoomId"])
+                            for event_id, event in assigned_events.items()
+                            if event_id not in self.current_node.path and event_id != self.events[-1]["Id"]
+                        ]
+                        if new_path:                          
+                            if not self.simulation_path:
+                                self.simulation_path.append(new_path)
+                                self.best_node.append(self.current_node)
+                            elif self.best_node[0].parent == self.current_node.parent:
+                                self.simulation_path[0] = new_path
+                                self.best_node[0] = self.current_node
+                            else:
+                                self.simulation_path.insert(0, new_path)
+                                self.best_node.insert(0, self.current_node)
 
         simulation_result_hard = self.normalize(self.current_node.best_hard_penalty, self.global_best_hard_penalty, self.worst_hard_penalty)
         simulation_result_soft = self.normalize(self.current_node.best_soft_penalty, self.best_soft_penalty, self.worst_soft_penalty)

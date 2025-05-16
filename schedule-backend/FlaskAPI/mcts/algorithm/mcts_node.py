@@ -29,7 +29,7 @@ class MCTSNode:
 
     def best_child(self, unflagged_children, c_param):
         choices_weights = [
-            child.score_hard / child.visits + c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
+            child.score_hard / child.visits + 2 * c_param * math.sqrt((2 * math.log(self.visits) / child.visits))
             for child in unflagged_children
         ]
 
