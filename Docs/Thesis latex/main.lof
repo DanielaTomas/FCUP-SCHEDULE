@@ -16,7 +16,7 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {6.1}{\ignorespaces Hard constraint progress without pruning during 10 minutes on the \(comp01\) instance from \ac {itc-2007}.}}{36}{figure.caption.13}%
 \contentsline {figure}{\numberline {6.2}{\ignorespaces Hard constraint progress with pruning during 10 minutes on the \(comp01\) instance from \ac {itc-2007}.}}{37}{figure.caption.14}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Soft constraint progress using the diving approach on the \(comp01\) instance from \ac {itc-2007} for 1 hour.}}{38}{figure.caption.15}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Soft constraint progress without using the diving approach on the \(comp01\) instance from \ac {itc-2007} for 1 hour.}}{38}{figure.caption.15}%
 \contentsline {figure}{\numberline {6.4}{\ignorespaces Soft constraint progress using the diving approach on the \(comp01\) instance from \ac {itc-2007} for 1 hour.}}{39}{figure.caption.16}%
 \addvspace {10\p@ }
 \contentsfinish 

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  16 MAY 2025 16:58
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  16 MAY 2025 18:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2032,7 +2032,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 80
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 81
- \TU/Arial(0)/m/n/10.95 39
+ \TU/Arial(0)/m/n/10.95 40
  []
 
 
@@ -2937,7 +2937,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 [36]
 Runaway argument?
-{without_diving_result)). This improvement is only noticeable when we\ETC.
+{without_diving_result). This improvement is only noticeable when we \ETC.
 ./Chapters/Results.tex:63: Paragraph ended before \T@ref was complete.
 <to be read again> 
                    \par 
@@ -2977,7 +2977,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [38]
-Overfull \hbox (63.83902pt too wide) in paragraph at lines 93--100
+Overfull \hbox (63.83902pt too wide) in paragraph at lines 92--99
  [][] 
  []
 
@@ -3230,7 +3230,7 @@ Package rerunfilecheck Info: File `main.brf' has not changed.
 Here is how much of TeX's memory you used:
  44387 strings out of 473965
  912956 string characters out of 5736631
- 1402873 words of memory out of 5000000
+ 1402881 words of memory out of 5000000
  66488 multiletter control sequences out of 15000+600000
  583955 words of font info for 145 fonts, out of 8000000 for 9000
  1351 hyphenation exceptions out of 8191

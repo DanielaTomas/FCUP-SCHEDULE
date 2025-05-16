@@ -78,7 +78,7 @@
 \contentsline {section}{\numberline {6.4}Pruning}{36}{section.6.4}%
 \contentsline {section}{\numberline {6.5}Diving}{37}{section.6.5}%
 \contentsline {section}{\numberline {6.6}Competition Results Comparison}{39}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Summary}{39}{section.6.7}%
+\contentsline {section}{\numberline {6.7}Summary}{40}{section.6.7}%
 \contentsline {chapter}{\numberline {7}Conclusion}{41}{chapter.7}%
 \vspace {0.5cm}
 \contentsline {chapter}{Bibliography}{41}{dummy.6}%

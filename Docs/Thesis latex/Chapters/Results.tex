@@ -50,16 +50,16 @@ While not depicted in Figure \ref{fig:pruning_result}, it is worth noting that s
 
 \section{Diving}
 
-To improve the convergence speed and solution quality during timetable generation, the \ac{mcts} algorithm incorporates a diving strategy (chapter \ref{Development} section \ref{sec:diving}). Moreover, the diving strategy complements pruning by directing attention to already feasible branches. This helps concentrate computational resources on areas of the search space that are both valid and potentially optimal.
+To improve the convergence speed and solution quality during timetable generation, the \ac{mcts} algorithm incorporates a diving strategy (chapter \ref{Development} section \ref{sec:diving}). Moreover, the diving strategy complements pruning by directing attention to already feasible branches. This method helps concentrate computational resources on areas of the search space that are both valid and potentially optimal.
 
-Figure \ref{fig:diving_result} (TODO MUDAR IMAGEM!!!) illustrates the soft constraint penalty progression over time on the \texttt{comp01} instance from the \ac{itc-2007} benchmark when using the diving strategy.
+Figures \ref{fig:diving_result} (TODO MUDAR IMAGEM!!!) and \ref{fig:without_diving_result} show the soft constraint penalty progression over time on the \texttt{comp01} instance from the \ac{itc-2007} benchmark, using and not using the diving strategy.
 
 The results demonstrate that the diving mechanism contributes positively to the search effectiveness:
 
 \begin{itemize}
 \item \textbf{Faster convergence:} The algorithm reaches lower penalty regions more rapidly compared to a standard breadth-oriented \ac{mcts} approach. By tracking and expanding the most promising nodes first, the diving queue helps avoid wasting iterations on less promising parts of the tree.
 
-\item \textbf{Improved solution quality:} As observed in the soft penalty trend, the use of diving leads to an improvement compared to the approach without diving (Figure \ref{without_diving_result)). This improvement is only noticeable when we extend the run time. This shows that the diving strategy not only accelerates convergence but also contributes to reaching higher-quality solutions.
+\item \textbf{Improved solution quality:} As observed in the soft penalty trend, the use of diving leads to an improvement compared to the approach without diving (Figure \ref{without_diving_result). This improvement is only noticeable when we extend the run time. This shows that the diving strategy not only accelerates convergence but also contributes to reaching higher-quality solutions.
 
 \item \textbf{Focused exploitation:} The queue-based selection mechanism ensures that the algorithm deepens the most promising paths. In practice, this limits unnecessary expansion of under-performing nodes and encourages building upon solutions with known potential.
 \end{itemize}
@@ -68,10 +68,9 @@ The results demonstrate that the diving mechanism contributes positively to the 
  \centering
     \includegraphics[width=0.8\columnwidth]{Results/without_diving_result.png}
     \includegraphics[width=0.19\columnwidth]{Results/soft_caption.png}
-    \caption{Soft constraint progress using the diving approach on the \(comp01\) instance from \ac{itc-2007} for 1 hour.}
+    \caption{Soft constraint progress without using the diving approach on the \(comp01\) instance from \ac{itc-2007} for 1 hour.}
     \label{fig:without_diving_result}
 \end{figure}
-
 
 \begin{figure}
  \centering
@@ -81,11 +80,11 @@ The results demonstrate that the diving mechanism contributes positively to the 
     \label{fig:diving_result}
 \end{figure}
 
-However, in both approaches (with and without diving) it is noticeable that the algorithm eventually stagnates, reaching a point where no further improvement is observed. After an initial phase of rapid improvement, the soft penalty score often plateaus.
+In both approaches (with and without diving) it is noticeable that the algorithm eventually stagnates, reaching a point where no further improvement is observed. After an initial phase of rapid improvement, the soft penalty score typically plateaus without finding an optimal solution. However, with the diving strategy, the soft constraint penalties at each iteration tend to remain closer to the best solution found, indicating a more stable and focused search trajectory.
 
 \section{Competition Results Comparison}
 
-The effectiveness of the \ac{mcts}-\ac{hc} hybrid was evaluated on the official \ac{itc-2007} track 3 benchmark set. Table \ref{tab:comparison_results} presents a comparison between the best-known results submitted by Müller (competition winner) and our system for instances \(comp01.ctt\) to \(comp05.ctt\), and \(comp11.ctt\).
+The effectiveness of the \ac{mcts}-\ac{hc} hybrid was evaluated on the official \ac{itc-2007} track 3 benchmark datasets. Table \ref{tab:comparison_results} presents a comparison between the best-known results submitted by Müller (competition winner) and our system for instances \(comp01.ctt\) to \(comp05.ctt\), and \(comp11.ctt\). Initially, all benchmark instances were considered for evaluation, but due to time constraints, the experiments were narrowed down to focus on only six instances.
 
 \begin{table}[h!]
 \centering
@@ -142,7 +141,7 @@ The effectiveness of the \ac{mcts}-\ac{hc} hybrid was evaluated on the official 
 \label{tab:comparison_results}
 \end{table}
 
-Although our approach does not yet outperform state-of-the-art methods in terms of soft constraint minimization even with an extended time, it consistently finds feasible solutions within reasonable time limits. This confirms its robustness and potential as a foundation for further refinement.
+Although our approach does not yet outperform state-of-the-art methods in terms of soft constraint minimization, even with an extended time, it consistently finds feasible solutions within reasonable time limits. This confirms its robustness and potential as a foundation for further refinement.
 
 \section{Summary}
 
