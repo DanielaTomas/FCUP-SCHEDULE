@@ -27,7 +27,7 @@ Other surveys, such as Abdipoor et al. \cite{abdipoor_meta-heuristic_2023}, cate
 
 Operational Research (OR) techniques provide mathematically rigorous solutions. Despite their complexity, these methods are simple to implement and can be considered if time and memory constraints are not a concern \cite{babaei_survey_2015}. However, the other types of approaches provide better quality results. 
 
-As Chen et al. and  Babaei et. al detailed in their surveys \cite{babaei_survey_2015, chen_survey_2021}, OR includes Graph Coloring (GC), Integer and Linear Programming (IP/LP) and Constraint Satisfaction(s) Programming (CSPs) based techniques.
+As Chen et al. and  Babaei et. al detailed in their surveys \cite{babaei_survey_2015,chen_survey_2021}, OR includes Graph Coloring (GC), Integer and Linear Programming (IP/LP) and Constraint Satisfaction(s) Programming (CSPs) based techniques.
 
 \section{Metaheuristics}
 
@@ -55,9 +55,9 @@ Population-based metaheuristics, as opposed to single-solution-based metaheurist
 
 Heuristic methods have been highly effective in solving a wide range of problems. However, their application to new problems is often challenging due to the vast number of parameter tuning and the lack of clear guidance \cite{hyper_heuristics_survey}. To address this problem, hyperheuristics aim to generalize methods by selecting or combining the most suitable heuristic(s) for a specific problem, rather than explicitly solving the problem.
 
-Hyper-heuristic and multi-objective approaches are less common, possibly due to their performance \cite{chen_survey_2021}.
+Hyper-heuristic and multi-objective (section \ref{sec:mo}) approaches are less common, possibly due to their performance \cite{chen_survey_2021}.
 
-\section{Multi-Objective}
+\section{Multi-Objective}\label{sec:mo}
 
 Multi-objective or multi-criteria approaches aim to optimize multiple conflicting objectives simultaneously. These methods are frequently used to find the optimal Pareto front, which is a set of compromise optimal solutions. However, the disadvantage lies in the execution effort \cite{chen_survey_2021}. Several multi-criteria algorithms can also be included in other categories, such as metaheuristics.
 
@@ -95,6 +95,21 @@ The research introduces several enhancements to the standard \ac{mcts} algorithm
 One major limitation of \ac{mcts} for timetabling is, as highlighted by Goh, its rigorous decision-making process. Events are assigned sequentially and cannot be reassigned, limiting the algorithm's flexibility. In contrast, local search methods, such as \ac{ts}, allow dynamic reassignment, enabling a more efficient exploration of the search space. Furthermore, the tree-based structure of \ac{mcts} restricts its hybridization with local search techniques, which have proven essential in achieving significant results in other learning-based algorithms. Another drawback of \ac{mcts} is its high computational cost, making it less effective under the strict time constraints imposed by timetabling problems.
 
 This dissertation aims to demonstrate that, despite its limitations, \ac{mcts} still holds potential for timetabling problems with the appropriate modifications and hybridization. 
+
+\section{Summary}
+
+We analyzed various surveys \cite{lewis_survey_2008,abdipoor_meta-heuristic_2023,babaei_survey_2015,chen_survey_2021} and categorized \ac{ucttp} approaches based on their problem-solving strategies:
+
+\begin{itemize}
+\item Metaheuristics emerged as one of the most promising, particularly single-solution-based algorithms like \ac{sa} and \ac{ts}.
+\item Hybrid approaches, like Müller’s \ac{itc-2007} approach \cite{muller_itc2007}, were also shown to be effective.
+\item Operational research methods are simple to implement but are often outperformed due to scalability limitations.
+\item Hyperheuristics, while still emerging, aim to generalize methods by dynamically selecting among heuristics.
+\item Multi-objective methods optimize multiple conflicting objectives simultaneously, but they are computationally expensive.
+\item Goh \cite{goh_MCTS} study on the \ac{pe-ctt} found that \ac{ts} outperformed \ac{mcts}, despite improvements to the standard \ac{mcts} algorithm.
+\item \ac{mcts} and its hybridization remain unexplored in the context of \ac{cb-ctt}, making this the novel contribution of our work.
+\end{itemize}
+
 
 
 

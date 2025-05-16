@@ -1,29 +1,23 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  2 MAY 2025 16:15
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  14 MAY 2025 17:45
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**vars.tex
+**vars
 (./vars.tex
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
-! Undefined control sequence.
+./vars.tex:9: Undefined control sequence.
 l.9 \thesistitle
                 {An interactive tool for supporting university timetabling}
-? ,,
-Type <return> to proceed, S to scroll future error messages,
-R to run without stopping, Q to run quietly,
-I to insert something, E to edit your file,
-1 or ... or 9 to ignore the next 1 to 9 tokens of input,
-H for help, X to quit.
-? 
-! Interruption.
-<to be read again> 
-                   {
-l.9 \thesistitle{
-                 An interactive tool for supporting university timetabling}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:9: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -31,7 +25,9 @@ Type  H <return>  for immediate help.
                                                   
 l.9 \thesistitle{A
                   n interactive tool for supporting university timetabling}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no A ("41) in font nullfont!
 Missing character: There is no n ("6E) in font nullfont!
 Missing character: There is no i ("69) in font nullfont!
@@ -88,12 +84,17 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 9--10
 []
  []
 
-! Undefined control sequence.
+./vars.tex:12: Undefined control sequence.
 l.12 \thesistype
                 {Masters Thesis}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:12: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -101,7 +102,9 @@ Type  H <return>  for immediate help.
                                                   
 l.12 \thesistype{M
                   asters Thesis}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no M ("4D) in font nullfont!
 Missing character: There is no a ("61) in font nullfont!
 Missing character: There is no s ("73) in font nullfont!
@@ -120,12 +123,17 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 12--13
 []
  []
 
-! Undefined control sequence.
+./vars.tex:15: Undefined control sequence.
 l.15 \supervisor
                 [mailto:jpp@fc.up.pt]{João \textsc{Pedroso}}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:15: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -133,7 +141,9 @@ Type  H <return>  for immediate help.
                                                   
 l.15 \supervisor[
                  mailto:jpp@fc.up.pt]{João \textsc{Pedroso}}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no [ ("5B) in font nullfont!
 Missing character: There is no m ("6D) in font nullfont!
 Missing character: There is no a ("61) in font nullfont!
@@ -174,12 +184,17 @@ Overfull \hbox (29.34pt too wide) in paragraph at lines 15--16
 \TU/lmr/m/sc/10 droso 
  []
 
-! Undefined control sequence.
+./vars.tex:22: Undefined control sequence.
 l.22 \degree
             {MSc. Network and Information Systems Engineering}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:22: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -187,7 +202,9 @@ Type  H <return>  for immediate help.
                                                   
 l.22 \degree{M
               Sc. Network and Information Systems Engineering}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no M ("4D) in font nullfont!
 Missing character: There is no S ("53) in font nullfont!
 Missing character: There is no c ("63) in font nullfont!
@@ -236,12 +253,17 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 22--23
 []
  []
 
-! Undefined control sequence.
+./vars.tex:25: Undefined control sequence.
 l.25 \authors
              [mailto:up202004946@edu.fc.up.pt]{Daniela \textsc{Tomás}}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:25: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -249,7 +271,9 @@ Type  H <return>  for immediate help.
                                                   
 l.25 \authors[
               mailto:up202004946@edu.fc.up.pt]{Daniela \textsc{Tomás}}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no [ ("5B) in font nullfont!
 Missing character: There is no m ("6D) in font nullfont!
 Missing character: There is no a ("61) in font nullfont!
@@ -300,16 +324,26 @@ Overfull \hbox (32.40001pt too wide) in paragraph at lines 25--26
 \TU/lmr/m/sc/10 Tomás 
  []
 
-! Undefined control sequence.
+./vars.tex:28: Undefined control sequence.
 l.28 \addresses
                {}
-? 
-! Undefined control sequence.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./vars.tex:31: Undefined control sequence.
 l.31 \subject
              {Informatics}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:31: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -317,17 +351,10 @@ Type  H <return>  for immediate help.
                                                   
 l.31 \subject{I
                nformatics}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no I ("49) in font nullfont!
-! Interruption.
-l.31 \subject{I
-               nformatics}
-? ,,,,
-Type <return> to proceed, S to scroll future error messages,
-R to run without stopping, Q to run quietly,
-I to insert something, E to edit your file,
-H for help, X to quit.
-? 
 Missing character: There is no n ("6E) in font nullfont!
 Missing character: There is no f ("66) in font nullfont!
 Missing character: There is no o ("6F) in font nullfont!
@@ -343,13 +370,17 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 31--32
 [] 
  []
 
-! Undefined control sequence.
+./vars.tex:34: Undefined control sequence.
 l.34 \keywords
               {University Course Timetabling Problem, Curriculum-based Cours...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-? 
 
-! LaTeX Error: Missing \begin{document}.
+./vars.tex:34: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -358,7 +389,9 @@ Type  H <return>  for immediate help.
 l.34 \keywords{U
                 niversity Course Timetabling Problem, Curriculum-based Cours...
 
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no U ("55) in font nullfont!
 Missing character: There is no n ("6E) in font nullfont!
 Missing character: There is no i ("69) in font nullfont!
@@ -475,12 +508,17 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 34--36
 []
  []
 
-! Undefined control sequence.
+./vars.tex:38: Undefined control sequence.
 l.38 \university
                 {Universidade do Porto}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:38: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -488,7 +526,9 @@ Type  H <return>  for immediate help.
                                                   
 l.38 \university{U
                   niversidade do Porto}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no U ("55) in font nullfont!
 Missing character: There is no n ("6E) in font nullfont!
 Missing character: There is no i ("69) in font nullfont!
@@ -508,10 +548,15 @@ Missing character: There is no o ("6F) in font nullfont!
 Missing character: There is no r ("72) in font nullfont!
 Missing character: There is no t ("74) in font nullfont!
 Missing character: There is no o ("6F) in font nullfont!
-! Undefined control sequence.
+./vars.tex:40: Undefined control sequence.
 l.40 \UNIVERSITY
                 {UNIVERSIDADE DO PORTO}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 Missing character: There is no U ("55) in font nullfont!
 Missing character: There is no N ("4E) in font nullfont!
 Missing character: There is no I ("49) in font nullfont!
@@ -536,12 +581,17 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 38--41
 []
  []
 
-! Undefined control sequence.
+./vars.tex:44: Undefined control sequence.
 l.44 \faculty
              {Faculdade de Ciências da Universidade do Porto}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:44: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -549,7 +599,9 @@ Type  H <return>  for immediate help.
                                                   
 l.44 \faculty{F
                aculdade de Ciências da Universidade do Porto}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no F ("46) in font nullfont!
 Missing character: There is no a ("61) in font nullfont!
 Missing character: There is no c ("63) in font nullfont!
@@ -590,10 +642,15 @@ Missing character: There is no o ("6F) in font nullfont!
 Missing character: There is no r ("72) in font nullfont!
 Missing character: There is no t ("74) in font nullfont!
 Missing character: There is no o ("6F) in font nullfont!
-! Undefined control sequence.
+./vars.tex:46: Undefined control sequence.
 l.46 \FACULTY
              {FACULDADE DE CIÊNCIAS DA UNIVERSIDADE DO PORTO}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 Missing character: There is no F ("46) in font nullfont!
 Missing character: There is no A ("41) in font nullfont!
 Missing character: There is no C ("43) in font nullfont!
@@ -639,12 +696,17 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 44--47
 []
  []
 
-! Undefined control sequence.
+./vars.tex:50: Undefined control sequence.
 l.50 \department
                 {Departamento de Ciência de Computadores}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-! LaTeX Error: Missing \begin{document}.
+
+./vars.tex:50: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -652,7 +714,9 @@ Type  H <return>  for immediate help.
                                                   
 l.50 \department{D
                   epartamento de Ciência de Computadores}
-? 
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 Missing character: There is no D ("44) in font nullfont!
 Missing character: There is no e ("65) in font nullfont!
 Missing character: There is no p ("70) in font nullfont!
@@ -688,10 +752,15 @@ Missing character: There is no o ("6F) in font nullfont!
 Missing character: There is no r ("72) in font nullfont!
 Missing character: There is no e ("65) in font nullfont!
 Missing character: There is no s ("73) in font nullfont!
-! Undefined control sequence.
+./vars.tex:52: Undefined control sequence.
 l.52 \DEPARTMENT
                 {DEPARTAMENTO DE CIÊNCIA DE COMPUTADORES}
-? 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 Missing character: There is no D ("44) in font nullfont!
 Missing character: There is no E ("45) in font nullfont!
 Missing character: There is no P ("50) in font nullfont!
@@ -733,29 +802,10 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 50--53
  []
 
 )
-*
-(Please type a command or say `\end')
-*
-(Please type a command or say `\end')
-*
-(Please type a command or say `\end')
-*
-(Please type a command or say `\end')
-*
-(Please type a command or say `\end')
-*
-(Please type a command or say `\end')
-*
-(Please type a command or say `\end')
-*
-(Please type a command or say `\end')
-*
-(Please type a command or say `\end')
-*
 ! Emergency stop.
-<*> 
-    
-End of file on the terminal!
+<*> vars
+        
+*** (job aborted, no legal \end found)
 
  
 Here is how much of TeX's memory you used:
@@ -765,5 +815,5 @@ Here is how much of TeX's memory you used:
  23063 multiletter control sequences out of 15000+600000
  558077 words of font info for 37 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 15i,1n,20p,129b,64s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 15i,1n,20p,125b,64s stack positions out of 10000i,1000n,20000p,200000b,200000s
 No pages of output.

@@ -298,7 +298,7 @@ A list of valid (period, room) combinations is generated. If no such combination
 
 A combination is selected based on the number of already-expanded children. A new path is constructed by assigning the selected period and room to the event.
 
-Before proceeding, the algorithm evaluates the partial timetable (i.e., the new path) against a global hard penalty threshold. If the new assignment violates hard constraints resulting in a penalty below the threshold, a null child is added to indicate that the expansion stopped for that branch. This pruning condition reduces unnecessary exploration.
+Before proceeding, the algorithm evaluates the partial timetable (i.e., the new path) against a global hard penalty threshold. If the new assignment violates hard constraints resulting in a penalty below the threshold, a null child is added to indicate that the expansion stopped for that branch. This pruning was introduced as a mechanism to eliminate paths in the tree that violate hard constraints, thus focusing computational effort on promising and feasible solutions.
 
 If the expansion continues, the algorithm estimates the number of valid (period, room) combinations for the next event. This value is stored as the child’s expansion\_limit to guide future branching.
 
@@ -456,7 +456,7 @@ The \ac{hc} approach follows the following steps:
 	\end{itemize}
 \end{enumerate}
 
-\section{Diving}
+\section{Diving}\label{sec:diving}
 
 \begin{figure}
       \centering

@@ -1,0 +1,138 @@
+         760874678078 function calls in 86396.450 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+   492295   52.940    0.000 86060.654    0.175 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:167(simulation)
+ 73570639  837.698    0.000 82050.044    0.001 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:169(find_best_room_and_period)
+4472929112 18719.991    0.000 53191.331    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:21(check_event_hard_constraints)
+412570744546 23302.809    0.000 23302.809    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:12(check_conflict_time)
+2067041024 14550.768    0.000 17042.497    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/utils.py:49(find_available_rooms)
+4472929112 8732.994    0.000 13704.824    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:52(check_block_constraints)
+2812125891 7084.877    0.000 8074.181    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:96(check_block_compactness)
+  1375447   59.064    0.000 4070.680    0.003 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/utils.py:90(evaluate_timetable)
+251848554705 3207.345    0.000 3207.345    0.000 {method 'get' of 'dict' objects}
+ 88519154  367.823    0.000 2627.828    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/utils.py:84(dict_slice)
+ 88428742 1098.093    0.000 2258.579    0.000 {built-in function next}
+2743456845 1477.180    0.000 1944.832    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:123(check_room_stability)
+2744434157 1445.988    0.000 1935.395    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:81(check_min_working_days)
+6705540632 1161.360    0.000 1161.360    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/utils.py:85(<lambda>)
+2067041024 1099.591    0.000 1099.591    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/utils.py:56(<setcomp>)
+2067041024 1011.057    0.000 1023.905    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/utils.py:50(<dictcomp>)
+4472929112  387.394    0.000  908.070    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:42(check_event_unavailability_constraints)
+14839605811  593.758    0.000  593.758    0.000 {method 'add' of 'set' objects}
+2812125891  318.451    0.000  370.438    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:135(check_room_capacity)
+   883366   11.389    0.000  265.211    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:123(expansion)
+   883363    9.215    0.000  224.602    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:125(calculate_expansion_limit)
+11891988162  146.364    0.000  146.364    0.000 {built-in function len}
+5910532243  143.317    0.000  143.317    0.000 {method 'discard' of 'set' objects}
+10674599453  129.517    0.000  129.517    0.000 {method 'values' of 'dict' objects}
+3238164932  124.756    0.000  124.756    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/utils.py:61(<lambda>)
+       17    0.232    0.014   71.519    4.207 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:211(run_hill_climbing)
+   883366    7.706    0.000   66.650    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:82(selection)
+5262732064   64.049    0.000   64.049    0.000 {built-in function abs}
+1203072587   49.236    0.000   60.807    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/utils.py:63(<lambda>)
+    42364    2.666    0.000   56.317    0.001 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:19(evaluate_timetable)
+  2879733    9.343    0.000   42.233    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts_node.py:30(best_child)
+2156485631   40.163    0.000   40.163    0.000 {method 'items' of 'dict' objects}
+587507740   31.607    0.000   31.607    0.000 {method 'append' of 'list' objects}
+ 73688231    3.495    0.000   21.036    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/random.py:375(choice)
+ 73688231   12.253    0.000   17.026    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/random.py:239(_randbelow_with_getrandbits)
+  2879733    9.064    0.000   16.351    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts_node.py:31(<listcomp>)
+2099100243   12.849    0.000   12.849    0.000 {method 'keys' of 'dict' objects}
+  2879733    9.476    0.000    9.476    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:108(<listcomp>)
+  2879733    6.743    0.000    8.694    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts_node.py:39(<listcomp>)
+ 96911893    7.696    0.000    7.696    0.000 {built-in function math.log}
+ 73570639    6.244    0.000    7.118    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:208(<lambda>)
+    18385    0.210    0.000    6.656    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:52(period_move)
+ 80425933    3.885    0.000    6.107    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts_node.py:18(depth)
+ 74555302    4.784    0.000    4.784    0.000 {built-in function min}
+  2879733    4.677    0.000    4.677    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts_node.py:37(<listcomp>)
+   492312    3.489    0.000    4.348    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:197(update_penalties)
+  3713101    1.937    0.000    4.070    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts_node.py:26(is_terminal_node)
+ 12460901    3.021    0.000    3.339    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:134(<genexpr>)
+127231952    3.133    0.000    3.133    0.000 {method 'getrandbits' of 'Random' objects}
+   984590    2.570    0.000    3.116    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:66(normalize)
+   883366    3.052    0.000    3.052    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:147(<listcomp>)
+  4696134    1.986    0.000    2.870    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts_node.py:22(is_fully_expanded)
+  7236385    2.554    0.000    2.554    0.000 {built-in function max}
+   492295    2.505    0.000    2.505    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:260(backpropagation)
+   492295    2.467    0.000    2.467    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts_node.py:5(__init__)
+    18623    0.508    0.000    1.922    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:78(event_move)
+ 73688231    1.640    0.000    1.640    0.000 {method 'bit_length' of 'int' objects}
+ 96911893    1.542    0.000    1.542    0.000 {built-in function math.sqrt}
+     9119    0.084    0.000    1.226    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:180(min_working_days_move)
+    12821    0.305    0.000    1.207    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:135(curriculum_compactness_move)
+  2879733    1.109    0.000    1.109    0.000 {method 'index' of 'list' objects}
+   492295    0.653    0.000    1.028    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:73(update_progress_metrics)
+     9119    0.065    0.000    0.955    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:181(<listcomp>)
+ 73661051    0.877    0.000    0.877    0.000 {method 'random' of 'Random' objects}
+    18661    0.107    0.000    0.779    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:64(room_move)
+  1375658    0.738    0.000    0.738    0.000 {method 'copy' of 'dict' objects}
+    12803    0.091    0.000    0.608    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:114(room_stability_move)
+   978920    0.546    0.000    0.546    0.000 {built-in function math.exp}
+   270510    0.409    0.000    0.430    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:160(<listcomp>)
+   582737    0.424    0.000    0.424    0.000 {built-in function time.time}
+    90412    0.075    0.000    0.176    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/random.py:506(choices)
+  1375447    0.101    0.000    0.111    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/check_conflicts.py:65(check_room_conflicts)
+    90412    0.038    0.000    0.094    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/random.py:540(<listcomp>)
+    53159    0.050    0.000    0.073    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:39(revert_changes)
+    90412    0.057    0.000    0.057    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:219(<listcomp>)
+    90412    0.053    0.000    0.053    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/bisect.py:19(bisect_right)
+    42404    0.045    0.000    0.045    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:48(save_original_state)
+       28    0.008    0.000    0.031    0.001 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/simulation_results_writer.py:6(write_simulation_results)
+    12803    0.025    0.000    0.027    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:118(<listcomp>)
+    42404    0.018    0.000    0.018    0.000 {method 'update' of 'dict' objects}
+     4341    0.013    0.000    0.015    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/hill_climbing.py:191(<setcomp>)
+     7750    0.012    0.000    0.012    0.000 {method 'remove' of 'list' objects}
+       56    0.000    0.000    0.007    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:1701(fromtimestamp)
+       56    0.001    0.000    0.006    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:1657(_fromtimestamp)
+     4508    0.003    0.000    0.006    0.000 {method 'write' of '_io.TextIOWrapper' objects}
+       56    0.005    0.000    0.005    0.000 {built-in function _io.open}
+       56    0.004    0.000    0.004    0.000 {method '__exit__' of '_io._IOBase' objects}
+     4508    0.002    0.000    0.003    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/encodings/utf_8.py:19(encode)
+      196    0.002    0.000    0.002    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:468(__new__)
+       84    0.000    0.000    0.002    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:2110(__sub__)
+    42070    0.002    0.000    0.002    0.000 {method 'clear' of 'dict' objects}
+    90412    0.002    0.000    0.002    0.000 {built-in function math.isfinite}
+      112    0.001    0.000    0.001    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:1588(__new__)
+      112    0.001    0.000    0.001    0.000 {built-in function time.localtime}
+       17    0.001    0.000    0.001    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/mcts.py:237(<listcomp>)
+      168    0.000    0.000    0.001    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:986(toordinal)
+       56    0.000    0.000    0.001    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:627(__sub__)
+     4508    0.001    0.000    0.001    0.000 {built-in function _codecs.utf_8_encode}
+      168    0.000    0.000    0.001    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:69(_ymd2ord)
+     2969    0.000    0.000    0.000    0.000 {built-in function isinstance}
+       29    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/posixpath.py:100(split)
+      112    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:392(_check_date_fields)
+       28    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/posixpath.py:71(join)
+      112    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:405(_check_time_fields)
+      167    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:198(cb)
+      168    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:64(_days_before_month)
+       28    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:583(__str__)
+     1036    0.000    0.000    0.000    0.000 {built-in function divmod}
+      280    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:57(_days_in_month)
+      252    0.000    0.000    0.000    0.000 {built-in function round}
+       57    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/posixpath.py:41(_get_sep)
+      784    0.000    0.000    0.000    0.000 {built-in function _operator.index}
+      168    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:52(_days_before_year)
+      168    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:48(_is_leap)
+       29    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}
+       56    0.000    0.000    0.000    0.000 {built-in function math.modf}
+      196    0.000    0.000    0.000    0.000 {method '__new__' of 'type' objects}
+       56    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/codecs.py:186(__init__)
+      168    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:422(_check_tzinfo_arg)
+       29    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+       29    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+       28    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+       57    0.000    0.000    0.000    0.000 {built-in function posix.fspath}
+      167    0.000    0.000    0.000    0.000 {built-in function _imp.acquire_lock}
+      167    0.000    0.000    0.000    0.000 {built-in function _imp.release_lock}
+       56    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/datetime.py:601(days)
+       28    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+       20    0.000    0.000    0.000    0.000 {method 'insert' of 'list' objects}
+       27    0.000    0.000    0.000    0.000 /usr/local/Cellar/pypy3.10/7.3.17_1/libexec/lib/pypy3.10/codecs.py:214(setstate)
+        1    0.000    0.000    0.000    0.000 /Users/jpp/DanielaTomas/FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts/algorithm/debug.py:143(profile_execution)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
