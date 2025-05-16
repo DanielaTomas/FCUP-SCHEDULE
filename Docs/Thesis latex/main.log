@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  16 MAY 2025 18:16
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  16 MAY 2025 19:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2027,7 +2027,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 79
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 80
- \TU/Arial(0)/m/n/10.95 39
+ \TU/Arial(0)/m/n/10.95 37
  []
 
 
@@ -2037,11 +2037,16 @@ Overfull \hbox (12.17973pt too wide) detected at line 81
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 82
+ \TU/Arial(0)/m/n/10.95 40
+ []
+
+
+Overfull \hbox (12.17973pt too wide) detected at line 83
  \TU/Arial(0)/m/n/10.95 41
  []
 
 
-Overfull \hbox (12.17973pt too wide) detected at line 84
+Overfull \hbox (12.17973pt too wide) detected at line 85
  \TU/Arial(0)/m/n/10.95 41
  []
 
@@ -2936,18 +2941,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [36]
-Runaway argument?
-{without_diving_result). This improvement is only noticeable when we \ETC.
-./Chapters/Results.tex:63: Paragraph ended before \T@ref was complete.
-<to be read again> 
-                   \par 
-l.63 
-     
-I suspect you've forgotten a `}', causing me to apply this
-control sequence to too much text. How can we recover?
-My plan is to forget the whole thing and hope for the best.
-
-
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2958,6 +2951,17 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [37]
+Runaway argument?
+{without_diving_result). This improvement is only noticeable when we \ETC.
+./Chapters/Results.tex:71: Paragraph ended before \T@ref was complete.
+<to be read again> 
+                   \par 
+l.71 
+     
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
 File: Figures/Results/without_diving_result.png Graphic file (type bmp)
 <Figures/Results/without_diving_result.png>
 File: Figures/Results/soft_caption.png Graphic file (type bmp)
@@ -2977,11 +2981,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [38]
-Overfull \hbox (63.83902pt too wide) in paragraph at lines 92--99
- [][] 
- []
-
-
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2991,7 +2990,12 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
-[39]) (./Chapters/Conclusion.tex
+[39]
+Overfull \hbox (63.83902pt too wide) in paragraph at lines 100--107
+ [][] 
+ []
+
+) (./Chapters/Conclusion.tex
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -3223,14 +3227,14 @@ LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 16BBC7A7DB4D298B1E19E53C9F316C3F;11469.
+(rerunfilecheck)             Checksum: 1A5A62057A766C9232A7760252D71938;11615.
 Package rerunfilecheck Info: File `main.brf' has not changed.
 (rerunfilecheck)             Checksum: 098F80EC1D7D999787AEDD8D6C92C4B0;1659.
  ) 
 Here is how much of TeX's memory you used:
  44387 strings out of 473965
  912956 string characters out of 5736631
- 1402881 words of memory out of 5000000
+ 1403038 words of memory out of 5000000
  66488 multiletter control sequences out of 15000+600000
  583955 words of font info for 145 fonts, out of 8000000 for 9000
  1351 hyphenation exceptions out of 8191

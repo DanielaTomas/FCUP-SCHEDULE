@@ -48,6 +48,14 @@ While not depicted in Figure \ref{fig:pruning_result}, it is worth noting that s
     \label{fig:pruning_result}
 \end{figure}
 
+\section{Hill Climbing}
+
+To improve solution quality, \ac{hc} was combined with the \ac{mcts} algorithm (chapter \ref{Development} section \ref{hill_climbing_section}). Importantly, \ac{hc} operates exclusively on feasible solutions returned by \ac{mcts}, ensuring that hard constraint validity is maintained throughout the optimization process.
+
+In general, the hybrid approach consistently produces lower soft constraint penalties compared to standard \ac{mcts}, validating the effectiveness of combining global exploration with local refinement. 
+
+Although the incorporation of \ac{hc} introduces additional computational overhead, the resulting improvements in solution quality make it a worthwhile trade-off in most cases.
+   
 \section{Diving}
 
 To improve the convergence speed and solution quality during timetable generation, the \ac{mcts} algorithm incorporates a diving strategy (chapter \ref{Development} section \ref{sec:diving}). Moreover, the diving strategy complements pruning by directing attention to already feasible branches. This method helps concentrate computational resources on areas of the search space that are both valid and potentially optimal.
@@ -154,7 +162,7 @@ This chapter evaluated the \ac{mcts}-\ac{hc} hybrid approach across several dime
 
 \item \textbf{Pruning:} Efficiently eliminated infeasible branches, improving search focus and convergence.
 
-\item \textbf{Diving:} Hill Climbing successfully reduced soft constraint penalties after \ac{mcts} found a feasible solution.
+\item \textbf{Diving:} Diving successfully reduced soft constraint penalties after \ac{mcts} found a feasible solution.
 
 \item \textbf{Competition Benchmarking:} Although solution quality was below the best-known results, the approach shows solid potential with room for optimization.
 \end{itemize}
