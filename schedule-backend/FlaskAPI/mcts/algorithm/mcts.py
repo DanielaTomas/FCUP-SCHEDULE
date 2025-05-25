@@ -4,7 +4,7 @@ from algorithm.debug import *
 from algorithm.check_conflicts import ConflictsChecker
 from algorithm.hill_climbing import HillClimbing
 from algorithm.simulation_results_writer import write_simulation_results
-from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER, PRUNING, DIVING
+from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER, PRUNING, DIVING, DEBUG_RANDOM_SIMULATION
 from dataclasses import dataclass
 import cProfile
 import time
@@ -31,6 +31,7 @@ class MCTSConfig:
 class MCTS:
 
     def __init__(self, current_timetable, config: MCTSConfig):
+        self.config = config
         self.params = config.params
         self.rooms = current_timetable["rooms"]
         self.events, name_to_event_ids = add_event_ids_and_priority(current_timetable["events"], config.days, config.periods_per_day, current_timetable["blocks"], current_timetable["constraints"])
@@ -208,14 +209,18 @@ class MCTS:
         remaining_events = sorted(self.events[self.current_node.depth():], key=lambda event: (event["Id"] in self.previous_unassigned_events, event["Priority"], random.random()), reverse=True)
 
         for i, event in enumerate(remaining_events):
-            best_room_and_period = find_best_room_and_period()
-            if best_room_and_period:
-                event["RoomId"], event["WeekDay"], event["Timeslot"] = best_room_and_period  
+            if DEBUG_RANDOM_SIMULATION:
+                event["RoomId"], event["WeekDay"], event["Timeslot"] = random.choice(list(self.rooms.keys())), random.randrange(0, self.config.days), random.randrange(0, self.config.periods_per_day)
                 assigned_events[event["Id"]] = event 
-            else: 
-                self.previous_unassigned_events.add(event["Id"])
-                unassigned_events.add(event["Id"])
-                event["Priority"] += 50
+            else:
+                best_room_and_period = find_best_room_and_period()
+                if best_room_and_period:
+                    event["RoomId"], event["WeekDay"], event["Timeslot"] = best_room_and_period  
+                    assigned_events[event["Id"]] = event 
+                else: 
+                    self.previous_unassigned_events.add(event["Id"])
+                    unassigned_events.add(event["Id"])
+                    event["Priority"] += 50
 
         hard_penalty_result, soft_penalty_result = evaluate_timetable(self.conflicts_checker, assigned_events, unassigned_events)
         

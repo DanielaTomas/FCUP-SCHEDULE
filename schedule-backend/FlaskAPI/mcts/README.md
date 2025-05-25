@@ -68,14 +68,16 @@
 
 # Debug Options
 
-* You can enable or disable specific debug outputs by setting the following flags to ``False`` in the ``macros.py`` file:
+* You can enable or disable specific debug outputs by setting the following flags to ``True`` or ``False`` in the ``macros.py`` file:
     ```PY
-    DEBUG_EXCEL = True      # Generates the 'test_results.xlsx' file
-    DEBUG_TREE = True       # Outputs the MCTS tree structure (saved in the 'mcts_tree' folder)
-    DEBUG_PROGRESS = True   # Creates HTML plots of constraint evolution (saved in the 'constraint_progress' folder)
-    DEBUG_LOG = True        # Logs best intermediate and final solutions (saved in the 'log' folder)
+    DEBUG_EXCEL = True              # Generates the 'test_results.xlsx' file
+    DEBUG_TREE = True               # Outputs the MCTS tree structure (saved in the 'mcts_tree' folder)
+    DEBUG_PROGRESS = True           # Creates HTML plots of constraint evolution (saved in the 'constraint_progress' folder)
+    DEBUG_LOG = True                # Logs best intermediate and final solutions (saved in the 'log' folder)
+    DEBUG_PROFILER = True           # Enables performance profiling (saved in the 'profiler' folder)
+    DEBUG_RANDOM_SIMULATION = True  # Enables random simulations
     ```
-    <!-- DEBUG_PRINT = True      # Prints logs to the console during execution -->
+    <!-- DEBUG_PRINT = True              # Prints logs to the console during execution -->
 
 * **Note:** If ``DEBUG_LOG = False``, the ``DEBUG_EXCEL = True`` flag will not generate the ``test_results.xlsx`` file because the log data is required for the Excel output. Ensure that ``DEBUG_LOG`` is enabled if you wish to generate the Excel file.
 

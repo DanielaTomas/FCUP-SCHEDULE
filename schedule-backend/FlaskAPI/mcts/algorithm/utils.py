@@ -99,9 +99,7 @@ def evaluate_timetable(conflicts_checker, timetable, unassigned_events = [], ful
         
         if full_evaluation:
             soft_penalty += (conflicts_checker.check_room_capacity(event, event["RoomId"])
-                            + conflicts_checker.check_block_compactness(
-                                event, timetable, event["Timeslot"], event["WeekDay"]
-                            ))
+                            + conflicts_checker.check_block_compactness(event, timetable, event["Timeslot"], event["WeekDay"]))
             if event["Name"] not in event_names:
                 soft_penalty += (conflicts_checker.check_min_working_days(event, events_to_check, event["WeekDay"])
                                 + conflicts_checker.check_room_stability(event, events_to_check, event["RoomId"]))
