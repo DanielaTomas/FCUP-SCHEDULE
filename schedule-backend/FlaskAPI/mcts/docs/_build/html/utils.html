@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utils module &mdash; A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="simulation_results_writer module" href="simulation_results_writer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">algorithm</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="check_conflicts.html">check_conflicts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">debug module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hill_climbing.html">hill_climbing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macros.html">macros module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mcts.html">mcts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mcts_node.html">mcts_node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_results_writer.html">simulation_results_writer module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#utils.add_event_ids_and_priority"><code class="docutils literal notranslate"><span class="pre">add_event_ids_and_priority()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.dict_slice"><code class="docutils literal notranslate"><span class="pre">dict_slice()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.evaluate_timetable"><code class="docutils literal notranslate"><span class="pre">evaluate_timetable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.find_available_rooms"><code class="docutils literal notranslate"><span class="pre">find_available_rooms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.get_valid_periods"><code class="docutils literal notranslate"><span class="pre">get_valid_periods()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.root_expansion_limit"><code class="docutils literal notranslate"><span class="pre">root_expansion_limit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utils.sort_periods"><code class="docutils literal notranslate"><span class="pre">sort_periods()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">algorithm</a></li>
+      <li class="breadcrumb-item active">utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-utils">
+<span id="utils-module"></span><h1>utils module<a class="headerlink" href="#module-utils" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.add_event_ids_and_priority">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">add_event_ids_and_priority</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periods_per_day</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraints</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#add_event_ids_and_priority"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.add_event_ids_and_priority" title="Link to this definition"></a></dt>
+<dd><p>Duplicates each event based on the number of lectures, assigns a unique ID, determines valid periods, calculates priority, and sorts events by priority.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>events</strong> (<em>list</em>) – List of event dictionaries.</p></li>
+<li><p><strong>days</strong> (<em>int</em>) – Number of scheduling days.</p></li>
+<li><p><strong>periods_per_day</strong> (<em>int</em>) – Number of periods per day.</p></li>
+<li><p><strong>blocks</strong> (<em>dict</em>) – Mapping of block names to their associated events.</p></li>
+<li><p><strong>constraints</strong> (<em>dict</em>) – Mapping of event names to a list of unavailable time slots.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of sorted events with IDs and priorities, and a name-to-IDs mapping.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.dict_slice">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">dict_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next_iteration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#dict_slice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.dict_slice" title="Link to this definition"></a></dt>
+<dd><p>Returns a sliced dictionary starting from the specified key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<em>dict</em>) – Original dictionary.</p></li>
+<li><p><strong>start_key</strong> – Key to start from.</p></li>
+<li><p><strong>next_iteration</strong> (<em>bool</em>) – If True, skip the start_key entry itself.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sliced dictionary.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.evaluate_timetable">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">evaluate_timetable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conflicts_checker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timetable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unassigned_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_evaluation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#evaluate_timetable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.evaluate_timetable" title="Link to this definition"></a></dt>
+<dd><p>Evaluates a timetable by computing penalties from conflicts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conflicts_checker</strong> (<em>object</em>) – Object with methods to check constraint violations.</p></li>
+<li><p><strong>timetable</strong> (<em>dict</em>) – Mapping from event IDs to scheduled events.</p></li>
+<li><p><strong>unassigned_events</strong> (<em>list</em>) – Events that couldn’t be scheduled.</p></li>
+<li><p><strong>full_evaluation</strong> (<em>bool</em>) – Whether to compute soft constraint penalties as well.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(-hard_penalty, -soft_penalty) if full_evaluation, else just -hard_penalty.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.find_available_rooms">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">find_available_rooms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_capacity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rooms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">available_periods</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#find_available_rooms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.find_available_rooms" title="Link to this definition"></a></dt>
+<dd><p>Determine the appropriate rooms for each available period that meet the capacity restriction whenever possible and avoid conflicts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event_capacity</strong> (<em>int</em>) – Required capacity for the event.</p></li>
+<li><p><strong>rooms</strong> (<em>dict</em>) – Mapping of room IDs to room data.</p></li>
+<li><p><strong>events</strong> (<em>list</em>) – Other scheduled events to check for conflicts.</p></li>
+<li><p><strong>available_periods</strong> (<em>list</em>) – Time periods available for the event.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mapping from periods to lists of suitable room IDs (sorted by fit).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.get_valid_periods">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_valid_periods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constraints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periods_per_day</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#get_valid_periods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.get_valid_periods" title="Link to this definition"></a></dt>
+<dd><p>Returns a list of periods that are not restricted by unavailability constraints.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> (<em>dict</em>) – The event being scheduled.</p></li>
+<li><p><strong>constraints</strong> (<em>dict</em>) – Mapping of event names to a list of restricted time slots.</p></li>
+<li><p><strong>days</strong> (<em>int</em>) – Number of scheduling days.</p></li>
+<li><p><strong>periods_per_day</strong> (<em>int</em>) – Number of periods per day.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Available (day, timeslot) tuples.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.root_expansion_limit">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">root_expansion_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rooms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#root_expansion_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.root_expansion_limit" title="Link to this definition"></a></dt>
+<dd><p>Calculates root expansion limit, i.e., the total number of room-period combinations where the next event could be scheduled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> (<em>dict</em>) – The event to analyze.</p></li>
+<li><p><strong>rooms</strong> (<em>dict</em>) – Mapping of room IDs to room data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Total number of viable (period, room) pairs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.sort_periods">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">sort_periods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#sort_periods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.sort_periods" title="Link to this definition"></a></dt>
+<dd><p>Sorts periods such that the less available (more constrained) periods across all events come first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> (<em>dict</em>) – The event whose periods are being sorted.</p></li>
+<li><p><strong>events</strong> (<em>list</em>) – List of all event dictionaries.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sorted list of available periods.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simulation_results_writer.html" class="btn btn-neutral float-left" title="simulation_results_writer module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniela Tomás and João Pedroso.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

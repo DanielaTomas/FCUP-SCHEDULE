@@ -93,3 +93,29 @@
             ```SHELL
             $ ./validator "input/comp01.ctt" "output/comp01_output.txt"
             ```
+
+# Documentation
+
+* This project includes auto-generated documentation using ``Sphinx``, located in the ``docs`` directory.
+
+* To view the documentation, open [docs/_build/html/index.html/index.html](docs/_build/html/index.html)
+
+* If you make changes to the code or docstrings and want to regenerate the documentation:
+    1. Install ``Sphinx``:
+        ```SHELL
+        $ pip install sphinx
+        ```   
+    2. From the root of the project (e.g. ``FCUP-SCHEDULE/schedule-backend/FlaskAPI/mcts``), run:
+        ```SHELL
+        $ sphinx-apidoc -o docs/ algorithm/
+        ```
+        * This step scans the ``algorithm/`` folder and generates corresponding .rst files in the ``docs/`` directory.
+    3. Then navigate to the ``docs`` folder:
+        ```SHELL
+        $ cd docs
+        ```
+    4. Build the HTML documentation:
+        ```SHELL
+        $ make html
+        ```
+    5. The updated documentation will be available in ``docs/_build/html/index.html``

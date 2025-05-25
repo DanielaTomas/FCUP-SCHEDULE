@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>debug module &mdash; A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="hill_climbing module" href="hill_climbing.html" />
+    <link rel="prev" title="check_conflicts module" href="check_conflicts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">algorithm</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="check_conflicts.html">check_conflicts module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">debug module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debug.get_last_log_line"><code class="docutils literal notranslate"><span class="pre">get_last_log_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debug.parse_last_log_line"><code class="docutils literal notranslate"><span class="pre">parse_last_log_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debug.plot_progress"><code class="docutils literal notranslate"><span class="pre">plot_progress()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debug.profile_execution"><code class="docutils literal notranslate"><span class="pre">profile_execution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debug.save_results_to_excel"><code class="docutils literal notranslate"><span class="pre">save_results_to_excel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debug.visualize_tree"><code class="docutils literal notranslate"><span class="pre">visualize_tree()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hill_climbing.html">hill_climbing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macros.html">macros module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mcts.html">mcts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mcts_node.html">mcts_node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_results_writer.html">simulation_results_writer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">algorithm</a></li>
+      <li class="breadcrumb-item active">debug module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/debug.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-debug">
+<span id="debug-module"></span><h1>debug module<a class="headerlink" href="#module-debug" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="debug.get_last_log_line">
+<span class="sig-prename descclassname"><span class="pre">debug.</span></span><span class="sig-name descname"><span class="pre">get_last_log_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#get_last_log_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#debug.get_last_log_line" title="Link to this definition"></a></dt>
+<dd><p>Gets the last log line from a file and parses it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Path to the log file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Parsed [time, hard, soft] values or error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list or str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="debug.parse_last_log_line">
+<span class="sig-prename descclassname"><span class="pre">debug.</span></span><span class="sig-name descname"><span class="pre">parse_last_log_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#parse_last_log_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#debug.parse_last_log_line" title="Link to this definition"></a></dt>
+<dd><p>Extracts time, hard penalty, and soft penalty values from a log line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>line</strong> (<em>str</em>) – Line from the log file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>[time (str), hard (int), soft (int)] or None if format is invalid.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="debug.plot_progress">
+<span class="sig-prename descclassname"><span class="pre">debug.</span></span><span class="sig-name descname"><span class="pre">plot_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constraint_progress.html'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#plot_progress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#debug.plot_progress" title="Link to this definition"></a></dt>
+<dd><p>Plots the progress of hard and soft constraints over iterations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metrics</strong> (<em>dict</em>) – Dictionary with keys: ‘iterations’, ‘current_hard’, ‘best_hard’, ‘current_soft’, ‘best_soft’.</p></li>
+<li><p><strong>output_file_name</strong> (<em>str</em>) – Filename for the saved HTML plot.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="debug.profile_execution">
+<span class="sig-prename descclassname"><span class="pre">debug.</span></span><span class="sig-name descname"><span class="pre">profile_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#profile_execution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#debug.profile_execution" title="Link to this definition"></a></dt>
+<dd><p>Saves the profiling statistics to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>profiler</strong> (<em>cProfile.Profile</em>) – The profiler instance.</p></li>
+<li><p><strong>input_file_name</strong> (<em>str</em>) – Filename to save the profiler output.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="debug.save_results_to_excel">
+<span class="sig-prename descclassname"><span class="pre">debug.</span></span><span class="sig-name descname"><span class="pre">save_results_to_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test_results.xlsx'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#save_results_to_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#debug.save_results_to_excel" title="Link to this definition"></a></dt>
+<dd><p>Saves test results to an Excel file with a new sheet for each test run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>results</strong> (<em>dict</em>) – Dictionary mapping filenames to lists of [time, hard, soft] results.</p></li>
+<li><p><strong>file_names</strong> (<em>list</em>) – Ordered list of filenames used for the results.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – Path to the Excel file to save results.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="debug.visualize_tree">
+<span class="sig-prename descclassname"><span class="pre">debug.</span></span><span class="sig-name descname"><span class="pre">visualize_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mcts_tree'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/debug.html#visualize_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#debug.visualize_tree" title="Link to this definition"></a></dt>
+<dd><p>Creates a MCTS tree using Graphviz and saves it as a PDF.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root</strong> (<em>Node</em>) – Root node of the MCTS tree.</p></li>
+<li><p><strong>output_file_name</strong> (<em>str</em>) – Filename for the output PDF.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="check_conflicts.html" class="btn btn-neutral float-left" title="check_conflicts module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hill_climbing.html" class="btn btn-neutral float-right" title="hill_climbing module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniela Tomás and João Pedroso.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

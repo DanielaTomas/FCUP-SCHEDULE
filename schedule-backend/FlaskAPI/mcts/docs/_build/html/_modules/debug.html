@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>debug &#8212; A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for debug</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">algorithm.macros</span> <span class="kn">import</span> <span class="n">WAIT_TIME</span><span class="p">,</span> <span class="n">MAX_RETRIES</span>
+<span class="kn">from</span> <span class="nn">algorithm.simulation_results_writer</span> <span class="kn">import</span> <span class="n">directory_exists</span>
+<span class="kn">import</span> <span class="nn">graphviz</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">openpyxl</span>
+<span class="kn">from</span> <span class="nn">openpyxl.styles</span> <span class="kn">import</span> <span class="n">Font</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">pstats</span>
+
+<div class="viewcode-block" id="visualize_tree">
+<a class="viewcode-back" href="../debug.html#debug.visualize_tree">[docs]</a>
+<span class="k">def</span> <span class="nf">visualize_tree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">output_file_name</span> <span class="o">=</span> <span class="s2">&quot;mcts_tree&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a MCTS tree using Graphviz and saves it as a PDF.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        root (Node): Root node of the MCTS tree.</span>
+<span class="sd">        output_file_name (str): Filename for the output PDF.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Processing the tree...&quot;</span><span class="p">)</span>
+    <span class="n">dot</span> <span class="o">=</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">Digraph</span><span class="p">(</span><span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;MCTS Tree&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_nodes_edges</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">:</span> <span class="k">return</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">assignment</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">best_hard_penalty</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">best_soft_penalty</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1">#{node.expansion_limit}&quot;</span>
+        <span class="n">dot</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s2">&quot;plaintext&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;0.01&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;0.01&quot;</span><span class="p">)</span>
+        <span class="c1">#label = &quot;&quot;</span>
+        <span class="c1">#dot.node(str(id(node)), label=label, shape=&quot;point&quot;, width=&quot;0.01&quot;, height=&quot;0.01&quot;)</span>
+
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">child</span><span class="p">:</span>
+                <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">node</span><span class="p">)),</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">child</span><span class="p">)),</span> <span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span> <span class="n">penwidth</span><span class="o">=</span><span class="s2">&quot;0.5&quot;</span><span class="p">)</span>
+                <span class="n">add_nodes_edges</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">add_nodes_edges</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="n">output_dir</span> <span class="o">=</span> <span class="s2">&quot;mcts_tree&quot;</span>
+        <span class="n">directory_exists</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">output_file_name</span><span class="p">)</span>
+
+        <span class="n">dot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;pdf&quot;</span><span class="p">,</span> <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tree successfully saved as </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">.pdf</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">ExecutableNotFound</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Graphviz is not installed or not in the system PATH.&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">graphviz</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Graphviz failed to render the file. The tree may be too large.&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">MemoryError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Not enough memory to render the graph.&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="plot_progress">
+<a class="viewcode-back" href="../debug.html#debug.plot_progress">[docs]</a>
+<span class="k">def</span> <span class="nf">plot_progress</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">output_file_name</span> <span class="o">=</span> <span class="s2">&quot;constraint_progress.html&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots the progress of hard and soft constraints over iterations.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        metrics (dict): Dictionary with keys: &#39;iterations&#39;, &#39;current_hard&#39;, &#39;best_hard&#39;, &#39;current_soft&#39;, &#39;best_soft&#39;.</span>
+<span class="sd">        output_file_name (str): Filename for the saved HTML plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Processing the constraint progress...&quot;</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+                        <span class="n">subplot_titles</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Hard Constraint Progress&quot;</span><span class="p">,</span> <span class="s2">&quot;Soft Constraint Progress&quot;</span><span class="p">),</span>
+                        <span class="n">shared_xaxes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;iterations&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;current_hard&quot;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Current Hard&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)),</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;iterations&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;best_hard&quot;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Best Hard&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)),</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;iterations&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;current_soft&quot;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Current Soft&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)),</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;iterations&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;best_soft&quot;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines+markers&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Best Soft&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">)),</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Constraint Progress (Current vs. Best)&quot;</span><span class="p">,</span> <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Constraint Value&quot;</span><span class="p">)</span>
+    
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="s2">&quot;constraint_progress&quot;</span>
+    <span class="n">directory_exists</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">output_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">output_file_name</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">write_html</span><span class="p">(</span><span class="n">output_file_name</span><span class="p">)</span>
+    <span class="c1">#fig.show()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plot saved successfully to </span><span class="si">{</span><span class="n">output_file_name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="save_results_to_excel">
+<a class="viewcode-back" href="../debug.html#debug.save_results_to_excel">[docs]</a>
+<span class="k">def</span> <span class="nf">save_results_to_excel</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">file_names</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;test_results.xlsx&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves test results to an Excel file with a new sheet for each test run.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        results (dict): Dictionary mapping filenames to lists of [time, hard, soft] results.</span>
+<span class="sd">        file_names (list): Ordered list of filenames used for the results.</span>
+<span class="sd">        filename (str): Path to the Excel file to save results.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving results to excel...&quot;</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RETRIES</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                <span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">sheet_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Test </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wb</span><span class="o">.</span><span class="n">sheetnames</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">create_sheet</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">sheet_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">wb</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">Workbook</span><span class="p">()</span>
+                <span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
+                <span class="n">ws</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Test 1&quot;</span>
+            
+            <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TEST&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">file_names</span>
+            <span class="n">ws</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="n">file</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="k">if</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">results</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">file</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">index</span> <span class="k">else</span> <span class="s2">&quot;N/A&quot;</span>
+            
+            <span class="n">best_hard_row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">get_value</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">]</span>
+            <span class="n">best_soft_row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Hard&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">get_value</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">]</span>
+            <span class="n">iteration_row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Soft&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">get_value</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">file_names</span><span class="p">]</span>
+
+            <span class="n">ws</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_hard_row</span><span class="p">)</span>
+            <span class="n">ws</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_soft_row</span><span class="p">)</span>
+            <span class="n">ws</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iteration_row</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">ws</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">(</span><span class="n">min_row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_row</span><span class="o">=</span><span class="n">ws</span><span class="o">.</span><span class="n">max_row</span><span class="p">,</span> <span class="n">min_col</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_col</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+                    <span class="n">cell</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">Font</span><span class="p">(</span><span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            
+            <span class="n">wb</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Results saved to &#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&#39; successfully!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Permission denied: </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2"> is open. Please close the file. Retrying in </span><span class="si">{</span><span class="n">WAIT_TIME</span><span class="si">}</span><span class="s2"> seconds...&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">WAIT_TIME</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="parse_last_log_line">
+<a class="viewcode-back" href="../debug.html#debug.parse_last_log_line">[docs]</a>
+<span class="k">def</span> <span class="nf">parse_last_log_line</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts time, hard penalty, and soft penalty values from a log line.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        line (str): Line from the log file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: [time (str), hard (int), soft (int)] or None if format is invalid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Time: ([\d:.]+), Hard: (-?\d+), Soft: (-?\d+)&quot;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+        <span class="n">time_value</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">hard_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">soft_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">time_value</span><span class="p">,</span> <span class="n">hard_value</span><span class="p">,</span> <span class="n">soft_value</span><span class="p">]</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="get_last_log_line">
+<a class="viewcode-back" href="../debug.html#debug.get_last_log_line">[docs]</a>
+<span class="k">def</span> <span class="nf">get_last_log_line</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets the last log line from a file and parses it.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        filename (str): Path to the log file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list or str: Parsed [time, hard, soft] values or error message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">SEEK_END</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+            
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">SEEK_END</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">SEEK_CUR</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">parse_last_log_line</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;File not found&quot;</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">parse_last_log_line</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="n">lines</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span></div>
+
+        
+
+<div class="viewcode-block" id="profile_execution">
+<a class="viewcode-back" href="../debug.html#debug.profile_execution">[docs]</a>
+<span class="k">def</span> <span class="nf">profile_execution</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="n">input_file_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves the profiling statistics to a file.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        profiler (cProfile.Profile): The profiler instance.</span>
+<span class="sd">        input_file_name (str): Filename to save the profiler output.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">profiler</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving profiler output...&quot;</span><span class="p">)</span>
+    
+    <span class="n">output_dir</span> <span class="o">=</span> <span class="s2">&quot;profiler&quot;</span>
+    <span class="n">directory_exists</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">output_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">input_file_name</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">sortby</span> <span class="o">=</span> <span class="s1">&#39;cumulative&#39;</span>
+    <span class="n">ps</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">sortby</span><span class="p">)</span>
+    <span class="n">ps</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Profiler output saved to </span><span class="si">{</span><span class="n">output_file_name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">algorithm</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Daniela Tomás and João Pedroso.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

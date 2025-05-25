@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>algorithm &mdash; A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="check_conflicts module" href="check_conflicts.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="check_conflicts.html">check_conflicts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">debug module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hill_climbing.html">hill_climbing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="macros.html">macros module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mcts.html">mcts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mcts_node.html">mcts_node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_results_writer.html">simulation_results_writer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">algorithm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="algorithm">
+<h1>algorithm<a class="headerlink" href="#algorithm" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="check_conflicts.html">check_conflicts module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_block_compactness"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_block_compactness()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_block_constraints"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_block_constraints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_conflict_time"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_conflict_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_event_hard_constraints"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_event_hard_constraints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_event_unavailability_constraints"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_event_unavailability_constraints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_min_working_days"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_min_working_days()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_room_capacity"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_room_capacity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_room_conflicts"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_room_conflicts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.check_room_stability"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.check_room_stability()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="check_conflicts.html#check_conflicts.ConflictsChecker.room_conflicts"><code class="docutils literal notranslate"><span class="pre">ConflictsChecker.room_conflicts()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">debug module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="debug.html#debug.get_last_log_line"><code class="docutils literal notranslate"><span class="pre">get_last_log_line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html#debug.parse_last_log_line"><code class="docutils literal notranslate"><span class="pre">parse_last_log_line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html#debug.plot_progress"><code class="docutils literal notranslate"><span class="pre">plot_progress()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html#debug.profile_execution"><code class="docutils literal notranslate"><span class="pre">profile_execution()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html#debug.save_results_to_excel"><code class="docutils literal notranslate"><span class="pre">save_results_to_excel()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html#debug.visualize_tree"><code class="docutils literal notranslate"><span class="pre">visualize_tree()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hill_climbing.html">hill_climbing module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing"><code class="docutils literal notranslate"><span class="pre">HillClimbing</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.curriculum_compactness_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.curriculum_compactness_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.evaluate_timetable"><code class="docutils literal notranslate"><span class="pre">HillClimbing.evaluate_timetable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.event_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.event_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.min_working_days_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.min_working_days_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.period_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.period_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.revert_changes"><code class="docutils literal notranslate"><span class="pre">HillClimbing.revert_changes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.room_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.room_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.room_stability_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.room_stability_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.run_hill_climbing"><code class="docutils literal notranslate"><span class="pre">HillClimbing.run_hill_climbing()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="hill_climbing.html#hill_climbing.HillClimbing.save_original_state"><code class="docutils literal notranslate"><span class="pre">HillClimbing.save_original_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="macros.html">macros module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcts.html">mcts module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mcts.html#mcts.MCTS"><code class="docutils literal notranslate"><span class="pre">MCTS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.config"><code class="docutils literal notranslate"><span class="pre">MCTS.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.rooms"><code class="docutils literal notranslate"><span class="pre">MCTS.rooms</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.events"><code class="docutils literal notranslate"><span class="pre">MCTS.events</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.root"><code class="docutils literal notranslate"><span class="pre">MCTS.root</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.current_node"><code class="docutils literal notranslate"><span class="pre">MCTS.current_node</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.backpropagation"><code class="docutils literal notranslate"><span class="pre">MCTS.backpropagation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.expansion"><code class="docutils literal notranslate"><span class="pre">MCTS.expansion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.normalize"><code class="docutils literal notranslate"><span class="pre">MCTS.normalize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.run_mcts"><code class="docutils literal notranslate"><span class="pre">MCTS.run_mcts()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.selection"><code class="docutils literal notranslate"><span class="pre">MCTS.selection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.simulation"><code class="docutils literal notranslate"><span class="pre">MCTS.simulation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTS.update_progress_metrics"><code class="docutils literal notranslate"><span class="pre">MCTS.update_progress_metrics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mcts.html#mcts.MCTSConfig"><code class="docutils literal notranslate"><span class="pre">MCTSConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTSConfig.days"><code class="docutils literal notranslate"><span class="pre">MCTSConfig.days</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTSConfig.output_filename"><code class="docutils literal notranslate"><span class="pre">MCTSConfig.output_filename</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTSConfig.params"><code class="docutils literal notranslate"><span class="pre">MCTSConfig.params</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.MCTSConfig.periods_per_day"><code class="docutils literal notranslate"><span class="pre">MCTSConfig.periods_per_day</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mcts.html#mcts.Params"><code class="docutils literal notranslate"><span class="pre">Params</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.Params.c_param"><code class="docutils literal notranslate"><span class="pre">Params.c_param</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.Params.iterations"><code class="docutils literal notranslate"><span class="pre">Params.iterations</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts.html#mcts.Params.time_limit"><code class="docutils literal notranslate"><span class="pre">Params.time_limit</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mcts_node.html">mcts_node module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mcts_node.html#mcts_node.MCTSNode"><code class="docutils literal notranslate"><span class="pre">MCTSNode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mcts_node.html#mcts_node.MCTSNode.best_child"><code class="docutils literal notranslate"><span class="pre">MCTSNode.best_child()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts_node.html#mcts_node.MCTSNode.depth"><code class="docutils literal notranslate"><span class="pre">MCTSNode.depth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts_node.html#mcts_node.MCTSNode.is_fully_expanded"><code class="docutils literal notranslate"><span class="pre">MCTSNode.is_fully_expanded()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mcts_node.html#mcts_node.MCTSNode.is_terminal_node"><code class="docutils literal notranslate"><span class="pre">MCTSNode.is_terminal_node()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simulation_results_writer.html">simulation_results_writer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simulation_results_writer.html#simulation_results_writer.directory_exists"><code class="docutils literal notranslate"><span class="pre">directory_exists()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_results_writer.html#simulation_results_writer.write_simulation_results"><code class="docutils literal notranslate"><span class="pre">write_simulation_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.add_event_ids_and_priority"><code class="docutils literal notranslate"><span class="pre">add_event_ids_and_priority()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.dict_slice"><code class="docutils literal notranslate"><span class="pre">dict_slice()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.evaluate_timetable"><code class="docutils literal notranslate"><span class="pre">evaluate_timetable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.find_available_rooms"><code class="docutils literal notranslate"><span class="pre">find_available_rooms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.get_valid_periods"><code class="docutils literal notranslate"><span class="pre">get_valid_periods()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.root_expansion_limit"><code class="docutils literal notranslate"><span class="pre">root_expansion_limit()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#utils.sort_periods"><code class="docutils literal notranslate"><span class="pre">sort_periods()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="check_conflicts.html" class="btn btn-neutral float-right" title="check_conflicts module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniela Tomás and João Pedroso.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

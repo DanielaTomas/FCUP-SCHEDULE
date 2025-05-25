@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hill_climbing module &mdash; A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="macros module" href="macros.html" />
+    <link rel="prev" title="debug module" href="debug.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">algorithm</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="check_conflicts.html">check_conflicts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">debug module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">hill_climbing module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hill_climbing.HillClimbing"><code class="docutils literal notranslate"><span class="pre">HillClimbing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.curriculum_compactness_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.curriculum_compactness_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.evaluate_timetable"><code class="docutils literal notranslate"><span class="pre">HillClimbing.evaluate_timetable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.event_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.event_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.min_working_days_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.min_working_days_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.period_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.period_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.revert_changes"><code class="docutils literal notranslate"><span class="pre">HillClimbing.revert_changes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.room_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.room_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.room_stability_move"><code class="docutils literal notranslate"><span class="pre">HillClimbing.room_stability_move()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.run_hill_climbing"><code class="docutils literal notranslate"><span class="pre">HillClimbing.run_hill_climbing()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hill_climbing.HillClimbing.save_original_state"><code class="docutils literal notranslate"><span class="pre">HillClimbing.save_original_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="macros.html">macros module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mcts.html">mcts module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mcts_node.html">mcts_node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simulation_results_writer.html">simulation_results_writer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">algorithm</a></li>
+      <li class="breadcrumb-item active">hill_climbing module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/hill_climbing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-hill_climbing">
+<span id="hill-climbing-module"></span><h1>hill_climbing module<a class="headerlink" href="#module-hill_climbing" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hill_climbing.</span></span><span class="sig-name descname"><span class="pre">HillClimbing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conflicts_checker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rooms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">days</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_to_event_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'output/output.txt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Implements the Hill Climbing algorithm for timetable optimization.
+It iteratively improves a given timetable solution using various neighborhood moves.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.curriculum_compactness_move">
+<span class="sig-name descname"><span class="pre">curriculum_compactness_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timetable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unscheduled_events</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.curriculum_compactness_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.curriculum_compactness_move" title="Link to this definition"></a></dt>
+<dd><p>Tries to move isolated curriculum events closer to others to improve compactness.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.evaluate_timetable">
+<span class="sig-name descname"><span class="pre">evaluate_timetable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulated_events</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.evaluate_timetable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.evaluate_timetable" title="Link to this definition"></a></dt>
+<dd><p>Evaluates a timetable based on soft constraint penalties, since there are no hard constraint violations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>simulated_events</strong> (<em>dict</em>) – The timetable being evaluated.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Negative of total soft penalties if it’s better than the current best;</dt><dd><p>None if not an improvement.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.event_move">
+<span class="sig-name descname"><span class="pre">event_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timetable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unscheduled_events</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.event_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.event_move" title="Link to this definition"></a></dt>
+<dd><p>Performs a comprehensive move by reassigning an event to a new room and period,
+and potentially swapping with another event to resolve conflicts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.min_working_days_move">
+<span class="sig-name descname"><span class="pre">min_working_days_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timetable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unscheduled_events</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.min_working_days_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.min_working_days_move" title="Link to this definition"></a></dt>
+<dd><p>Increases the number of working days a course is scheduled on.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.period_move">
+<span class="sig-name descname"><span class="pre">period_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timetable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unscheduled_events</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.period_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.period_move" title="Link to this definition"></a></dt>
+<dd><p>Attempts to move a random event to a different period (WeekDay,Timeslot).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.revert_changes">
+<span class="sig-name descname"><span class="pre">revert_changes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timetable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.revert_changes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.revert_changes" title="Link to this definition"></a></dt>
+<dd><p>Reverts any changes made to events based on saved original states.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.room_move">
+<span class="sig-name descname"><span class="pre">room_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timetable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unscheduled_events</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.room_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.room_move" title="Link to this definition"></a></dt>
+<dd><p>Attempts to move a random event to a different available room.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.room_stability_move">
+<span class="sig-name descname"><span class="pre">room_stability_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timetable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unscheduled_events</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.room_stability_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.room_stability_move" title="Link to this definition"></a></dt>
+<dd><p>Tries to assign all lectures of a course to a single room to improve room stability.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.run_hill_climbing">
+<span class="sig-name descname"><span class="pre">run_hill_climbing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">best_timetable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_result_soft</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_limit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.run_hill_climbing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.run_hill_climbing" title="Link to this definition"></a></dt>
+<dd><p>Executes the Hill Climbing algorithm using neighborhood moves until a local optimum is found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>best_timetable</strong> (<em>dict</em>) – Current best timetable solution.</p></li>
+<li><p><strong>start_key</strong> (<em>int</em>) – The event ID to start from.</p></li>
+<li><p><strong>best_result_soft</strong> (<em>int</em>) – Best known soft score.</p></li>
+<li><p><strong>start_time</strong> (<em>float</em>) – Start time (Unix timestamp).</p></li>
+<li><p><strong>time_limit</strong> (<em>float</em>) – Time limit in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Final best soft score and corresponding timetable.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[int, dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hill_climbing.HillClimbing.save_original_state">
+<span class="sig-name descname"><span class="pre">save_original_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hill_climbing.html#HillClimbing.save_original_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hill_climbing.HillClimbing.save_original_state" title="Link to this definition"></a></dt>
+<dd><p>Stores the current state of an event before modification.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="debug.html" class="btn btn-neutral float-left" title="debug module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="macros.html" class="btn btn-neutral float-right" title="macros module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniela Tomás and João Pedroso.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

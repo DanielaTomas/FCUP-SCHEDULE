@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>utils &#8212; A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">dropwhile</span>
+
+<div class="viewcode-block" id="add_event_ids_and_priority">
+<a class="viewcode-back" href="../utils.html#utils.add_event_ids_and_priority">[docs]</a>
+<span class="k">def</span> <span class="nf">add_event_ids_and_priority</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">days</span><span class="p">,</span> <span class="n">periods_per_day</span><span class="p">,</span> <span class="n">blocks</span><span class="p">,</span> <span class="n">constraints</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Duplicates each event based on the number of lectures, assigns a unique ID, determines valid periods, calculates priority, and sorts events by priority.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        events (list): List of event dictionaries.</span>
+<span class="sd">        days (int): Number of scheduling days.</span>
+<span class="sd">        periods_per_day (int): Number of periods per day.</span>
+<span class="sd">        blocks (dict): Mapping of block names to their associated events.</span>
+<span class="sd">        constraints (dict): Mapping of event names to a list of unavailable time slots.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: A list of sorted events with IDs and priorities, and a name-to-IDs mapping.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">events_to_visit</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">name_to_event_ids</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">unique_id</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Lectures&quot;</span><span class="p">]):</span>
+            <span class="n">new_event</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+            <span class="n">new_event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unique_id</span>
+            <span class="n">new_event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_valid_periods</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">days</span><span class="p">,</span> <span class="n">periods_per_day</span><span class="p">)</span>
+            <span class="n">new_event</span><span class="p">[</span><span class="s2">&quot;Priority&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">new_event</span><span class="p">[</span><span class="s2">&quot;Lectures&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">new_event</span><span class="p">[</span><span class="s2">&quot;MinWorkingDays&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">4</span>
+                                    <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="mi">3</span>
+                                    <span class="o">+</span> <span class="n">new_event</span><span class="p">[</span><span class="s2">&quot;Capacity&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+                                    <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">blocks</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">block</span><span class="p">[</span><span class="s2">&quot;Events&quot;</span><span class="p">])</span>
+                                    <span class="p">)</span>
+            <span class="n">events_to_visit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_event</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">name_to_event_ids</span><span class="p">:</span>
+                <span class="n">name_to_event_ids</span><span class="p">[</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">name_to_event_ids</span><span class="p">[</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">unique_id</span><span class="p">)</span>
+            
+            <span class="n">unique_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_to_visit</span><span class="p">:</span>
+        <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sort_periods</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">events_to_visit</span><span class="p">)</span>
+        
+    <span class="n">sorted_events</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">events_to_visit</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Priority&quot;</span><span class="p">],</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sorted_events</span><span class="p">,</span> <span class="n">name_to_event_ids</span></div>
+
+
+
+<div class="viewcode-block" id="sort_periods">
+<a class="viewcode-back" href="../utils.html#utils.sort_periods">[docs]</a>
+<span class="k">def</span> <span class="nf">sort_periods</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sorts periods such that the less available (more constrained) periods across all events come first.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        event (dict): The event whose periods are being sorted.</span>
+<span class="sd">        events (list): List of all event dictionaries.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: Sorted list of available periods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">period_conflict_count</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">]:</span>
+        <span class="n">period_conflict_count</span><span class="p">[</span><span class="n">period</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">period</span> <span class="ow">in</span> <span class="n">other</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">other</span> <span class="ow">in</span> <span class="n">events</span> <span class="k">if</span> <span class="n">other</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="p">(</span><span class="n">period_conflict_count</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+
+    
+
+<div class="viewcode-block" id="root_expansion_limit">
+<a class="viewcode-back" href="../utils.html#utils.root_expansion_limit">[docs]</a>
+<span class="k">def</span> <span class="nf">root_expansion_limit</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">rooms</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates root expansion limit, i.e., the total number of room-period combinations where the next event could be scheduled.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        event (dict): The event to analyze.</span>
+<span class="sd">        rooms (dict): Mapping of room IDs to room data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: Total number of viable (period, room) pairs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">available_rooms</span> <span class="o">=</span> <span class="n">find_available_rooms</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Capacity&quot;</span><span class="p">],</span> <span class="n">rooms</span><span class="p">,</span> <span class="p">[],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">])</span>
+    <span class="n">expansion_limit</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rooms</span><span class="p">)</span> <span class="k">for</span> <span class="n">rooms</span> <span class="ow">in</span> <span class="n">available_rooms</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">expansion_limit</span></div>
+
+
+
+<div class="viewcode-block" id="find_available_rooms">
+<a class="viewcode-back" href="../utils.html#utils.find_available_rooms">[docs]</a>
+<span class="k">def</span> <span class="nf">find_available_rooms</span><span class="p">(</span><span class="n">event_capacity</span><span class="p">,</span> <span class="n">rooms</span><span class="p">,</span> <span class="n">events</span><span class="p">,</span> <span class="n">available_periods</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine the appropriate rooms for each available period that meet the capacity restriction whenever possible and avoid conflicts.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        event_capacity (int): Required capacity for the event.</span>
+<span class="sd">        rooms (dict): Mapping of room IDs to room data.</span>
+<span class="sd">        events (list): Other scheduled events to check for conflicts.</span>
+<span class="sd">        available_periods (list): Time periods available for the event.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Mapping from periods to lists of suitable room IDs (sorted by fit).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">period_room_availability</span> <span class="o">=</span> <span class="p">{</span><span class="n">period</span><span class="p">:</span> <span class="nb">set</span><span class="p">(</span><span class="n">rooms</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="k">for</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">available_periods</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">other_event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+        <span class="n">occupied_period</span> <span class="o">=</span> <span class="p">(</span><span class="n">other_event</span><span class="p">[</span><span class="s2">&quot;WeekDay&quot;</span><span class="p">],</span> <span class="n">other_event</span><span class="p">[</span><span class="s2">&quot;Timeslot&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">occupied_period</span> <span class="ow">in</span> <span class="n">period_room_availability</span><span class="p">:</span>
+            <span class="n">period_room_availability</span><span class="p">[</span><span class="n">occupied_period</span><span class="p">]</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">other_event</span><span class="p">[</span><span class="s2">&quot;RoomId&quot;</span><span class="p">])</span>
+
+    <span class="n">suitable_rooms</span> <span class="o">=</span> <span class="p">{</span><span class="n">room_id</span> <span class="k">for</span> <span class="n">room_id</span><span class="p">,</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">rooms</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">room</span><span class="p">[</span><span class="s2">&quot;Capacity&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">event_capacity</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">available_periods</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">period_room_availability</span><span class="p">[</span><span class="n">period</span><span class="p">]:</span>
+            <span class="n">intersected</span> <span class="o">=</span> <span class="n">period_room_availability</span><span class="p">[</span><span class="n">period</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">suitable_rooms</span>
+            <span class="k">if</span> <span class="n">intersected</span><span class="p">:</span> 
+                <span class="n">sorted_rooms</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">intersected</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">room_id</span><span class="p">:</span> <span class="p">(</span><span class="n">rooms</span><span class="p">[</span><span class="n">room_id</span><span class="p">][</span><span class="s2">&quot;Capacity&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">event_capacity</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sorted_rooms</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">period_room_availability</span><span class="p">[</span><span class="n">period</span><span class="p">]),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">room_id</span><span class="p">:</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rooms</span><span class="p">[</span><span class="n">room_id</span><span class="p">][</span><span class="s2">&quot;Capacity&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">event_capacity</span><span class="p">))</span>
+            <span class="n">period_room_availability</span><span class="p">[</span><span class="n">period</span><span class="p">]</span> <span class="o">=</span> <span class="n">sorted_rooms</span> 
+
+    <span class="k">return</span> <span class="n">period_room_availability</span></div>
+
+
+
+<div class="viewcode-block" id="get_valid_periods">
+<a class="viewcode-back" href="../utils.html#utils.get_valid_periods">[docs]</a>
+<span class="k">def</span> <span class="nf">get_valid_periods</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span> <span class="n">days</span><span class="p">,</span> <span class="n">periods_per_day</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a list of periods that are not restricted by unavailability constraints.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        event (dict): The event being scheduled.</span>
+<span class="sd">        constraints (dict): Mapping of event names to a list of restricted time slots.</span>
+<span class="sd">        days (int): Number of scheduling days.</span>
+<span class="sd">        periods_per_day (int): Number of periods per day.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: Available (day, timeslot) tuples.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">available_periods</span> <span class="o">=</span> <span class="nb">set</span><span class="p">((</span><span class="n">weekday</span><span class="p">,</span> <span class="n">timeslot</span><span class="p">)</span> <span class="k">for</span> <span class="n">weekday</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">days</span><span class="p">)</span> <span class="k">for</span> <span class="n">timeslot</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">periods_per_day</span><span class="p">))</span>
+
+    <span class="n">event_constraints</span> <span class="o">=</span> <span class="n">constraints</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">],</span> <span class="p">[])</span>
+    <span class="n">restricted_slots</span> <span class="o">=</span> <span class="nb">set</span><span class="p">((</span><span class="n">constraint</span><span class="p">[</span><span class="s2">&quot;WeekDay&quot;</span><span class="p">],</span> <span class="n">constraint</span><span class="p">[</span><span class="s2">&quot;Timeslot&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">constraint</span> <span class="ow">in</span> <span class="n">event_constraints</span><span class="p">)</span>
+    <span class="n">available_periods</span> <span class="o">-=</span> <span class="n">restricted_slots</span>
+    
+    <span class="k">if</span> <span class="n">available_periods</span><span class="p">:</span>
+        <span class="n">available_periods_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">available_periods</span><span class="p">)</span>
+        <span class="c1">#random.shuffle(available_periods_list)</span>
+        <span class="k">return</span> <span class="n">available_periods_list</span>
+    
+    <span class="k">return</span> <span class="nb">list</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="dict_slice">
+<a class="viewcode-back" href="../utils.html#utils.dict_slice">[docs]</a>
+<span class="k">def</span> <span class="nf">dict_slice</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">start_key</span><span class="p">,</span> <span class="n">next_iteration</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a sliced dictionary starting from the specified key.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        d (dict): Original dictionary.</span>
+<span class="sd">        start_key: Key to start from.</span>
+<span class="sd">        next_iteration (bool): If True, skip the start_key entry itself.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Sliced dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">iterator</span> <span class="o">=</span> <span class="n">dropwhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">start_key</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">next_iteration</span><span class="p">:</span> <span class="nb">next</span><span class="p">(</span><span class="n">iterator</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="evaluate_timetable">
+<a class="viewcode-back" href="../utils.html#utils.evaluate_timetable">[docs]</a>
+<span class="k">def</span> <span class="nf">evaluate_timetable</span><span class="p">(</span><span class="n">conflicts_checker</span><span class="p">,</span> <span class="n">timetable</span><span class="p">,</span> <span class="n">unassigned_events</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">full_evaluation</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluates a timetable by computing penalties from conflicts.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        conflicts_checker (object): Object with methods to check constraint violations.</span>
+<span class="sd">        timetable (dict): Mapping from event IDs to scheduled events.</span>
+<span class="sd">        unassigned_events (list): Events that couldn&#39;t be scheduled.</span>
+<span class="sd">        full_evaluation (bool): Whether to compute soft constraint penalties as well.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        tuple: (-hard_penalty, -soft_penalty) if full_evaluation, else just -hard_penalty.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hard_penalty</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">soft_penalty</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">room_conflicts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">event_names</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">timetable</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">events_to_check</span> <span class="o">=</span> <span class="n">dict_slice</span><span class="p">(</span><span class="n">timetable</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">hard_penalty</span> <span class="o">+=</span> <span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_event_hard_constraints</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">events_to_check</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;RoomId&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Timeslot&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;WeekDay&quot;</span><span class="p">],</span> <span class="n">room_conflicts</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">full_evaluation</span><span class="p">:</span>
+            <span class="n">soft_penalty</span> <span class="o">+=</span> <span class="p">(</span><span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_room_capacity</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;RoomId&quot;</span><span class="p">])</span>
+                            <span class="o">+</span> <span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_block_compactness</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">timetable</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Timeslot&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;WeekDay&quot;</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event_names</span><span class="p">:</span>
+                <span class="n">soft_penalty</span> <span class="o">+=</span> <span class="p">(</span><span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_min_working_days</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">events_to_check</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;WeekDay&quot;</span><span class="p">])</span>
+                                <span class="o">+</span> <span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_room_stability</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">events_to_check</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;RoomId&quot;</span><span class="p">]))</span>
+                <span class="n">event_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">])</span>
+    
+    <span class="n">hard_penalty</span> <span class="o">+=</span> <span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_room_conflicts</span><span class="p">(</span><span class="n">room_conflicts</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">full_evaluation</span><span class="p">:</span>
+        <span class="n">hard_penalty</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unassigned_events</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">hard_penalty</span><span class="p">,</span> <span class="o">-</span><span class="n">soft_penalty</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">hard_penalty</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">algorithm</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Daniela Tomás and João Pedroso.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

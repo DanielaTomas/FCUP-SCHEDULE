@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mcts &#8212; A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for mcts</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module implements the Monte Carlo Tree Search (MCTS) algorithm for solving the CB-CTT problem.</span>
+<span class="sd">It uses the standard MCTS steps: selection, expansion, simulation, and backpropagation, combined with hill climbing and a diving approach.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">algorithm.mcts_node</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">algorithm.utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">algorithm.debug</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">algorithm.check_conflicts</span> <span class="kn">import</span> <span class="n">ConflictsChecker</span>
+<span class="kn">from</span> <span class="nn">algorithm.hill_climbing</span> <span class="kn">import</span> <span class="n">HillClimbing</span>
+<span class="kn">from</span> <span class="nn">algorithm.simulation_results_writer</span> <span class="kn">import</span> <span class="n">write_simulation_results</span>
+<span class="kn">from</span> <span class="nn">algorithm.macros</span> <span class="kn">import</span> <span class="n">DEFAULT_TIME_LIMIT</span><span class="p">,</span> <span class="n">DEBUG_TREE</span><span class="p">,</span> <span class="n">DEBUG_PROGRESS</span><span class="p">,</span> <span class="n">DEBUG_PROFILER</span><span class="p">,</span> <span class="n">PRUNING</span><span class="p">,</span> <span class="n">DIVING</span><span class="p">,</span> <span class="n">DEBUG_RANDOM_SIMULATION</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span> <span class="nn">cProfile</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1">#TODO remove prints; remove debug ?</span>
+
+<div class="viewcode-block" id="Params">
+<a class="viewcode-back" href="../mcts.html#mcts.Params">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Params</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    MCTS parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c_param</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.4</span> <span class="c1">#: Exploration-exploitation constant for UCT.</span>
+    <span class="n">iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1">#: Number of MCTS iterations to perform.</span>
+    <span class="n">time_limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_TIME_LIMIT</span> <span class="c1">#: Maximum runtime in seconds.</span></div>
+
+
+
+<div class="viewcode-block" id="MCTSConfig">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTSConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">MCTSConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    MCTS configurations for the algorithm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Params</span>  <span class="c1">#: MCTS parameters.</span>
+    <span class="n">days</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1">#: Number of scheduling days.</span>
+    <span class="n">periods_per_day</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1">#: Number of periods per day.</span>
+    <span class="n">output_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;output/output.txt&quot;</span>  <span class="c1">#: Output file path.</span></div>
+
+
+
+<div class="viewcode-block" id="MCTS">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTS">[docs]</a>
+<span class="k">class</span> <span class="nc">MCTS</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main class implementing the MCTS algorithm.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        config (MCTSConfig): Configuration object for MCTS.</span>
+<span class="sd">        rooms (dict): Available rooms in the schedule.</span>
+<span class="sd">        events (list): Events to be scheduled.</span>
+<span class="sd">        root (MCTSNode): Root of the MCTS tree.</span>
+<span class="sd">        current_node (MCTSNode): Node currently being expanded or simulated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_timetable</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">MCTSConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the MCTS algorithm.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            current_timetable (dict): Initial input containing events, rooms, constraints, and blocks.</span>
+<span class="sd">            config (MCTSConfig): Configuration parameters for MCTS.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rooms</span> <span class="o">=</span> <span class="n">current_timetable</span><span class="p">[</span><span class="s2">&quot;rooms&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">,</span> <span class="n">name_to_event_ids</span> <span class="o">=</span> <span class="n">add_event_ids_and_priority</span><span class="p">(</span><span class="n">current_timetable</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">days</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">periods_per_day</span><span class="p">,</span> <span class="n">current_timetable</span><span class="p">[</span><span class="s2">&quot;blocks&quot;</span><span class="p">],</span> <span class="n">current_timetable</span><span class="p">[</span><span class="s2">&quot;constraints&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">MCTSNode</span><span class="p">(</span><span class="n">expansion_limit</span><span class="o">=</span><span class="n">root_expansion_limit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rooms</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span> <span class="o">=</span> <span class="n">ConflictsChecker</span><span class="p">(</span><span class="n">current_timetable</span><span class="p">[</span><span class="s2">&quot;constraints&quot;</span><span class="p">],</span> <span class="n">current_timetable</span><span class="p">[</span><span class="s2">&quot;blocks&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">name_to_event_ids</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hill_climber</span> <span class="o">=</span> <span class="n">HillClimbing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span><span class="p">,</span> <span class="n">current_timetable</span><span class="p">[</span><span class="s2">&quot;blocks&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">days</span><span class="p">,</span> <span class="n">name_to_event_ids</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">output_filename</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_penalties</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_unassigned_events</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_filename</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">output_filename</span>
+
+        <span class="k">if</span> <span class="n">DIVING</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_current_node_fully_expanded</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">DEBUG_PROGRESS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;iterations&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;best_hard&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;best_soft&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;current_hard&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;current_soft&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    
+
+    <span class="k">def</span> <span class="nf">_initialize_penalties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize penalty tracking variables for hard and soft constraint violations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_best_hard_penalty</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_best_soft_penalty</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">worst_hard_penalty</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worst_soft_penalty</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_soft_penalty</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;-inf&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MCTS.normalize">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTS.normalize">[docs]</a>
+    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">best</span><span class="p">,</span> <span class="n">worst</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Normalize a hard or soft score between 0 and 1 using an exponential scale.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            result (float): The result value to normalize.</span>
+<span class="sd">            best (float): Best (highest) known value.</span>
+<span class="sd">            worst (float): Worst (lowest) known value.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Normalized score.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">best</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">worst</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="mf">1.0</span>
+        <span class="k">if</span> <span class="n">best</span> <span class="o">==</span> <span class="n">worst</span><span class="p">:</span> <span class="k">return</span> <span class="mf">0.5</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">result</span> <span class="o">-</span> <span class="n">worst</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">best</span> <span class="o">-</span> <span class="n">worst</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+
+    
+
+<div class="viewcode-block" id="MCTS.update_progress_metrics">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTS.update_progress_metrics">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_progress_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iteration</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update metrics for tracking progress over iterations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            iteration (int): The current iteration number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;iterations&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iteration</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;best_hard&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_best_hard_penalty</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;best_soft&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_best_soft_penalty</span><span class="p">)</span></div>
+
+
+
+    <span class="c1"># MCTS steps:</span>
+
+
+<div class="viewcode-block" id="MCTS.selection">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTS.selection">[docs]</a>
+    <span class="k">def</span> <span class="nf">selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the selection phase of MCTS.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if selection was successful, False if the tree is fully expanded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">DIVING</span><span class="p">:</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">is_fully_expanded</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">is_fully_expanded</span><span class="p">():</span>
+                        <span class="k">for</span> <span class="n">simulation_node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">child</span> <span class="ow">and</span> <span class="n">child</span><span class="o">.</span><span class="n">assignment</span> <span class="o">==</span> <span class="n">simulation_node</span><span class="p">:</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">simulation_node</span><span class="p">)</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span> <span class="o">=</span> <span class="n">child</span>
+                                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                                    <span class="k">return</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="k">return</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">:</span> <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">current_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
+
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">current_node</span><span class="o">.</span><span class="n">is_terminal_node</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)):</span>  
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">current_node</span><span class="o">.</span><span class="n">is_fully_expanded</span><span class="p">():</span> <span class="k">break</span>
+
+            <span class="n">unflagged_children</span> <span class="o">=</span> <span class="p">[</span><span class="n">child</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">current_node</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">child</span> <span class="ow">and</span> <span class="n">child</span><span class="o">.</span><span class="n">expansion_limit</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">unflagged_children</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current_node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+                    <span class="n">current_node</span><span class="o">.</span><span class="n">expansion_limit</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">current_node</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">parent</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">current_node</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">best_child</span><span class="p">(</span><span class="n">unflagged_children</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">c_param</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span> <span class="o">=</span> <span class="n">current_node</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="MCTS.expansion">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTS.expansion">[docs]</a>
+    <span class="k">def</span> <span class="nf">expansion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the expansion phase of MCTS by adding a new child to the current node.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if a new node was successfully added, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">calculate_expansion_limit</span><span class="p">(</span><span class="n">new_path</span><span class="p">):</span>
+            <span class="n">next_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">next_event</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">PRUNING</span> <span class="ow">and</span> <span class="n">evaluate_timetable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span><span class="p">,</span> <span class="n">new_path</span><span class="p">,</span> <span class="n">full_evaluation</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_hard_penalty</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">previous_unassigned_events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">rooms_available</span> <span class="o">=</span> <span class="n">find_available_rooms</span><span class="p">(</span><span class="n">next_event</span><span class="p">[</span><span class="s2">&quot;Capacity&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">new_path</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">next_event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rooms</span><span class="p">)</span> <span class="k">for</span> <span class="n">rooms</span> <span class="ow">in</span> <span class="n">rooms_available</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">DIVING</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_current_node_fully_expanded</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">is_fully_expanded</span><span class="p">()</span>
+
+        <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">()]</span>
+
+        <span class="n">available_periods</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">available_periods</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">expansion_limit</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">rooms_by_period</span> <span class="o">=</span> <span class="n">find_available_rooms</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Capacity&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">available_periods</span><span class="p">)</span>
+
+        <span class="n">period_room_combinations</span> <span class="o">=</span> <span class="p">[(</span><span class="n">weekday</span><span class="p">,</span> <span class="n">timeslot</span><span class="p">,</span> <span class="n">room</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">weekday</span><span class="p">,</span> <span class="n">timeslot</span><span class="p">),</span> <span class="n">rooms</span> <span class="ow">in</span> <span class="n">rooms_by_period</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">rooms</span> <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">rooms</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">period_room_combinations</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">period_room_combinations</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">expansion_limit</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">new_weekday</span><span class="p">,</span> <span class="n">new_timeslot</span><span class="p">,</span> <span class="n">new_room</span> <span class="o">=</span> <span class="n">period_room_combinations</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">children</span><span class="p">)]</span>
+        
+        <span class="n">new_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_path</span><span class="p">[</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">event</span><span class="p">,</span> <span class="s2">&quot;RoomId&quot;</span><span class="p">:</span> <span class="n">new_room</span><span class="p">,</span> <span class="s2">&quot;WeekDay&quot;</span><span class="p">:</span> <span class="n">new_weekday</span><span class="p">,</span> <span class="s2">&quot;Timeslot&quot;</span><span class="p">:</span> <span class="n">new_timeslot</span><span class="p">}</span>
+
+        <span class="n">new_expansion_limit</span> <span class="o">=</span> <span class="n">calculate_expansion_limit</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_expansion_limit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="n">child_node</span> <span class="o">=</span> <span class="n">MCTSNode</span><span class="p">(</span><span class="n">expansion_limit</span><span class="o">=</span><span class="n">new_expansion_limit</span><span class="p">,</span> <span class="n">assignment</span><span class="o">=</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">],</span> <span class="n">new_weekday</span><span class="p">,</span> <span class="n">new_timeslot</span><span class="p">,</span> <span class="n">new_room</span><span class="p">),</span> <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">new_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child_node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span> <span class="o">=</span> <span class="n">child_node</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+
+<div class="viewcode-block" id="MCTS.simulation">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTS.simulation">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">time_limit</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the simulation phase by assigning events using heuristics or randomness.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_time (float): Timestamp when MCTS started.</span>
+<span class="sd">            time_limit (int): Maximum allowed runtime.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: Normalized hard and soft penalty scores (float, float).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">find_best_room_and_period</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">]:</span> <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="n">min_soft_penalty</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+            <span class="n">candidates</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="n">compactness_weight</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">weekday</span><span class="p">,</span> <span class="n">timeslot</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Available_Periods&quot;</span><span class="p">]:</span>
+                <span class="n">available_rooms</span> <span class="o">=</span> <span class="n">find_available_rooms</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Capacity&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">assigned_events</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="p">[(</span><span class="n">weekday</span><span class="p">,</span><span class="n">timeslot</span><span class="p">)])</span>
+                <span class="k">if</span> <span class="n">available_rooms</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="o">!=</span> <span class="p">[</span><span class="nb">set</span><span class="p">()]:</span>
+                    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">available_rooms</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]):</span>
+                        <span class="n">hard_penalty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_event_hard_constraints</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">assigned_events</span><span class="p">,</span> <span class="n">room</span><span class="p">,</span> <span class="n">timeslot</span><span class="p">,</span> <span class="n">weekday</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">hard_penalty</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">soft_penalty</span> <span class="o">=</span> <span class="p">(</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_room_capacity</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">room</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="n">compactness_weight</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_block_compactness</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">assigned_events</span><span class="p">,</span> <span class="n">timeslot</span><span class="p">,</span> <span class="n">weekday</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_min_working_days</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">assigned_events</span><span class="p">,</span> <span class="n">weekday</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span><span class="o">.</span><span class="n">check_room_stability</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">assigned_events</span><span class="p">,</span> <span class="n">room</span><span class="p">)</span>
+                            <span class="p">)</span>
+                            <span class="k">if</span> <span class="n">soft_penalty</span> <span class="o">&lt;</span> <span class="n">min_soft_penalty</span><span class="p">:</span>
+                                <span class="n">min_soft_penalty</span> <span class="o">=</span> <span class="n">soft_penalty</span>
+                                <span class="n">candidates</span> <span class="o">=</span> <span class="p">[(</span><span class="n">room</span><span class="p">,</span> <span class="n">weekday</span><span class="p">,</span> <span class="n">timeslot</span><span class="p">)]</span>
+                            <span class="k">elif</span> <span class="n">soft_penalty</span> <span class="o">==</span> <span class="n">min_soft_penalty</span><span class="p">:</span>
+                                <span class="n">candidates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">room</span><span class="p">,</span> <span class="n">weekday</span><span class="p">,</span> <span class="n">timeslot</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="k">if</span> <span class="n">candidates</span> <span class="k">else</span> <span class="kc">None</span>
+            
+
+        <span class="k">def</span> <span class="nf">update_penalties</span><span class="p">(</span><span class="n">soft_penalty</span><span class="p">,</span> <span class="n">hard_penalty</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">hard_penalty</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">worst_hard_penalty</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">hard_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">worst_hard_penalty</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">best_hard_penalty</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">hard_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">best_hard_penalty</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best_soft_penalty</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">soft_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_soft_penalty</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">worst_soft_penalty</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">soft_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">worst_soft_penalty</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">best_soft_penalty</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">soft_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">best_soft_penalty</span><span class="p">)</span>
+
+
+        <span class="n">assigned_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">unassigned_events</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">remaining_events</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">():],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_unassigned_events</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Priority&quot;</span><span class="p">],</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">event</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">remaining_events</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">DEBUG_RANDOM_SIMULATION</span><span class="p">:</span>
+                <span class="n">event</span><span class="p">[</span><span class="s2">&quot;RoomId&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;WeekDay&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Timeslot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rooms</span><span class="o">.</span><span class="n">keys</span><span class="p">())),</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">days</span><span class="p">),</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">periods_per_day</span><span class="p">)</span>
+                <span class="n">assigned_events</span><span class="p">[</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">event</span> 
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">best_room_and_period</span> <span class="o">=</span> <span class="n">find_best_room_and_period</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">best_room_and_period</span><span class="p">:</span>
+                    <span class="n">event</span><span class="p">[</span><span class="s2">&quot;RoomId&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;WeekDay&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Timeslot&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_room_and_period</span>  
+                    <span class="n">assigned_events</span><span class="p">[</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">event</span> 
+                <span class="k">else</span><span class="p">:</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">previous_unassigned_events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">])</span>
+                    <span class="n">unassigned_events</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;Id&quot;</span><span class="p">])</span>
+                    <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Priority&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">50</span>
+
+        <span class="n">hard_penalty_result</span><span class="p">,</span> <span class="n">soft_penalty_result</span> <span class="o">=</span> <span class="n">evaluate_timetable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conflicts_checker</span><span class="p">,</span> <span class="n">assigned_events</span><span class="p">,</span> <span class="n">unassigned_events</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">DEBUG_PROGRESS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;current_hard&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hard_penalty_result</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;current_soft&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">soft_penalty_result</span><span class="p">)</span>
+
+        <span class="n">update_penalties</span><span class="p">(</span><span class="n">soft_penalty_result</span><span class="p">,</span> <span class="n">hard_penalty_result</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">hard_penalty_result</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_hard_penalty</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">hard_penalty_result</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_hard_penalty</span> <span class="ow">and</span> <span class="n">soft_penalty_result</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_soft_penalty</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">global_best_hard_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_soft_penalty</span> <span class="o">=</span> <span class="n">hard_penalty_result</span><span class="p">,</span> <span class="n">soft_penalty_result</span>
+            <span class="n">write_simulation_results</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_filename</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">assigned_events</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">hard_penalty_result</span><span class="p">,</span> <span class="n">soft_penalty_result</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unassigned_events</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">hard_penalty_result</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">soft_penalty_result</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">global_best_soft_penalty</span><span class="p">,</span> <span class="n">assigned_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hill_climber</span><span class="o">.</span><span class="n">run_hill_climbing</span><span class="p">(</span><span class="n">assigned_events</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">depth</span><span class="p">()][</span><span class="s2">&quot;Id&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_soft_penalty</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">time_limit</span><span class="p">)</span>
+                <span class="n">update_penalties</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_best_soft_penalty</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">DIVING</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_current_node_fully_expanded</span><span class="p">:</span>
+                        <span class="n">new_path</span> <span class="o">=</span> <span class="p">[</span>
+                            <span class="p">(</span><span class="n">event_id</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;WeekDay&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;Timeslot&quot;</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;RoomId&quot;</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">event_id</span><span class="p">,</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">assigned_events</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                            <span class="k">if</span> <span class="n">event_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">path</span> <span class="ow">and</span> <span class="n">event_id</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Id&quot;</span><span class="p">]</span>
+                        <span class="p">]</span>
+                        <span class="k">if</span> <span class="n">new_path</span><span class="p">:</span>                          
+                            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="p">:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="p">)</span>
+                            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_path</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">simulation_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">new_path</span><span class="p">)</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">best_node</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="p">)</span>
+
+        <span class="n">simulation_result_hard</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">best_hard_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_hard_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">worst_hard_penalty</span><span class="p">)</span>
+        <span class="n">simulation_result_soft</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_node</span><span class="o">.</span><span class="n">best_soft_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_soft_penalty</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">worst_soft_penalty</span><span class="p">)</span>
+        <span class="c1">#print(f&quot;{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}&quot;)</span>
+
+        <span class="k">return</span> <span class="n">simulation_result_hard</span><span class="p">,</span> <span class="n">simulation_result_soft</span></div>
+
+    
+
+<div class="viewcode-block" id="MCTS.backpropagation">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTS.backpropagation">[docs]</a>
+    <span class="k">def</span> <span class="nf">backpropagation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulation_result_hard</span><span class="p">,</span> <span class="n">simulation_result_soft</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Backpropagate simulation results up the tree.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            simulation_result_hard (float): Normalized hard score.</span>
+<span class="sd">            simulation_result_soft (float): Normalized soft score.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_node</span>
+        <span class="k">while</span> <span class="n">node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">visits</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">score_hard</span> <span class="o">+=</span> <span class="n">simulation_result_hard</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">score_soft</span> <span class="o">+=</span> <span class="n">simulation_result_soft</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span></div>
+
+
+
+<div class="viewcode-block" id="MCTS.run_mcts">
+<a class="viewcode-back" href="../mcts.html#mcts.MCTS.run_mcts">[docs]</a>
+    <span class="k">def</span> <span class="nf">run_mcts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the full MCTS loop: selection, expansion, simulation, backpropagation.</span>
+
+<span class="sd">        Handles early stopping based on time or optimality conditions.</span>
+<span class="sd">        Outputs profiling, debug trees, or metric plots if enabled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">DEBUG_PROFILER</span><span class="p">:</span>
+            <span class="n">profiler</span> <span class="o">=</span> <span class="n">cProfile</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span>
+            <span class="n">profiler</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">iterations</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">iterations</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">duration</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">time_limit</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="p">():</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Full tree!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expansion</span><span class="p">():</span>
+                    <span class="n">simulation_hard</span><span class="p">,</span> <span class="n">simulation_soft</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulation</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">time_limit</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_hard_penalty</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_best_soft_penalty</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimal solution found!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">break</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">backpropagation</span><span class="p">(</span><span class="n">simulation_hard</span><span class="p">,</span> <span class="n">simulation_soft</span><span class="p">)</span>
+                    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+                    <span class="k">if</span> <span class="n">DEBUG_PROGRESS</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_progress_metrics</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Execution interrupted by user.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+        <span class="k">if</span> <span class="n">DEBUG_TREE</span> <span class="ow">or</span> <span class="n">DEBUG_PROGRESS</span> <span class="ow">or</span> <span class="n">DEBUG_PROFILER</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_filename</span><span class="p">)</span>
+                <span class="n">input_file_name</span> <span class="o">=</span> <span class="n">tail</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">DEBUG_PROFILER</span><span class="p">:</span> <span class="n">profile_execution</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">input_file_name</span><span class="si">}</span><span class="s2">_profiler_outuput.txt&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">DEBUG_PROGRESS</span><span class="p">:</span> <span class="n">plot_progress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">input_file_name</span><span class="si">}</span><span class="s2">_constraint_progress.html&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">DEBUG_TREE</span><span class="p">:</span> <span class="n">visualize_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">input_file_name</span><span class="si">}</span><span class="s2">_tree&quot;</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Execution interrupted by user.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">A Hybrid Approach to University Timetabling Using Monte Carlo Tree Search, Hill Climbing and Diving</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">algorithm</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Daniela Tomás and João Pedroso.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
