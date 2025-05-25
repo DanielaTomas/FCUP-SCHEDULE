@@ -11,6 +11,13 @@ import time
 import io, pstats
 
 def visualize_tree(root, output_file_name = "mcts_tree"):
+    """
+    Creates a MCTS tree using Graphviz and saves it as a PDF.
+
+    Parameters:
+        root (Node): Root node of the MCTS tree.
+        output_file_name (str): Filename for the output PDF.
+    """
     print("Processing the tree...")
     dot = graphviz.Digraph(comment = 'MCTS Tree')
 
@@ -47,6 +54,13 @@ def visualize_tree(root, output_file_name = "mcts_tree"):
 
 
 def plot_progress(metrics, output_file_name = "constraint_progress.html"):
+    """
+    Plots the progress of hard and soft constraints over iterations.
+
+    Parameters:
+        metrics (dict): Dictionary with keys: 'iterations', 'current_hard', 'best_hard', 'current_soft', 'best_soft'.
+        output_file_name (str): Filename for the saved HTML plot.
+    """
     print("Processing the constraint progress...")
     fig = make_subplots(rows=1, cols=2, 
                         subplot_titles=("Hard Constraint Progress", "Soft Constraint Progress"),
@@ -72,6 +86,14 @@ def plot_progress(metrics, output_file_name = "constraint_progress.html"):
 
 
 def save_results_to_excel(results, file_names, filename="test_results.xlsx"):
+    """
+    Saves test results to an Excel file with a new sheet for each test run.
+
+    Parameters:
+        results (dict): Dictionary mapping filenames to lists of [time, hard, soft] results.
+        file_names (list): Ordered list of filenames used for the results.
+        filename (str): Path to the Excel file to save results.
+    """
     print(f"Saving results to excel...")
     
     for attempt in range(MAX_RETRIES):
@@ -112,6 +134,15 @@ def save_results_to_excel(results, file_names, filename="test_results.xlsx"):
 
 
 def parse_last_log_line(line):
+    """
+    Extracts time, hard penalty, and soft penalty values from a log line.
+
+    Parameters:
+        line (str): Line from the log file.
+
+    Returns:
+        list: [time (str), hard (int), soft (int)] or None if format is invalid.
+    """
     match = re.search(r"Time: ([\d:.]+), Hard: (-?\d+), Soft: (-?\d+)", line)
     if match:
         time_value = match.group(1)
@@ -122,6 +153,15 @@ def parse_last_log_line(line):
 
 
 def get_last_log_line(filename):
+    """
+    Gets the last log line from a file and parses it.
+
+    Parameters:
+        filename (str): Path to the log file.
+
+    Returns:
+        list or str: Parsed [time, hard, soft] values or error message.
+    """
     try:
         with open(filename, 'rb') as f:
             f.seek(0, os.SEEK_END)
@@ -141,20 +181,27 @@ def get_last_log_line(filename):
         
 
 def profile_execution(profiler, input_file_name):
-        profiler.disable()
-        
-        print(f"Saving profiler output...")
-        
-        output_dir = "profiler"
-        directory_exists(output_dir)
-        output_file_name = os.path.join(output_dir, input_file_name)
+    """
+    Saves the profiling statistics to a file.
 
-        s = io.StringIO()
-        sortby = 'cumulative'
-        ps = pstats.Stats(profiler, stream=s).sort_stats(sortby)
-        ps.print_stats()
+    Parameters:
+        profiler (cProfile.Profile): The profiler instance.
+        input_file_name (str): Filename to save the profiler output.
+    """
+    profiler.disable()
+    
+    print(f"Saving profiler output...")
+    
+    output_dir = "profiler"
+    directory_exists(output_dir)
+    output_file_name = os.path.join(output_dir, input_file_name)
 
-        with open(output_file_name, 'w') as f:
-            f.write(s.getvalue())
-        
-        print(f"Profiler output saved to {output_file_name}\n")
+    s = io.StringIO()
+    sortby = 'cumulative'
+    ps = pstats.Stats(profiler, stream=s).sort_stats(sortby)
+    ps.print_stats()
+
+    with open(output_file_name, 'w') as f:
+        f.write(s.getvalue())
+    
+    print(f"Profiler output saved to {output_file_name}\n")

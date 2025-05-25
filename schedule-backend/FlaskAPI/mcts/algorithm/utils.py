@@ -3,6 +3,19 @@ from copy import copy
 from itertools import dropwhile
 
 def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraints):
+    """
+    Duplicates each event based on the number of lectures, assigns a unique ID, determines valid periods, calculates priority, and sorts events by priority.
+
+    Args:
+        events (list): List of event dictionaries.
+        days (int): Number of scheduling days.
+        periods_per_day (int): Number of periods per day.
+        blocks (dict): Mapping of block names to their associated events.
+        constraints (dict): Mapping of event names to a list of unavailable time slots.
+
+    Returns:
+        tuple: A list of sorted events with IDs and priorities, and a name-to-IDs mapping.
+    """
     events_to_visit = []
     name_to_event_ids = {}
     unique_id = 0
@@ -33,7 +46,17 @@ def add_event_ids_and_priority(events, days, periods_per_day, blocks, constraint
     return sorted_events, name_to_event_ids
 
 
-def sort_periods(event, events): # periods that are less frequently available across events get higher priority
+def sort_periods(event, events):
+    """
+    Sorts periods such that the less available (more constrained) periods across all events come first.
+
+    Args:
+        event (dict): The event whose periods are being sorted.
+        events (list): List of all event dictionaries.
+
+    Returns:
+        list: Sorted list of available periods.
+    """
     period_conflict_count = {}
     for period in event["Available_Periods"]:
         period_conflict_count[period] = sum(period in other["Available_Periods"] for other in events if other["Id"] != event["Id"])
@@ -41,12 +64,34 @@ def sort_periods(event, events): # periods that are less frequently available ac
     
 
 def root_expansion_limit(event, rooms):
-        available_rooms = find_available_rooms(event["Capacity"], rooms, [], event["Available_Periods"])
-        expansion_limit = sum(len(rooms) for rooms in available_rooms.values())
-        return expansion_limit
+    """
+    Calculates root expansion limit, i.e., the total number of room-period combinations where the next event could be scheduled.
+
+    Args:
+        event (dict): The event to analyze.
+        rooms (dict): Mapping of room IDs to room data.
+
+    Returns:
+        int: Total number of viable (period, room) pairs.
+    """
+    available_rooms = find_available_rooms(event["Capacity"], rooms, [], event["Available_Periods"])
+    expansion_limit = sum(len(rooms) for rooms in available_rooms.values())
+    return expansion_limit
 
 
 def find_available_rooms(event_capacity, rooms, events, available_periods):
+    """
+    Determine the appropriate rooms for each available period that meet the capacity restriction whenever possible and avoid conflicts.
+
+    Args:
+        event_capacity (int): Required capacity for the event.
+        rooms (dict): Mapping of room IDs to room data.
+        events (list): Other scheduled events to check for conflicts.
+        available_periods (list): Time periods available for the event.
+
+    Returns:
+        dict: Mapping from periods to lists of suitable room IDs (sorted by fit).
+    """
     period_room_availability = {period: set(rooms.keys()) for period in available_periods}
     for other_event in events:
         occupied_period = (other_event["WeekDay"], other_event["Timeslot"])
@@ -67,6 +112,18 @@ def find_available_rooms(event_capacity, rooms, events, available_periods):
 
 
 def get_valid_periods(event, constraints, days, periods_per_day):
+    """
+    Returns a list of periods that are not restricted by unavailability constraints.
+
+    Args:
+        event (dict): The event being scheduled.
+        constraints (dict): Mapping of event names to a list of restricted time slots.
+        days (int): Number of scheduling days.
+        periods_per_day (int): Number of periods per day.
+
+    Returns:
+        list: Available (day, timeslot) tuples.
+    """
     available_periods = set((weekday, timeslot) for weekday in range(days) for timeslot in range(periods_per_day))
 
     event_constraints = constraints.get(event["Name"], [])
@@ -82,12 +139,35 @@ def get_valid_periods(event, constraints, days, periods_per_day):
 
 
 def dict_slice(d, start_key, next_iteration = False):
+    """
+    Returns a sliced dictionary starting from the specified key.
+
+    Args:
+        d (dict): Original dictionary.
+        start_key: Key to start from.
+        next_iteration (bool): If True, skip the start_key entry itself.
+
+    Returns:
+        dict: Sliced dictionary.
+    """
     iterator = dropwhile(lambda x: x[0] != start_key, d.items())
     if next_iteration: next(iterator, None)
     return dict(iterator)
 
 
 def evaluate_timetable(conflicts_checker, timetable, unassigned_events = [], full_evaluation = True):
+    """
+    Evaluates a timetable by computing penalties from conflicts.
+
+    Args:
+        conflicts_checker (object): Object with methods to check constraint violations.
+        timetable (dict): Mapping from event IDs to scheduled events.
+        unassigned_events (list): Events that couldn't be scheduled.
+        full_evaluation (bool): Whether to compute soft constraint penalties as well.
+
+    Returns:
+        tuple: (-hard_penalty, -soft_penalty) if full_evaluation, else just -hard_penalty.
+    """
     hard_penalty = 0
     soft_penalty = 0
     room_conflicts = {}

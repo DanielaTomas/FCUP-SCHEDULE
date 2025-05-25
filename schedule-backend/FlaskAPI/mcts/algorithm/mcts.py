@@ -1,3 +1,8 @@
+"""
+This module implements the Monte Carlo Tree Search (MCTS) algorithm for solving the CB-CTT problem.
+It uses the standard MCTS steps: selection, expansion, simulation, and backpropagation, combined with hill climbing and a diving approach.
+"""
+
 from algorithm.mcts_node import *
 from algorithm.utils import *
 from algorithm.debug import *
@@ -10,27 +15,47 @@ import cProfile
 import time
 
 #TODO remove prints; remove debug ?
-#TODO documentation
-#TODO remove final_result ?
 
 @dataclass
 class Params:
-    c_param: float = 1.4
-    iterations: int = None
-    time_limit: int = DEFAULT_TIME_LIMIT
+    """
+    MCTS parameters.
+    """
+    c_param: float = 1.4 #: Exploration-exploitation constant for UCT.
+    iterations: int = None #: Number of MCTS iterations to perform.
+    time_limit: int = DEFAULT_TIME_LIMIT #: Maximum runtime in seconds.
 
 
 @dataclass
 class MCTSConfig:
-    params: Params
-    days: int
-    periods_per_day: int
-    output_filename: str = "output/output.txt"
+    """
+    MCTS configurations for the algorithm.
+    """
+    params: Params  #: MCTS parameters.
+    days: int  #: Number of scheduling days.
+    periods_per_day: int  #: Number of periods per day.
+    output_filename: str = "output/output.txt"  #: Output file path.
 
 
 class MCTS:
+    """
+    Main class implementing the MCTS algorithm.
 
+    Attributes:
+        config (MCTSConfig): Configuration object for MCTS.
+        rooms (dict): Available rooms in the schedule.
+        events (list): Events to be scheduled.
+        root (MCTSNode): Root of the MCTS tree.
+        current_node (MCTSNode): Node currently being expanded or simulated.
+    """
     def __init__(self, current_timetable, config: MCTSConfig):
+        """
+        Initialize the MCTS algorithm.
+
+        Args:
+            current_timetable (dict): Initial input containing events, rooms, constraints, and blocks.
+            config (MCTSConfig): Configuration parameters for MCTS.
+        """
         self.config = config
         self.params = config.params
         self.rooms = current_timetable["rooms"]
@@ -56,6 +81,9 @@ class MCTS:
     
 
     def _initialize_penalties(self):
+        """
+        Initialize penalty tracking variables for hard and soft constraint violations.
+        """
         self.global_best_hard_penalty = float('-inf')
         self.global_best_soft_penalty = float('-inf')
 
@@ -65,6 +93,17 @@ class MCTS:
 
 
     def normalize(self, result, best, worst):
+        """
+        Normalize a hard or soft score between 0 and 1 using an exponential scale.
+
+        Args:
+            result (float): The result value to normalize.
+            best (float): Best (highest) known value.
+            worst (float): Worst (lowest) known value.
+
+        Returns:
+            float: Normalized score.
+        """
         if best == 0 and worst == 0: return 1.0
         if best == worst: return 0.5
         a = (result - worst) / (best - worst)
@@ -72,6 +111,12 @@ class MCTS:
     
 
     def update_progress_metrics(self, iteration):
+        """
+        Update metrics for tracking progress over iterations.
+
+        Args:
+            iteration (int): The current iteration number.
+        """
         self.metrics['iterations'].append(iteration)
         self.metrics['best_hard'].append(self.global_best_hard_penalty)
         self.metrics['best_soft'].append(self.global_best_soft_penalty)
@@ -81,6 +126,12 @@ class MCTS:
 
 
     def selection(self):
+        """
+        Perform the selection phase of MCTS.
+
+        Returns:
+            bool: True if selection was successful, False if the tree is fully expanded.
+        """
         if DIVING:
             while self.best_node and self.simulation_path:
                 if self.best_node[0].parent and not self.best_node[0].parent.is_fully_expanded():
@@ -122,7 +173,12 @@ class MCTS:
 
 
     def expansion(self):
+        """
+        Perform the expansion phase of MCTS by adding a new child to the current node.
 
+        Returns:
+            bool: True if a new node was successfully added, False otherwise.
+        """
         def calculate_expansion_limit(new_path):
             next_event = self.events[self.current_node.depth()+1] if self.current_node.depth()+1 < len(self.events) else None
             if next_event is None:
@@ -166,7 +222,16 @@ class MCTS:
 
 
     def simulation(self, start_time, time_limit):
+        """
+        Perform the simulation phase by assigning events using heuristics or randomness.
 
+        Args:
+            start_time (float): Timestamp when MCTS started.
+            time_limit (int): Maximum allowed runtime.
+
+        Returns:
+            tuple: Normalized hard and soft penalty scores (float, float).
+        """
         def find_best_room_and_period():
             if not event["Available_Periods"]: return None
 
@@ -264,6 +329,13 @@ class MCTS:
     
 
     def backpropagation(self, simulation_result_hard, simulation_result_soft):
+        """
+        Backpropagate simulation results up the tree.
+
+        Args:
+            simulation_result_hard (float): Normalized hard score.
+            simulation_result_soft (float): Normalized soft score.
+        """
         node = self.current_node
         while node is not None:
             node.visits += 1
@@ -273,6 +345,12 @@ class MCTS:
 
 
     def run_mcts(self):
+        """
+        Run the full MCTS loop: selection, expansion, simulation, backpropagation.
+
+        Handles early stopping based on time or optimality conditions.
+        Outputs profiling, debug trees, or metric plots if enabled.
+        """
         if DEBUG_PROFILER:
             profiler = cProfile.Profile()
             profiler.enable()

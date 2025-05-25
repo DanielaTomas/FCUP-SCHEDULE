@@ -4,8 +4,22 @@ from algorithm.simulation_results_writer import write_simulation_results
 from algorithm.macros import HC_IDLE
 
 class HillClimbing:
-
+    """
+    Implements the Hill Climbing algorithm for timetable optimization.
+    It iteratively improves a given timetable solution using various neighborhood moves.
+    """
     def __init__(self, conflicts_checker, blocks, rooms, days, name_to_event_ids, output_filename="output/output.txt"):
+        """
+        Initializes the HillClimbing algorithm with the required problem-specific data.
+        
+        Args:
+            conflicts_checker: An instance providing constraint validation methods.
+            blocks (dict): Curriculum blocks information.
+            rooms (dict): Dictionary of room data.
+            days (int): Number of scheduling days.
+            name_to_event_ids (dict): Maps course names to their event IDs.
+            output_filename (str): File to store the best result found.
+        """
         self.blocks = blocks.values()
         self.rooms = rooms
         self.conflicts_checker = conflicts_checker
@@ -17,6 +31,16 @@ class HillClimbing:
 
 
     def evaluate_timetable(self, simulated_events):
+        """
+        Evaluates a timetable based on soft constraint penalties, since there are no hard constraint violations.
+        
+        Args:
+            simulated_events (dict): The timetable being evaluated.
+        
+        Returns:
+            int or None: Negative of total soft penalties if it's better than the current best;
+                         None if not an improvement.
+        """
         soft_penalty = 0
         event_names = []
 
@@ -37,6 +61,7 @@ class HillClimbing:
     
 
     def revert_changes(self, timetable):
+        """Reverts any changes made to events based on saved original states."""
         if not self.original_state: return
         for event_id, original_state in self.original_state.items():
             event = timetable.get(event_id)
@@ -46,10 +71,14 @@ class HillClimbing:
       
 
     def save_original_state(self, event):
+        """Stores the current state of an event before modification."""
         self.original_state[event["Id"]] = {"WeekDay": event["WeekDay"],"Timeslot": event["Timeslot"], "RoomId": event["RoomId"]}
 
 
     def period_move(self, timetable, unscheduled_events):
+        """
+        Attempts to move a random event to a different period (WeekDay,Timeslot).
+        """
         random_event = random.choice(list(unscheduled_events.values()))
 
         for new_period in random_event["Available_Periods"]:
@@ -62,6 +91,9 @@ class HillClimbing:
 
 
     def room_move(self, timetable, unscheduled_events):
+        """
+        Attempts to move a random event to a different available room.
+        """
         random_event = random.choice(list(unscheduled_events.values()))
 
         available_rooms = find_available_rooms(random_event["Capacity"], self.rooms, timetable.values(), [(random_event["WeekDay"], random_event["Timeslot"])])
@@ -76,6 +108,10 @@ class HillClimbing:
 
 
     def event_move(self, timetable, unscheduled_events):
+        """
+        Performs a comprehensive move by reassigning an event to a new room and period,
+        and potentially swapping with another event to resolve conflicts.
+        """
         random_event = random.choice(list(unscheduled_events.values()))
 
         for new_weekday, new_timeslot in random_event["Available_Periods"]:
@@ -112,6 +148,9 @@ class HillClimbing:
     
 
     def room_stability_move(self, timetable, unscheduled_events):
+        """
+        Tries to assign all lectures of a course to a single room to improve room stability.
+        """
         random_event = random.choice(list(unscheduled_events.values()))
 
         course_events = self.name_to_event_ids.get(random_event["Name"])
@@ -133,6 +172,9 @@ class HillClimbing:
 
 
     def curriculum_compactness_move(self, timetable, unscheduled_events):
+        """
+        Tries to move isolated curriculum events closer to others to improve compactness.
+        """
         random_block = random.choice(list(self.blocks))
         
         isolated_events = []
@@ -178,6 +220,9 @@ class HillClimbing:
 
     
     def min_working_days_move(self, timetable, unscheduled_events):
+        """
+        Increases the number of working days a course is scheduled on.
+        """
         penalized_events = [
             event for event in unscheduled_events.values()
             if self.conflicts_checker.check_min_working_days(event, timetable, event["WeekDay"]) > 0
@@ -209,6 +254,19 @@ class HillClimbing:
 
 
     def run_hill_climbing(self, best_timetable, start_key, best_result_soft, start_time, time_limit):
+        """
+        Executes the Hill Climbing algorithm using neighborhood moves until a local optimum is found.
+
+        Args:
+            best_timetable (dict): Current best timetable solution.
+            start_key (int): The event ID to start from.
+            best_result_soft (int): Best known soft score.
+            start_time (float): Start time (Unix timestamp).
+            time_limit (float): Time limit in seconds.
+
+        Returns:
+            Tuple[int, dict]: Final best soft score and corresponding timetable.
+        """
         self.best_result_soft = best_result_soft
 
         neighborhoods = [(self.period_move,1), (self.room_move,1), (self.event_move,1), (self.room_stability_move,0.7), (self.min_working_days_move,0.5), (self.curriculum_compactness_move,0.7)]

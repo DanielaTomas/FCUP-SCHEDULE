@@ -4,6 +4,16 @@ from datetime import datetime
 from algorithm.macros import DEBUG_LOG
 
 def write_simulation_results(output_filename, assigned_events, start_time, hard_penalty_result, soft_penalty_result):
+    """
+    Writes the best simulation results to both a log file (if DEBUG_LOG is enabled) and the output file.
+
+    Args:
+        output_filename (str): Path to the file where best assignments are saved.
+        assigned_events (list): List of scheduled events with assignment information.
+        start_time (float): Start time of the simulation (as a Unix timestamp).
+        hard_penalty_result (int): Best hard constraint penalty score.
+        soft_penalty_result (int): Best soft constraint penalty score.
+    """
     if DEBUG_LOG:
         _, tail = os.path.split(output_filename)
         input_file_name = tail.split('_')[0]
@@ -22,6 +32,12 @@ def write_simulation_results(output_filename, assigned_events, start_time, hard_
 
 
 def directory_exists(directory):
+    """
+    Ensures that the given directory exists, creating it if necessary.
+
+    Args:
+        directory (str): The path of the directory to check or create.
+    """
     if not os.path.exists(directory):
         os.makedirs(directory)
 
