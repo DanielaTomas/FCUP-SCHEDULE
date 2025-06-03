@@ -33,7 +33,7 @@ The primary objective of this dissertation is to enhance the efficiency and qual
 
 \section{Methodology and Contributions}
 
-To address the problem challenges, this dissertation proposes a novel hybrid approach combining two heuristic algorithms: \ac{mcts} and \ac{hc}. The \ac{mcts} heuristic search algorithm was chosen, as it has been applied to various optimization problems and has proven to be particularly effective in games. \ac{hc} was also chosen to be used in conjunction with \ac{mcts} for local optimization. 
+To address the problem challenges, this dissertation proposes a novel hybrid approach combining two heuristic algorithms: \ac{mcts} and \ac{hc}, along with a diving strategy. The \ac{mcts} heuristic search algorithm was chosen, as it has been applied to various optimization problems and has proven to be particularly effective in games. \ac{hc} was also chosen to be used in conjunction with \ac{mcts} for local optimization, refining feasible solutions discovered during the global search. The diving strategy further strengthens the search process by deepening the exploration of promising partial solutions, thereby improving the chances of reaching higher-quality timetables.
 
 Although \ac{mcts} has shown positive results in relevant areas, its application to \ac{ucttp} remains largely unexplored. Therefore, the proposed system presents an opportunity to advance the state of the art and help in further studies, by leveraging the global search capabilities of \ac{mcts} to explore diverse scheduling possibilities with \ac{hc} to refine solutions locally. This hybrid approach aims to deliver both feasible and better-quality timetables while addressing the practical challenges faced by \ac{fcup} in managing large-scale scheduling.
 

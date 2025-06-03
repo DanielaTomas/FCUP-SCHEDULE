@@ -47,17 +47,16 @@ Finally, to my university friends, thank you for sharing this journey with me. Y
 	degree={Mestrado em Engenharia de Redes e Sistemas Informáticos},
 	nameconnector={por},
         keywordsname={Palavras-chave},
-        keywords={University Course Timetabling Problem, Curriculum-based Course Timetabling, Monte Carlo Tree Search, Hill Climbing, Diving, ITC-2007}]
+        keywords={\textit{University Course Timetabling Problem}, \textit{Curriculum-based Course Timetabling}, \textit{Monte Carlo Tree Search}, \textit{Hill Climbing, Diving}, ITC-2007}]
 \begin{otherlanguage}{portuguese}
 
 A geração de horários para escolas e universidades é um problema de otimização combinatória NP-difícil, caracterizado por um espaço de pesquisa vasto e por restrições. Na Faculdade de Ciências da Universidade do Porto (FCUP), a elaboração dos horários a cada semestre para milhares de estudantes, dezenas de currículos e centenas de docentes é, atualmente, um processo manual, demorado e sujeito a erros.
 
-Esta dissertação aborda a variante Curriculum-Based Course Timetabling (CB-CTT) do University Course Timetabling Problem, apresentando uma abordagem híbrida inovadora que combina Monte Carlo Tree Search (MCTS) com Hill Climbing (HC). O MCTS conduz a pesquisa global, simulando e avaliando múltiplas atribuições de evento, período e sala, priorizando os eventos mais restritos e expandindo os ramos mais promissores. Sempre que o MCTS encontra, durante a fase de simulação, um horário viável melhorado, o HC assume o controlo e aplica seis movimentos de vizinhança para refinar iterativamente a solução, enquanto preserva a sua viabilidade.
+Esta dissertação aborda a variante \textit{Curriculum-Based Course Timetabling} (CB-CTT) do \textit{University Course Timetabling Problem}, apresentando uma abordagem híbrida inovadora que combina \textit{Monte Carlo Tree Search} (MCTS) com \textit{Hill Climbing} (HC) e \textit{diving}. O MCTS conduz a pesquisa global, simulando e avaliando múltiplas atribuições de evento, período e sala, priorizando os eventos mais restritos e expandindo os ramos mais promissores. Sempre que o MCTS encontra, durante a fase de simulação, um horário viável melhorado, o HC assume o controlo e aplica seis movimentos de vizinhança para refinar iterativamente a solução, enquanto preserva a sua viabilidade. A estratégia de diving foi introduzida para melhorar a efetividade do MCTS. Essa estratégia aprofunda soluções parciais promissoras, permitindo que o algoritmo se foque em regiões de maior qualidade no espaço de pesquisa.
 
-Testes com as instâncias do terceiro track da ITC-2007 demonstram que o híbrido MCTS-HC consegue encontrar consistentemente horários viáveis, apesar da sua performance permanecer abaixo dos melhores resultados publicados…
+Testes com as instâncias do terceiro \textit{track} da ITC-2007 demonstram que a abordagem híbrida encontra consistentemente horários viáveis. No entanto, mesmo com limites de tempo alargados, a abordagem ainda não supera os melhores resultados publicados no que diz respeito à minimização de \textit{soft constraints}.
 
-Apesar de algumas melhorias e mudanças introduzidas no algoritmo MCTS padrão, continuam a existir desafios...
-
+Apesar de várias melhorias e adaptações ao algoritmo MCTS padrão, continuam a existir desafios. Ainda assim, a abordagem híbrida proposta revela um grande potencial e constitui uma base sólida para investigação futura e aplicação prática em contextos institucionais de criação de horários, como é o caso da FCUP.
 
 \end{otherlanguage}
 \end{abstract}
@@ -70,11 +69,11 @@ Apesar de algumas melhorias e mudanças introduzidas no algoritmo MCTS padrão, 
 
 Timetable generation for schools and universities is an NP-hard combinatorial optimization problem with a vast search space and constraints. At the Faculty of Sciences of the University of Porto (FCUP), preparing semester schedules for thousands of students, dozens of curricula, and hundreds of lecturers is currently manual, time-consuming, and prone to errors.
 
-This dissertation addresses the Curriculum-Based Course Timetabling (CB-CTT) variant of the University Course Timetabling Problem by presenting a novel hybrid approach that combines Monte Carlo Tree Search (MCTS) with Hill Climbing (HC). MCTS drives the global search, simulating and evaluating multiple event, period, and room assignments, prioritizing the most constrained events and expanding the most promising branches. Whenever MCTS obtains an improved feasible timetable during simulation, HC takes over and applies six neighborhood moves to iteratively improve the solution while preserving the feasibility.
+This dissertation addresses the Curriculum-Based Course Timetabling (CB-CTT) variant of the University Course Timetabling Problem by presenting a novel hybrid approach that combines Monte Carlo Tree Search (MCTS) with Hill Climbing (HC) and a diving strategy. MCTS drives the global search, simulating and evaluating multiple event, period, and room assignments, prioritizing the most constrained events and expanding the most promising branches. Whenever MCTS obtains an improved feasible timetable during simulation, HC takes over and applies six neighborhood moves to iteratively improve the solution while preserving the feasibility. The diving strategy was introduced to further enhance the MCTS effectiveness. This strategy deepens promising partial solutions, allowing the algorithm to focus on higher-quality regions of the search space.
 
-Tests on the ITC-2007 track 3 instances show that the MCTS-HC hybrid consistently finds feasible timetables, but its performance remains below the best published results...
+Tests on the ITC-2007 track 3 benchmark instances show that the hybrid approach consistently finds feasible timetables. However, even with extended time limits, the approach does not yet outperform best published results in terms of minimizing soft constraint violations.
 
-Despite some improvements and changes to the standard MCTS algorithm, challenges remain...
+Despite some improvements and changes to the standard MCTS algorithm, challenges remain. Nevertheless, the proposed hybrid approach demonstrates strong potential and a solid foundation for further research and practical adoption in institutional timetabling contexts like FCUP. 
 
 \end{abstract}
 \addtocontents{toc}{\protect\setcounter{tocdepth}{3}}
