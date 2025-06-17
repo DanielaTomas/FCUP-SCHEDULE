@@ -4,7 +4,7 @@ from algorithm.debug import *
 from algorithm.check_conflicts import ConflictsChecker
 from algorithm.hill_climbing import HillClimbing
 from algorithm.simulation_results_writer import write_simulation_results
-from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER, PRUNING, DIVING, DEBUG_RANDOM_SIMULATION
+from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER, PRUNING, DIVING, DEBUG_RANDOM_SIMULATION, HILL_CLIMBING
 from dataclasses import dataclass
 import cProfile
 import time
@@ -235,8 +235,9 @@ class MCTS:
             write_simulation_results(self.output_filename, list(assigned_events.values()), start_time, hard_penalty_result, soft_penalty_result)
             
             if len(unassigned_events) == 0 and hard_penalty_result == 0 and soft_penalty_result != 0:
-                self.global_best_soft_penalty, assigned_events = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
-                update_penalties(self.global_best_soft_penalty)
+                if HILL_CLIMBING:
+                    self.global_best_soft_penalty, assigned_events = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
+                    update_penalties(self.global_best_soft_penalty)
                 
                 if DIVING:
                     if not self.simulation_path or self.is_current_node_fully_expanded:
