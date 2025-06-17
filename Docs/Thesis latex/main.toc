@@ -74,13 +74,14 @@
 \contentsline {chapter}{\numberline {6}Results}{36}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Python vs PyPy Performance}{36}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Feasibility}{36}{section.6.2}%
-\contentsline {section}{\numberline {6.3}\(C\) Parameter Behaviour}{36}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Pruning}{37}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Hill Climbing}{38}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Diving}{38}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Competition Results Comparison}{41}{section.6.7}%
-\contentsline {section}{\numberline {6.8}Summary}{41}{section.6.8}%
-\contentsline {chapter}{\numberline {7}Conclusion}{42}{chapter.7}%
+\contentsline {section}{\numberline {6.3}Random Simulation Performance}{36}{section.6.3}%
+\contentsline {section}{\numberline {6.4}\(C\) Parameter Behaviour}{37}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Pruning}{37}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Hill Climbing}{39}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Diving}{39}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Competition Results Comparison}{41}{section.6.8}%
+\contentsline {section}{\numberline {6.9}Summary}{41}{section.6.9}%
+\contentsline {chapter}{\numberline {7}Conclusion}{43}{chapter.7}%
 \vspace {0.5cm}
-\contentsline {chapter}{Bibliography}{42}{dummy.6}%
+\contentsline {chapter}{Bibliography}{43}{dummy.6}%
 \contentsfinish 

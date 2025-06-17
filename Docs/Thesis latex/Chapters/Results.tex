@@ -16,7 +16,13 @@ One of the fundamental requirements of \ac{cb-ctt} is the ability to produce fea
 
 Throughout all experiments, the proposed system consistently produced feasible solutions across all tested datasets from the \ac{itc-2007} benchmark. This demonstrates the robustness of the system's constraint handling mechanisms, regardless of instance size or structural complexity, confirming the general applicability of the approach.
 
-%TODO random simulation
+\section{Random Simulation Performance}
+
+To establish a baseline for the effectiveness of guided search, a random simulation test was conducted.  In this configuration, event, period, and room assignments were selected at random, without considering constraint satisfaction or search tree statistics. The goal of this experiment was to evaluate the ability of a purely stochastic method to find feasible solutions and to compare its performance against the guided \ac{mcts} approach. 
+
+Across multiple runs, the random simulation consistently failed to produce feasible solutions. Although random simulations can execute a high number of iterations due to its simplicity and lack of tree maintenance overhead, the majority of these iterations were ineffective, repeatedly exploring infeasible parts of the search space. 
+
+These results highlight the importance of incorporating domain knowledge decision-making to ensure feasibility in a realistic time frame.
 
 \section{\(C\) Parameter Behaviour}
 

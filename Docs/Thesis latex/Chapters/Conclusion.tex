@@ -1,4 +1,4 @@
-% Introduction
+% Conclusion
 
 % Main chapter title
 %\chapter[toc version]{doc version}
@@ -19,8 +19,8 @@ An additional innovation is the incorporation of a diving strategy into the \ac{
 
 However, our findings indicate that both standard and diving-based \ac{mcts} tend to plateau after a certain number of iterations, with diminishing returns even under extended run times. While diving produces more consistent improvements and tends to stay closer to the best-found solutions, the problem of long-term stagnation remains and represents a key area for future optimization.
 
-Our experimental results, including comparisons against the benchmark dataset from the ITC-2007 competition, show that the hybrid \ac{mcts}-\ac{hc} approach consistently produces feasible solutions. Although it does not yet outperform state-of-the-art solutions, this dissertation provides a more effective and adaptive scheduling process for \ac{fcup} and can be extended to other institutions and help in other studies. 
+Our experimental results, including comparisons against the benchmark dataset from the ITC-2007 competition, show that the hybrid approach consistently produces feasible solutions. Although it does not yet outperform state-of-the-art solutions, this dissertation provides a more effective and adaptive scheduling process for \ac{fcup} and can be extended to other institutions and help in other studies. 
 
-Future work should focus on refining the diving strategy, refining the heuristic functions and improving computational performance.
+Future work should focus on fine tuning the algorithm, improving the heuristic functions, and enhancing computational performance. One promising direction is to postpone rooms allocation during both tree construction and simulation. In this approach, the fixed nodes in the tree represents only the \((weekday, timeslot)\) and, in the simulation, only allocate these two attributes for each event. The evaluation would then rely only on criteria that do not depend on room assignments. Only when a leaf node is reached, or when a solution is optimal according to these partial criteria, room allocation will be performed, followed by a complete evaluation. Exploring this variant could help reduce computational overhead and allow deeper or broader search within the same time constraints.
 
 
