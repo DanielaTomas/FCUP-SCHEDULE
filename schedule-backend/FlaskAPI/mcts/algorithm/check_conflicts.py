@@ -18,8 +18,8 @@ class ConflictsChecker:
 
     # Hard Constraints:
     
-    def check_event_hard_constraints(self, event, other_events, room_id, timeslot, weekday, room_conflicts = None):
-        if timeslot is None or weekday is None or room_id is None: return HARD_PENALTY
+    def check_event_hard_constraints(self, event, other_events, timeslot, weekday, room_id = None, room_conflicts = None):
+        if timeslot is None or weekday is None: return HARD_PENALTY
 
         penalty = (
             self.check_event_unavailability_constraints(event, timeslot, weekday)
@@ -31,7 +31,7 @@ class ConflictsChecker:
                 if other_event['Name'] == event["Name"]:
                     penalty += HARD_PENALTY
                 else:
-                    if other_event['RoomId'] == room_id:
+                    if room_id is not None and other_event.get("RoomId") is not None and other_event.get("RoomId") == room_id:
                         if room_conflicts is not None: self.room_conflicts(other_event, room_conflicts)
                         else: penalty += HARD_PENALTY
                     if other_event["Teacher"] == event["Teacher"]:
@@ -127,7 +127,7 @@ class ConflictsChecker:
 
         for ev in evs:
             ev = other_events.get(ev)
-            if ev is not None and ev["RoomId"] is not None and ev["Id"] != event["Id"] and ev["RoomId"] != room_id:
+            if ev is not None and ev.get("RoomId") is not None and ev["Id"] != event["Id"] and ev.get("RoomId") != room_id:
                 different_rooms.add(ev["RoomId"])
         return len(different_rooms)
     

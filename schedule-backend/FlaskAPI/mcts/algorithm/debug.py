@@ -16,7 +16,7 @@ def visualize_tree(root, output_file_name = "mcts_tree"):
 
     def add_nodes_edges(node):
         if not node: return
-        label = f"{node.assignment} {node.best_hard_penalty} {node.best_soft_penalty}" #{node.expansion_limit}"
+        label = f"{node.assignment} {node.best_hard_penalty} {node.best_soft_penalty} {node.expansion_limit}"
         dot.node(str(id(node)), label=label, shape="plaintext", width="0.01", height="0.01")
         #label = ""
         #dot.node(str(id(node)), label=label, shape="point", width="0.01", height="0.01")

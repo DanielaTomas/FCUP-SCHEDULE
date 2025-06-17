@@ -41,9 +41,9 @@ def sort_periods(event, events): # periods that are less frequently available ac
     
 
 def root_expansion_limit(event, rooms):
-        available_rooms = find_available_rooms(event["Capacity"], rooms, [], event["Available_Periods"])
-        expansion_limit = sum(len(rooms) for rooms in available_rooms.values())
-        return expansion_limit
+        #available_rooms = find_available_rooms(event["Capacity"], rooms, [], event["Available_Periods"])
+        #expansion_limit = sum(len(rooms) for rooms in available_rooms.values())
+        return len(event["Available_Periods"])
 
 
 def find_available_rooms(event_capacity, rooms, events, available_periods):
@@ -51,7 +51,7 @@ def find_available_rooms(event_capacity, rooms, events, available_periods):
     for other_event in events:
         occupied_period = (other_event["WeekDay"], other_event["Timeslot"])
         if occupied_period in period_room_availability:
-            period_room_availability[occupied_period].discard(other_event["RoomId"])
+            if other_event.get("RoomId"): period_room_availability[occupied_period].discard(other_event["RoomId"])
 
     suitable_rooms = {room_id for room_id, room in rooms.items() if room["Capacity"] >= event_capacity}
     for period in available_periods:
@@ -95,7 +95,7 @@ def evaluate_timetable(conflicts_checker, timetable, unassigned_events = [], ful
 
     for event in timetable.values():
         events_to_check = dict_slice(timetable, event["Id"], True)
-        hard_penalty += conflicts_checker.check_event_hard_constraints(event, events_to_check, event["RoomId"], event["Timeslot"], event["WeekDay"], room_conflicts)
+        hard_penalty += conflicts_checker.check_event_hard_constraints(event, events_to_check, event["Timeslot"], event["WeekDay"], event["RoomId"], room_conflicts)
         
         if full_evaluation:
             soft_penalty += (conflicts_checker.check_room_capacity(event, event["RoomId"])

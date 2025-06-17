@@ -4,7 +4,7 @@ from algorithm.debug import *
 from algorithm.check_conflicts import ConflictsChecker
 from algorithm.hill_climbing import HillClimbing
 from algorithm.simulation_results_writer import write_simulation_results
-from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER, PRUNING, DIVING, DEBUG_RANDOM_SIMULATION
+from algorithm.macros import DEFAULT_TIME_LIMIT, DEBUG_TREE, DEBUG_PROGRESS, DEBUG_PROFILER, PRUNING, DIVING, DEBUG_RANDOM_SIMULATION, HILL_CLIMBING
 from dataclasses import dataclass
 import cProfile
 import time
@@ -131,8 +131,8 @@ class MCTS:
                 self.previous_unassigned_events.add(event["Id"])
                 self.current_node.children.append(None)
                 return None
-            rooms_available = find_available_rooms(next_event["Capacity"], self.rooms, new_path.values(), next_event["Available_Periods"])
-            return sum(len(rooms) for rooms in rooms_available.values())
+            #rooms_available = find_available_rooms(next_event["Capacity"], self.rooms, new_path.values(), next_event["Available_Periods"])
+            return len(next_event["Available_Periods"])
 
         if DIVING: self.is_current_node_fully_expanded = not self.current_node.is_fully_expanded()
 
@@ -143,31 +143,28 @@ class MCTS:
             self.current_node.expansion_limit = 0
             return False
 
-        rooms_by_period = find_available_rooms(event["Capacity"], self.rooms, self.current_node.path.values(), available_periods)
+        period_combinations = [(weekday, timeslot) for (weekday, timeslot) in available_periods]
 
-        period_room_combinations = [(weekday, timeslot, room) for (weekday, timeslot), rooms in rooms_by_period.items() if rooms for room in rooms]
-
-        if not period_room_combinations or len(self.current_node.children) >= len(period_room_combinations):
+        if not period_combinations or len(self.current_node.children) >= len(period_combinations):
             self.current_node.expansion_limit = 0
             return False
 
-        new_weekday, new_timeslot, new_room = period_room_combinations[len(self.current_node.children)]
+        new_weekday, new_timeslot = period_combinations[len(self.current_node.children)]
         
         new_path = self.current_node.path.copy()
-        new_path[event["Id"]] = {**event, "RoomId": new_room, "WeekDay": new_weekday, "Timeslot": new_timeslot}
+        new_path[event["Id"]] = {**event, "WeekDay": new_weekday, "Timeslot": new_timeslot}
 
         new_expansion_limit = calculate_expansion_limit(new_path)
         if new_expansion_limit is None: return False
         
-        child_node = MCTSNode(expansion_limit=new_expansion_limit, assignment=(event["Id"], new_weekday, new_timeslot, new_room), parent=self.current_node, path=new_path)
+        child_node = MCTSNode(expansion_limit=new_expansion_limit, assignment=(event["Id"], new_weekday, new_timeslot), parent=self.current_node, path=new_path)
         self.current_node.children.append(child_node)
         self.current_node = child_node
         return True
 
 
     def simulation(self, start_time, time_limit):
-
-        def find_best_room_and_period():
+        """ def find_best_period():
             if not event["Available_Periods"]: return None
 
             min_soft_penalty = float('inf')
@@ -176,24 +173,42 @@ class MCTS:
             compactness_weight = min(1, (i+self.current_node.depth()) / (len(self.events)-1))
 
             for weekday, timeslot in event["Available_Periods"]:
-                available_rooms = find_available_rooms(event["Capacity"], self.rooms, assigned_events.values(), [(weekday,timeslot)])
-                if available_rooms.values() != [set()]:
-                    for room in list(list(available_rooms.values())[0]):
-                        hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, assigned_events, room, timeslot, weekday)
-                        if hard_penalty == 0:
-                            soft_penalty = (
-                                self.conflicts_checker.check_room_capacity(event, room)
-                                + compactness_weight * self.conflicts_checker.check_block_compactness(event, assigned_events, timeslot, weekday)
-                                + self.conflicts_checker.check_min_working_days(event, assigned_events, weekday)
-                                + self.conflicts_checker.check_room_stability(event, assigned_events, room)
-                            )
-                            if soft_penalty < min_soft_penalty:
-                                min_soft_penalty = soft_penalty
-                                candidates = [(room, weekday, timeslot)]
-                            elif soft_penalty == min_soft_penalty:
-                                candidates.append((room, weekday, timeslot))
+                hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, assigned_events, timeslot, weekday)
+                if hard_penalty == 0:
+                    soft_penalty = (
+                        + compactness_weight * self.conflicts_checker.check_block_compactness(event, assigned_events, timeslot, weekday)
+                        + self.conflicts_checker.check_min_working_days(event, assigned_events, weekday)
+                    )
+                    if soft_penalty < min_soft_penalty:
+                        min_soft_penalty = soft_penalty
+                        candidates = [(weekday, timeslot)]
+                    elif soft_penalty == min_soft_penalty:
+                        candidates.append((weekday, timeslot))
             return random.choice(candidates) if candidates else None
-            
+
+
+        def find_best_room():
+            if not event["Available_Periods"]: return None
+
+            min_soft_penalty = float('inf')
+            candidates = []
+
+            available_rooms = find_available_rooms(event["Capacity"], self.rooms, assigned_events.values(), [(event["WeekDay"], event["Timeslot"])])
+            if available_rooms.values() != [set()]:
+                for room in list(list(available_rooms.values())[0]):
+                    hard_penalty = self.conflicts_checker.check_event_hard_constraints(event, assigned_events, event["Timeslot"], event["WeekDay"], room)
+                    if hard_penalty == 0:
+                        soft_penalty = (
+                            self.conflicts_checker.check_room_capacity(event, room)
+                            + self.conflicts_checker.check_room_stability(event, assigned_events, room)
+                        )
+                        if soft_penalty < min_soft_penalty:
+                            min_soft_penalty = soft_penalty
+                            candidates = [room]
+                        elif soft_penalty == min_soft_penalty:
+                            candidates.append(room)
+            return random.choice(candidates) if candidates else None
+             """
 
         def update_penalties(soft_penalty, hard_penalty = None):
             if hard_penalty is not None:
@@ -208,21 +223,35 @@ class MCTS:
         unassigned_events = set()
         remaining_events = sorted(self.events[self.current_node.depth():], key=lambda event: (event["Id"] in self.previous_unassigned_events, event["Priority"], random.random()), reverse=True)
 
-        for i, event in enumerate(remaining_events):
+        """ for i, event in enumerate(remaining_events):
             if DEBUG_RANDOM_SIMULATION:
                 event["RoomId"], event["WeekDay"], event["Timeslot"] = random.choice(list(self.rooms.keys())), random.randrange(0, self.config.days), random.randrange(0, self.config.periods_per_day)
                 assigned_events[event["Id"]] = event 
             else:
-                best_room_and_period = find_best_room_and_period()
-                if best_room_and_period:
-                    event["RoomId"], event["WeekDay"], event["Timeslot"] = best_room_and_period  
+                best_period = find_best_period()
+                if best_period:
+                    event["WeekDay"], event["Timeslot"] = best_period  
                     assigned_events[event["Id"]] = event 
                 else: 
                     self.previous_unassigned_events.add(event["Id"])
                     unassigned_events.add(event["Id"])
                     event["Priority"] += 50
 
+        assigned_events_list = list(assigned_events.values())
+        assigned_events_list = sorted(assigned_events_list, key=lambda event: (event["Id"] in self.previous_unassigned_events, event["Priority"], random.random()), reverse=True)
+        for event in assigned_events_list:
+            best_room = find_best_room()
+            if best_room:
+                event["RoomId"] = best_room  
+                assigned_events[event["Id"]] = event 
+            else: 
+                del assigned_events[event["Id"]]
+                self.previous_unassigned_events.add(event["Id"])
+                unassigned_events.add(event["Id"])
+                event["Priority"] += 50 """
+
         hard_penalty_result, soft_penalty_result = evaluate_timetable(self.conflicts_checker, assigned_events, unassigned_events)
+        print(f"{hard_penalty_result} {soft_penalty_result}")
         
         if DEBUG_PROGRESS:
             self.metrics["current_hard"].append(hard_penalty_result)
@@ -235,8 +264,9 @@ class MCTS:
             write_simulation_results(self.output_filename, list(assigned_events.values()), start_time, hard_penalty_result, soft_penalty_result)
             
             if len(unassigned_events) == 0 and hard_penalty_result == 0 and soft_penalty_result != 0:
-                self.global_best_soft_penalty, assigned_events = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
-                update_penalties(self.global_best_soft_penalty)
+                if HILL_CLIMBING:
+                    self.global_best_soft_penalty, assigned_events = self.hill_climber.run_hill_climbing(assigned_events, self.events[self.current_node.depth()]["Id"], self.global_best_soft_penalty, start_time, time_limit)
+                    update_penalties(self.global_best_soft_penalty)
                 
                 if DIVING:
                     if not self.simulation_path or self.is_current_node_fully_expanded:

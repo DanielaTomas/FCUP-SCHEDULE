@@ -17,7 +17,9 @@ def write_simulation_results(output_filename, assigned_events, start_time, hard_
     
     with open(output_filename, 'w') as file:
         for event in assigned_events:
-            if event['RoomId'] is not None or event['WeekDay'] is not None or event['Timeslot'] is not None:
+            if event.get("RoomId") is None and event['WeekDay'] is not None and event['Timeslot'] is not None:
+                file.write(f"{event['Name']} {'rB'} {event['WeekDay']} {event['Timeslot']}\n")
+            elif event.get("RoomId") is not None and event['WeekDay'] is not None and event['Timeslot'] is not None:
                 file.write(f"{event['Name']} {event['RoomId']} {event['WeekDay']} {event['Timeslot']}\n")
 
 
