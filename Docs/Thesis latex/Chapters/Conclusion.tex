@@ -19,8 +19,40 @@ An additional innovation is the incorporation of a diving strategy into the \ac{
 
 However, our findings indicate that both standard and diving-based \ac{mcts} tend to plateau after a certain number of iterations, with diminishing returns even under extended run times. While diving produces more consistent improvements and tends to stay closer to the best-found solutions, the problem of long-term stagnation remains and represents a key area for future optimization.
 
-Our experimental results, including comparisons against the benchmark dataset from the ITC-2007 competition, show that the hybrid approach consistently produces feasible solutions. Although it does not yet outperform state-of-the-art solutions, this dissertation provides a more effective and adaptive scheduling process for \ac{fcup} and can be extended to other institutions and help in other studies. 
+Our experimental results, including comparisons against the benchmark dataset from the ITC-2007 competition, show that the hybrid approach consistently produces feasible solutions. Although it does not yet outperform state-of-the-art solutions, this dissertation provides an effective and adaptive scheduling process for \ac{fcup} and can be extended to other institutions and help in other studies. 
 
-Future work should focus on fine tuning the algorithm, improving the heuristic functions, and enhancing computational performance. One promising direction is to postpone rooms allocation during both tree construction and simulation. In this approach, the fixed nodes in the tree represents only the \((weekday, timeslot)\) and, in the simulation, only allocate these two attributes for each event. The evaluation would then rely only on criteria that do not depend on room assignments. Only when a leaf node is reached, or when a solution is optimal according to these partial criteria, room allocation will be performed, followed by a complete evaluation. Exploring this variant could help reduce computational overhead and allow deeper or broader search within the same time constraints.
+\section{Future Work}
+
+Future work may focus on fine tuning the algorithm, improving the heuristic functions, enhancing computational performance, and integrating a visualization tool.
+
+\subsection{Performance}
+
+One promising direction is to postpone rooms allocation during both tree construction and simulation. In this approach, the fixed nodes in the tree represents only the \((weekday, timeslot)\) (Appendix \ref{AppendixA} Figure \ref{fig:tree}) and, in the simulation, only allocate these two attributes for each event. Room assignments are performed afterward, once the simulation reaches a complete assignment of periods. Exploring this variant could help reduce computational overhead and allow deeper or broader search within the same time constraints.
+
+Although early testing of this approach did not yield strong results, it remains a promising idea that deserves further investigation and refinement.
+
+\subsection{Previous Work}
+
+A previous project\footnote{\textbf{Front-end:} \url{https://github.com/luismdsleite/schedule} \textbf{Back-end:} \url{https://github.com/luismdsleite/schedule-backend}} developed a timetabling visualization tool using Flask and reactive programming principles with the Elm language. Flask facilitated data management and communication between the front-end and the database (Appendix \ref{AppendixA} Figure \ref{fig:previous_work_uml}), ensuring that timetable updates were efficiently processed and displayed. 
+
+This tool allows users to manually construct and modify schedules while providing a responsive interface (Appendix \ref{AppendixA} Figure \ref{fig:previous_work_interface}). However, despite its usability, the tool has some limitations that this dissertation attempted to address:
+
+\begin{itemize}
+\item \textbf{No conflict detection support:} Users had to manually check for conflicts, increasing the risk of errors.
+\item \textbf{Lack of automated guidance:} It did not provide recommendations or suggestions to help users make optimal scheduling decisions.
+\item \textbf{No quality assessment:} The system lacked mechanisms to evaluate the quality of a given timetable.
+\end{itemize}
+
+The development process involved several adaptations and refinements. Initially, the previous work was analyzed and made functional, serving as a baseline for the new system. 
+
+The \ac{mcts} algorithm was being developed while also being integrated into the front-end interface intended to showcase the project. However, as the focus shifted towards adapting it to the \ac{itc-2007} track 3 benchmark for performance evaluation and fine-tuning the algorithm, the front-end development gradually lost priority. As the algorithm evolved and diverged significantly from its original form, aligning it with the prior work proved difficult. Consequently, continuing its development would be time-consuming and ultimately not worthwhile, as it was primarily intended for demonstration purposes. Instead, the system should be directly integrated into the sigarra\footnote{\url{https://sigarra.up.pt/up/pt/web\_page.inicial}} website.
+
+%\begin{figure}
+%    \centering
+%      \includegraphics[width=1.1\columnwidth]{Development/uml.png}
+%      \caption[UML]
+%      {UML}
+%      \label{fig:uml}
+%\end{figure}
 
 

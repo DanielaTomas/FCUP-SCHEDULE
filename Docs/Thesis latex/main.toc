@@ -24,64 +24,66 @@
 \contentsline {section}{\numberline {1.4}Dissertation layout}{2}{section.1.4}%
 \contentsline {chapter}{\numberline {2}Background}{4}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Combinatorial Optimization Problems}{4}{section.2.1}%
-\contentsline {section}{\numberline {2.2}University Course Timetabling Problem}{4}{section.2.2}%
+\contentsline {section}{\numberline {2.2}The University Course Timetabling Problem}{4}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Curriculum-Based and Post-Enrollment Course Timetabling}{5}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Constraints}{5}{subsection.2.2.2}%
 \contentsline {section}{\numberline {2.3}International Timetabling Competition (ITC)}{6}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Monte Carlo Tree Search}{6}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Monte Carlo Tree Search}{7}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Phases}{7}{subsection.2.4.1}%
 \contentsline {subsection}{\numberline {2.4.2}Properties}{8}{subsection.2.4.2}%
 \contentsline {section}{\numberline {2.5}Local Search}{8}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}Hill Climbing}{8}{subsection.2.5.1}%
-\contentsline {section}{\numberline {2.6}Previous Work}{9}{section.2.6}%
-\contentsline {chapter}{\numberline {3}Related Work}{11}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Operational Research (OR)}{11}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Metaheuristics}{11}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Single Solution-Based}{12}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Population-Based}{12}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Hyperheuristics}{12}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Multi-Objective}{13}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Hybrid}{13}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Monte Carlo Tree Search}{14}{section.3.6}%
-\contentsline {section}{\numberline {3.7}Summary}{14}{section.3.7}%
-\contentsline {chapter}{\numberline {4}Development}{16}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Problem Formulation}{16}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Constraints}{17}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}Monte Carlo Tree Search}{18}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Search Space}{18}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}\ac {mcts} Tree}{18}{subsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.2.1}Tree Nodes}{18}{subsubsection.4.2.2.1}%
-\contentsline {subsection}{\numberline {4.2.3}Events Allocation}{19}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Periods and Rooms Allocation}{20}{subsection.4.2.4}%
-\contentsline {subsubsection}{\numberline {4.2.4.1}Initial Periods and Rooms Allocation Approach}{20}{subsubsection.4.2.4.1}%
-\contentsline {subsubsection}{\numberline {4.2.4.2}Final Periods and Rooms Allocation Approach}{22}{subsubsection.4.2.4.2}%
-\contentsline {subsection}{\numberline {4.2.5}Methodology}{22}{subsection.4.2.5}%
-\contentsline {subsubsection}{\numberline {4.2.5.1}Selection}{23}{subsubsection.4.2.5.1}%
-\contentsline {subsubsection}{\numberline {4.2.5.2}Expansion}{24}{subsubsection.4.2.5.2}%
-\contentsline {subsubsection}{\numberline {4.2.5.3}Simulation}{25}{subsubsection.4.2.5.3}%
-\contentsline {subsubsection}{\numberline {4.2.5.4}Backpropagation}{28}{subsubsection.4.2.5.4}%
-\contentsline {subsection}{\numberline {4.2.6}Normalization}{28}{subsection.4.2.6}%
-\contentsline {section}{\numberline {4.3}Hill climbing}{28}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Neighborhoods}{29}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Methodology}{29}{subsection.4.3.2}%
-\contentsline {section}{\numberline {4.4}Diving}{30}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Front-end}{31}{section.4.5}%
-\contentsline {chapter}{\numberline {5}Tests}{33}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Test Instances}{33}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Test Setup}{33}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Performance Metrics}{34}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Testing Procedure}{35}{section.5.4}%
-\contentsline {chapter}{\numberline {6}Results}{36}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Python vs PyPy Performance}{36}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Feasibility}{36}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Random Simulation Performance}{36}{section.6.3}%
-\contentsline {section}{\numberline {6.4}\(C\) Parameter Behaviour}{37}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Pruning}{37}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Hill Climbing}{39}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Diving}{39}{section.6.7}%
-\contentsline {section}{\numberline {6.8}Competition Results Comparison}{41}{section.6.8}%
+\contentsline {chapter}{\numberline {3}Related Work}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Operational Research (OR)}{10}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Metaheuristics}{10}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Single Solution-Based}{11}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Population-Based}{11}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Hyperheuristics}{11}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Multi-Objective Optimization}{11}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Hybrid Approaches}{12}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Monte Carlo Tree Search}{13}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Summary}{13}{section.3.7}%
+\contentsline {chapter}{\numberline {4}Development}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Problem Formulation}{15}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Assignment Attributes}{16}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Constraints}{16}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Monte Carlo Tree Search}{17}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Search Space}{17}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}\ac {mcts} Tree}{17}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}Tree Nodes}{17}{subsubsection.4.2.2.1}%
+\contentsline {subsection}{\numberline {4.2.3}Events Allocation}{18}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Periods and Rooms Allocation}{19}{subsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.4.1}Initial Periods and Rooms Allocation Approach}{19}{subsubsection.4.2.4.1}%
+\contentsline {subsubsection}{\numberline {4.2.4.2}Final Periods and Rooms Allocation Approach}{21}{subsubsection.4.2.4.2}%
+\contentsline {subsection}{\numberline {4.2.5}Methodology}{21}{subsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.5.1}Selection}{22}{subsubsection.4.2.5.1}%
+\contentsline {subsubsection}{\numberline {4.2.5.2}Expansion}{23}{subsubsection.4.2.5.2}%
+\contentsline {subsubsection}{\numberline {4.2.5.3}Simulation}{24}{subsubsection.4.2.5.3}%
+\contentsline {subsubsection}{\numberline {4.2.5.4}Backpropagation}{27}{subsubsection.4.2.5.4}%
+\contentsline {subsection}{\numberline {4.2.6}Normalization}{27}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}Hill climbing}{27}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Neighborhoods}{28}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Methodology}{28}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Diving}{29}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Tests}{31}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Test Instances}{31}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Test Setup}{31}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Performance Metrics}{32}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Testing Procedure}{33}{section.5.4}%
+\contentsline {chapter}{\numberline {6}Results}{34}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Python vs PyPy Performance}{34}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Feasibility}{34}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Random Simulation Performance}{34}{section.6.3}%
+\contentsline {section}{\numberline {6.4}\(C\) Parameter Behaviour}{35}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Pruning}{35}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Hill Climbing}{37}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Diving}{37}{section.6.7}%
+\contentsline {section}{\numberline {6.8}Competition Results Comparison}{39}{section.6.8}%
 \contentsline {section}{\numberline {6.9}Summary}{41}{section.6.9}%
-\contentsline {chapter}{\numberline {7}Conclusion}{43}{chapter.7}%
+\contentsline {chapter}{\numberline {7}Conclusion}{42}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Future Work}{42}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Performance}{42}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Previous Work}{43}{subsection.7.1.2}%
 \vspace {0.5cm}
 \contentsline {chapter}{Bibliography}{43}{dummy.6}%
 \contentsfinish 

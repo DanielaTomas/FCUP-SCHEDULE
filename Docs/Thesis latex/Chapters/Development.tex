@@ -17,7 +17,7 @@ The source code for the hybrid timetabling system is available at \url{https://g
 
 \section{Problem Formulation}
 
-The entities in the problem are listed below:
+The formulation presented is based on the model proposed in the \ac{itc-2007} track 3. The entities in the problem are listed below:
 
 \begin{itemize}
 	\item \textbf{Periods, \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):} Days are divided into fixed timeslots, with periods consisting of a day and a timeslot.
@@ -38,7 +38,7 @@ The entities in the problem are listed below:
 			%\item Restriction (availability and TODO: preferences for periods)
 		\end{itemize}
 
-	\item \textbf{Events, \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):} Represent the events to be scheduled (usually a lecture). Each event has associated attributes:
+	\item \textbf{Events, \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):} Represent the events to be scheduled (usually lectures). Each event has associated the following attributes:
 %		\begin{multicols}{2}
 %		\textbf{Previous work:}
 %		\begin{itemize}
@@ -51,19 +51,28 @@ The entities in the problem are listed below:
 %		\columnbreak
 %		\textbf{TODO: adicionar ao trabalho anterior?}
 		\begin{itemize}
-        		\item Capacity (number of students)
-        		\item Number of lectures
-        		\item Minimum working days (days over which the events of the same course should be spread)
-        		\item Available periods
-        		\item Priority
-        		\item Lecturer
-        		\item Period (day, timeslot)
- 			\item Room
+        		\item Capacity (number of students);
+        		\item Number of lectures;
+        		\item Minimum working days (days over which the events of the same course should be spread);
+        		\item Available periods;
+        		\item Priority;
+        		\item Lecturer;
 		\end{itemize}
 %		\end{multicols} 
 
 	\item \textbf{Blocks, \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):} A block may represent a group of related events. Usually represents all events from the same curriculum, which is a set of courses in a study program.
 \end{itemize}
+
+
+\subsection{Assignment Attributes}
+
+Although not intrinsic properties of events, the following elements are essential in the assignment process:
+
+\begin{itemize}
+	\item \textbf{Period (day, timeslot):} Each event is to be scheduled into exactly one period.
+	\item \textbf{Room:} Each event must be assigned to a room that satisfies its capacity.
+\end{itemize}
+
 
 \subsection{Constraints}
 
@@ -89,7 +98,7 @@ There are several hard and soft constraints that affect the creation of \ac{fcup
 	\item \textbf{S4:} All events of a course should be given in the same room.
 \end{itemize}
 
-The problem is defined as a maximization problem, with the algorithm attempting to minimize soft constraint violations while strictly adhering to hard constraints.
+The problem is defined as a minimization problem, with the algorithm attempting to minimize soft constraint violations while strictly adhering to hard constraints.
 
 \section{Monte Carlo Tree Search}
 
@@ -99,7 +108,7 @@ The problem is defined as a maximization problem, with the algorithm attempting 
 
 \subsection{Search Space}
 
-The search space, \(S\),  for this problem is large as it involves a product of all possible event-period-room combinations: \[S = E \cdot P  \cdot R,\] where \(E\) is the set of events, \(P\) is the set of periods (day, timeslot), and \(R\) is the set of rooms.
+The search space, \(S\),  for this problem is large as it involves a product of all possible event-period-room combinations: \[S = E \times P  \times R,\] where \(E\) is the set of events, \(P\) is the set of periods (day, timeslot), and \(R\) is the set of rooms.
 
 To reduce the search space, unavailable periods and unavailable rooms for a chosen period are discarded immediately in the \ac{mcts} \(expansion\) phase.
 
@@ -120,7 +129,7 @@ Figure \ref{fig:mcts_tree} illustrates the basic structure of the \ac{mcts} tree
 A node is composed of the following attributes:
 
 \begin{itemize}
-\item A \textbf{path} is a dictionary that represents the sequence of actions leading to a node. The root is the only node that has an empty path.
+%\item A \textbf{path} is a dictionary that represents the sequence of actions leading to a node. The root is the only node that has an empty path.
 
 \item A \textbf{parent} is a reference to the parent node, allowing the tree structure to be navigated upwards. The root is the only node that does not have a parent.
 
@@ -137,7 +146,7 @@ A node is composed of the following attributes:
 
 \subsection{Events Allocation}
 
-Events are sorted in advance so that the most difficult event to place is placed first in the tree. The priority of an event (Formula \ref{priority}) is calculated based on:
+Events are sorted in advance so that the most difficult event to place is placed first in the tree. We propose to determine the priority of an event (Equation \ref{priority}) based on:
 
 \begin{itemize}
 \item The difference between the number of lectures and minimum working days to prioritize events with more lectures spread over fewer days;
@@ -481,17 +490,3 @@ As a result, in the fifth iteration, node \(A3\) is the only element in the queu
 In the sixth iteration, although \(A3\) is fully expanded, none of its children surpass its score of -34. Therefore, the next node selected is \(B1\) because was part of the simulation path associated with \(A3\). Upon expanding \(B1\), the algorithm discovers node \(C1\), which yields a better score than the previous best from \(A3\). Consequently, \(C1\) is placed at the front of the queue.  
 
 The expansion of \(B1\) continues, but once \(B1\) is fully expanded, the algorithm selects \(C1\) for expansion next, since it now holds the highest priority in the queue.
-
-\section{Front-end}
-
-The development process involved several adaptations and refinements. Initially, the previous work was analyzed and made functional, serving as a baseline for the new system. 
-
-The \ac{mcts} algorithm was being developed while also being integrated into the front-end  interface intended to showcase the project. However, as the focus shifted towards adapting it to the \ac{itc-2007} track 3 benchmark for performance evaluation and fine-tuning the algorithm, the front-end development gradually lost priority. As the algorithm evolved and diverged significantly from its original form, aligning it with the prior work proved difficult. Consequently, continuing its development would be time-consuming and ultimately not worthwhile, as it was primarily intended for demonstration purposes. Instead, the system should be directly integrated into the sigarra\footnote{\url{https://sigarra.up.pt/up/pt/web\_page.inicial}} website.
-
-%\begin{figure}
-%    \centering
-%      \includegraphics[width=1.1\columnwidth]{Development/uml.png}
-%      \caption[UML]
-%      {UML}
-%      \label{fig:uml}
-%\end{figure}

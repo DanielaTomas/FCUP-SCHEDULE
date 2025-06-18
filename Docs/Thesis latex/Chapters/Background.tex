@@ -19,20 +19,20 @@ This chapter will cover the concepts needed to contextualize and understand the 
 
 Finding a solution for maximizing or minimizing a value is common in several real world problems. These problems often require searching for an optimal solution from a finite set of possibilities. They are characterized by their discrete nature and the challenge of finding optimal solutions in large search spaces.
 
-\acp{cop} arise in various fields, such as artificial intelligence, machine learning, auction theory, applied mathematics, and so on. Some well-known \acp{cop} include Knapsack Problem, Traveling Salesman Problem, and Graph Coloring. 
+\acp{cop} arise in various fields, such as artificial intelligence, machine learning, auction theory, applied mathematics, and more. Some well-known \acp{cop} include the Knapsack Problem, the Traveling Salesman Problem, and Graph Coloring. 
 
 To solve these problems, various algorithmic techniques are used, including:
 \begin{itemize}
-\item \textbf{Exact algorithms:} Guarantee optimal solutions by exhaustively exploring the solution space. However, they can be computationally expensive, especially for large and complex problems, because their complexity often grows exponentially.
-\item \textbf{Approximation algorithms:} Produce provably near-optimal solutions, providing a quantifiable measure of how far the solution might diverge from the best possible one, making them valuable for problems where exact solutions are infeasible.
+\item \textbf{Exact algorithms:} Guarantee optimal solutions by exhaustively exploring the solution space. However, they can be computationally expensive, especially for large and complex problems, because their runtime and/or memory requirements often grow exponentially.
+\item \textbf{Approximation algorithms:} Produce provably near-optimal solutions, providing a quantifiable measure of how far the solution might diverge from the best possible one, making them valuable for problems where obtaining exact solutions is too demanding but some guarantees are desirable.
 \item \textbf{Heuristic algorithms:} Focus on practicality and efficiency by finding good solutions within a reasonable time frame. While they do not ensure optimality, they are often effective for solving large-scale problems. This type of algorithms will be the primary focus of this dissertation.
 \end{itemize}
 
-\section{University Course Timetabling Problem}
+\section{The University Course Timetabling Problem}
 
-\ac{ucttp} is a NP-hard \ac{cop} that involves allocating events, rooms, lecturers, and students to weekly schedules while meeting certain predefined constraints. It falls under the broader category of Educational Timetabling, which also includes other challenging problems such as Examination Timetabling. 
+\ac{ucttp} is an NP-hard \ac{cop} that involves allocating events, rooms, lecturers, and students to weekly schedules while meeting certain predefined constraints. It falls under the broader category of Educational Timetabling, which also includes other challenging problems such as Examination Timetabling. 
 
-Due to the size and complexity of the problem, obtaining an optimal solution in usable time is typically infeasible. Therefore, it is necessary to employ robust optimization techniques.
+Due to the size and complexity of the problem, obtaining an optimal solution in usable time is typically infeasible. Therefore, it is usually necessary to employ heuristic optimization techniques.
 
 \subsection{Curriculum-Based and Post-Enrollment Course Timetabling}
 
@@ -50,7 +50,7 @@ These two problems differ significantly in terms of timing, flexibility, and con
 %How can a university/school schedule its classes to make the best use of teachers and classrooms without conflicts?
 In the context of \ac{ucttp}, constraints are often divided into two different types (Figure \ref{fig:constraints}):
 \begin{itemize}
-\item \textbf{Hard constraints:} Ensure the feasibility of the timetable and must be strictly satisfied. Typically, a hard constraint includes avoiding overlapping events for the same student or a lecturer. 
+\item \textbf{Hard constraints:} Ensure the feasibility of the timetable and must be strictly satisfied. Typically, a hard constraint includes avoiding overlapping events for the same student or lecturer. 
 \item \textbf{Soft constraints:} Represent preferences to improve the quality of the solution without being mandatory. An example of a soft constraint is minimizing gaps in students' timetables to ensure a more compact timetable.
 \end{itemize}
 
@@ -72,7 +72,7 @@ The \ac{itc-2007}\footnote{\url{https://www.eeecs.qub.ac.uk/itc2007/}} was struc
 
 \section{Monte Carlo Tree Search}
 
-\ac{mcts} is a decision-making algorithm that has been successfully applied in a variety of optimization problems with a huge search space. The algorithm has proven to be particularly effective in games such as Go and Chess, where the algorithm can even outperform the best human players.
+\ac{mcts} is a decision-making algorithm that has been successfully applied in a variety of optimization problems with a huge search space. The algorithm has proven to be particularly effective in games such as Go and Chess, where it can outperform even the best human players.
 
 \subsection{Phases}
 
@@ -94,7 +94,7 @@ The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_ap
 	\end{equation} where \(w_i\) is the total reward of all playouts through this state, \(n_i\) is the number of visits of child node \(i\), \(C\) is a constant greater than zero (typically \(\sqrt{2}\)), and \(n\) is the number of visits of the parent node.
     \item \textbf{Expansion:} One or more child nodes are added to the node previously reached in the selection phase.
     \item \textbf{Simulation:} From the newly added node(s), a simulation is performed according to a default policy, which may include random moves until a terminal node is reached.
-    \item \textbf{Backpropagation:} The simulation result is then propagated back through the traversed nodes, where the number of visits and the average reward for each node are updated until it reaches the root.
+    \item \textbf{Backpropagation:} The simulation result is then propagated back through the traversed nodes, where the number of visits and the average reward for each node are updated, until it reaches the root.
 \end{enumerate}
 
 \subsection{Properties}
@@ -111,13 +111,13 @@ The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_ap
 
 \section{Local Search}
 
-Local search is an optimization technique that iteratively improves a solution within a given search space by making small changes and retaining those that yield better results. It is effective for large-scale problems where the search is computationally expensive or unfeasible. Popular local search algorithms include \ac{hc}, \ac{sa}, \ac{ts}, and Genetic Algorithms (GA). While local search algorithms are powerful, they can sometimes get stuck and fail to find the global best solution. Techniques such as simulated annealing help escape local optima and explore a broader range of solutions.
+Local search is an optimization technique that iteratively improves a solution within a given search space by making small changes and retaining those that yield better results. It is effective for large-scale problems where the search is computationally expensive or unfeasible. Popular local search algorithms include \ac{hc}, \ac{sa}, and \ac{ts}. While local search algorithms are powerful, they can sometimes get stuck and fail to find the global best solution. Techniques such as simulated annealing help escape local optima and explore a broader range of solutions.
 
 \subsection{Hill Climbing}
 
 \ac{hc} is a local search optimization algorithm that begins with an initial solution, which can be randomly generated or specifically chosen depending on the problem. From this starting point, \ac{hc} evaluates neighbouring solutions, which are generated by making small modifications to the current solution. If a neighbouring solution is found to be better than the current one, the algorithm moves to that new solution. The algorithm finishes when there is no better neighbouring solution that offers an improvement over the current one, indicating that a local optimum has been attained. 
 
-While \ac{hc} is effective and easy to implement, it has limitations.The algorithm can get stuck in:
+While \ac{hc} is effective and easy to implement, it has limitations. The algorithm can get stuck in:
 
 \begin{itemize}
 \item \textbf{Local optimum:} A solution state that is better than its neighbours but not necessarily the global optimum, i.e., the best possible solution in the entire search space, restricting further improvement.
@@ -133,33 +133,7 @@ To address these issues, variations of the algorithm have been developed:
 \item \textbf{Stochastic Hill-Climbing}: Randomly selects a neighbour, without evaluation, and moves to it if it improves the solution. This approach is less commonly used than the other two.
 \end{itemize}
 
-\section{Previous Work}
-
-\begin{figure}
-      \centering
-      \includegraphics[width=1.0\columnwidth]{Background/previous_work.png}
-      \caption[Previous work interface]
-      {Previous work interface}
-      \label{fig:previous_work_interface}
-\end{figure}
-
-\begin{figure}
-      \centering
-      \includegraphics[width=1.0\columnwidth]{Background/uml.png}
-      \caption[Previous work UML]
-      {Previous work UML}
-      \label{fig:previous_work_uml}
-\end{figure}
-
-A previous project\footnote{\textbf{Front-end:} \url{https://github.com/luismdsleite/schedule} \textbf{Back-end:} \url{https://github.com/luismdsleite/schedule-backend}} developed a timetabling visualization tool using Flask and reactive programming principles with the Elm language. Flask facilitated data management and communication between the front-end and the database (Figure \ref{fig:previous_work_uml}), ensuring that timetable updates were efficiently processed and displayed. 
-
-This tool allow users to manually construct and modify schedules while providing a responsive interface (Figure \ref{fig:previous_work_interface}). However, despite its usability, the tool has some limitations that this dissertation attempts to address:
-
-\begin{itemize}
-\item \textbf{No conflict detection support:} Users had to manually check for conflicts, increasing the risk of errors.
-\item \textbf{Lack of automated guidance:} It did not provide recommendations or suggestions to help users make optimal scheduling decisions.
-\item \textbf{No quality assessment:} The system lacked mechanisms to evaluate the quality of a given timetable.
-\end{itemize}
+%\section{Previous Work}
 
 %\subsection{Reactive Programming}
 

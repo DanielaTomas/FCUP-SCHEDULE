@@ -21,19 +21,19 @@ According to Lewis' survey \cite{lewis_survey_2008}, algorithms can be divided i
 	\item \textbf{Multi-stage with relaxation} is divided into multiple stages, with some constraints being relaxed while satisfying others.
 \end{itemize}
 
-Other surveys, such as Abdipoor et al. \cite{abdipoor_meta-heuristic_2023}, categorized \ac{ucttp} into five groups: operational research (or), metaheuristics, hyperheuristics, multi-objective, and hybrid approaches.
+Other surveys, such as Abdipoor et al.\ \cite{abdipoor_meta-heuristic_2023}, categorized \ac{ucttp} into five groups: operational research, metaheuristics, hyperheuristics, multi-objective, and hybrid approaches.
 
 \section{Operational Research (OR)}
 
-Operational Research (OR) techniques provide mathematically rigorous solutions. Despite their complexity, these methods are simple to implement and can be considered if time and memory constraints are not a concern \cite{babaei_survey_2015}. However, the other types of approaches provide better quality results. 
+Operational Research (OR) techniques provide mathematically rigorous solutions. Despite their complexity, these methods are simple to implement and can be considered if time and memory constraints are not a concern \cite{babaei_survey_2015}. However, if time is limited, the other types of approaches provide better quality results. 
 
-As Chen et al. and  Babaei et. al detailed in their surveys \cite{babaei_survey_2015,chen_survey_2021}, OR includes Graph Coloring (GC), Integer and Linear Programming (IP/LP) and Constraint Satisfaction(s) Programming (CSPs) based techniques.
+As Babaei et al.\ and Chen et al.\ detailed in their surveys \cite{babaei_survey_2015,chen_survey_2021}, OR includes Graph Coloring (GC), Integer and Linear Programming (IP/LP) and Constraint Satisfaction(s) Programming (CSPs) based techniques.
 
 \section{Metaheuristics}
 
 Metaheuristics \textit{provide "acceptable" solutions in a reasonable time for solving hard and complex problems} \cite{talbi2009metaheuristics}. 
 
-Metaheuristics are similarly defined by Du et al. as \textit{a class of intelligent self-learning algorithms for finding near-optimum solutions to hard optimization problems} \cite{du2016search}.
+Metaheuristics are similarly defined by Du et al.\ as \textit{a class of intelligent self-learning algorithms for finding near-optimum solutions to hard optimization problems} \cite{du2016search}.
 
 Metaheuristics, while not guaranteeing global optimality, have become one of the most used solution strategy for \ac{ucttp} and can be classified into two categories: Single solution-based and Population-based.
 
@@ -45,7 +45,7 @@ This metaheuristic approach includes algorithms such as \ac{hc}, \ac{sa}, \ac{ts
 
 \subsection{Population-Based}
 
-Population-based meta-heuristics iteratively improve a population of solutions by generating a new population in the same neighborhood as the existing ones. This method can be subdivided into Evolutionary Algorithms, such as Genetic Algorithms, and Swarm Intelligence, such as Ant Colony Optimization \cite{abdipoor_meta-heuristic_2023,du2016search}.
+Population-based meta-heuristics iteratively improve a population of solutions by generating a new population based on the selection, recombination and/or mutation of individuals in the current population. This method can be subdivided into Evolutionary Algorithms, such as Genetic Algorithms, and Swarm Intelligence, such as Ant Colony Optimization \cite{abdipoor_meta-heuristic_2023,du2016search}.
 
 Population-based metaheuristics, as opposed to single-solution-based metaheuristics, are more focused on exploration rather than exploitation \cite{talbi2009metaheuristics,du2016search}. Despite promising results on real-world datasets, population-based approaches were rarely applied to benchmark datasets and performed poorly in \ac{itc} competitions compared to single solution-based methods \cite{abdipoor_meta-heuristic_2023}.
 
@@ -55,13 +55,13 @@ Population-based metaheuristics, as opposed to single-solution-based metaheurist
 
 Heuristic methods have been highly effective in solving a wide range of problems. However, their application to new problems is often challenging due to the vast number of parameter tuning and the lack of clear guidance \cite{hyper_heuristics_survey}. To address this problem, hyperheuristics aim to generalize methods by selecting or combining the most suitable heuristic(s) for a specific problem, rather than explicitly solving the problem.
 
-Hyper-heuristic and multi-objective (section \ref{sec:mo}) approaches are less common, possibly due to their performance \cite{chen_survey_2021}.
+Hyperheuristic approaches are less common, possibly due to their performance \cite{chen_survey_2021}.
 
-\section{Multi-Objective}\label{sec:mo}
+\section{Multi-Objective Optimization}\label{sec:mo}
 
-Multi-objective or multi-criteria approaches aim to optimize multiple conflicting objectives simultaneously. These methods are frequently used to find the optimal Pareto front, which is a set of compromise optimal solutions. However, the disadvantage lies in the execution effort \cite{chen_survey_2021}. Several multi-criteria algorithms can also be included in other categories, such as metaheuristics.
+Multi-objective or multi-criteria approaches aim to optimize multiple conflicting objectives simultaneously. These methods are frequently used to find the optimal Pareto front, which is a set of compromise optimal solutions such that one cannot improve one objective without deteriorating the other. However, the disadvantage of this approach lies in the execution effort \cite{chen_survey_2021}. Several multi-criteria algorithms can also be included in other categories, such as metaheuristics.
 
-\section{Hybrid}
+\section{Hybrid Approaches}
 
 Hybrid approaches mix algorithms from two or more of the previously mentioned types of approaches.
 
@@ -80,7 +80,7 @@ In particular, Tomáš Müller, winner of the \ac{itc-2007} tracks 1 and 3, deve
 
 The algorithms used included Iterative Forward Search (IFS), \ac{hc}, Great Deluge (GD), and optionally \ac{sa}. During the construction phase, IFS is employed to find a complete solution, followed by \ac{hc} to find the local optimum. When a solution cannot be improved further using \ac{hc}, GD is used to iteratively decrease, based on a cooling rate, a bound that is imposed on the value of the current solution. Optionally, \ac{sa} can be used when the bound reaches its lower limit.
 
-The solver's techniques have been integrated into UniTime\footnote{url{https://www.unitime.org/}} system, which is widely used for scheduling in academic institutions. Furthermore, the principles behind Müller's hybrid methodology are still relevant in modern optimization problems.
+The solver's techniques have been integrated into the UniTime\footnote{url{https://www.unitime.org/}} system, which is widely used for scheduling in academic institutions. Furthermore, the principles behind Müller's hybrid methodology are still relevant in modern optimization methods.
 
 While Müller's approach was highly successful in 2007, subsequent research has revealed that other methods may outperform it in some instances. However, it remains a benchmark against which new approaches are often compared.
 
