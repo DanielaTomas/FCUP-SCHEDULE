@@ -14,7 +14,7 @@
 % Write text in here
 % Use \subsection and \subsubsection to organize text
 
-\ac{ucttp} is a complex combinatorial optimization problem that consists of allocating events, rooms, lecturers, and students to weekly schedules while meeting certain constraints. A particular focus of this research is on \ac{cb-ctt}, a variant of \ac{ucttp} where the scheduling process is centered around courses and their associated curricula. 
+\ac{ucttp} is a complex combinatorial optimization problem that consists of allocating events, rooms, lecturers, and students to weekly schedules while meeting certain constraints. A particular focus of this research is on\ac{cb-ctt}, a variant of\ac{ucttp} where the scheduling process is centered around courses and their associated curricula. 
 
 To illustrate the complexity of the problem, consider two courses within the same curriculum: \textit{Introduction to Programming} and \textit{Calculus I}. Each course comes with distinct scheduling demands: the former might require three lectures per week (two theoretical and one lab), while \textit{Calculus I} may demand two lectures (a theoretical and a practical). Each lecture requires specific resources and teaching environments: practical programming lectures typically require a computer lab, while large auditoriums are better suited for theoretical lectures to accommodate more students. Since these lectures cannot overlap, variations in lecture frequency and format add an additional layer of complexity to the scheduling process. %Additional constraints further complicate the task, such as respecting lecturer availability and ensuring that students have balanced daily schedules without long gaps or excessive workloads. 
 Moreover, other specific requirements may arise depending on the institution’s policies and the particular needs of courses or lecturers.
@@ -23,27 +23,27 @@ The challenge intensifies when considering a complete bachelor’s or master’s
 
 \section{Motivation}
 
-The process of building timetables at \ac{fcup} each semester is currently time-consuming, not automated, and the final results are not always the most satisfactory. In general, existing tools focus primarily on visualizing timetables or on basic conflict detection. This situation not only results in suboptimal schedules but also increases the workload for administrative staff and impacts the satisfaction of both lecturers and students. 
+The process of building timetables at\ac{fcup} each semester is currently time-consuming, not automated, and the final results are not always the most satisfactory. In general, existing tools focus primarily on visualizing timetables or on basic conflict detection. This situation not only results in suboptimal schedules but also increases the workload for administrative staff and impacts the satisfaction of both lecturers and students. 
 
-In the academic year 2023/2024, \ac{fcup} enrolled more than 5000 students, offered 117 different curricula, and coordinated 646 collaborators \cite{fcup_em_numeros}. This scale underscores the need for an effective timetabling system that can manage such scale while minimizing errors and conflicts. %The approach in use is not only inefficient but also prone to errors and conflicts.
+In the academic year 2023/2024,\ac{fcup} enrolled more than 5000 students, offered 117 different curricula, and coordinated 646 collaborators \cite{fcup_em_numeros}. This scale underscores the need for an effective timetabling system that can manage such scale while minimizing errors and conflicts. %The approach in use is not only inefficient but also prone to errors and conflicts.
 
 \section{Objectives}
 
-The primary objective of this dissertation is to design a tool able to enhance the efficiency and quality of \ac{fcup}'s weekly timetable development by providing step-by-step interactive recommendations and detecting potential conflicts during its construction. The aim of this functionality is to later be integrated into a timetable visualization interface that was previously developed using reactive programming.
+The primary objective of this dissertation is to design a tool able to enhance the efficiency and quality of\ac{fcup}'s weekly timetable development by providing step-by-step interactive recommendations and detecting potential conflicts during its construction. The aim of this functionality is to later be integrated into a timetable visualization interface that was previously developed using reactive programming.
 
 \section{Methodology and Contributions}
 
-To address the problem challenges, this dissertation proposes a novel hybrid approach combining two heuristic algorithms: \ac{mcts} and \ac{hc}, along with a diving strategy. The \ac{mcts} heuristic search algorithm was chosen, as it has been applied to various optimization problems and has proven to be particularly effective in games. \ac{hc} was also chosen to be used in conjunction with \ac{mcts} for local optimization, refining feasible solutions discovered during the global search. The diving strategy further strengthens the search process by deepening the exploration of promising partial solutions, thereby improving the chances of reaching higher-quality timetables.
+To address the problem challenges, this dissertation proposes a novel hybrid approach combining two heuristic algorithms:\ac{mcts} and\ac{hc}, along with a diving strategy. The\ac{mcts} heuristic search algorithm was chosen, as it has been applied to various optimization problems and has proven to be particularly effective in games.\ac{hc} was also chosen to be used in conjunction with\ac{mcts} for local optimization, refining feasible solutions discovered during the global search. The diving strategy further strengthens the search process by deepening the exploration of promising partial solutions, thereby improving the chances of reaching higher-quality timetables.
 
-Although \ac{mcts} has shown positive results in relevant areas, its application to \ac{ucttp} remains largely unexplored. Therefore, the proposed system presents an opportunity to advance the state of the art and help in further studies, by leveraging the global search capabilities of \ac{mcts} to explore diverse scheduling possibilities with \ac{hc} to refine solutions locally. This hybrid approach aims to deliver both feasible and better-quality timetables while addressing the practical challenges faced by \ac{fcup} in managing large-scale scheduling.
+Although\ac{mcts} has shown positive results in relevant areas, its application to\ac{ucttp} remains largely unexplored. Therefore, the proposed system presents an opportunity to advance the state of the art and help in further studies, by leveraging the global search capabilities of\ac{mcts} to explore diverse scheduling possibilities with\ac{hc} to refine solutions locally. This hybrid approach aims to deliver both feasible and better-quality timetables while addressing the practical challenges faced by\ac{fcup} in managing large-scale scheduling.
 
 \section{Dissertation layout}
 
 After the introductory chapter stating the motivation, objectives, methodology, and contributions, the remainder of the dissertation is organized as follows:
 
 \begin{itemize}
-\item \textbf{Chapter~\ref{Background} - Background:} Introduces the fundamental concepts needed to contextualize and understand the \ac{ucttp}, along with an overview of the algorithms used.
-\item \textbf{Chapter~\ref{Related Work} -  Related Work:} Reviews existing research on \ac{ucttp}, discussing various approaches, including operational research, metaheuristics, hyperheuristics, multi-objective, and hybrid methods.
+\item \textbf{Chapter~\ref{Background} - Background:} Introduces the fundamental concepts needed to contextualize and understand the\ac{ucttp}, along with an overview of the algorithms used.
+\item \textbf{Chapter~\ref{Related Work} -  Related Work:} Reviews existing research on\ac{ucttp}, discussing various approaches, including operational research, metaheuristics, hyperheuristics, multi-objective, and hybrid methods.
 \item \textbf{Chapter~\ref{Development} -  Development:} Describes the design and implementation of the proposed hybrid approach.
 \item \textbf{Chapter~\ref{Tests} - Tests:} Details the experimental setup and evaluation metrics used to assess the system's performance.
 \item \textbf{Chapter~\ref{Results} -  Results:} Presents and analyzes the results obtained from the experiments. 
@@ -54,4 +54,4 @@ After the introductory chapter stating the motivation, objectives, methodology, 
 %Details the design of the proposed hybrid optimization system, including algorithmic formulation and system architecture.
 %Describes the implementation of the system, experimental setup, and benchmarking using ITC-2007 inspired datasets.
 %Presents and analyzes the experimental results, comparing the proposed method against existing approaches.
-%This chapter reviews existing timetabling methodologies and heuristic algorithms, with a focus on \ac{mcts} and local search techniques.
+%This chapter reviews existing timetabling methodologies and heuristic algorithms, with a focus on\ac{mcts} and local search techniques.

@@ -28,7 +28,7 @@
 \contentsline {subsection}{\numberline {2.2.1}Curriculum-Based and Post-Enrollment Course Timetabling}{5}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Constraints}{5}{subsection.2.2.2}%
 \contentsline {section}{\numberline {2.3}International Timetabling Competition (ITC)}{6}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Monte Carlo Tree Search}{7}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Monte Carlo Tree Search}{6}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Phases}{7}{subsection.2.4.1}%
 \contentsline {subsection}{\numberline {2.4.2}Properties}{8}{subsection.2.4.2}%
 \contentsline {section}{\numberline {2.5}Local Search}{8}{section.2.5}%
@@ -50,21 +50,20 @@
 \contentsline {section}{\numberline {4.2}Monte Carlo Tree Search}{17}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Search Space}{17}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}\ac {mcts} Tree}{17}{subsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.2.1}Tree Nodes}{17}{subsubsection.4.2.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}Tree Nodes}{18}{subsubsection.4.2.2.1}%
 \contentsline {subsection}{\numberline {4.2.3}Events Allocation}{18}{subsection.4.2.3}%
 \contentsline {subsection}{\numberline {4.2.4}Periods and Rooms Allocation}{19}{subsection.4.2.4}%
-\contentsline {subsubsection}{\numberline {4.2.4.1}Initial Periods and Rooms Allocation Approach}{19}{subsubsection.4.2.4.1}%
-\contentsline {subsubsection}{\numberline {4.2.4.2}Final Periods and Rooms Allocation Approach}{21}{subsubsection.4.2.4.2}%
-\contentsline {subsection}{\numberline {4.2.5}Methodology}{21}{subsection.4.2.5}%
-\contentsline {subsubsection}{\numberline {4.2.5.1}Selection}{22}{subsubsection.4.2.5.1}%
-\contentsline {subsubsection}{\numberline {4.2.5.2}Expansion}{23}{subsubsection.4.2.5.2}%
-\contentsline {subsubsection}{\numberline {4.2.5.3}Simulation}{24}{subsubsection.4.2.5.3}%
-\contentsline {subsubsection}{\numberline {4.2.5.4}Backpropagation}{27}{subsubsection.4.2.5.4}%
-\contentsline {subsection}{\numberline {4.2.6}Normalization}{27}{subsection.4.2.6}%
-\contentsline {section}{\numberline {4.3}Hill climbing}{27}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Neighborhoods}{28}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Methodology}{28}{subsection.4.3.2}%
-\contentsline {section}{\numberline {4.4}Diving}{29}{section.4.4}%
+\contentsline {subsection}{\numberline {4.2.5}Methodology}{19}{subsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.5.1}Selection}{20}{subsubsection.4.2.5.1}%
+\contentsline {subsubsection}{\numberline {4.2.5.2}Expansion}{22}{subsubsection.4.2.5.2}%
+\contentsline {subsubsection}{\numberline {4.2.5.3}Simulation}{22}{subsubsection.4.2.5.3}%
+\contentsline {subsubsection}{\numberline {4.2.5.4}Backpropagation}{24}{subsubsection.4.2.5.4}%
+\contentsline {subsection}{\numberline {4.2.6}Normalization}{26}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}Hill climbing}{26}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Neighborhoods}{26}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Methodology}{27}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Diving}{28}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Example of the Diving Approach}{29}{subsection.4.4.1}%
 \contentsline {chapter}{\numberline {5}Tests}{31}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Test Instances}{31}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Test Setup}{31}{section.5.2}%

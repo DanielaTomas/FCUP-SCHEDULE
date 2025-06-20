@@ -2,23 +2,23 @@
 
 \label{Results}
 
-This chapter presents the main outcomes of the proposed \ac{mcts}-based system for \ac{cb-ctt}. The following sections explore aspects such as computational performance, feasibility of generated timetables, analysis of the exploration constant \(C\), the impact of pruning, effectiveness of the diving strategy, and a comparison against benchmark competition results.
+This chapter presents the main outcomes of the proposed\ac{mcts}-based approach for\ac{cb-ctt}. The following sections explore aspects such as computational performance, feasibility of generated timetables, analysis of the exploration constant \(C\), the impact of pruning, effectiveness of the diving strategy, and a comparison against benchmark competition results.
 
 \section{Python vs PyPy Performance}
 
-During the development and testing of the system, both standard Python and PyPy\footnote{A Just-In-Time (JIT) python compiling alternative. Link: \url{https://pypy.org/}} were evaluated for performance. While both correctly executed the \ac{mcts} algorithm, the performance difference was substantial. PyPy called over three times more functions compared to Python.
+During the development and testing of the method, both standard Python and PyPy\footnote{A Just-In-Time (JIT) python compiling alternative. Link: \url{https://pypy.org/}} were evaluated for performance. While both correctly executed the\ac{mcts} algorithm, the performance difference was substantial. PyPy called over three times more functions compared to Python.
 
-Given the compute-intensive nature of \ac{mcts}, PyPy was ultimately chosen for running all the experiments and benchmarks.
+Given the compute-intensive nature of\ac{mcts}, PyPy was ultimately chosen for running all the experiments and benchmarks.
 
 \section{Feasibility}
 
-One of the fundamental requirements of \ac{cb-ctt} is the ability to produce feasible schedules, i.e., timetables that strictly adhere to hard constraints such as avoiding room clashes, overlapping events, and unavailable periods.
+One of the fundamental requirements of\ac{cb-ctt} is the ability to produce feasible schedules, i.e., timetables that strictly adhere to hard constraints such as avoiding room clashes, overlapping events, and unavailable periods.
 
-Throughout all experiments, the proposed method consistently produced feasible solutions across all tested datasets from the \ac{itc-2007} benchmark. This demonstrates the robustness of the method's constraint handling mechanisms, regardless of instance size or structural complexity, confirming the general applicability of the approach.
+Throughout all experiments, the proposed method consistently produced feasible solutions across all tested datasets from the\ac{itc-2007} benchmark. This demonstrates the robustness of the method's constraint handling mechanisms, regardless of instance size or structural complexity, confirming the general applicability of the approach.
 
 \section{Random Simulation Performance}
 
-To establish a baseline for the effectiveness of guided search, a random simulation test was conducted.  In this configuration, event, period, and room assignments were selected at random, without considering constraint satisfaction or search tree statistics. The goal of this experiment was to evaluate the ability of a purely stochastic method to find feasible solutions and to compare its performance against the guided \ac{mcts} approach. 
+To establish a baseline for the effectiveness of guided search, a random simulation test was conducted.  In this configuration, event, period, and room assignments were selected at random, without considering constraint satisfaction or search tree statistics. The goal of this experiment was to evaluate the ability of a purely stochastic method to find feasible solutions and to compare its performance against the guided\ac{mcts} approach. 
 
 Across multiple runs, the random simulation consistently failed to produce feasible solutions. Although random simulations can execute a high number of iterations due to its simplicity and lack of tree maintenance overhead, the majority of these iterations were ineffective, repeatedly exploring infeasible parts of the search space. 
 
@@ -26,17 +26,17 @@ These results highlight the importance of incorporating domain knowledge informa
 
 \section{\(C\) Parameter Behaviour}
 
-The exploration constant \(C\) in the \ac{uct} formula (Formula \ref{uct_formula}) was varied across several orders of magnitude (from 0.1 to 1000), including the modified variant incorporating accumulated rewards (Equation \ref{modified_uct}). 
+The exploration constant \(C\) in the\ac{uct} formula (Formula \ref{uct_formula}) was varied across several orders of magnitude (from 0.1 to 1000), including the modified variant incorporating accumulated rewards (Equation \ref{modified_uct}). 
 
 Surprisingly, the results showed that varying \(C\) had minimal impact on solution quality, which indicates a lower-than-expected sensitivity to node selection.
 
 \section{Pruning}
 
-The application of pruning during \ac{mcts} plays a crucial role in the efficiency of the search process.
+The application of pruning during\ac{mcts} plays a crucial role in the efficiency of the search process.
 
-Figure \ref{fig:without_pruning_result} illustrates the behavior of the system without pruning. The search frequently explores infeasible branches of the tree, which is evident from the large number of iterations with hard constraint violations. Although some feasible solutions are eventually discovered, the overall search efficiency is compromised due to the continuous evaluation of solutions that will be ultimately discarded.
+Figure \ref{fig:without_pruning_result} illustrates the behavior of the method without pruning. The search frequently explores infeasible branches of the tree, which is evident from the large number of iterations with hard constraint violations. Although some feasible solutions are eventually discovered, the overall search efficiency is compromised due to the continuous evaluation of solutions that will be ultimately discarded.
 
-Conversely, when pruning is applied (Figure \ref{fig:pruning_result}), the search is restricted to branches that satisfy hard constraints. As a result, the hard constraint value remains consistently at zero throughout the iterations, reflecting that pruning effectively excludes infeasible regions from the search space. This restriction allows \ac{mcts} to focus on high-quality and valid solutions, preventing wasteful exploration. The cleaner progression and stable constraint satisfaction not only accelerate convergence but also improve the overall robustness of the approach. 
+Conversely, when pruning is applied (Figure \ref{fig:pruning_result}), the search is restricted to branches that satisfy hard constraints. As a result, the hard constraint value remains consistently at zero throughout the iterations, reflecting that pruning effectively excludes infeasible regions from the search space. This restriction allows\ac{mcts} to focus on high-quality and valid solutions, preventing wasteful exploration. The cleaner progression and stable constraint satisfaction not only accelerate convergence but also improve the overall robustness of the approach. 
 
 While not depicted in Figure \ref{fig:pruning_result}, it is worth noting that simulations may still experience occasional hard constraint violations because pruning is applied to branches within the tree rather than across the entire search space.
 
@@ -44,7 +44,7 @@ While not depicted in Figure \ref{fig:pruning_result}, it is worth noting that s
  \centering
      \includegraphics[width=0.6\columnwidth]{Results/without_pruning.png}
      \includegraphics[width=0.2\columnwidth]{Results/hard_caption.png}
-     \caption{Hard constraint progress without pruning during 10 minutes on the \textt{comp01} instance from \ac{itc-2007}.}
+     \caption{Hard constraint progress without pruning during 10 minutes on the \texttt{comp01} instance from\ac{itc-2007}.}
      \label{fig:without_pruning_result}
 \end{figure}
 
@@ -52,28 +52,28 @@ While not depicted in Figure \ref{fig:pruning_result}, it is worth noting that s
  \centering
     \includegraphics[width=0.6\columnwidth]{Results/pruning.png}
     \includegraphics[width=0.2\columnwidth]{Results/hard_caption.png}
-    \caption{Hard constraint progress with pruning during 10 minutes on the \textt{comp01} instance from \ac{itc-2007}.}
+    \caption{Hard constraint progress with pruning during 10 minutes on the \texttt{comp01} instance from\ac{itc-2007}.}
     \label{fig:pruning_result}
 \end{figure}
 
 \section{Hill Climbing}
 
-To improve solution quality, \ac{hc} was combined with the \ac{mcts} algorithm (chapter \ref{Development} section \ref{hill_climbing_section}). Importantly, \ac{hc} operates exclusively on complete feasible solutions returned by \ac{mcts}, ensuring that hard constraint validity is maintained throughout the optimization process.
+To improve solution quality,\ac{hc} was combined with the\ac{mcts} algorithm (chapter \ref{Development} section \ref{hill_climbing_section}). Importantly,\ac{hc} operates exclusively on complete feasible solutions returned by\ac{mcts}, ensuring that hard constraint validity is maintained throughout the optimization process.
 
-In general, the hybrid approach consistently produces lower soft constraint penalties compared to standard \ac{mcts}, validating the effectiveness of combining global exploration with local refinement. 
+In general, the hybrid approach consistently produces lower soft constraint penalties compared to standard\ac{mcts}, validating the effectiveness of combining global exploration with local refinement. 
 
-Although the incorporation of \ac{hc} introduces additional computational overhead, the resulting improvements in solution quality make it a worthwhile trade-off in most cases.
+Although the incorporation of\ac{hc} introduces additional computational overhead, the resulting improvements in solution quality make it a worthwhile trade-off in most cases.
    
 \section{Diving}
 
-To improve the convergence speed and solution quality during timetable generation, the \ac{mcts} algorithm incorporates a diving strategy (chapter \ref{Development} section \ref{sec:diving}). Moreover, the diving strategy complements pruning by directing attention to already feasible branches. This method helps concentrate computational resources on areas of the search space that are both valid and high quality.
+To improve the convergence speed and solution quality during timetable generation, the\ac{mcts} algorithm incorporates a diving strategy (chapter \ref{Development} section \ref{sec:diving}). Moreover, the diving strategy complements pruning by directing attention to already feasible branches. This method helps concentrate computational resources on areas of the search space that are both valid and high quality.
 
-Figures \ref{fig:diving_result} and \ref{fig:without_diving_result} show the soft constraint penalty progression over time on the \texttt{comp01} instance from the \ac{itc-2007} benchmark, using and not using the diving strategy.
+Figures \ref{fig:diving_result} and \ref{fig:without_diving_result} show the soft constraint penalty progression over time on the \texttt{comp01} instance from the\ac{itc-2007} benchmark, using and not using the diving strategy.
 
 The results demonstrate that the diving mechanism contributes positively to the search effectiveness:
 
 \begin{itemize}
-\item \textbf{Faster convergence:} The algorithm reaches lower penalty regions more rapidly compared to a standard breadth-oriented \ac{mcts} approach. By tracking and expanding the most promising nodes first, the diving queue helps avoid wasting iterations on less promising parts of the tree.
+\item \textbf{Faster convergence:} The algorithm reaches lower penalty regions more rapidly compared to a standard breadth-oriented\ac{mcts} approach. By tracking and expanding the most promising nodes first, the diving queue helps avoid wasting iterations on less promising parts of the tree.
 
 \item \textbf{Improved solution quality:} As observed in the soft penalty trend, the use of diving leads to an improvement compared to the approach without diving (Figure \ref{fig:without_diving_result}). This improvement is only noticeable when we extend the run time. This shows that the diving strategy not only accelerates convergence but also contributes to reaching higher-quality solutions.
 
@@ -84,7 +84,7 @@ The results demonstrate that the diving mechanism contributes positively to the 
  \centering
     \includegraphics[width=0.8\columnwidth]{Results/without_diving_result.png}
     \includegraphics[width=0.19\columnwidth]{Results/soft_caption.png}
-    \caption{Soft constraint progress without using the diving approach on the \textt{comp01} instance from \ac{itc-2007} for 1 hour and \(C\)=1.4.}
+    \caption{Soft constraint progress without using the diving approach on the \texttt{comp01} instance from\ac{itc-2007} for 1 hour and \(C\)=1.4.}
     \label{fig:without_diving_result}
 \end{figure}
 
@@ -92,7 +92,7 @@ The results demonstrate that the diving mechanism contributes positively to the 
  \centering
     \includegraphics[width=0.8\columnwidth]{Results/diving_result.png}
     \includegraphics[width=0.19\columnwidth]{Results/soft_caption.png}
-    \caption{Soft constraint progress using the diving approach on the \textt{comp01} instance from \ac{itc-2007} for 1 hour and \(C\)=1.4.}
+    \caption{Soft constraint progress using the diving approach on the \texttt{comp01} instance from\ac{itc-2007} for 1 hour and \(C\)=1.4.}
     \label{fig:diving_result}
 \end{figure}
 
@@ -100,7 +100,7 @@ In both approaches (with and without diving) it is noticeable that the algorithm
 
 \section{Competition Results Comparison}
 
-The effectiveness of the \ac{mcts}-\ac{hc} hybrid was evaluated on the official \ac{itc-2007} track 3 benchmark datasets. Table \ref{tab:comparison_results} presents a comparison between the best results submitted by Müller (competition winner) and our system for instances \textt{comp01.ctt} to\textt{comp05.ctt}, and \textt{comp11.ctt}. The soft score is shown first and the hard score is in parentheses. Initially, all benchmark instances were considered for evaluation, but due to time constraints, the experiments were narrowed down to focus on only six instances.
+The effectiveness of the\ac{mcts}-\ac{hc} hybrid was evaluated on the official\ac{itc-2007} track 3 benchmark datasets. Table \ref{tab:comparison_results} presents a comparison between the best results submitted by Müller (competition winner) and our approach (with \(C\)=0.1) for instances \texttt{comp01.ctt} to\texttt{comp05.ctt}, and \texttt{comp11.ctt}. Initially, all benchmark instances were considered for evaluation, but due to time constraints, the experiments were narrowed down to focus on only six instances.
 
 \begin{landscape}
 \begin{table}[p]
@@ -112,24 +112,24 @@ The effectiveness of the \ac{mcts}-\ac{hc} hybrid was evaluated on the official 
 \textbf{Instance}
 & \multicolumn{3}{c|}{\textbf{Müller}} 
 & \multicolumn{3}{c|}{\textbf{Random Simulation}} 
-& \multicolumn{3}{c|}{\textbf{\ac{hc}}} 
-& \multicolumn{3}{c|}{\textbf{Diving}} 
-& \multicolumn{3}{c}{\textbf{\ac{hc}+Diving}} \\
+& \multicolumn{3}{c|}{\textbf{\ac{mcts}+\ac{hc}}} 
+& \multicolumn{3}{c|}{\textbf{\ac{mcts}+Diving}} 
+& \multicolumn{3}{c}{\textbf{\ac{mcts}+\ac{hc}+Diving}} \\
 & avg & max & min 
 & avg & max & min 
 & avg & max & min 
 & avg & max & min 
 & avg & max & min \\
 \hline
-\textbf{comp01} & 5 (0) & 5 (0) & 5 (0) & 2136.8 (96.1) & 2469 (99) & 1844 (91) & & & & & & & & & \\
-\textbf{comp02} & 61.3 (0) & 70 (0) & 51 (0) & 8099.1 (231.9) & 9351 (236) & 6909 (228) & & & & & & & & & \\
-\textbf{comp03} & 94.8 (0) & 103 (0) & 84 (0) & 5941.1 (184.5) & 6575 (187) & 5299 (182) & & & & & & & & & \\
-\textbf{comp04} & 42.8 (0) & 48 (0) & 37 (0) & 5168.2 (179.8) & 5552 (183) & 4407 (176) & & & & & & & & & \\
-\textbf{comp05} & 343.5 (0) & 379 (0) & 330 (0) & 8752.1 (121.6) & 9482 (125) & 7922 (118) & & & & & & & & & \\
-\textbf{comp11} & 0 (0) & 0 (0) & 0 (0) & 2033.8 (68.8) & 2211 (72) & 1826 (64) & & & & & & & & & \\
+\textbf{comp01} & 5 (0) & 5 (0) & 5 (0) & 2136.8 (96.1) & 2469 (99) & 1844 (91) & (0) & (0) & (0) & (0) & (0) & (0) & 17.4 (0) & 23 (0) & 12 (0) \\
+\textbf{comp02} & 61.3 (0) & 70 (0) & 51 (0) & 8099.1 (231.9) & 9351 (236) & 6909 (228) & (0) & (0) & (0) & (0) & (0) & (0) & 208.2 (0) & 232 (0) & 186 (0) \\
+\textbf{comp03} & 94.8 (0) & 103 (0) & 84 (0) & 5941.1 (184.5) & 6575 (187) & 5299 (182) & (0) & (0) & (0) & (0) & (0) & (0) & 241.6 (0) & 260 (0) & 215 (0) \\
+\textbf{comp04} & 42.8 (0) & 48 (0) & 37 (0) & 5168.2 (179.8) & 5552 (183) & 4407 (176) & (0) & (0) & (0) & (0) & (0) & (0) & 140.9 (0) & 151 (0) & 127 (0) \\
+\textbf{comp05} & 343.5 (0) & 379 (0) & 330 (0) & 8752.1 (121.6) & 9482 (125) & 7922 (118) & (0) & (0) & (0) & (0) & (0) & (0) & 639.6 (0) & 766 (0) & 587 (0) \\
+\textbf{comp11} & 0 (0) & 0 (0) & 0 (0) & 2033.8 (68.8) & 2211 (72) & 1826 (64) & (0) & (0) & (0) & (0) & (0) & (0) & 9.9 (0) & 13 (0) & 7 (0) \\
 \hline
 \end{tabular}
-\caption{Comparison of Müller and our method variants across six benchmark instances. Soft constraint penalties are shown with hard constraint violations in parentheses.}
+\caption{Comparison of Müller and our method variants across six benchmark instances during 10 minutes. Soft constraint penalties are shown with hard constraint violations in parentheses.}
 \label{tab:comparison_results}
 \end{table}
 \end{landscape}
@@ -139,16 +139,16 @@ Although our approach does not yet outperform state-of-the-art methods in terms 
 
 \section{Summary}
 
-This chapter evaluated the \ac{mcts}-\ac{hc} hybrid approach across several dimensions: implementation performance, feasibility, parameter tuning, pruning impact, and solution quality. Key findings include:
+This chapter evaluated the\ac{mcts}-\ac{hc} hybrid approach across several dimensions: implementation performance, feasibility, parameter tuning, pruning impact, and solution quality. Key findings include:
 
 \begin{itemize}
-\item \textbf{Feasibility:} The system consistently generated feasible timetables in the challenging \ac{itc-2007} set of benchmark instances.
+\item \textbf{Feasibility:} The method consistently generated feasible timetables in the challenging\ac{itc-2007} set of benchmark instances.
 
 \item \textbf{Performance:} PyPy significantly outperformed standard Python, justifying its use in all experiments.
 
 \item \textbf{Pruning:} Efficiently eliminated infeasible branches, improving search focus and convergence.
 
-\item \textbf{Diving:} Diving successfully reduced soft constraint penalties after \ac{mcts} found a feasible solution.
+\item \textbf{Diving:} Diving successfully reduced soft constraint penalties after\ac{mcts} found a feasible solution.
 
 \item \textbf{Competition Benchmarking:} Although solution quality was below the best-known results, the approach shows solid potential with room for improvement.
 \end{itemize}

@@ -11,7 +11,7 @@
 % For referencing this chapter elsewhere, use \ref{ChapterTemplate}
 \label{Background}
 
-This chapter will cover the concepts needed to contextualize and understand the \ac{ucttp} and the algorithms used to obtain the final result, namely the \ac{mcts} and \ac{hc} algorithms.
+This chapter will cover the concepts needed to contextualize and understand the\ac{ucttp} and the algorithms used to obtain the final result, namely the\ac{mcts} and\ac{hc} algorithms.
 
 %\section Terminology
 
@@ -30,7 +30,7 @@ To solve these problems, various algorithmic techniques are used, including:
 
 \section{The University Course Timetabling Problem}
 
-\ac{ucttp} is an NP-hard \ac{cop} that involves allocating events, rooms, lecturers, and students to weekly schedules while meeting certain predefined constraints. It falls under the broader category of Educational Timetabling, which also includes other challenging problems such as Examination Timetabling. 
+\ac{ucttp} is an NP-hard\ac{cop} that involves allocating events, rooms, lecturers, and students to weekly schedules while meeting certain predefined constraints. It falls under the broader category of Educational Timetabling, which also includes other challenging problems such as Examination Timetabling. 
 
 Due to the size and complexity of the problem, obtaining an optimal solution in usable time is typically infeasible. Therefore, it is usually necessary to employ heuristic optimization techniques.
 
@@ -44,11 +44,11 @@ Due to the size and complexity of the problem, obtaining an optimal solution in 
 \item \textbf{\ac{pe-ctt}:} Events are scheduled after students enroll in their courses, taking into account their preferred event combinations while minimizing conflicts.
 \end{itemize}
 
-These two problems differ significantly in terms of timing, flexibility, and constraints. \ac{pe-ctt} is performed after the student has enrolled in their courses, while \ac{cb-ctt} is performed first. \ac{pe-ctt} adjusts to the student choices, providing greater flexibility, while \ac{cb-ctt} follows a more rigid and predefined structure. Furthermore, \ac{pe-ctt} often involves more complex constraints due to diverse student preferences, whereas \ac{cb-ctt} deals with more predictable patterns. As a result, \ac{pe-ctt} is appropriate for institutions with a flexible course enrollment, while \ac{cb-ctt} is ideal for institutions with fixed curricula. \ac{fcup}'s timetables generation fits into \ac{cb-ctt}.
+These two problems differ significantly in terms of timing, flexibility, and constraints.\ac{pe-ctt} is performed after the student has enrolled in their courses, while\ac{cb-ctt} is performed first.\ac{pe-ctt} adjusts to the student choices, providing greater flexibility, while\ac{cb-ctt} follows a more rigid and predefined structure. Furthermore,\ac{pe-ctt} often involves more complex constraints due to diverse student preferences, whereas\ac{cb-ctt} deals with more predictable patterns. As a result,\ac{pe-ctt} is appropriate for institutions with a flexible course enrollment, while\ac{cb-ctt} is ideal for institutions with fixed curricula.\ac{fcup}'s timetables generation fits into\ac{cb-ctt}.
 
 \subsection{Constraints}
 %How can a university/school schedule its classes to make the best use of teachers and classrooms without conflicts?
-In the context of \ac{ucttp}, constraints are often divided into two different types (Figure \ref{fig:constraints}):
+In the context of\ac{ucttp}, constraints are often divided into two different types (Figure \ref{fig:constraints}):
 \begin{itemize}
 \item \textbf{Hard constraints:} Ensure the feasibility of the timetable and must be strictly satisfied. Typically, a hard constraint includes avoiding overlapping events for the same student or lecturer. 
 \item \textbf{Soft constraints:} Represent preferences to improve the quality of the solution without being mandatory. An example of a soft constraint is minimizing gaps in students' timetables to ensure a more compact timetable.
@@ -64,15 +64,15 @@ In the context of \ac{ucttp}, constraints are often divided into two different t
 
 \section{International Timetabling Competition (ITC)}
 
-Since 2002, the \ac{patat}\footnote{\url{https://patatconference.org/communityService.html}} has supported timetabling competitions to encourage research in this field. There have already been five editions of the \ac{itc}, with three focusing on university timetabling. The third edition, held in 2011, centered on high school timetabling.
+Since 2002, the\ac{patat}\footnote{\url{https://patatconference.org/communityService.html}} has supported timetabling competitions to encourage research in this field. There have already been five editions of the\ac{itc}, with three focusing on university timetabling. The third edition, held in 2011, centered on high school timetabling.
 
-The first \ac{itc} in 2002 focused on the \ac{pe-ctt} problem and utilized artificially generated instances. Over successive editions, the competition introduced problem instances that increasingly reflected real-world constraints and complexities.
+The first\ac{itc} in 2002 focused on the\ac{pe-ctt} problem and utilized artificially generated instances. Over successive editions, the competition introduced problem instances that increasingly reflected real-world constraints and complexities.
 
-The \ac{itc-2007}\footnote{\url{https://www.eeecs.qub.ac.uk/itc2007/}} was structured into three distinct tracks: Examination Timetabling Problem, Post-enrollment Course Timetabling, and Curriculum-based Course Timetabling. The second one is an extended version of the previous competition. This dissertation focuses on the Curriculum-Based Course Timetabling track (track 3) of the \ac{itc-2007}, as it aligns with the problem under investigation. Even after 18 years, these benchmark datasets remain widely used in academic research and optimization studies, demonstrating their relevance in the field.
+The\ac{itc-2007}\footnote{\url{https://www.eeecs.qub.ac.uk/itc2007/}} was structured into three distinct tracks: Examination Timetabling Problem, Post-enrollment Course Timetabling, and Curriculum-based Course Timetabling. The second one is an extended version of the previous competition. This dissertation focuses on the Curriculum-Based Course Timetabling track (track 3) of the\ac{itc-2007}, as it aligns with the problem under investigation. Even after 18 years, these benchmark datasets remain widely used in academic research and optimization studies, demonstrating their relevance in the field.
 
 \section{Monte Carlo Tree Search}
 
-\ac{mcts} is a decision-making algorithm that has been successfully applied in a variety of optimization problems with a huge search space. The algorithm has proven to be particularly effective in games such as Go and Chess, where it can outperform even the best human players.
+\ac{mcts} is a decision-making algorithm that has been successfully applied in a variety of optimization problems with a huge search space. The algorithm has proven to be particularly effective in games such as Go and Chess, where it can outperform even the best human players \cite{swiechowski_monte_carlo_review}.
 
 \subsection{Phases}
 
@@ -87,7 +87,7 @@ The \ac{itc-2007}\footnote{\url{https://www.eeecs.qub.ac.uk/itc2007/}} was struc
 The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_approach} \cite{browne_survey_2012}. These phases are repeated for a predefined number of iterations or until a computational budget (such as time or memory) is reached. The phases are as follows:
 
 \begin{enumerate}
-	\item \textbf{Selection:} The tree is traversed from the root node until it finds a node that is not completely expanded, i.e., a non-terminal node with unvisited children. The selection is guided by a policy that balances exploration and exploitation. Typically, the policy used is \ac{uct}, which selects nodes that maximize formula \ref{uct_formula}.
+	\item \textbf{Selection:} The tree is traversed from the root node until it finds a node that is not completely expanded, i.e., a non-terminal node with unvisited children. The selection is guided by a policy that balances exploration and exploitation. Typically, the policy used is\ac{uct}, which selects nodes that maximize formula \ref{uct_formula}.
 	 
 	\begin{equation}
 	UCT = \frac{w_i}{n_i} + 2C\sqrt{\frac{2\ln{n}}{n_i}},\label{uct_formula}
@@ -102,7 +102,7 @@ The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_ap
 \ac{mcts} has several characteristics that make it especially suitable for solving complex problems \cite{browne_survey_2012}:
 
 \begin{itemize}
-\item \textbf{Aheuristic:} Does not require domain-specific heuristics to be effective, which is specially useful in complex problems. While adding some domain knowledge can improve performance, \ac{mcts} can still yield good results with simple random simulations.
+\item \textbf{Aheuristic:} Does not require domain-specific heuristics to be effective, which is specially useful in complex problems. While adding some domain knowledge can improve performance,\ac{mcts} can still yield good results with simple random simulations.
 
 \item \textbf{Anytime:} Can return a valid solution at any point during its execution. Since each iteration immediately updates the search tree, the current best move is always available.
 
@@ -111,18 +111,18 @@ The algorithm consists of four phases, as illustrated in Figure \ref{fig:mcts_ap
 
 \section{Local Search}
 
-Local search is an optimization technique that iteratively improves a solution within a given search space by making small changes and retaining those that yield better results. It is effective for large-scale problems where the search is computationally expensive or unfeasible. Popular local search algorithms include \ac{hc}, \ac{sa}, and \ac{ts}. While local search algorithms are powerful, they can sometimes get stuck and fail to find the global best solution. Techniques such as simulated annealing help escape local optima and explore a broader range of solutions.
+Local search is an optimization technique that iteratively improves a solution within a given search space by making small changes and retaining those that yield better results. It is effective for large-scale problems where the search is computationally expensive or unfeasible. Popular local search algorithms include\ac{hc},\ac{sa}, and\ac{ts}. While local search algorithms are powerful, they can sometimes get stuck and fail to find the global best solution. Techniques such as simulated annealing help escape local optima and explore a broader range of solutions.
 
 \subsection{Hill Climbing}
 
-\ac{hc} is a local search optimization algorithm that begins with an initial solution, which can be randomly generated or specifically chosen depending on the problem. From this starting point, \ac{hc} evaluates neighbouring solutions, which are generated by making small modifications to the current solution. If a neighbouring solution is found to be better than the current one, the algorithm moves to that new solution. The algorithm finishes when there is no better neighbouring solution that offers an improvement over the current one, indicating that a local optimum has been attained. 
+\ac{hc} is a local search optimization algorithm that begins with an initial solution, which can be randomly generated or specifically chosen depending on the problem. From this starting point,\ac{hc} evaluates neighbouring solutions, which are generated by making small modifications to the current solution. If a neighbouring solution is found to be better than the current one, the algorithm moves to that new solution. The algorithm finishes when there is no better neighbouring solution that offers an improvement over the current one, indicating that a local optimum has been attained. 
 
-While \ac{hc} is effective and easy to implement, it has limitations. The algorithm can get stuck in:
+While\ac{hc} is effective and easy to implement, it has limitations. The algorithm can get stuck in:
 
 \begin{itemize}
 \item \textbf{Local optimum:} A solution state that is better than its neighbours but not necessarily the global optimum, i.e., the best possible solution in the entire search space, restricting further improvement.
 \item \textbf{Plateaus:} Mostly flat regions in the search space where neighbouring solutions have the same value, making it challenging for the algorithm to determine a direction of improvement.
-\item \textbf{Ridges:} A region in the search space where moving in all directions appears to lead downhill, and reaching a better solution often requires a sequence of non-improving moves, which \ac{hc} does not explore.
+\item \textbf{Ridges:} A region in the search space where moving in all directions appears to lead downhill, and reaching a better solution often requires a sequence of non-improving moves, which\ac{hc} does not explore.
 \end{itemize}
 
 To address these issues, variations of the algorithm have been developed:

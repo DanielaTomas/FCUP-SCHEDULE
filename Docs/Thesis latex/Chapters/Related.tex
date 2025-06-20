@@ -11,7 +11,7 @@
 % For referencing this chapter elsewhere, use \ref{ChapterTemplate}
 \label{Related Work}
 
-The literature on the \ac{ucttp} is vast, so this chapter will cover various approaches to address this problem, mostly based on surveys.
+The literature on the\ac{ucttp} is vast, so this chapter will cover various approaches to address this problem, mostly based on surveys.
 
 According to Lewis' survey \cite{lewis_survey_2008}, algorithms can be divided into three categories:
 
@@ -21,7 +21,7 @@ According to Lewis' survey \cite{lewis_survey_2008}, algorithms can be divided i
 	\item \textbf{Multi-stage with relaxation} is divided into multiple stages, with some constraints being relaxed while satisfying others.
 \end{itemize}
 
-Other surveys, such as Abdipoor et al.\ \cite{abdipoor_meta-heuristic_2023}, categorized \ac{ucttp} into five groups: operational research, metaheuristics, hyperheuristics, multi-objective, and hybrid approaches.
+Other surveys, such as Abdipoor et al.\ \cite{abdipoor_meta-heuristic_2023}, categorized\ac{ucttp} into five groups: operational research, metaheuristics, hyperheuristics, multi-objective, and hybrid approaches.
 
 \section{Operational Research (OR)}
 
@@ -35,19 +35,19 @@ Metaheuristics \textit{provide "acceptable" solutions in a reasonable time for s
 
 Metaheuristics are similarly defined by Du et al.\ as \textit{a class of intelligent self-learning algorithms for finding near-optimum solutions to hard optimization problems} \cite{du2016search}.
 
-Metaheuristics, while not guaranteeing global optimality, have become one of the most used solution strategy for \ac{ucttp} and can be classified into two categories: Single solution-based and Population-based.
+Metaheuristics, while not guaranteeing global optimality, have become one of the most used solution strategy for\ac{ucttp} and can be classified into two categories: Single solution-based and Population-based.
 
 \subsection{Single Solution-Based}
 
 Single solution-based metaheuristics, also known as local search algorithms, focus on modifying a single solution throughout the search in order to improve that solution. 
 
-This metaheuristic approach includes algorithms such as \ac{hc}, \ac{sa}, \ac{ts}, and Iterated Local Search (ILS). \ac{sa} is perhaps the most effective single solution-based metaheuristic, particularly in benchmark datasets, but \ac{ts} has also been shown to be successful in minimizing hard constraints \cite{abdipoor_meta-heuristic_2023}.
+This metaheuristic approach includes algorithms such as\ac{hc},\ac{sa},\ac{ts}, and Iterated Local Search (ILS).\ac{sa} is perhaps the most effective single solution-based metaheuristic, particularly in benchmark datasets, but\ac{ts} has also been shown to be successful in minimizing hard constraints \cite{abdipoor_meta-heuristic_2023}.
 
 \subsection{Population-Based}
 
 Population-based meta-heuristics iteratively improve a population of solutions by generating a new population based on the selection, recombination and/or mutation of individuals in the current population. This method can be subdivided into Evolutionary Algorithms, such as Genetic Algorithms, and Swarm Intelligence, such as Ant Colony Optimization \cite{abdipoor_meta-heuristic_2023,du2016search}.
 
-Population-based metaheuristics, as opposed to single-solution-based metaheuristics, are more focused on exploration rather than exploitation \cite{talbi2009metaheuristics,du2016search}. Despite promising results on real-world datasets, population-based approaches were rarely applied to benchmark datasets and performed poorly in \ac{itc} competitions compared to single solution-based methods \cite{abdipoor_meta-heuristic_2023}.
+Population-based metaheuristics, as opposed to single-solution-based metaheuristics, are more focused on exploration rather than exploitation \cite{talbi2009metaheuristics,du2016search}. Despite promising results on real-world datasets, population-based approaches were rarely applied to benchmark datasets and performed poorly in\ac{itc} competitions compared to single solution-based methods \cite{abdipoor_meta-heuristic_2023}.
 
 %\subsubsection{Hybrid}
 
@@ -76,9 +76,9 @@ Hybrid approaches can indeed be divided into two main categories \cite{abdipoor_
 
 %Hybridization of local search and population-based approaches (also known as the Memetic Algorithm (MA))
 
-In particular, Tomáš Müller, winner of the \ac{itc-2007} tracks 1 and 3, developed a collaborative hybrid approach\footnote{url{https://github.com/tomas-muller/cpsolver-itc2007}} for all three tracks \cite{muller_itc2007}, finding feasible solutions for all instances of tracks 1 and 3 and most instances of track 2. 
+In particular, Tomáš Müller, winner of the\ac{itc-2007} tracks 1 and 3, developed a collaborative hybrid approach\footnote{url{https://github.com/tomas-muller/cpsolver-itc2007}} for all three tracks \cite{muller_itc2007}, finding feasible solutions for all instances of tracks 1 and 3 and most instances of track 2. 
 
-The algorithms used included Iterative Forward Search (IFS), \ac{hc}, Great Deluge (GD), and optionally \ac{sa}. During the construction phase, IFS is employed to find a complete solution, followed by \ac{hc} to find the local optimum. When a solution cannot be improved further using \ac{hc}, GD is used to iteratively decrease, based on a cooling rate, a bound that is imposed on the value of the current solution. Optionally, \ac{sa} can be used when the bound reaches its lower limit.
+The algorithms used included Iterative Forward Search (IFS),\ac{hc}, Great Deluge (GD), and optionally\ac{sa}. During the construction phase, IFS is employed to find a complete solution, followed by\ac{hc} to find the local optimum. When a solution cannot be improved further using\ac{hc}, GD is used to iteratively decrease, based on a cooling rate, a bound that is imposed on the value of the current solution. Optionally,\ac{sa} can be used when the bound reaches its lower limit.
 
 The solver's techniques have been integrated into the UniTime\footnote{url{https://www.unitime.org/}} system, which is widely used for scheduling in academic institutions. Furthermore, the principles behind Müller's hybrid methodology are still relevant in modern optimization methods.
 
@@ -86,28 +86,28 @@ While Müller's approach was highly successful in 2007, subsequent research has 
 
 \section{Monte Carlo Tree Search}
 
-\ac{mcts} application to \acp{cop} remains relatively unexplored. In the context of \ac{ucttp}, Goh's investigation \cite{goh_MCTS} is the only known study that explores the potential of \ac{mcts} in solving the \ac{pe-ctt}. 
+\ac{mcts} application to \acp{cop} remains relatively unexplored. In the context of\ac{ucttp}, Goh's investigation \cite{goh_MCTS} is the only known study that explores the potential of\ac{mcts} in solving the\ac{pe-ctt}. 
 
-Goh's investigation employs a two-stage approach, first utilizing \ac{mcts} to find initial feasible solutions and then applying local search techniques to enhance the quality of these solutions.
+Goh's investigation employs a two-stage approach, first utilizing\ac{mcts} to find initial feasible solutions and then applying local search techniques to enhance the quality of these solutions.
 
-The research introduces several enhancements to the standard \ac{mcts} algorithm, including heuristic-based simulations and tree pruning techniques, which improved the \ac{mcts} performance and effectiveness. The study also provides a comprehensive comparison of \ac{mcts} against traditional methods such as Graph Coloring heuristic and \ac{ts}, with \ac{ts} emerging as the most effective method.
+The research introduces several enhancements to the standard\ac{mcts} algorithm, including heuristic-based simulations and tree pruning techniques, which improved the\ac{mcts} performance and effectiveness. The study also provides a comprehensive comparison of\ac{mcts} against traditional methods such as Graph Coloring heuristic and\ac{ts}, with\ac{ts} emerging as the most effective method.
 
-One major limitation of \ac{mcts} for timetabling is, as highlighted by Goh, its rigorous decision-making process. Events are assigned sequentially and cannot be reassigned, limiting the algorithm's flexibility. In contrast, local search methods, such as \ac{ts}, allow dynamic reassignment, enabling a more efficient exploration of the search space. Furthermore, the tree-based structure of \ac{mcts} restricts its hybridization with local search techniques, which have proven essential in achieving significant results in other learning-based algorithms. Another drawback of \ac{mcts} is its high computational cost, making it less effective under the strict time constraints imposed by timetabling problems.
+One major limitation of\ac{mcts} for timetabling is, as highlighted by Goh, its rigorous decision-making process. Events are assigned sequentially and cannot be reassigned, limiting the algorithm's flexibility. In contrast, local search methods, such as\ac{ts}, allow dynamic reassignment, enabling a more efficient exploration of the search space. Furthermore, the tree-based structure of\ac{mcts} restricts its hybridization with local search techniques, which have proven essential in achieving significant results in other learning-based algorithms. Another drawback of\ac{mcts} is its high computational cost, making it less effective under the strict time constraints imposed by timetabling problems.
 
-This dissertation aims to demonstrate that, despite its limitations, \ac{mcts} still holds potential for timetabling problems with the appropriate modifications and hybridization. 
+This dissertation aims to demonstrate that, despite its limitations,\ac{mcts} still holds potential for timetabling problems with the appropriate modifications and hybridization. 
 
 \section{Summary}
 
-We analyzed various surveys \cite{lewis_survey_2008,abdipoor_meta-heuristic_2023,babaei_survey_2015,chen_survey_2021} and categorized \ac{ucttp} approaches based on their problem-solving strategies:
+We analyzed various surveys \cite{lewis_survey_2008,abdipoor_meta-heuristic_2023,babaei_survey_2015,chen_survey_2021} and categorized\ac{ucttp} approaches based on their problem-solving strategies:
 
 \begin{itemize}
-\item Metaheuristics emerged as one of the most promising, particularly single-solution-based algorithms like \ac{sa} and \ac{ts}.
-\item Hybrid approaches, like Müller’s \ac{itc-2007} approach \cite{muller_itc2007}, were also shown to be effective.
+\item Metaheuristics emerged as one of the most promising, particularly single-solution-based algorithms like\ac{sa} and\ac{ts}.
+\item Hybrid approaches, like Müller’s\ac{itc-2007} approach \cite{muller_itc2007}, were also shown to be effective.
 \item Operational research methods are simple to implement but are often outperformed due to scalability limitations.
 \item Hyperheuristics, while still emerging, aim to generalize methods by dynamically selecting among heuristics.
 \item Multi-objective methods optimize multiple conflicting objectives simultaneously, but they are computationally expensive.
-\item Goh \cite{goh_MCTS} study on the \ac{pe-ctt} found that \ac{ts} outperformed \ac{mcts}, despite improvements to the standard \ac{mcts} algorithm.
-\item \ac{mcts} and its hybridization remain unexplored in the context of \ac{cb-ctt}, making this the novel contribution of our work.
+\item Goh \cite{goh_MCTS} study on the\ac{pe-ctt} found that\ac{ts} outperformed\ac{mcts}, despite improvements to the standard\ac{mcts} algorithm.
+\item\ac{mcts} and its hybridization remain unexplored in the context of\ac{cb-ctt}, making this the novel contribution of our work.
 \end{itemize}
 
 

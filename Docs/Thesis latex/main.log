@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  18 JUN 2025 20:42
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  20 JUN 2025 18:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1767,7 +1767,7 @@ Overfull \hbox (6.08987pt too wide) detected at line 30
 
 
 Overfull \hbox (6.08987pt too wide) detected at line 31
- \TU/Arial(0)/m/n/10.95 7
+ \TU/Arial(0)/m/n/10.95 6
  []
 
 
@@ -1877,7 +1877,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 52
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 53
- \TU/Arial(0)/m/n/10.95 17
+ \TU/Arial(0)/m/n/10.95 18
  []
 
 
@@ -1910,12 +1910,12 @@ Overfull \hbox (12.17973pt too wide) detected at line 56
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 57
- \TU/Arial(0)/m/n/10.95 21
+ \TU/Arial(0)/m/n/10.95 20
  []
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 58
- \TU/Arial(0)/m/n/10.95 21
+ \TU/Arial(0)/m/n/10.95 22
  []
 
 
@@ -1925,22 +1925,22 @@ Overfull \hbox (12.17973pt too wide) detected at line 59
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 60
- \TU/Arial(0)/m/n/10.95 23
- []
-
-
-Overfull \hbox (12.17973pt too wide) detected at line 61
  \TU/Arial(0)/m/n/10.95 24
  []
 
 
+Overfull \hbox (12.17973pt too wide) detected at line 61
+ \TU/Arial(0)/m/n/10.95 26
+ []
+
+
 Overfull \hbox (12.17973pt too wide) detected at line 62
- \TU/Arial(0)/m/n/10.95 27
+ \TU/Arial(0)/m/n/10.95 26
  []
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 63
- \TU/Arial(0)/m/n/10.95 27
+ \TU/Arial(0)/m/n/10.95 26
  []
 
 
@@ -1955,12 +1955,12 @@ Overfull \hbox (12.17973pt too wide) detected at line 65
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 66
- \TU/Arial(0)/m/n/10.95 28
+ \TU/Arial(0)/m/n/10.95 29
  []
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 67
- \TU/Arial(0)/m/n/10.95 29
+ \TU/Arial(0)/m/n/10.95 31
  []
 
 
@@ -1975,17 +1975,17 @@ Overfull \hbox (12.17973pt too wide) detected at line 69
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 70
- \TU/Arial(0)/m/n/10.95 31
- []
-
-
-Overfull \hbox (12.17973pt too wide) detected at line 71
  \TU/Arial(0)/m/n/10.95 32
  []
 
 
-Overfull \hbox (12.17973pt too wide) detected at line 72
+Overfull \hbox (12.17973pt too wide) detected at line 71
  \TU/Arial(0)/m/n/10.95 33
+ []
+
+
+Overfull \hbox (12.17973pt too wide) detected at line 72
+ \TU/Arial(0)/m/n/10.95 34
  []
 
 
@@ -2003,15 +2003,15 @@ Overfull \hbox (12.17973pt too wide) detected at line 75
  \TU/Arial(0)/m/n/10.95 34
  []
 
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 11.40997pt on input line 76.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 11.40997pt on input line 76.
 
 Overfull \hbox (12.17973pt too wide) detected at line 76
- \TU/Arial(0)/m/n/10.95 34
+ \TU/Arial(0)/m/n/10.95 35
  []
 
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 11.40997pt on input line 77.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 11.40997pt on input line 77.
 
 Overfull \hbox (12.17973pt too wide) detected at line 77
  \TU/Arial(0)/m/n/10.95 35
@@ -2019,7 +2019,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 77
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 78
- \TU/Arial(0)/m/n/10.95 35
+ \TU/Arial(0)/m/n/10.95 37
  []
 
 
@@ -2029,17 +2029,17 @@ Overfull \hbox (12.17973pt too wide) detected at line 79
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 80
- \TU/Arial(0)/m/n/10.95 37
- []
-
-
-Overfull \hbox (12.17973pt too wide) detected at line 81
  \TU/Arial(0)/m/n/10.95 39
  []
 
 
-Overfull \hbox (12.17973pt too wide) detected at line 82
+Overfull \hbox (12.17973pt too wide) detected at line 81
  \TU/Arial(0)/m/n/10.95 41
+ []
+
+
+Overfull \hbox (12.17973pt too wide) detected at line 82
+ \TU/Arial(0)/m/n/10.95 42
  []
 
 
@@ -2054,16 +2054,11 @@ Overfull \hbox (12.17973pt too wide) detected at line 84
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 85
- \TU/Arial(0)/m/n/10.95 42
- []
-
-
-Overfull \hbox (12.17973pt too wide) detected at line 86
  \TU/Arial(0)/m/n/10.95 43
  []
 
 
-Overfull \hbox (12.17973pt too wide) detected at line 88
+Overfull \hbox (12.17973pt too wide) detected at line 87
  \TU/Arial(0)/m/n/10.95 43
  []
 
@@ -2102,12 +2097,12 @@ Overfull \hbox (12.17973pt too wide) detected at line 10
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 11
- \TU/Arial(0)/m/n/10.95 22
+ \TU/Arial(0)/m/n/10.95 20
  []
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 12
- \TU/Arial(0)/m/n/10.95 29
+ \TU/Arial(0)/m/n/10.95 30
  []
 
 
@@ -2142,7 +2137,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 21
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 22
- \TU/Arial(0)/m/n/10.95 49
+ \TU/Arial(0)/m/n/10.95 47
  []
 
 )
@@ -2230,6 +2225,9 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [4
 
 ]
+File: Figures/Background/constraints.jpg Graphic file (type bmp)
+<Figures/Background/constraints.jpg>
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2240,8 +2238,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [5]
-File: Figures/Background/constraints.jpg Graphic file (type bmp)
-<Figures/Background/constraints.jpg>
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
 (Font)              scaled to size 9.37807pt on input line 67.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
@@ -2250,6 +2246,18 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 9.37807pt on input line 67.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 7.29405pt on input line 67.
+
+Overfull \hbox (22.23318pt too wide) in paragraph at lines 67--68
+[]\TU/Arial(0)/m/n/10.95 Since 2002, the [][][]International Conference on the 
+Practice and Theory of Automated Timetabling
+ []
+
+
+Overfull \hbox (2.64905pt too wide) in paragraph at lines 67--68
+\TU/Arial(0)/m/n/10.95 (PATAT)[][][][][][][][] has supported timetabling compet
+itions to encourage research in this field. There
+ []
+
 
 
 
@@ -2296,6 +2304,12 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [9]
 Chapter 3.
 
+Overfull \hbox (4.03157pt too wide) in paragraph at lines 38--39
+\TU/Arial(0)/m/n/10.95 used solution strategy for [][][]UCTTP[][] and can be cl
+assified into two categories: Single solution-
+ []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2334,6 +2348,12 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [12]
+Overfull \hbox (4.29729pt too wide) in paragraph at lines 95--96
+[]\TU/Arial(0)/m/n/10.95 One major limitation of [][][]MCTS[][] for timetabling
+ is, as highlighted by Goh, its rigorous decision-
+ []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2612,6 +2632,22 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [18]
+Overfull \hbox (46.86414pt too wide) in paragraph at lines 181--182
+[]\TU/Arial(0)/m/n/10.95 The [][][]MCTS[][] algorithm consists of four phases: 
+$\OML/zplm/m/it/10.95 selection$\TU/Arial(0)/m/n/10.95 , $\OML/zplm/m/it/10.95 
+expansion$\TU/Arial(0)/m/n/10.95 , $\OML/zplm/m/it/10.95 simulation$\TU/Arial(0
+)/m/n/10.95 , and $\OML/zplm/m/it/10.95 backpropagation$\TU/Arial(0)/m/n/10.95 
+.
+ []
+
+File: Figures/Development/MCTS_Steps.jpg Graphic file (type bmp)
+<Figures/Development/MCTS_Steps.jpg>
+
+Overfull \hbox (42.68173pt too wide) in paragraph at lines 185--187
+ [][] 
+ []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2632,12 +2668,32 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [20]
-File: Figures/Development/MCTS_Steps.jpg Graphic file (type bmp)
-<Figures/Development/MCTS_Steps.jpg>
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 200.
 
-Overfull \hbox (42.68173pt too wide) in paragraph at lines 247--249
- [][] 
- []
+./Chapters/Development.tex:236: Missing number, treated as zero.
+<to be read again> 
+                   \ALG@b@2@EndFunction@0 
+l.236 \EndFunction
+                  
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+
+./Chapters/Development.tex:237: Package algorithmicx Error: Some blocks are not
+ closed!!!.
+
+See the algorithmicx package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.237 \end{algorithmic}
+                       
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
 
 
 
@@ -2650,6 +2706,58 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [21]
+Overfull \hbox (2.1293pt too wide) in paragraph at lines 250--251
+[]\TU/Arial(0)/m/n/10.95 Before proceeding, the algorithm evaluates the partial
+ timetable (i.e., the new child) against
+ []
+
+./Chapters/Development.tex:259: Missing \endcsname inserted.
+<to be read again> 
+                   \ALG@currentblock@0 
+l.259 \Function
+               {EXPANSION}{}
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+./Chapters/Development.tex:259: Extra \endcsname.
+\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
+                                                  \relax \def \ALG@thisblock...
+l.259 \Function
+               {EXPANSION}{}
+I'm ignoring this, since I wasn't doing a \csname.
+
+./Chapters/Development.tex:281: Missing number, treated as zero.
+<to be read again> 
+                   \ALG@currentblock@0 
+l.281 \end{algorithmic}
+                       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+./Chapters/Development.tex:281: Missing = inserted for \ifnum.
+<to be read again> 
+                   \ALG@currentblock@0 
+l.281 \end{algorithmic}
+                       
+I was expecting to see `<', `=', or `>'. Didn't.
+
+./Chapters/Development.tex:281: Missing number, treated as zero.
+<to be read again> 
+                   \ALG@currentblock@0 
+l.281 \end{algorithmic}
+                       
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 287--288
+[]\TU/Arial(0)/b/n/10.95 function \TU/Arial(0)/m/sc/10.95 FIND_AVAILABLE_ROOMS\
+TU/Arial(0)/m/n/10.95 (event_capacity, rooms, events, avail-
+ []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2660,41 +2768,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [22]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 260.
-
-./Chapters/Development.tex:290: Missing $ inserted.
-<inserted text> 
-                $
-l.290 ...\_hard}{child.visits} $+$ c\_param $\cdot
-                                                   \sqrt{\frac{2\ln(self.vis...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 293--295
-[] \TU/Arial(0)/m/n/10.95 best_children $\OMS/zplm/m/n/10.95  $ \TU/Arial(0)/m/
-n/10.95 [unflagged_children[i] \TU/Arial(0)/b/n/10.95 for each \TU/Arial(0)/m/n
-/10.95 i, weight \TU/Arial(0)/b/n/10.95 in \TU/Arial(0)/m/it/10.95 enumer-
- []
-
-./Chapters/Development.tex:295: Missing $ inserted.
-<inserted text> 
-                $
-l.295 ...\_soft}{child.visits} $+$ c\_param $\cdot
-                                                   \sqrt{\frac{2\ln(self.vis...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Underfull \hbox (badness 3930) in paragraph at lines 295--297
-[] \TU/Arial(0)/m/n/10.95 choices_weights $\OMS/zplm/m/n/10.95  $ \TU/Arial(0)/
-m/n/10.95 [$[]$+$\OML/zplm/m/it/10.95 c[]param$$\OMS/zplm/m/n/10.95 ^^A[]$ \TU/
-Arial(0)/b/n/10.95 for each \TU/Arial(0)/m/n/10.95 child \TU/Arial(0)/b/n/10.95
- in
- []
-
-
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2705,62 +2778,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [23]
-Overfull \hbox (0.92096pt too wide) in paragraph at lines 312--313
-[]\TU/Arial(0)/m/n/10.95 Before proceeding, the algorithm evaluates the partial
- timetable (i.e., the new path) against
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 338--339
-[] \TU/Arial(0)/m/n/10.95 new_weekday, new_timeslot, new_room $\OMS/zplm/m/n/10
-.95  $ \TU/Arial(0)/m/n/10.95 pe-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 340--342
-[] \TU/Arial(0)/m/n/10.95 new_path[event[”Id”]] $\OMS/zplm/m/n/10.95  $ \TU/Ari
-al(0)/m/n/10.95 {**event, ”RoomId”: new_room, ”WeekDay”:
- []
-
-
-Underfull \hbox (badness 1681) in paragraph at lines 345--346
-[] \TU/Arial(0)/m/n/10.95 child_node $\OMS/zplm/m/n/10.95  $ \TU/Arial(0)/m/n/1
-0.95 MCTSNode(expansion_limit = expansion_limit, parent = cur-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 356--357
-[]\TU/Arial(0)/b/n/10.95 function \TU/Arial(0)/m/sc/10.95 FIND_AVAILABLE_ROOMS\
-TU/Arial(0)/m/n/10.95 (event_capacity, rooms, events, avail-
- []
-
-
-Overfull \hbox (1.27219pt too wide) in paragraph at lines 361--362
-[] \TU/Arial(0)/m/n/10.95 period_room_availability[occupied_period].\TU/Arial(0
-)/m/it/10.95 discard\TU/Arial(0)/m/n/10.95 (other_event[”RoomId”]) 
- []
-
-
-Underfull \hbox (badness 3219) in paragraph at lines 365--367
-[] \TU/Arial(0)/m/n/10.95 suitable_rooms $\OMS/zplm/m/n/10.95  $ \TU/Arial(0)/m
-/n/10.95 {room_id \TU/Arial(0)/b/n/10.95 for each \TU/Arial(0)/m/n/10.95 room_i
-d, room \TU/Arial(0)/b/n/10.95 in \TU/Arial(0)/m/n/10.95 rooms.items() \TU/Aria
-l(0)/b/n/10.95 if
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 371--372
-[] \TU/Arial(0)/m/n/10.95 sorted_rooms $\OMS/zplm/m/n/10.95  $ \TU/Arial(0)/m/i
-t/10.95 sort\TU/Arial(0)/m/n/10.95 (intersected, by (room[”Capacity”] -
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 373--374
-[] \TU/Arial(0)/m/n/10.95 sorted_rooms $\OMS/zplm/m/n/10.95  $ \TU/Arial(0)/m/i
-t/10.95 sort\TU/Arial(0)/m/n/10.95 (period_room_availability[period], by
- []
-
-
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2791,6 +2808,30 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [26]
+Underfull \hbox (badness 10000) in paragraph at lines 436--437
+[]\TU/Arial(0)/b/n/10.95 function \TU/Arial(0)/m/sc/10.95 RUN_HILL_CLIMBING\TU/
+Arial(0)/m/n/10.95 (best_timetable, start_key, best_result_soft,
+ []
+
+./Chapters/Development.tex:460: Missing number, treated as zero.
+<to be read again> 
+                   \ALG@b@2@Else@0 
+l.460         \Else
+                   
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+./Chapters/Development.tex:462: Missing number, treated as zero.
+<to be read again> 
+                   \ALG@b@2@EndIf@0 
+l.462         \EndIf
+                    
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2801,6 +2842,29 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [27]
+Runaway argument?
+{Algorithm \ref {selection_with_diving} and \ref {diving_algorithm}. \ETC.
+./Chapters/Development.tex:473: Paragraph ended before \T@ref was complete.
+<to be read again> 
+                   \par 
+l.473 
+      
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+./Chapters/Development.tex:512: Missing number, treated as zero.
+<to be read again> 
+                   \ALG@b@2@EndIf@0 
+l.512             \EndIf
+                        
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+File: Figures/Development/MCTS_Diving.jpg Graphic file (type bmp)
+<Figures/Development/MCTS_Diving.jpg>
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2811,9 +2875,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [28]
-File: Figures/Development/MCTS_Diving.jpg Graphic file (type bmp)
-<Figures/Development/MCTS_Diving.jpg>
-
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2859,15 +2920,15 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 [32]
 
-./Chapters/Tests.tex:98: LaTeX Error: \begin{enumerate} on input line 92 ended 
-by \end{enumrate}.
+./Chapters/Tests.tex:100: LaTeX Error: \begin{enumerate} on input line 94 ended
+ by \end{enumrate}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.98 \end{enumrate}
-                   
+l.100 \end{enumrate}
+                    
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
@@ -2919,54 +2980,10 @@ File: Figures/Results/without_pruning.png Graphic file (type bmp)
 <Figures/Results/without_pruning.png>
 File: Figures/Results/hard_caption.png Graphic file (type bmp)
 <Figures/Results/hard_caption.png>
-./Chapters/Results.tex:47: Undefined control sequence.
-<argument> ...ing during 10 minutes on the \textt 
-                                                  {comp01} instance from \ac...
-l.47 ...extt{comp01} instance from \ac{itc-2007}.}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Chapters/Results.tex:47: Undefined control sequence.
-<argument> ...ing during 10 minutes on the \textt 
-                                                  {comp01} instance from \ac...
-l.47 ...extt{comp01} instance from \ac{itc-2007}.}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 File: Figures/Results/pruning.png Graphic file (type bmp)
 <Figures/Results/pruning.png>
 File: Figures/Results/hard_caption.png Graphic file (type bmp)
 <Figures/Results/hard_caption.png>
-./Chapters/Results.tex:55: Undefined control sequence.
-<argument> ...ing during 10 minutes on the \textt 
-                                                  {comp01} instance from \ac...
-l.55 ...extt{comp01} instance from \ac{itc-2007}.}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Chapters/Results.tex:55: Undefined control sequence.
-<argument> ...ing during 10 minutes on the \textt 
-                                                  {comp01} instance from \ac...
-l.55 ...extt{comp01} instance from \ac{itc-2007}.}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 
 
 
@@ -3002,29 +3019,6 @@ File: Figures/Results/without_diving_result.png Graphic file (type bmp)
 <Figures/Results/without_diving_result.png>
 File: Figures/Results/soft_caption.png Graphic file (type bmp)
 <Figures/Results/soft_caption.png>
-
-./Chapters/Results.tex:87: Undefined control sequence.
-<argument> ...g the diving approach on the \textt 
-                                                  {comp01} instance from \ac...
-l.87 ...m \ac{itc-2007} for 1 hour and \(C\)=1.4.}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Chapters/Results.tex:87: Undefined control sequence.
-<argument> ...g the diving approach on the \textt 
-                                                  {comp01} instance from \ac...
-l.87 ...m \ac{itc-2007} for 1 hour and \(C\)=1.4.}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
 (Font)              scaled to size 10.42007pt on input line 87.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
@@ -3037,28 +3031,6 @@ File: Figures/Results/diving_result.png Graphic file (type bmp)
 <Figures/Results/diving_result.png>
 File: Figures/Results/soft_caption.png Graphic file (type bmp)
 <Figures/Results/soft_caption.png>
-./Chapters/Results.tex:95: Undefined control sequence.
-<argument> ...g the diving approach on the \textt 
-                                                  {comp01} instance from \ac...
-l.95 ...m \ac{itc-2007} for 1 hour and \(C\)=1.4.}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Chapters/Results.tex:95: Undefined control sequence.
-<argument> ...g the diving approach on the \textt 
-                                                  {comp01} instance from \ac...
-l.95 ...m \ac{itc-2007} for 1 hour and \(C\)=1.4.}
-                                                  
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 
 
 
@@ -3070,34 +3042,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [38]
-./Chapters/Results.tex:103: Undefined control sequence.
-l.103 ...nner) and our system for instances \textt
-                                                  {comp01.ctt} to\textt{comp...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Chapters/Results.tex:103: Undefined control sequence.
-l.103 ...for instances \textt{comp01.ctt} to\textt
-                                                  {comp05.ctt}, and \textt{c...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Chapters/Results.tex:103: Undefined control sequence.
-l.103 ...p01.ctt} to\textt{comp05.ctt}, and \textt
-                                                  {comp11.ctt}. The soft sco...
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -3183,6 +3127,12 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 ** loaded for the language `EN'. Using the pattern for
 ** the default language instead.
 ** WARNING: IEEEtranN.bst: No hyphenation pattern has been
+** loaded for the language `EN'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtranN.bst: No hyphenation pattern has been
+** loaded for the language `EN'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtranN.bst: No hyphenation pattern has been
 ** loaded for the language `en'. Using the pattern for
 ** the default language instead.
 ** WARNING: IEEEtranN.bst: No hyphenation pattern has been
@@ -3205,15 +3155,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 ** the default language instead.
 ** WARNING: IEEEtranN.bst: No hyphenation pattern has been
 ** loaded for the language `EN'. Using the pattern for
-** the default language instead.
-** WARNING: IEEEtranN.bst: No hyphenation pattern has been
-** loaded for the language `en'. Using the pattern for
-** the default language instead.
-** WARNING: IEEEtranN.bst: No hyphenation pattern has been
-** loaded for the language `en'. Using the pattern for
-** the default language instead.
-** WARNING: IEEEtranN.bst: No hyphenation pattern has been
-** loaded for the language `en'. Using the pattern for
 ** the default language instead.
 ** WARNING: IEEEtranN.bst: No hyphenation pattern has been
 ** loaded for the language `en'. Using the pattern for
@@ -3234,6 +3175,15 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [44
 
 ]
+** WARNING: IEEEtranN.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtranN.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtranN.bst: No hyphenation pattern has been
+** loaded for the language `en'. Using the pattern for
+** the default language instead.
 ** WARNING: IEEEtranN.bst: No hyphenation pattern has been
 ** loaded for the language `en'. Using the pattern for
 ** the default language instead.
@@ -3269,82 +3219,6 @@ File: Figures/AppendixA/previous_work.png Graphic file (type bmp)
 <Figures/AppendixA/previous_work.png>
 File: Figures/AppendixA/uml.png Graphic file (type bmp)
 <Figures/AppendixA/uml.png>
-
-Underfull \hbox (badness 1742) in paragraph at lines 40--41
-[]  \TU/Arial(0)/b/n/10.95 key \TU/Arial(0)/m/n/10.95 = $\OML/zplm/m/it/10.95 ^
-^U$ \TU/Arial(0)/m/n/10.95 event: (event[”Id”] \TU/Arial(0)/b/n/10.95 in \TU/Ar
-ial(0)/m/n/10.95 previous_unassigned_events,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 46--47
-[] \TU/Arial(0)/m/n/10.95 event[”RoomId”], event[”WeekDay”], event[”Timeslot”] 
-$\OMS/zplm/m/n/10.95  $
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 62--63
-[]   \TU/Arial(0)/m/it/10.95 write_best_simulation_result_to_file\TU/Arial(0)/m
-/n/10.95 (\TU/Arial(0)/m/it/10.95 list\TU/Arial(0)/m/n/10.95 (assigned_events.v
-alues()),
- []
-
-
-Underfull \hbox (badness 4673) in paragraph at lines 63--64
-[] \TU/Arial(0)/b/n/10.95 if \TU/Arial(0)/m/it/10.95 len\TU/Arial(0)/m/n/10.95 
-(unassigned_events) $\OT1/zplm/m/n/10.95 ==$ \TU/Arial(0)/m/n/10.95 0 \TU/Arial
-(0)/b/n/10.95 and \TU/Arial(0)/m/n/10.95 hard_penalty_result $\OT1/zplm/m/n/10.
-95 ==$ \TU/Arial(0)/m/n/10.95 0 \TU/Arial(0)/b/n/10.95 and
- []
-
-
-Overfull \hbox (5.71468pt too wide) in paragraph at lines 64--65
-[] \TU/Arial(0)/m/n/10.95 global_best_soft_penalty $\OMS/zplm/m/n/10.95  $ \TU/
-Arial(0)/m/n/10.95 hill_climber.\TU/Arial(0)/m/it/10.95 run_hill_climbing\TU/Ar
-ial(0)/m/n/10.95 (assigned_events, 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 82--83
-[]\TU/Arial(0)/b/n/10.95 function \TU/Arial(0)/m/sc/10.95 RUN_HILL_CLIMBING\TU/
-Arial(0)/m/n/10.95 (best_timetable, start_key, best_result_soft,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 84--86
-[] \TU/Arial(0)/m/n/10.95 neighborhoods $\OMS/zplm/m/n/10.95  $ \TU/Arial(0)/m/
-n/10.95 [(\TU/Arial(0)/m/it/10.95 period_move\TU/Arial(0)/m/n/10.95 , 1), (\TU/
-Arial(0)/m/it/10.95 room_move\TU/Arial(0)/m/n/10.95 , 1), (\TU/Arial(0)/m/it/10
-.95 event_move\TU/Arial(0)/m/n/10.95 ,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 84--86
-\TU/Arial(0)/m/n/10.95 1), (\TU/Arial(0)/m/it/10.95 room_stability_move\TU/Aria
-l(0)/m/n/10.95 , 0.7), (\TU/Arial(0)/m/it/10.95 min_working_days_move\TU/Arial(
-0)/m/n/10.95 , 0.5), (\TU/Arial(0)/m/it/10.95 curricu-
- []
-
-./Appendices/AppendixA.tex:89: Missing $ inserted.
-<inserted text> 
-                $
-l.89 ...  \State (current\_neighborhood, \_) \gets
-                                                  $ weighted random choice f...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 93--95
-[] \TU/Arial(0)/m/n/10.95 modified_timetable $\OMS/zplm/m/n/10.95  $ \TU/Arial(
-0)/m/n/10.95 current_neighborhood(best_timetable, unsched-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 106--107
-[] \TU/Arial(0)/m/it/10.95 write_simulation_results\TU/Arial(0)/m/n/10.95 (outp
-ut_filename, best_timetable.values(),
- []
-
 )
 
 
@@ -3367,43 +3241,23 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
-[47]
-
-
-Package fancyhdr Warning: \headheight is too small (14.0pt): 
-(fancyhdr)                Make it at least 18.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{18.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
-
-[48]
-
-
-Package fancyhdr Warning: \headheight is too small (14.0pt): 
-(fancyhdr)                Make it at least 18.99997pt, for example:
-(fancyhdr)                \setlength{\headheight}{18.99997pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-
-(fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
-
-[49] (./main.aux)
+[47] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 0764B47462CFE7D54422BB4E681FD301;12376.
+(rerunfilecheck)             Checksum: 2EEE0828470004169822C000C684B0EB;11933.
 Package rerunfilecheck Info: File `main.brf' has not changed.
-(rerunfilecheck)             Checksum: BF32B5FD150DF4DF0F3BDF2B7D4F4280;1659.
+(rerunfilecheck)             Checksum: AEFE58CED99A34E9ADEAB3CEC28D8862;1793.
  ) 
 Here is how much of TeX's memory you used:
- 44404 strings out of 473965
- 913351 string characters out of 5736631
- 1406093 words of memory out of 5000000
- 66503 multiletter control sequences out of 15000+600000
- 583955 words of font info for 145 fonts, out of 8000000 for 9000
+ 44429 strings out of 473965
+ 913915 string characters out of 5736631
+ 1402830 words of memory out of 5000000
+ 66527 multiletter control sequences out of 15000+600000
+ 583963 words of font info for 146 fonts, out of 8000000 for 9000
  1351 hyphenation exceptions out of 8191
  108i,19n,138p,2378b,1099s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (58 pages).
+Output written on main.pdf (56 pages).

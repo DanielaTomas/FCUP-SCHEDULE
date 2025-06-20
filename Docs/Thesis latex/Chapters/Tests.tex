@@ -7,11 +7,11 @@
 
 \label{Tests}
 
-This chapter outlines the numerous tests used to evaluate the performance of the final algorithm on instances from the \ac{itc-2007} benchmark. %\footnote{https://www.eeecs.qub.ac.uk/itc2007/Login/SecretPage.php}. %All the tests were executed on a computer with the following characteristics: (...)
+This chapter outlines the numerous tests used to evaluate the performance of the final algorithm on instances from the\ac{itc-2007} benchmark. %\footnote{https://www.eeecs.qub.ac.uk/itc2007/Login/SecretPage.php}. %All the tests were executed on a computer with the following characteristics: (...)
 
 \section{Test Instances}
 
-The evaluation used all 21 instances from the \ac{itc-2007} track 3 dataset (\texttt{comp01.ctt} to \texttt{comp21.ctt}). Each instance includes detailed information about about curricula, courses, rooms, unavailability constraints, lectures, periods and lecturers. The key features of each instance are summarized in Table~\ref{itc_instance_features}.
+The evaluation used all 21 instances from the\ac{itc-2007} track 3 dataset (\texttt{comp01.ctt} to \texttt{comp21.ctt}). Each instance includes detailed information about about curricula, courses, rooms, unavailability constraints, lectures, periods and lecturers. The key features of each instance are summarized in Table~\ref{itc_instance_features}.
 
 \begin{table}[h!]
 \footnotesize
@@ -43,7 +43,7 @@ comp20                                    & 78                                  
 comp21                                    & 78                                         & 94                                       & 18                                     & 463                                          & 327                                       & 25                                       & 76 					\\
 \hline                                      
 \end{tabular}
-\caption{Key features of the \ac{itc-2007} track 3 instances.}
+\caption{Key features of the\ac{itc-2007} track 3 instances.}
 \label{itc_instance_features}
 \end{center}
 \end{table}
@@ -52,16 +52,18 @@ All instances guarantee at least one feasible solution, which means that in the 
 
 \section{Test Setup}
 
-The tests were conducted for different values of the parameter \(C\) (Equation \ref{uct_formula}), which affects the exploration-exploitation trade-off in the \ac{mcts} algorithm. A higher \(C\) value increases the weight of the second term, allowing the algorithm explore less-visited nodes with more intensity. On the other hand, a lower \(C\) value favors nodes with a higher average reward, resulting in increased exploitation of known favorable choices. Specifically, we tested the algorithm with some values of C ranging from 0.1 to 1000.
+The tests were conducted for different values of the parameter \(C\) (Equation \ref{uct_formula}), which affects the exploration-exploitation trade-off in the\ac{mcts} algorithm. A higher \(C\) value increases the weight of the second term, allowing the algorithm explore less-visited nodes with more intensity. On the other hand, a lower \(C\) value favors nodes with a higher average reward, resulting in increased exploitation of known favorable choices. Specifically, we tested the algorithm with some values of C ranging from 0.1 to 1000.
 
-Additionally, an alternative \ac{uct} formula was evaluated, modifying the exploitation term to use the accumulated reward instead of the average (Equation \ref{modified_uct}), giving an advantage to the nodes that were exploited first.
+Additionally, an alternative\ac{uct} formula was evaluated, modifying the exploitation term to use the accumulated reward instead of the average (Equation \ref{modified_uct}), giving an advantage to the nodes that were exploited first.
 
 \begin{equation}
 UCT = w_i + 2C\sqrt{\frac{2\ln{n}}{n_i}},\label{modified_uct}
 \end{equation} where \(w_i\) is the total reward of all playouts through this state, \(n_i\) is the number of visits of child node \(i\), \(C\) is a constant (typically \(\sqrt{2}\) in game-playing scenarios), and \(n\) is the number of visits of the parent node.
 
-For optimization problems, the value of \(C\) is problem-dependent and usually needs to be empirically tuned rather than set to \(\sqrt{2}\).
-	
+For optimization problems, the value of \(C\) is problem-dependent and usually needs to be empirically tuned rather than set to \(\sqrt{2}\) \cite{swiechowski_monte_carlo_review}.
+
+In the\ac{hc} algorithm, the parameter \(HC\_IDLE\) was set to 5000, indicating the maximum number of consecutive iterations allowed without improvement before the search is terminated.
+
 \section{Performance Metrics}
 
 Each test corresponds, therefore, to a different \(C\) value, and the performance measurements are recorded for 21 problem instances, denoted as \texttt{comp01} to \texttt{comp21}. For each instance, the method iterates numerous times until a stopping condition is met, which is in this experiment a time constraint.
