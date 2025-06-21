@@ -107,11 +107,11 @@ class MCTS:
             unflagged_children = [child for child in current_node.children if child and child.expansion_limit != 0]
 
             if not unflagged_children:
-                if current_node.parent:
+                """ if current_node.parent:
                     current_node.expansion_limit = 0
                     current_node = current_node.parent
-                else:
-                    return False
+                else: """
+                return False
             else:
                 current_node = current_node.best_child(unflagged_children, self.params.c_param)
 
@@ -257,7 +257,7 @@ class MCTS:
 
         simulation_result_hard = self.normalize(self.current_node.best_hard_penalty, self.global_best_hard_penalty, self.worst_hard_penalty)
         simulation_result_soft = self.normalize(self.current_node.best_soft_penalty, self.best_soft_penalty, self.worst_soft_penalty)
-        print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}")
+        #print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}")
 
         return simulation_result_hard, simulation_result_soft
     
@@ -286,9 +286,9 @@ class MCTS:
                     break
                 if self.expansion():
                     simulation_hard, simulation_soft = self.simulation(start_time, self.params.time_limit)
-                    if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
+                    """ if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
                         print("Optimal solution found!\n")
-                        break
+                        break """
                     self.backpropagation(simulation_hard, simulation_soft)
                     duration = time.time() - start_time
                     if DEBUG_PROGRESS: self.update_progress_metrics(i+1)

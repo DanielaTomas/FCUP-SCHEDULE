@@ -146,7 +146,9 @@ This chapter evaluated the\ac{mcts}-\ac{hc} hybrid approach across several dimen
 
 \item \textbf{Performance:} PyPy significantly outperformed standard Python, justifying its use in all experiments.
 
-\item \textbf{Pruning:} Efficiently eliminated infeasible branches, improving search focus and convergence.
+\item \textbf{Random Simulation:} Purely random simulations failed to produce feasible solutions, emphasizing the necessity of guided search and domain knowledge to navigate the complex solution space effectively.
+
+\item \textbf{Pruning:} Efficiently eliminated some infeasible branches, improving search focus and convergence.
 
 \item \textbf{Diving:} Diving successfully reduced soft constraint penalties after\ac{mcts} found a feasible solution.
 
