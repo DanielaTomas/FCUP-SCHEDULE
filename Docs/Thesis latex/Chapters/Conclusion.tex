@@ -1,3 +1,5 @@
+\pretocmd{\chapter}{\glsresetall}{}{}
+
 % Conclusion
 
 % Main chapter title
@@ -27,7 +29,7 @@ Future work may focus on fine tuning the algorithm, improving the heuristic func
 
 \subsection{Performance}
 
-One promising direction is to postpone rooms allocation during both tree construction and simulation. In this approach, the fixed nodes in the tree represents only the \((weekday, timeslot)\) (Appendix \ref{AppendixA} Figure \ref{fig:tree}) and, in the simulation, only allocate these two attributes for each event. Room assignments are performed afterward, once the simulation reaches a complete assignment of periods. Exploring this variant could help reduce computational overhead and allow deeper or broader search within the same time constraints.
+One promising direction is to postpone room allocation during both tree construction and simulation. In this approach, the fixed nodes in the tree represent only the \((weekday, timeslot)\) (Appendix \ref{AppendixA} Figure \ref{fig:tree}) and, in the simulation, only allocate these two attributes for each event. Room assignments are performed afterward, once the simulation reaches a complete assignment of periods. Exploring this variant could help reduce computational overhead and allow a deeper or broader search within the same time constraints.
 
 Although early testing of this approach did not yield strong results, it remains a promising idea that deserves further investigation and refinement.
 

@@ -7,7 +7,7 @@
 \contentsline {figure}{\numberline {2.2}{\ignorespaces MCTS approach}}{7}{figure.caption.6}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces MCTS tree}}{17}{figure.caption.7}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces MCTS tree}}{18}{figure.caption.7}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces MCTS steps}}{20}{figure.caption.8}%
 \contentsline {figure}{\numberline {4.3}{\ignorespaces Diving approach}}{30}{figure.caption.9}%
 \addvspace {10\p@ }
@@ -17,7 +17,7 @@
 \contentsline {figure}{\numberline {6.3}{\ignorespaces Soft constraint progress without using the diving approach on the \texttt {comp01} instance from\ac {itc-2007} for 1 hour and \(C\)=1.4.}}{38}{figure.caption.13}%
 \contentsline {figure}{\numberline {6.4}{\ignorespaces Soft constraint progress using the diving approach on the \texttt {comp01} instance from\ac {itc-2007} for 1 hour and \(C\)=1.4.}}{39}{figure.caption.14}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces Proposed \ac {mcts} tree}}{46}{figure.caption.18}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Previous work interface}}{46}{figure.caption.19}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Previous work UML}}{47}{figure.caption.20}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Proposed \ac {mcts} tree}}{47}{figure.caption.18}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Previous work interface}}{47}{figure.caption.19}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Previous work UML}}{48}{figure.caption.20}%
 \contentsfinish 

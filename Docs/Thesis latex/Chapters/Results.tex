@@ -1,3 +1,5 @@
+\pretocmd{\chapter}{\glsresetall}{}{}
+
 \chapter{Results}
 
 \label{Results}
@@ -102,8 +104,7 @@ In both approaches (with and without diving) it is noticeable that the algorithm
 
 The effectiveness of the\ac{mcts}-\ac{hc} hybrid was evaluated on the official\ac{itc-2007} track 3 benchmark datasets. Table \ref{tab:comparison_results} presents a comparison between the best results submitted by Müller (competition winner) and our approach (with \(C\)=0.1) for instances \texttt{comp01.ctt} to\texttt{comp05.ctt}, and \texttt{comp11.ctt}. Initially, all benchmark instances were considered for evaluation, but due to time constraints, the experiments were narrowed down to focus on only six instances.
 
-\begin{landscape}
-\begin{table}[p]
+\begin{sidewaystable}[p]
 \centering
 %\footnotesize
 \setlength{\tabcolsep}{3pt}
@@ -131,8 +132,7 @@ The effectiveness of the\ac{mcts}-\ac{hc} hybrid was evaluated on the official\a
 \end{tabular}
 \caption{Comparison of Müller and our method variants across six benchmark instances during 10 minutes. Soft constraint penalties are shown with hard constraint violations in parentheses.}
 \label{tab:comparison_results}
-\end{table}
-\end{landscape}
+\end{sidewaystable}
 
 
 Although our approach does not yet outperform state-of-the-art methods in terms of soft constraint minimization, even with an extended time, it consistently finds feasible solutions within reasonable time limits. This confirms its robustness and potential as a foundation for further refinement.

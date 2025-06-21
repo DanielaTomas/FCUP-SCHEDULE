@@ -1,3 +1,5 @@
+\pretocmd{\chapter}{\glsresetall}{}{}
+
 % Development
 
 % Main chapter title
@@ -76,7 +78,7 @@ Although not intrinsic properties of events, the following elements are essentia
 
 \subsection{Constraints}
 
-There are several hard and soft constraints that affect the creation of\ac{fcup} timetables. The following hard and soft constraints were selected, drawing inspiration from those of\ac{itc-2007}:
+There are several hard and soft constraints that affect the creation of timetables. The following hard and soft constraints were selected, drawing inspiration from those of\ac{itc-2007}:
 
 \textbf{Hard constraints:}
 
@@ -199,7 +201,7 @@ However, if all of a node's children have reached their expansion limit, the alg
 \begin{algorithm}
 \caption{Selection}\label{selection}
 \begin{algorithmic}[1]
-\Procedure{SELECTION}{}
+\Function{SELECTION}{}
 	\State Start from the root node
 	\While{current node is not terminal}
 			\If{current node has unexplored children}
@@ -220,7 +222,7 @@ However, if all of a node's children have reached their expansion limit, the alg
 	\EndWhile
 	\State Store the selected node for expansion
 	\State \Return True
-\EndProcedure
+\EndFunction
 \end{algorithmic}
 \end{algorithm}
 
@@ -228,7 +230,7 @@ However, if all of a node's children have reached their expansion limit, the alg
 \begin{algorithm}
 \caption{Best Child}\label{best_child}
 \begin{algorithmic}[1]
-\Procedure{BEST\_CHILD}{children, c\_param = 1.4}
+\Function{BEST\_CHILD}{children, c\_param = 1.4}
     \State Evaluate candidates based on hard constraints using\ac{uct} (Equation \ref{uct_formula})
     \State Filter those with the highest hard score
     \State Among them, evaluate based on soft constraints using\ac{uct} (Equation \ref{uct_formula})
@@ -247,7 +249,7 @@ A list of valid (period, room) combinations is generated. If no such combination
 
 A combination is selected based on the number of already-expanded children. %A new path is constructed by assigning the selected period and room to the event.
 
-Before proceeding, the algorithm evaluates the partial timetable (i.e., the new child) against a global hard penalty threshold. If the new assignment violates hard constraints resulting in a penalty below the threshold, the expansion stops for that branch. However, if the penalty exceeds the threshold, the node remains in the tree. This pruning strategy was introduced to focus computational effort on promising and potentially feasible solutions. Notably, we use a threshold rather than immediately discarding all infeasible nodes because, in real-world timetabling problems, a fully feasible solution might not always be possible. Completely eliminating infeasible nodes would make the algorithm unsuitable for hard instances, as it would prevent the search from distinguishing between more and less infeasible solutions.
+Before proceeding, the algorithm evaluates the partial timetable (i.e., the new child) against a global hard penalty threshold. If the new assignment violates hard constraints, resulting in a penalty below the threshold, the expansion stops for that branch. However, if the penalty exceeds the threshold, the node remains in the tree. This pruning strategy was introduced to focus computational effort on promising and potentially feasible solutions. Notably, we use a threshold rather than immediately discarding all infeasible nodes because, in real-world timetabling problems, a fully feasible solution might not always be possible. Completely eliminating infeasible nodes would make the algorithm unsuitable for hard instances, as it would prevent the search from distinguishing between more and less infeasible solutions.
 
 If the expansion continues, the algorithm estimates the number of valid (period, room) combinations for the next event. This value is stored as the child’s expansion\_limit to guide future branching.
 
@@ -258,7 +260,7 @@ Finally, a new child node is created with the updated path and expansion limit. 
 \begin{algorithmic}[1]
 \Function{EXPANSION}{}
 	\State Identify the next event based on current node’s depth
-	\State Retrieve available periods and corresponding valid rooms 
+	\State FIND\_AVAILABLE\_ROOMS(...) \Comment Retrieve available periods and corresponding valid rooms 
 \\
 	\If{no valid (period, room) combinations exist}
 		\State Mark current node as fully expanded
@@ -369,7 +371,7 @@ It starts from the current node, which is the leaf node where the simulation occ
 \begin{algorithm}
 \caption{Backpropagation}\label{backpropagation}
 \begin{algorithmic}[1]
-\Function{BACKPROPAGATION}{simulation\_result\_hard, simulation\_result\_soft}
+\Procedure{BACKPROPAGATION}{simulation\_result\_hard, simulation\_result\_soft}
     \State Start at the current node
     \While{node is not None}
         \State Increment visit count
@@ -377,7 +379,7 @@ It starts from the current node, which is the leaf node where the simulation occ
         \State Update soft score with simulation soft result
         \State Move to the parent node
     \EndWhile
-\EndFunction
+\EndProcedure
 \end{algorithmic}
 \end{algorithm}
 
@@ -431,9 +433,9 @@ The\ac{hc} approach follows the following steps:
 \end{enumerate}
 
 \begin{algorithm}
-\caption{Run Hill Climbing}\label{run_hill_climbing}
+\caption{Hill Climbing}\label{run_hill_climbing}
 \begin{algorithmic}[1]
-\Function{RUN\_HILL\_CLIMBING}{best\_timetable, start\_key, best\_result\_soft, start\_time, time\_limit}
+\Function{HILL\_CLIMBING}{best\_timetable, start\_key, best\_result\_soft, start\_time, time\_limit}
     \State Define neighborhood moves with associated probabilities
     \State Initialize idle iteration counter
 \\
@@ -469,15 +471,15 @@ The\ac{hc} approach follows the following steps:
 
 \section{Diving}\label{sec:diving}
 
-To improve the effectiveness of timetable generation, we also implemented a diving strategy in\ac{mcts} (\ref{Algorithm \ref{selection_with_diving} and \ref{diving_algorithm}. This diving strategy enables the algorithm to follow and deepen promising paths, aiming to improve the convergence speed and solution quality.
+To improve the effectiveness of timetable generation, we also implemented a diving strategy in\ac{mcts} (Algorithm \ref{selection_with_diving} and \ref{diving_algorithm}). This diving strategy enables the algorithm to follow and deepen promising paths, aiming to improve the convergence speed and solution quality.
 
 \begin{algorithm}
 \caption{Selection with Diving}\label{selection_with_diving}
 \begin{algorithmic}[1]
 \Procedure{SELECTION}{}
-	\While{queue is not empty}
+	\If{queue is not empty}
 		\State DIVE()
-	\EndWhile
+	\EndIf
 \\
 	\State ... 	\Comment{Perform standard\ac{mcts} traversal from the root}
 	\\
@@ -488,9 +490,9 @@ To improve the effectiveness of timetable generation, we also implemented a divi
 \begin{algorithm}
 \caption{Dive}\label{diving_algorithm}
 \begin{algorithmic}[1]
-\Procedure{DIVE}{}
-		\State selected\_node $\gets$ Pop next node 
-		\State simulation\_path $\gets$ Pop simulation path
+\Function{DIVE}{}
+		\State selected\_node $\gets$ Retrieve next node from the queue 
+		\State simulation\_path $\gets$ Retrieve associated simulation path
 		\If{selected\_node parent exists and is expandable}
             		\State Set selected\_node to the parent
             		\State \Return True
@@ -498,9 +500,9 @@ To improve the effectiveness of timetable generation, we also implemented a divi
  			\State Follow the simulation\_path:
 			\For{each scheduled assignment in the path}
 				\If{a child of the node matches the assignment}
-					\State Move to that child
-					\State Remove the assignment from the simulation\_path
 					\State Set selected\_node to this child
+					\State Set current node to this child
+					\State Remove the assignment from the simulation\_path
 					\State \Return True
 				\EndIf
 			\EndFor
@@ -508,13 +510,11 @@ To improve the effectiveness of timetable generation, we also implemented a divi
 			\State Set current node to selected\_node
                		\State \Return True
             	\EndIf
-            	 \State Remove this entry from the queue
-            \EndIf
-\EndProcedure
+\EndFunction
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Example of the Diving Approach}
+\subsection{Diving Approach Example}
 
 
 \begin{figure}

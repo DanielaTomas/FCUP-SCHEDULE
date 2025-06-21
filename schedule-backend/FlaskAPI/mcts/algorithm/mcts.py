@@ -81,25 +81,23 @@ class MCTS:
 
 
     def selection(self):
-        if DIVING:
-            while self.best_node and self.simulation_path:
-                if self.best_node[0].parent and not self.best_node[0].parent.is_fully_expanded():
-                    self.current_node = self.best_node[0].parent
-                    return True
+        if DIVING and self.best_node and self.simulation_path:
+            if self.best_node[0].parent and not self.best_node[0].parent.is_fully_expanded():
+                self.current_node = self.best_node[0].parent
+                return True
+            else:
+                if self.best_node[0].is_fully_expanded():
+                    for simulation_node in self.simulation_path[0]:
+                        for child in self.best_node[0].children:
+                            if child and child.assignment == simulation_node:
+                                self.simulation_path[0].remove(simulation_node)
+                                self.best_node[0] = child
+                                self.current_node = child
+                                if self.simulation_path and (len(self.simulation_path[0]) == 0): del self.simulation_path[0]
+                                return True
                 else:
-                    if self.best_node[0].is_fully_expanded():
-                        for simulation_node in self.simulation_path[0]:
-                            for child in self.best_node[0].children:
-                                if child and child.assignment == simulation_node:
-                                    self.simulation_path[0].remove(simulation_node)
-                                    self.best_node[0] = child
-                                    self.current_node = child
-                                    if self.simulation_path and (len(self.simulation_path[0]) == 0): del self.simulation_path[0]
-                                    return True
-                    else:
-                        self.current_node = self.best_node[0]
-                        return True
-                if self.best_node: del self.best_node[0]
+                    self.current_node = self.best_node[0]
+                    return True
 
         current_node = self.root
 
@@ -259,7 +257,7 @@ class MCTS:
 
         simulation_result_hard = self.normalize(self.current_node.best_hard_penalty, self.global_best_hard_penalty, self.worst_hard_penalty)
         simulation_result_soft = self.normalize(self.current_node.best_soft_penalty, self.best_soft_penalty, self.worst_soft_penalty)
-        #print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}")
+        print(f"{hard_penalty_result} {soft_penalty_result} {simulation_result_hard} {simulation_result_soft}")
 
         return simulation_result_hard, simulation_result_soft
     

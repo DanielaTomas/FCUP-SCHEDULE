@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  20 JUN 2025 18:56
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  21 JUN 2025 12:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -582,16 +582,281 @@ File: ppxetex.def 2024/10/28 v0.6c Pdfpages driver for XeTeX (AM)
 \c@AM@survey=\count329
 \AM@templatesizebox=\box69
 )
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks42
+\pgfutil@tempdima=\dimen272
+\pgfutil@tempdimb=\dimen273
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box70
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+))
+Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks43
+\pgfkeys@temptoks=\toks44
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.co
+de.tex
+\pgfkeys@tmptoks=\toks45
+))
+\pgf@x=\dimen274
+\pgf@y=\dimen275
+\pgf@xa=\dimen276
+\pgf@ya=\dimen277
+\pgf@xb=\dimen278
+\pgf@yb=\dimen279
+\pgf@xc=\dimen280
+\pgf@yc=\dimen281
+\pgf@xd=\dimen282
+\pgf@yd=\dimen283
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count330
+\c@pgf@countb=\count331
+\c@pgf@countc=\count332
+\c@pgf@countd=\count333
+\t@pgf@toka=\toks46
+\t@pgf@tokb=\toks47
+\t@pgf@tokc=\toks48
+\pgf@sys@id@count=\count334
+ (c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
+)
+Driver file for pgf: pgfsys-xetex.def
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-xetex.def
+File: pgfsys-xetex.def 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dvipdfmx.def
+File: pgfsys-dvipdfmx.def 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+)
+\pgfsys@objnum=\count335
+)))
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfsyssoftpath@smallbuffer@items=\count336
+\pgfsyssoftpath@bigbuffer@items=\count337
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))
+
+LaTeX Warning: Package "xcolor" has already been loaded: ignoring load-time
+(LaTeX)        option "xcdraw".
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen284
+\pgfmath@count=\count338
+\pgfmath@box=\box71
+\pgfmath@toks=\toks49
+\pgfmath@stack@operand=\toks50
+\pgfmath@stack@operation=\toks51
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.te
+x)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric
+.code.tex)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.t
+ex)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.co
+de.tex)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.te
+x)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithm
+etics.code.tex)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count339
+))
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@picminx=\dimen285
+\pgf@picmaxx=\dimen286
+\pgf@picminy=\dimen287
+\pgf@picmaxy=\dimen288
+\pgf@pathminx=\dimen289
+\pgf@pathmaxx=\dimen290
+\pgf@pathminy=\dimen291
+\pgf@pathmaxy=\dimen292
+\pgf@xx=\dimen293
+\pgf@xy=\dimen294
+\pgf@yx=\dimen295
+\pgf@yy=\dimen296
+\pgf@zx=\dimen297
+\pgf@zy=\dimen298
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.cod
+e.tex
+File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@path@lastx=\dimen299
+\pgf@path@lasty=\dimen300
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.te
+x
+File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@shorten@end@additional=\dimen301
+\pgf@shorten@start@additional=\dimen302
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfpic=\box72
+\pgf@hbox=\box73
+\pgf@layerbox@main=\box74
+\pgf@picture@serial@count=\count340
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code
+.tex
+File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgflinewidth=\dimen303
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.c
+ode.tex
+File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@pt@x=\dimen304
+\pgf@pt@y=\dimen305
+\pgf@pt@temp=\dimen306
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.co
+de.tex
+File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfarrowsep=\dimen307
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@max=\dimen308
+\pgf@sys@shading@range@num=\count341
+\pgf@shadingcount=\count342
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfexternal@startupbox=\box75
+) (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code
+.tex
+File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+) (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+))) (c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.te
+x
+File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfnodeparttextbox=\box76
+)
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.st
+y
+Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+\pgf@nodesepstart=\dimen309
+\pgf@nodesepend=\dimen310
+)
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.st
+y
+Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+)) (c:/texlive/2024/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(c:/texlive/2024/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+\pgffor@iter=\dimen311
+\pgffor@skip=\dimen312
+\pgffor@stack=\toks52
+\pgffor@toks=\toks53
+))
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.co
+de.tex
+File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgf@plot@mark@count=\count343
+\pgfplotmarksize=\dimen313
+)
+\tikz@lastx=\dimen314
+\tikz@lasty=\dimen315
+\tikz@lastxsaved=\dimen316
+\tikz@lastysaved=\dimen317
+\tikz@lastmovetox=\dimen318
+\tikz@lastmovetoy=\dimen319
+\tikzleveldistance=\dimen320
+\tikzsiblingdistance=\dimen321
+\tikz@figbox=\box77
+\tikz@figbox@bg=\box78
+\tikz@tempbox=\box79
+\tikz@tempbox@bg=\box80
+\tikztreelevel=\count344
+\tikznumberofchildren=\count345
+\tikznumberofcurrentchild=\count346
+\tikz@fig@count=\count347
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+\pgfmatrixcurrentrow=\count348
+\pgfmatrixcurrentcolumn=\count349
+\pgf@matrix@numberofcolumns=\count350
+)
+\tikz@expandcount=\count351
+
+(c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
+brarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
+)))
 (c:/texlive/2024/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2024/11/08 v24.13 The multilingual framework for pdfLaTeX, LuaLa
 TeX and XeLaTeX
-\babel@savecnt=\count330
-\U@D=\dimen272
+\babel@savecnt=\count352
+\U@D=\dimen322
 \l@unhyphenated=\language89
 
 (c:/texlive/2024/texmf-dist/tex/generic/babel/xebabel.def)
-\bbl@readstream=\read2
-\bbl@dirlevel=\count331
+\bbl@readstream=\read3
+\bbl@dirlevel=\count353
 
 (c:/texlive/2024/texmf-dist/tex/generic/babel-portuges/portuguese.ldf
 Language: portuges 2021/07/09 v1.2t Portuguese support from the babel system
@@ -616,13 +881,13 @@ Package babel Info: Importing font and identification data for portuguese
 )
 (c:/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
-\csq@reset=\count332
-\csq@gtype=\count333
-\csq@glevel=\count334
-\csq@qlevel=\count335
-\csq@maxlvl=\count336
-\csq@tshold=\count337
-\csq@ltx@everypar=\toks42
+\csq@reset=\count354
+\csq@gtype=\count355
+\csq@glevel=\count356
+\csq@qlevel=\count357
+\csq@maxlvl=\count358
+\csq@tshold=\count359
+\csq@ltx@everypar=\toks54
 
 (c:/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2024-04-04 v5.2o csquotes generic definitions (JAW)
@@ -640,25 +905,25 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip82
 \bibsep=\skip83
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count338
+\c@NAT@ctr=\count360
 )
 (c:/texlive/2024/texmf-dist/tex/latex/notoccite/notoccite.sty
 Package: notoccite 2000/07/20
 )
 (c:/texlive/2024/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count339
-\float@exts=\toks43
-\float@box=\box70
-\@float@everytoks=\toks44
-\@floatcapt=\box71
+\c@float@type=\count361
+\float@exts=\toks55
+\float@box=\box81
+\@float@everytoks=\toks56
+\@floatcapt=\box82
 )
 (c:/texlive/2024/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen273
-\WF@size=\dimen274
-\c@WF@wrappedlines=\count340
-\WF@box=\box72
-\WF@everypar=\toks45
+\wrapoverhang=\dimen323
+\WF@size=\dimen324
+\c@WF@wrappedlines=\count362
+\WF@box=\box83
+\WF@everypar=\toks57
 Package: wrapfig 2003/01/31  v 3.6
 )
 (c:/texlive/2024/texmf-dist/tex/latex/placeins/placeins.sty
@@ -666,15 +931,15 @@ Package: placeins 2005/04/18  v 2.2
 )
 (c:/texlive/2024/texmf-dist/tex/latex/footmisc/footmisc.sty
 Package: footmisc 2023/07/05 v6.0f a miscellany of footnote facilities
-\FN@temptoken=\toks46
-\footnotemargin=\dimen275
-\@outputbox@depth=\dimen276
+\FN@temptoken=\toks58
+\footnotemargin=\dimen325
+\@outputbox@depth=\dimen326
 
 (c:/texlive/2024/texmf-dist/tex/latex/bigfoot/perpage.sty
 Package: perpage 2014/10/25 2.0 Reset/sort counters per page
-\c@abspage=\count341
+\c@abspage=\count363
 )
-\c@pp@a@footnote=\count342
+\c@pp@a@footnote=\count364
 Package footmisc Info: Declaring symbol style bringhurst on input line 696.
 Package footmisc Info: Declaring symbol style chicago on input line 704.
 Package footmisc Info: Declaring symbol style wiley on input line 713.
@@ -716,9 +981,9 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 Package: shellesc 2023/07/08 v1.0d unified shell escape interface for LaTeX
 Package shellesc Info: Restricted shell escape enabled on input line 77.
 )
-\c@svg@param@lastpage=\count343
-\svg@box=\box73
-\c@svg@param@currpage=\count344
+\c@svg@param@lastpage=\count365
+\svg@box=\box84
+\c@svg@param@currpage=\count366
 )
 
 LaTeX Warning: Package "xcolor" has already been loaded: ignoring load-time
@@ -735,80 +1000,12 @@ Package: transparent-nometadata 2022-10-27 v1.5 Transparency via pdfTeX's color
 Package transparent Warning: Loading aborted, because pdfTeX is not running in 
 PDF mode.
 
-)) (c:/texlive/2024/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
-(c:/texlive/2024/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks47
-\pgfutil@tempdima=\dimen277
-\pgfutil@tempdimb=\dimen278
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box74
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/pgf.revision.tex)
-Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
-))
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
-Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks48
-\pgfkeys@temptoks=\toks49
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.co
-de.tex
-\pgfkeys@tmptoks=\toks50
-))
-\pgf@x=\dimen279
-\pgf@y=\dimen280
-\pgf@xa=\dimen281
-\pgf@ya=\dimen282
-\pgf@xb=\dimen283
-\pgf@yb=\dimen284
-\pgf@xc=\dimen285
-\pgf@yc=\dimen286
-\pgf@xd=\dimen287
-\pgf@yd=\dimen288
-\w@pgf@writea=\write3
-\r@pgf@reada=\read3
-\c@pgf@counta=\count345
-\c@pgf@countb=\count346
-\c@pgf@countc=\count347
-\c@pgf@countd=\count348
-\t@pgf@toka=\toks51
-\t@pgf@tokb=\toks52
-\t@pgf@tokc=\toks53
-\pgf@sys@id@count=\count349
- (c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
-File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
-)
-Driver file for pgf: pgfsys-xetex.def
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-xetex.def
-File: pgfsys-xetex.def 2023-01-15 v3.1.10 (3.1.10)
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-dvipdfmx.def
-File: pgfsys-dvipdfmx.def 2023-01-15 v3.1.10 (3.1.10)
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
-File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
-)
-\pgfsys@objnum=\count350
-)))
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
-File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfsyssoftpath@smallbuffer@items=\count351
-\pgfsyssoftpath@bigbuffer@items=\count352
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
-File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )) (c:/texlive/2024/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
 Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count353
+\c@subfigure=\count367
 Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count354
+\c@subtable=\count368
 )
 (c:/texlive/2024/texmf-dist/tex/latex/commath/commath.sty
 Invalid UTF-8 byte or sequence at line 6 replaced by U+FFFD.
@@ -821,43 +1018,43 @@ Package: mathpazo 2020/03/25 PSNFSS-v9.3 Palatino w/ Pazo Math (D.Puga, WaS)
 )
 (c:/texlive/2024/texmf-dist/tex/latex/siunitx/siunitx.sty
 Package: siunitx 2024-11-19 v3.3.24 A comprehensive (SI) units package
-\l__siunitx_number_uncert_offset_int=\count355
-\l__siunitx_number_exponent_fixed_int=\count356
-\l__siunitx_number_min_decimal_int=\count357
-\l__siunitx_number_min_integer_int=\count358
-\l__siunitx_number_round_precision_int=\count359
-\l__siunitx_number_lower_threshold_int=\count360
-\l__siunitx_number_upper_threshold_int=\count361
-\l__siunitx_number_group_first_int=\count362
-\l__siunitx_number_group_size_int=\count363
-\l__siunitx_number_group_minimum_int=\count364
-\l__siunitx_angle_tmp_dim=\dimen289
-\l__siunitx_angle_marker_box=\box75
-\l__siunitx_angle_unit_box=\box76
-\l__siunitx_compound_count_int=\count365
+\l__siunitx_number_uncert_offset_int=\count369
+\l__siunitx_number_exponent_fixed_int=\count370
+\l__siunitx_number_min_decimal_int=\count371
+\l__siunitx_number_min_integer_int=\count372
+\l__siunitx_number_round_precision_int=\count373
+\l__siunitx_number_lower_threshold_int=\count374
+\l__siunitx_number_upper_threshold_int=\count375
+\l__siunitx_number_group_first_int=\count376
+\l__siunitx_number_group_size_int=\count377
+\l__siunitx_number_group_minimum_int=\count378
+\l__siunitx_angle_tmp_dim=\dimen327
+\l__siunitx_angle_marker_box=\box85
+\l__siunitx_angle_unit_box=\box86
+\l__siunitx_compound_count_int=\count379
 
 (c:/texlive/2024/texmf-dist/tex/latex/translations/translations.sty
 Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages
  (CN)
 )
-\l__siunitx_table_tmp_box=\box77
-\l__siunitx_table_tmp_dim=\dimen290
-\l__siunitx_table_column_width_dim=\dimen291
-\l__siunitx_table_integer_box=\box78
-\l__siunitx_table_decimal_box=\box79
-\l__siunitx_table_uncert_box=\box80
-\l__siunitx_table_before_box=\box81
-\l__siunitx_table_after_box=\box82
-\l__siunitx_table_before_dim=\dimen292
-\l__siunitx_table_carry_dim=\dimen293
-\l__siunitx_unit_tmp_int=\count366
-\l__siunitx_unit_position_int=\count367
-\l__siunitx_unit_total_int=\count368
+\l__siunitx_table_tmp_box=\box87
+\l__siunitx_table_tmp_dim=\dimen328
+\l__siunitx_table_column_width_dim=\dimen329
+\l__siunitx_table_integer_box=\box88
+\l__siunitx_table_decimal_box=\box89
+\l__siunitx_table_uncert_box=\box90
+\l__siunitx_table_before_box=\box91
+\l__siunitx_table_after_box=\box92
+\l__siunitx_table_before_dim=\dimen330
+\l__siunitx_table_carry_dim=\dimen331
+\l__siunitx_unit_tmp_int=\count380
+\l__siunitx_unit_position_int=\count381
+\l__siunitx_unit_total_int=\count382
 )
 (c:/texlive/2024/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks54
-\verbatim@line=\toks55
+\every@verbatim=\toks59
+\verbatim@line=\toks60
 \verbatim@in@stream=\read4
 )
 (c:/texlive/2024/texmf-dist/tex/latex/epigraph/epigraph.sty
@@ -873,14 +1070,14 @@ Package: nextpage 2009/09/03 v1.1a additional page commands
 )
 (c:/texlive/2024/texmf-dist/tex/latex/varwidth/varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box83
-\sift@deathcycles=\count369
-\@vwid@loff=\dimen294
-\@vwid@roff=\dimen295
+\@vwid@box=\box93
+\sift@deathcycles=\count383
+\@vwid@loff=\dimen332
+\@vwid@roff=\dimen333
 )
 (./epigraphoverload.tex
-\epi@textbox=\box84
-\epi@sourcebox=\box85
+\epi@textbox=\box94
+\epi@sourcebox=\box95
 \epi@finalwidth=\skip88
 ) (c:/texlive/2024/texmf-dist/tex/latex/xargs/xargs.sty
 Package: xargs 2008/03/22 v1.1  extended macro definitions  (mpg)
@@ -890,36 +1087,36 @@ Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
 
 (c:/texlive/2024/texmf-dist/tex/generic/xkeyval/xkeyval.tex
 (c:/texlive/2024/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks56
-\XKV@tempa@toks=\toks57
+\XKV@toks=\toks61
+\XKV@tempa@toks=\toks62
 )
-\XKV@depth=\count370
+\XKV@depth=\count384
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
-\xargs@max=\count371
-\xargs@toksa=\toks58
-\xargs@toksb=\toks59
+\xargs@max=\count385
+\xargs@toksa=\toks63
+\xargs@toksb=\toks64
 )
 (c:/texlive/2024/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count372
-\c@ALG@rem=\count373
-\c@ALG@nested=\count374
+\c@ALG@line=\count386
+\c@ALG@rem=\count387
+\c@ALG@nested=\count388
 \ALG@tlm=\skip89
 \ALG@thistlm=\skip90
-\c@ALG@Lnr=\count375
-\c@ALG@blocknr=\count376
-\c@ALG@storecount=\count377
-\c@ALG@tmpcounter=\count378
+\c@ALG@Lnr=\count389
+\c@ALG@blocknr=\count390
+\c@ALG@storecount=\count391
+\c@ALG@tmpcounter=\count392
 \ALG@tmplength=\skip91
 ) (c:/texlive/2024/texmf-dist/tex/latex/algorithms/algorithm.sty
 Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
-\@float@every@algorithm=\toks60
-\c@algorithm=\count379
+\@float@every@algorithm=\toks65
+\c@algorithm=\count393
 )
 (c:/texlive/2024/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
@@ -936,13 +1133,13 @@ Package hyperref Info: Option `hypertexnames' set `true' on input line 160.
 Package: fancybox 2010/05/15 1.4
 
 Style option: `fancybox' v1.4 <2010/05/15> (tvz)
-\@fancybox=\box86
-\shadowsize=\dimen296
-\@Sbox=\box87
-\do@VerbBox=\toks61
-\the@fancyput=\toks62
-\this@fancyput=\toks63
-\EndVerbatimTokens=\toks64
+\@fancybox=\box96
+\shadowsize=\dimen334
+\@Sbox=\box97
+\do@VerbBox=\toks66
+\the@fancyput=\toks67
+\this@fancyput=\toks68
+\EndVerbatimTokens=\toks69
 \Verbatim@Outfile=\write4
 \Verbatim@Infile=\read5
 ) (c:/texlive/2024/texmf-dist/tex/latex/ragged2e/ragged2e.sty
@@ -965,44 +1162,34 @@ Package: ragged2e 2023/06/22 v3.6 ragged2e Package
 (c:/texlive/2024/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
 \multirow@colwidth=\skip106
-\multirow@cntb=\count380
+\multirow@cntb=\count394
 \multirow@dima=\skip107
-\bigstrutjot=\dimen297
+\bigstrutjot=\dimen335
 )
 (c:/texlive/2024/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
-\c@tracingmulticols=\count381
-\mult@box=\box88
-\multicol@leftmargin=\dimen298
-\c@unbalance=\count382
-\c@collectmore=\count383
-\doublecol@number=\count384
-\multicoltolerance=\count385
-\multicolpretolerance=\count386
-\full@width=\dimen299
-\page@free=\dimen300
-\premulticols=\dimen301
-\postmulticols=\dimen302
+\c@tracingmulticols=\count395
+\mult@box=\box98
+\multicol@leftmargin=\dimen336
+\c@unbalance=\count396
+\c@collectmore=\count397
+\doublecol@number=\count398
+\multicoltolerance=\count399
+\multicolpretolerance=\count400
+\full@width=\dimen337
+\page@free=\dimen338
+\premulticols=\dimen339
+\postmulticols=\dimen340
 \multicolsep=\skip108
 \multicolbaselineskip=\skip109
-\partial@page=\box89
-\last@line=\box90
-\mc@boxedresult=\box91
-\maxbalancingoverflow=\dimen303
-\mult@rightbox=\box92
-\mult@grightbox=\box93
-\mult@firstbox=\box94
-\mult@gfirstbox=\box95
-\@tempa=\box96
-\@tempa=\box97
-\@tempa=\box98
-\@tempa=\box99
-\@tempa=\box100
-\@tempa=\box101
-\@tempa=\box102
-\@tempa=\box103
-\@tempa=\box104
-\@tempa=\box105
+\partial@page=\box99
+\last@line=\box100
+\mc@boxedresult=\box101
+\maxbalancingoverflow=\dimen341
+\mult@rightbox=\box102
+\mult@grightbox=\box103
+\mult@firstbox=\box104
+\mult@gfirstbox=\box105
 \@tempa=\box106
 \@tempa=\box107
 \@tempa=\box108
@@ -1029,15 +1216,25 @@ Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
 \@tempa=\box129
 \@tempa=\box130
 \@tempa=\box131
-\c@minrows=\count387
-\c@columnbadness=\count388
-\c@finalcolumnbadness=\count389
-\last@try=\dimen304
-\multicolovershoot=\dimen305
-\multicolundershoot=\dimen306
-\mult@nat@firstbox=\box132
-\colbreak@box=\box133
-\mc@col@check@num=\count390
+\@tempa=\box132
+\@tempa=\box133
+\@tempa=\box134
+\@tempa=\box135
+\@tempa=\box136
+\@tempa=\box137
+\@tempa=\box138
+\@tempa=\box139
+\@tempa=\box140
+\@tempa=\box141
+\c@minrows=\count401
+\c@columnbadness=\count402
+\c@finalcolumnbadness=\count403
+\last@try=\dimen342
+\multicolovershoot=\dimen343
+\multicolundershoot=\dimen344
+\mult@nat@firstbox=\box142
+\colbreak@box=\box143
+\mc@col@check@num=\count404
 )
 (c:/texlive/2024/texmf-dist/tex/latex/todonotes/todonotes.sty
 Package: todonotes 2024/01/05 v1.1.7 Todonotes source and documentation.
@@ -1047,202 +1244,7 @@ Package: todonotes 2024/01/05
 LaTeX Warning: Package "xcolor" has already been loaded: ignoring load-time
 (LaTeX)        option "xcdraw".
 
-(c:/texlive/2024/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
-(c:/texlive/2024/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
-Package: pgf 2023-01-15 v3.1.10 (3.1.10)
 
-(c:/texlive/2024/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
-
-LaTeX Warning: Package "xcolor" has already been loaded: ignoring load-time
-(LaTeX)        option "xcdraw".
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
-Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen307
-\pgfmath@count=\count391
-\pgfmath@box=\box134
-\pgfmath@toks=\toks65
-\pgfmath@stack@operand=\toks66
-\pgfmath@stack@operation=\toks67
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.te
-x)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric
-.code.tex)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.t
-ex)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.co
-de.tex)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.te
-x)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithm
-etics.code.tex)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count392
-))
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
-File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@picminx=\dimen308
-\pgf@picmaxx=\dimen309
-\pgf@picminy=\dimen310
-\pgf@picmaxy=\dimen311
-\pgf@pathminx=\dimen312
-\pgf@pathmaxx=\dimen313
-\pgf@pathminy=\dimen314
-\pgf@pathmaxy=\dimen315
-\pgf@xx=\dimen316
-\pgf@xy=\dimen317
-\pgf@yx=\dimen318
-\pgf@yy=\dimen319
-\pgf@zx=\dimen320
-\pgf@zy=\dimen321
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.cod
-e.tex
-File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@path@lastx=\dimen322
-\pgf@path@lasty=\dimen323
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.te
-x
-File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@shorten@end@additional=\dimen324
-\pgf@shorten@start@additional=\dimen325
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
-File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfpic=\box135
-\pgf@hbox=\box136
-\pgf@layerbox@main=\box137
-\pgf@picture@serial@count=\count393
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code
-.tex
-File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgflinewidth=\dimen326
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.c
-ode.tex
-File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@pt@x=\dimen327
-\pgf@pt@y=\dimen328
-\pgf@pt@temp=\dimen329
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
-File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
-File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.co
-de.tex
-File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
-File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowsep=\dimen330
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
-File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@max=\dimen331
-\pgf@sys@shading@range@num=\count394
-\pgf@shadingcount=\count395
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
-File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
-File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfexternal@startupbox=\box138
-) (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
-File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code
-.tex
-File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
-File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
-File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
-))) (c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.te
-x
-File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfnodeparttextbox=\box139
-)
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
-File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)
-(c:/texlive/2024/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.st
-y
-Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
-\pgf@nodesepstart=\dimen332
-\pgf@nodesepend=\dimen333
-)
-(c:/texlive/2024/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.st
-y
-Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
-)) (c:/texlive/2024/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
-(c:/texlive/2024/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
-(c:/texlive/2024/texmf-dist/tex/latex/pgf/math/pgfmath.sty
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
-Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
-\pgffor@iter=\dimen334
-\pgffor@skip=\dimen335
-\pgffor@stack=\toks68
-\pgffor@toks=\toks69
-))
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
-Package: tikz 2023-01-15 v3.1.10 (3.1.10)
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.co
-de.tex
-File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@plot@mark@count=\count396
-\pgfplotmarksize=\dimen336
-)
-\tikz@lastx=\dimen337
-\tikz@lasty=\dimen338
-\tikz@lastxsaved=\dimen339
-\tikz@lastysaved=\dimen340
-\tikz@lastmovetox=\dimen341
-\tikz@lastmovetoy=\dimen342
-\tikzleveldistance=\dimen343
-\tikzsiblingdistance=\dimen344
-\tikz@figbox=\box140
-\tikz@figbox@bg=\box141
-\tikz@tempbox=\box142
-\tikz@tempbox@bg=\box143
-\tikztreelevel=\count397
-\tikznumberofchildren=\count398
-\tikznumberofcurrentchild=\count399
-\tikz@fig@count=\count400
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
-File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfmatrixcurrentrow=\count401
-\pgfmatrixcurrentcolumn=\count402
-\pgf@matrix@numberofcolumns=\count403
-)
-\tikz@expandcount=\count404
-
-(c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
-brarytopaths.code.tex
-File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)))
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
 brarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
@@ -1767,7 +1769,7 @@ Overfull \hbox (6.08987pt too wide) detected at line 30
 
 
 Overfull \hbox (6.08987pt too wide) detected at line 31
- \TU/Arial(0)/m/n/10.95 6
+ \TU/Arial(0)/m/n/10.95 7
  []
 
 
@@ -1877,7 +1879,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 52
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 53
- \TU/Arial(0)/m/n/10.95 18
+ \TU/Arial(0)/m/n/10.95 17
  []
 
 
@@ -1905,7 +1907,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 55
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 56
- \TU/Arial(0)/m/n/10.95 19
+ \TU/Arial(0)/m/n/10.95 20
  []
 
 
@@ -1920,17 +1922,17 @@ Overfull \hbox (12.17973pt too wide) detected at line 58
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 59
- \TU/Arial(0)/m/n/10.95 22
+ \TU/Arial(0)/m/n/10.95 23
  []
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 60
- \TU/Arial(0)/m/n/10.95 24
+ \TU/Arial(0)/m/n/10.95 25
  []
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 61
- \TU/Arial(0)/m/n/10.95 26
+ \TU/Arial(0)/m/n/10.95 25
  []
 
 
@@ -1970,7 +1972,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 68
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 69
- \TU/Arial(0)/m/n/10.95 31
+ \TU/Arial(0)/m/n/10.95 32
  []
 
 
@@ -2059,7 +2061,7 @@ Overfull \hbox (12.17973pt too wide) detected at line 85
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 87
- \TU/Arial(0)/m/n/10.95 43
+ \TU/Arial(0)/m/n/10.95 44
  []
 
 )
@@ -2092,7 +2094,7 @@ Overfull \hbox (6.08987pt too wide) detected at line 7
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 10
- \TU/Arial(0)/m/n/10.95 17
+ \TU/Arial(0)/m/n/10.95 18
  []
 
 
@@ -2127,17 +2129,17 @@ Overfull \hbox (12.17973pt too wide) detected at line 18
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 20
- \TU/Arial(0)/m/n/10.95 46
+ \TU/Arial(0)/m/n/10.95 47
  []
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 21
- \TU/Arial(0)/m/n/10.95 46
+ \TU/Arial(0)/m/n/10.95 47
  []
 
 
 Overfull \hbox (12.17973pt too wide) detected at line 22
- \TU/Arial(0)/m/n/10.95 47
+ \TU/Arial(0)/m/n/10.95 48
  []
 
 )
@@ -2225,9 +2227,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [4
 
 ]
-File: Figures/Background/constraints.jpg Graphic file (type bmp)
-<Figures/Background/constraints.jpg>
-
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2238,22 +2237,24 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [5]
+File: Figures/Background/constraints.jpg Graphic file (type bmp)
+<Figures/Background/constraints.jpg>
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 67.
+(Font)              scaled to size 9.37807pt on input line 69.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 67.
+(Font)              scaled to size 7.29405pt on input line 69.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 67.
+(Font)              scaled to size 9.37807pt on input line 69.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 67.
+(Font)              scaled to size 7.29405pt on input line 69.
 
-Overfull \hbox (22.23318pt too wide) in paragraph at lines 67--68
+Overfull \hbox (22.23318pt too wide) in paragraph at lines 69--70
 []\TU/Arial(0)/m/n/10.95 Since 2002, the [][][]International Conference on the 
 Practice and Theory of Automated Timetabling
  []
 
 
-Overfull \hbox (2.64905pt too wide) in paragraph at lines 67--68
+Overfull \hbox (2.64905pt too wide) in paragraph at lines 69--70
 \TU/Arial(0)/m/n/10.95 (PATAT)[][][][][][][][] has supported timetabling compet
 itions to encourage research in this field. There
  []
@@ -2304,7 +2305,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [9]
 Chapter 3.
 
-Overfull \hbox (4.03157pt too wide) in paragraph at lines 38--39
+Overfull \hbox (4.03157pt too wide) in paragraph at lines 40--41
 \TU/Arial(0)/m/n/10.95 used solution strategy for [][][]UCTTP[][] and can be cl
 assified into two categories: Single solution-
  []
@@ -2332,7 +2333,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [11]
-Overfull \hbox (6.22426pt too wide) in paragraph at lines 71--72
+Overfull \hbox (6.22426pt too wide) in paragraph at lines 73--74
 []\TU/Arial(0)/b/n/10.95 Collaborative hybrids: \TU/Arial(0)/m/n/10.95 Involve 
 running different algorithms sequentially, intertwined,
  []
@@ -2348,7 +2349,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [12]
-Overfull \hbox (4.29729pt too wide) in paragraph at lines 95--96
+Overfull \hbox (4.29729pt too wide) in paragraph at lines 97--98
 []\TU/Arial(0)/m/n/10.95 One major limitation of [][][]MCTS[][] for timetabling
  is, as highlighted by Goh, its rigorous decision-
  []
@@ -2376,149 +2377,149 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [14]
 Chapter 4.
 
-Overfull \hbox (23.81822pt too wide) in paragraph at lines 16--17
+Overfull \hbox (23.81822pt too wide) in paragraph at lines 18--19
 [][][][][][][][][][][][] [] [][][][] [][] [][][][][][][][] [] [][][][] [] [][][
 ][] [] [][][][][][][][] [][] [][][][][][][] [] [][][][][][][][] [] [][][][][]$[
 ][]\TU/Arial(0)/m/n/10.95 . The repos-
  []
 
-./Chapters/Development.tex:23: Double subscript.
+./Chapters/Development.tex:25: Double subscript.
 <argument> Periods, \(P = \{P_0, P_1, ..., P_|_
                                                P_|_-_1\}\):
-l.23 ..., \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):}
+l.25 ..., \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):}
                                                    Days are divided into fix...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:23: Double subscript.
+./Chapters/Development.tex:25: Double subscript.
 <argument> Periods, \(P = \{P_0, P_1, ..., P_|_P_
                                                  |_-_1\}\):
-l.23 ..., \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):}
+l.25 ..., \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):}
                                                    Days are divided into fix...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:23: Double subscript.
+./Chapters/Development.tex:25: Double subscript.
 <argument> ...ods, \(P = \{P_0, P_1, ..., P_|_P_|_
                                                   -_1\}\):
-l.23 ..., \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):}
+l.25 ..., \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):}
                                                    Days are divided into fix...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:23: Double subscript.
+./Chapters/Development.tex:25: Double subscript.
 <argument> ...s, \(P = \{P_0, P_1, ..., P_|_P_|_-_
                                                   1\}\):
-l.23 ..., \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):}
+l.25 ..., \(P = \{P_0, P_1, ..., P_|_P_|_-_1\}\):}
                                                    Days are divided into fix...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:27: Double subscript.
+./Chapters/Development.tex:29: Double subscript.
 <argument> Rooms, \(R = \{R_0, R_1, ..., R_|_
                                              R_|_-_1\}\):
-l.27 ..., \(R = \{R_0, R_1, ..., R_|_R_|_-_1\}\):}
+l.29 ..., \(R = \{R_0, R_1, ..., R_|_R_|_-_1\}\):}
                                                    Each room has a capacity ...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:27: Double subscript.
+./Chapters/Development.tex:29: Double subscript.
 <argument> Rooms, \(R = \{R_0, R_1, ..., R_|_R_
                                                |_-_1\}\):
-l.27 ..., \(R = \{R_0, R_1, ..., R_|_R_|_-_1\}\):}
+l.29 ..., \(R = \{R_0, R_1, ..., R_|_R_|_-_1\}\):}
                                                    Each room has a capacity ...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:27: Double subscript.
+./Chapters/Development.tex:29: Double subscript.
 <argument> Rooms, \(R = \{R_0, R_1, ..., R_|_R_|_
                                                  -_1\}\):
-l.27 ..., \(R = \{R_0, R_1, ..., R_|_R_|_-_1\}\):}
+l.29 ..., \(R = \{R_0, R_1, ..., R_|_R_|_-_1\}\):}
                                                    Each room has a capacity ...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:27: Double subscript.
+./Chapters/Development.tex:29: Double subscript.
 <argument> ...s, \(R = \{R_0, R_1, ..., R_|_R_|_-_
                                                   1\}\):
-l.27 ..., \(R = \{R_0, R_1, ..., R_|_R_|_-_1\}\):}
+l.29 ..., \(R = \{R_0, R_1, ..., R_|_R_|_-_1\}\):}
                                                    Each room has a capacity ...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:34: Double subscript.
+./Chapters/Development.tex:36: Double subscript.
 <argument> Lecturers, \(L = \{L_0, L_1, ..., L_|_
                                                  L_|_-_1\}\):
-l.34 ..., \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):}
+l.36 ..., \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):}
                                                   
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:34: Double subscript.
+./Chapters/Development.tex:36: Double subscript.
 <argument> ...urers, \(L = \{L_0, L_1, ..., L_|_L_
                                                   |_-_1\}\):
-l.34 ..., \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):}
+l.36 ..., \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):}
                                                   
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:34: Double subscript.
+./Chapters/Development.tex:36: Double subscript.
 <argument> ...ers, \(L = \{L_0, L_1, ..., L_|_L_|_
                                                   -_1\}\):
-l.34 ..., \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):}
+l.36 ..., \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):}
                                                   
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:34: Double subscript.
+./Chapters/Development.tex:36: Double subscript.
 <argument> ...s, \(L = \{L_0, L_1, ..., L_|_L_|_-_
                                                   1\}\):
-l.34 ..., \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):}
+l.36 ..., \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):}
                                                   
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:41: Double subscript.
+./Chapters/Development.tex:43: Double subscript.
 <argument> Events, \(E = \{E_0, E_1, ..., E_|_
                                               E_|_-_1\}\):
-l.41 ..., \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):}
+l.43 ..., \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):}
                                                    Represent the events to b...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:41: Double subscript.
+./Chapters/Development.tex:43: Double subscript.
 <argument> Events, \(E = \{E_0, E_1, ..., E_|_E_
                                                 |_-_1\}\):
-l.41 ..., \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):}
+l.43 ..., \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):}
                                                    Represent the events to b...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:41: Double subscript.
+./Chapters/Development.tex:43: Double subscript.
 <argument> Events, \(E = \{E_0, E_1, ..., E_|_E_|_
                                                   -_1\}\):
-l.41 ..., \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):}
+l.43 ..., \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):}
                                                    Represent the events to b...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:41: Double subscript.
+./Chapters/Development.tex:43: Double subscript.
 <argument> ...s, \(E = \{E_0, E_1, ..., E_|_E_|_-_
                                                   1\}\):
-l.41 ..., \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):}
+l.43 ..., \(E = \{E_0, E_1, ..., E_|_E_|_-_1\}\):}
                                                    Represent the events to b...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:63: Double subscript.
+./Chapters/Development.tex:65: Double subscript.
 <argument> Blocks, \(B = \{B_0, B_1, ..., B_|_
                                               B_|_-_1\}\):
-l.63 ..., \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):}
+l.65 ..., \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):}
                                                    A block may represent a g...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:63: Double subscript.
+./Chapters/Development.tex:65: Double subscript.
 <argument> Blocks, \(B = \{B_0, B_1, ..., B_|_B_
                                                 |_-_1\}\):
-l.63 ..., \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):}
+l.65 ..., \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):}
                                                    A block may represent a g...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:63: Double subscript.
+./Chapters/Development.tex:65: Double subscript.
 <argument> Blocks, \(B = \{B_0, B_1, ..., B_|_B_|_
                                                   -_1\}\):
-l.63 ..., \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):}
+l.65 ..., \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):}
                                                    A block may represent a g...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:63: Double subscript.
+./Chapters/Development.tex:65: Double subscript.
 <argument> ...s, \(B = \{B_0, B_1, ..., B_|_B_|_-_
                                                   1\}\):
-l.63 ..., \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):}
+l.65 ..., \(B = \{B_0, B_1, ..., B_|_B_|_-_1\}\):}
                                                    A block may represent a g...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
@@ -2547,67 +2548,67 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [16]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\ac' on input line 115.
+(hyperref)                removing `\ac' on input line 117.
 
 File: Figures/Development/MCTS_tree.jpg Graphic file (type bmp)
 <Figures/Development/MCTS_tree.jpg>
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...assignment (\((E_0,P_0,R_0),...,(E_0,P_|_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...assignment (\((E_0,P_0,R_0),...,(E_0,P_|_
                                                   P_|_-_1,R_|_R_|_-_1)\)). S...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...signment (\((E_0,P_0,R_0),...,(E_0,P_|_P_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...signment (\((E_0,P_0,R_0),...,(E_0,P_|_P_
                                                   |_-_1,R_|_R_|_-_1)\)). Sub...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...gnment (\((E_0,P_0,R_0),...,(E_0,P_|_P_|_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...gnment (\((E_0,P_0,R_0),...,(E_0,P_|_P_|_
                                                   -_1,R_|_R_|_-_1)\)). Subse...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...ment (\((E_0,P_0,R_0),...,(E_0,P_|_P_|_-_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...ment (\((E_0,P_0,R_0),...,(E_0,P_|_P_|_-_
                                                   1,R_|_R_|_-_1)\)). Subsequ...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...\((E_0,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...\((E_0,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_
                                                   R_|_-_1)\)). Subsequent le...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...(E_0,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_R_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...(E_0,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_R_
                                                   |_-_1)\)). Subsequent leve...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ..._0,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_R_|_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ..._0,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_R_|_
                                                   -_1)\)). Subsequent levels...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_R_|_-_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...,P_0,R_0),...,(E_0,P_|_P_|_-_1,R_|_R_|_-_
                                                   1)\)). Subsequent levels c...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...ssignment of events \(E_1, E_2, ..., E_|_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...ssignment of events \(E_1, E_2, ..., E_|_
                                                   E_|_-_1\).
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...ignment of events \(E_1, E_2, ..., E_|_E_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...ignment of events \(E_1, E_2, ..., E_|_E_
                                                   |_-_1\).
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...nment of events \(E_1, E_2, ..., E_|_E_|_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...nment of events \(E_1, E_2, ..., E_|_E_|_
                                                   -_1\).
 I treat `x_1_2' essentially like `x_1{}_2'.
 
-./Chapters/Development.tex:125: Double subscript.
-l.125 ...ent of events \(E_1, E_2, ..., E_|_E_|_-_
+./Chapters/Development.tex:127: Double subscript.
+l.127 ...ent of events \(E_1, E_2, ..., E_|_E_|_-_
                                                   1\).
 I treat `x_1_2' essentially like `x_1{}_2'.
 
@@ -2632,19 +2633,12 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [18]
-Overfull \hbox (46.86414pt too wide) in paragraph at lines 181--182
+Overfull \hbox (46.86414pt too wide) in paragraph at lines 183--184
 []\TU/Arial(0)/m/n/10.95 The [][][]MCTS[][] algorithm consists of four phases: 
 $\OML/zplm/m/it/10.95 selection$\TU/Arial(0)/m/n/10.95 , $\OML/zplm/m/it/10.95 
 expansion$\TU/Arial(0)/m/n/10.95 , $\OML/zplm/m/it/10.95 simulation$\TU/Arial(0
 )/m/n/10.95 , and $\OML/zplm/m/it/10.95 backpropagation$\TU/Arial(0)/m/n/10.95 
 .
- []
-
-File: Figures/Development/MCTS_Steps.jpg Graphic file (type bmp)
-<Figures/Development/MCTS_Steps.jpg>
-
-Overfull \hbox (42.68173pt too wide) in paragraph at lines 185--187
- [][] 
  []
 
 
@@ -2658,6 +2652,14 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [19]
+File: Figures/Development/MCTS_Steps.jpg Graphic file (type bmp)
+<Figures/Development/MCTS_Steps.jpg>
+
+Overfull \hbox (42.68173pt too wide) in paragraph at lines 187--189
+ [][] 
+ []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2669,32 +2671,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 [20]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 200.
-
-./Chapters/Development.tex:236: Missing number, treated as zero.
-<to be read again> 
-                   \ALG@b@2@EndFunction@0 
-l.236 \EndFunction
-                  
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-
-./Chapters/Development.tex:237: Package algorithmicx Error: Some blocks are not
- closed!!!.
-
-See the algorithmicx package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.237 \end{algorithmic}
-                       
-This error message was generated by an \errmessage
-command, so I can't give any explicit help.
-Pretend that you're Hercule Poirot: Examine all clues,
-and deduce the truth by order and method.
-
+put line 202.
 
 
 
@@ -2706,55 +2683,9 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [21]
-Overfull \hbox (2.1293pt too wide) in paragraph at lines 250--251
+Overfull \hbox (2.1293pt too wide) in paragraph at lines 252--253
 []\TU/Arial(0)/m/n/10.95 Before proceeding, the algorithm evaluates the partial
  timetable (i.e., the new child) against
- []
-
-./Chapters/Development.tex:259: Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.259 \Function
-               {EXPANSION}{}
-The control sequence marked <to be read again> should
-not appear between \csname and \endcsname.
-
-./Chapters/Development.tex:259: Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.259 \Function
-               {EXPANSION}{}
-I'm ignoring this, since I wasn't doing a \csname.
-
-./Chapters/Development.tex:281: Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.281 \end{algorithmic}
-                       
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-./Chapters/Development.tex:281: Missing = inserted for \ifnum.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.281 \end{algorithmic}
-                       
-I was expecting to see `<', `=', or `>'. Didn't.
-
-./Chapters/Development.tex:281: Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.281 \end{algorithmic}
-                       
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 287--288
-[]\TU/Arial(0)/b/n/10.95 function \TU/Arial(0)/m/sc/10.95 FIND_AVAILABLE_ROOMS\
-TU/Arial(0)/m/n/10.95 (event_capacity, rooms, events, avail-
  []
 
 
@@ -2768,6 +2699,12 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [22]
+Underfull \hbox (badness 10000) in paragraph at lines 289--290
+[]\TU/Arial(0)/b/n/10.95 function \TU/Arial(0)/m/sc/10.95 FIND_AVAILABLE_ROOMS\
+TU/Arial(0)/m/n/10.95 (event_capacity, rooms, events, avail-
+ []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2808,24 +2745,19 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [26]
-Underfull \hbox (badness 10000) in paragraph at lines 436--437
-[]\TU/Arial(0)/b/n/10.95 function \TU/Arial(0)/m/sc/10.95 RUN_HILL_CLIMBING\TU/
-Arial(0)/m/n/10.95 (best_timetable, start_key, best_result_soft,
- []
-
-./Chapters/Development.tex:460: Missing number, treated as zero.
+./Chapters/Development.tex:462: Missing number, treated as zero.
 <to be read again> 
                    \ALG@b@2@Else@0 
-l.460         \Else
+l.462         \Else
                    
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
 look up `weird error' in the index to The TeXbook.)
 
-./Chapters/Development.tex:462: Missing number, treated as zero.
+./Chapters/Development.tex:464: Missing number, treated as zero.
 <to be read again> 
                    \ALG@b@2@EndIf@0 
-l.462         \EndIf
+l.464         \EndIf
                     
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
@@ -2842,26 +2774,6 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [27]
-Runaway argument?
-{Algorithm \ref {selection_with_diving} and \ref {diving_algorithm}. \ETC.
-./Chapters/Development.tex:473: Paragraph ended before \T@ref was complete.
-<to be read again> 
-                   \par 
-l.473 
-      
-I suspect you've forgotten a `}', causing me to apply this
-control sequence to too much text. How can we recover?
-My plan is to forget the whole thing and hope for the best.
-
-./Chapters/Development.tex:512: Missing number, treated as zero.
-<to be read again> 
-                   \ALG@b@2@EndIf@0 
-l.512             \EndIf
-                        
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
 File: Figures/Development/MCTS_Diving.jpg Graphic file (type bmp)
 <Figures/Development/MCTS_Diving.jpg>
 
@@ -2920,14 +2832,14 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 [32]
 
-./Chapters/Tests.tex:100: LaTeX Error: \begin{enumerate} on input line 94 ended
+./Chapters/Tests.tex:102: LaTeX Error: \begin{enumerate} on input line 96 ended
  by \end{enumrate}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.100 \end{enumrate}
+l.102 \end{enumrate}
                     
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -2958,23 +2870,23 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [34
 
 ]
-LaTeX Font Info:    Calculating math sizes for size <14> on input line 27.
+LaTeX Font Info:    Calculating math sizes for size <14> on input line 29.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 14.5881pt on input line 27.
+(Font)              scaled to size 14.5881pt on input line 29.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 11.08687pt on input line 27.
+(Font)              scaled to size 11.08687pt on input line 29.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 8.75294pt on input line 27.
+(Font)              scaled to size 8.75294pt on input line 29.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 14.5881pt on input line 27.
+(Font)              scaled to size 14.5881pt on input line 29.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 11.08687pt on input line 27.
+(Font)              scaled to size 11.08687pt on input line 29.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 8.75294pt on input line 27.
+(Font)              scaled to size 8.75294pt on input line 29.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 27.
+(hyperref)                removing `math shift' on input line 29.
 
 File: Figures/Results/without_pruning.png Graphic file (type bmp)
 <Figures/Results/without_pruning.png>
@@ -3020,13 +2932,13 @@ File: Figures/Results/without_diving_result.png Graphic file (type bmp)
 File: Figures/Results/soft_caption.png Graphic file (type bmp)
 <Figures/Results/soft_caption.png>
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 87.
+(Font)              scaled to size 10.42007pt on input line 89.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 87.
+(Font)              scaled to size 7.91925pt on input line 89.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 87.
+(Font)              scaled to size 10.42007pt on input line 89.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 87.
+(Font)              scaled to size 7.91925pt on input line 89.
 File: Figures/Results/diving_result.png Graphic file (type bmp)
 <Figures/Results/diving_result.png>
 File: Figures/Results/soft_caption.png Graphic file (type bmp)
@@ -3071,16 +2983,13 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
-[41
-
-
-]
+[41]
 Chapter 7.
 
-Overfull \hbox (17.62425pt too wide) in paragraph at lines 30--31
+Overfull \hbox (12.14925pt too wide) in paragraph at lines 32--33
 \TU/Arial(0)/m/n/10.95 simulation. In this approach, the fixed nodes in the tre
-e represents only the $\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 weekday\OT1/pp
-l/m/n/10.95 , \OML/zplm/m/it/10.95 timeslot\OT1/zplm/m/n/10.95 )$
+e represent only the $\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 weekday\OT1/ppl
+/m/n/10.95 , \OML/zplm/m/it/10.95 timeslot\OT1/zplm/m/n/10.95 )$
  []
 
 
@@ -3096,7 +3005,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [42
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 36--36
+Underfull \hbox (badness 10000) in paragraph at lines 38--38
 [][][]\TU/Arial(0)/b/n/9 Front-end: [][]$[][][][][] [] [] [] [][][][][][] [] []
 [][] [] [][][][][][][][][][][][] [] [][][][][][][][]$[][] Back-end: [][]$[][][]
 [][] [] [] [] [][][][][][] [] [][][] []
@@ -3117,6 +3026,16 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [43]
+
+
+Package fancyhdr Warning: \headheight is too small (14.0pt): 
+(fancyhdr)                Make it at least 18.99997pt, for example:
+(fancyhdr)                \setlength{\headheight}{18.99997pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
+
+[44]
 ** WARNING: IEEEtranN.bst: No hyphenation pattern has been
 ** loaded for the language `pt'. Using the pattern for
 ** the default language instead.
@@ -3172,7 +3091,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
-[44
+[45
 
 ]
 ** WARNING: IEEEtranN.bst: No hyphenation pattern has been
@@ -3212,13 +3131,33 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
-[45]
+[46]
 File: Figures/AppendixA/tree.jpg Graphic file (type bmp)
 <Figures/AppendixA/tree.jpg>
 File: Figures/AppendixA/previous_work.png Graphic file (type bmp)
 <Figures/AppendixA/previous_work.png>
 File: Figures/AppendixA/uml.png Graphic file (type bmp)
 <Figures/AppendixA/uml.png>
+
+Package fontspec Info: 
+(fontspec)             Could not resolve font "Nirmala UI/I" (it probably
+(fontspec)             doesn't exist).
+
+
+Package fontspec Info: 
+(fontspec)             Font family 'NirmalaUI(0)' created for font 'Nirmala
+(fontspec)             UI' with options [].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.: <->"Nirmala
+(fontspec)             UI/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.: <->"Nirmala
+(fontspec)             UI/B/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.: <->"Nirmala
+(fontspec)             UI/BI/OT:script=latn;language=dflt;"
+
 )
 
 
@@ -3229,7 +3168,7 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
-[46
+[47
 
 ]
 
@@ -3241,23 +3180,23 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
-[47] (./main.aux)
+[48] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2024-11-02>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 2EEE0828470004169822C000C684B0EB;11933.
+(rerunfilecheck)             Checksum: 583EB5473C6EF58AA354B03C66B0AC7A;11892.
 Package rerunfilecheck Info: File `main.brf' has not changed.
-(rerunfilecheck)             Checksum: AEFE58CED99A34E9ADEAB3CEC28D8862;1793.
+(rerunfilecheck)             Checksum: A6A63CB58E79601583DB381773A1388E;1793.
  ) 
 Here is how much of TeX's memory you used:
- 44429 strings out of 473965
- 913915 string characters out of 5736631
- 1402830 words of memory out of 5000000
- 66527 multiletter control sequences out of 15000+600000
- 583963 words of font info for 146 fonts, out of 8000000 for 9000
+ 44502 strings out of 473965
+ 915741 string characters out of 5736631
+ 1402745 words of memory out of 5000000
+ 66588 multiletter control sequences out of 15000+600000
+ 584019 words of font info for 153 fonts, out of 8000000 for 9000
  1351 hyphenation exceptions out of 8191
- 108i,19n,138p,2378b,1099s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 100i,19n,124p,2378b,1099s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (56 pages).
+Output written on main.pdf (57 pages).
