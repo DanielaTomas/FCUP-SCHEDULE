@@ -309,15 +309,15 @@ The \(simulation\) phase estimates the value of each action, in this case, each 
 
 A random event allocation approach was initially explored but produced suboptimal results. Therefore, a more structured method was implemented.
 
-The \(simulation\) function (Algorithm \ref{simulation}) starts by creating a copy of the current node's path, which contains the events already scheduled. It then identifies the remaining events, i.e., events that have not been assigned yet. These remaining events are sorted based on two criteria:
+The \(simulation\) function (Algorithm \ref{simulation}) starts by retrieving the events already scheduled. It then sorts the remaining events, i.e., events that have not been assigned yet, based on two criteria:
 \begin{enumerate}
-\item Whether they were previously unassigned in prior simulations, to prioritize harder-to-schedule events.
-\item Their priority (Equation \ref{priority}), ensuring that more critical events are allocated first.
+\item Whether they were previously unassigned in prior simulations, ensuring that more critical events are allocated first.
+\item Their priority (Equation \ref{priority}), to prioritize harder-to-schedule events.
 \end{enumerate}
 
-For each unvisited event, the best available period and room combination is sought. The approach iterates through all the available periods and rooms, calculating the hard and soft penalties for each combination. During the calculation of the soft penalty, the importance of compactness (i.e., minimizing the time between related events) is adjusted, with a higher weight applied as the algorithm progresses.The combination with no hard penalties and the lowest soft penalty is selected as the best option. If multiple optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid allocation is found, the event will have higher priority in the next simulation.
+For each unvisited event, the algorithm searches for the best available period and room combination (Algorithm \ref{find_best_room_and_period}). This involves iterating through all the available periods and rooms, calculating the hard and soft penalties for each combination. During the calculation of the soft penalties, the importance of compactness (i.e., minimizing the time between related events) is adjusted, with a higher weight applied as the algorithm progresses, encouraging more compact schedules in later stages. The combination with no hard penalties and the lowest soft penalty score is selected as the best option. If multiple equally optimal choices exist, one is randomly selected. The event is then updated with the selected room, weekday, and timeslot. If no valid assignment is found, the event is left unassigned and its priority is increased for future simulations.
 
-After scheduling all events, the simulation result is calculated, and the best and worst penalty scores are then updated based on these results. If a new best result is found, the timetable is saved to a file. If a new best result is found and the hard penalty is zero, indicating a feasible solution, the\ac{hc} algorithm (section \ref{hill_climbing_section}) is used to further optimize the timetable.
+After scheduling all events, the algorithm evaluates the overall timetable, computing its hard and soft penalty scores. The best and worst penalty scores are then updated based on these results. If a new best solution is found, the timetable is saved to a file. Moreover, if a new best solution is found and the hard penalty is zero, indicating a feasible solution, the\ac{hc} algorithm (section \ref{hill_climbing_section} Algorithm \ref{run_hill_climbing}) is used to further optimize the timetable.
 
 \begin{algorithm}
 \caption{Simulation}\label{simulation}
@@ -328,7 +328,7 @@ After scheduling all events, the simulation result is calculated, and the best a
     \State Initialize unassigned events set
 \\
     \For{each remaining event}
-        \State Find best (period, room) assignment
+        \State FIND\_BEST\_ROOM\_AND\_PERIOD()
         \If{assignment found}
             \State Assign event to selected period and room
         \Else
@@ -336,7 +336,7 @@ After scheduling all events, the simulation result is calculated, and the best a
         \EndIf
     \EndFor
 \\
-    \State Evaluate timetable to compute hard and soft penalties
+    \State Evaluate overall timetable to compute hard and soft penalties
     \State Update global penalty trackers
 \\
     \If{new solution improves global best}
@@ -353,6 +353,43 @@ After scheduling all events, the simulation result is calculated, and the best a
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
+\begin{algorithm}
+\caption{Find Best Room and Period}\label{find_best_room_and_period}
+\begin{algorithmic}[1]
+\Function{FIND\_BEST\_ROOM\_AND\_PERIOD}{}
+    \State Initialize \textit{min\_soft\_penalty} $\gets \infty$
+    \State Initialize \textit{candidates} $\gets$ empty list
+    \State Compute \textit{compactness\_weight} based on search depth
+\\
+    \For{each (weekday, timeslot) in event's available periods}
+        \State FIND\_AVAILABLE\_ROOMS(...)
+        \For{each available room}
+            \State Compute \textit{hard\_penalty} for this assignment
+            \If{\textit{hard\_penalty} $==$ 0}
+                \State Compute \textit{soft\_penalty} as:
+                \State \hspace{0.5cm} room capacity penalty
+                \State \hspace{0.5cm} + compactness\_weight $\times$ compactness penalty
+                \State \hspace{0.5cm} + minimum working days penalty
+                \State \hspace{0.5cm} + room stability penalty
+                \If{\textit{soft\_penalty} $<$ \textit{min\_soft\_penalty}}
+                    \State Update \textit{min\_soft\_penalty}
+                    \State Set \textit{candidates} to [(room, weekday, timeslot)]
+                \ElsIf{\textit{soft\_penalty} $==$ \textit{min\_soft\_penalty}}
+                    \State Add (room, weekday, timeslot) to \textit{candidates}
+                \EndIf
+            \EndIf
+        \EndFor
+    \EndFor
+    \If{\textit{candidates} not empty}
+        \State \Return random choice from \textit{candidates}
+    \Else
+        \State \Return None
+    \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
 
 \subsubsection{Backpropagation}
 
@@ -483,23 +520,23 @@ To improve the effectiveness of timetable generation, we also implemented a divi
 \caption{Dive}\label{diving_algorithm}
 \begin{algorithmic}[1]
 \Function{DIVE}{}
-		\State selected\_node $\gets$ Retrieve next node from the queue 
-		\State simulation\_path $\gets$ Retrieve associated simulation path
-		\If{selected\_node parent exists and is expandable}
-            		\State Set selected\_node to the parent
+		\State \textit{selected\_node} $\gets$ Retrieve next node from the queue 
+		\State \textit{simulation\_path} $\gets$ Retrieve associated simulation path
+		\If{\textit{selected\_node} parent exists and is expandable}
+            		\State Set \textit{selected\_node} to the parent
             		\State \Return True
-            	\ElsIf{selected\_node is fully expanded}
- 			\State Follow the simulation\_path:
+            	\ElsIf{\textit{selected\_node} is fully expanded}
+ 			\State Follow the \textit{simulation\_path}:
 			\For{each scheduled assignment in the path}
 				\If{a child of the node matches the assignment}
-					\State Set selected\_node to this child
+					\State Set \textit{selected\_node} to this child
 					\State Set current node to this child
-					\State Remove the assignment from the simulation\_path
+					\State Remove the assignment from the \textit{simulation\_path}
 					\State \Return True
 				\EndIf
 			\EndFor
 		\Else
-			\State Set current node to selected\_node
+			\State Set current node to \textit{selected\_node}
                		\State \Return True
             	\EndIf
 \EndFunction

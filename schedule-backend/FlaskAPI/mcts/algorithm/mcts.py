@@ -190,7 +190,9 @@ class MCTS:
                                 candidates = [(room, weekday, timeslot)]
                             elif soft_penalty == min_soft_penalty:
                                 candidates.append((room, weekday, timeslot))
-            return random.choice(candidates) if candidates else None
+            if candidates:
+                return random.choice(candidates)
+            else: return None
             
 
         def update_penalties(soft_penalty, hard_penalty = None):
