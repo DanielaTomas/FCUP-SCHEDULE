@@ -1,12 +1,11 @@
 TMLIM=600
-INPUT_FILES="comp01.ctt comp02.ctt comp03.ctt comp04.ctt comp05.ctt comp11.ctt"
-for CPAR in 1000 500 100 50 10 1 0.1; do
-    for SEED in `seq -f "%02g" 1 10`; do
-        echo "C=$CPAR, seed=$SEED"
-        pypy3 -u mcts_input_parser.py --time_limit=$TMLIM --c_param=$CPAR --seed=$SEED --input_files=$INPUT_FILES
-        tar zcvf mcts-$TMLIM-$CPAR-$SEED.tgz mcts_tree/ constraint_progress/ output/ log/ profiler/
-        rm -rf mcts_tree/ constraint_progress/ output/ log/ profiler/
-    done
+CPAR=0.1
+INPUT_FILES=(comp01.ctt comp02.ctt comp03.ctt comp04.ctt comp05.ctt comp11.ctt)
+for SEED in `seq -f "%02g" 1 10`; do
+   echo "C=$CPAR, seed=$SEED"
+   pypy3 -u mcts_input_parser.py --time_limit=$TMLIM --c_param=$CPAR --seed=$SEED --input_files "${INPUT_FILES[@]}"
+   tar zcvf mcts-$TMLIM-$CPAR-$SEED.tgz mcts_tree/ constraint_progress/ output/ log/ profiler/
+   rm -rf mcts_tree/ constraint_progress/ output/ log/ profiler/
 done
 
 
