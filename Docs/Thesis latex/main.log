@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  25 JUN 2025 12:55
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  27 JUN 2025 14:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -523,13 +523,67 @@ Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
 
 ))
+(c:/texlive/2024/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+Package: adjustbox 2022/10/17 v1.3a Adjusting TeX boxes (trim, clip, ...)
+
+(c:/texlive/2024/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+
+(c:/texlive/2024/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(c:/texlive/2024/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks37
+\XKV@tempa@toks=\toks38
+)
+\XKV@depth=\count326
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(c:/texlive/2024/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
+-ends (calc, etex, pgfmath)
+)
+(c:/texlive/2024/texmf-dist/tex/latex/adjustbox/trimclip.sty
+Package: trimclip 2020/08/19 v1.2 Trim and clip general TeX material
+
+(c:/texlive/2024/texmf-dist/tex/latex/collectbox/collectbox.sty
+Package: collectbox 2022/10/17 v0.4c Collect macro arguments as boxes
+\collectedbox=\box66
+)
+\tc@llx=\dimen265
+\tc@lly=\dimen266
+\tc@urx=\dimen267
+\tc@ury=\dimen268
+Package trimclip Info: Using driver 'tc-xetex.def'.
+
+(c:/texlive/2024/texmf-dist/tex/latex/adjustbox/tc-xetex.def
+File: tc-xetex.def 2019/01/04 v2.2 Clipping driver for xetex
+))
+\adjbox@Width=\dimen269
+\adjbox@Height=\dimen270
+\adjbox@Depth=\dimen271
+\adjbox@Totalheight=\dimen272
+\adjbox@pwidth=\dimen273
+\adjbox@pheight=\dimen274
+\adjbox@pdepth=\dimen275
+\adjbox@ptotalheight=\dimen276
+
+(c:/texlive/2024/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
+\c@checkoddpage=\count327
+)
+(c:/texlive/2024/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box67
+\sift@deathcycles=\count328
+\@vwid@loff=\dimen277
+\@vwid@roff=\dimen278
+))
 (c:/texlive/2024/texmf-dist/tex/latex/pdfpages/pdfpages.sty
 Package: pdfpages 2024/10/28 v0.6c Insert pages of external PDF documents (AM)
 
 (c:/texlive/2024/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
-\ESO@tempdima=\dimen265
-\ESO@tempdimb=\dimen266
+\ESO@tempdima=\dimen279
+\ESO@tempdimb=\dimen280
 
 (c:/texlive/2024/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
@@ -554,44 +608,44 @@ Package: colortbl 2024/07/06 v1.0i Color table columns (DPC)
 
 (c:/texlive/2024/texmf-dist/tex/latex/tools/array.sty
 Package: array 2024/10/17 v2.6g Tabular extension package (FMi)
-\col@sep=\dimen267
-\ar@mcellbox=\box66
-\extrarowheight=\dimen268
-\NC@list=\toks37
+\col@sep=\dimen281
+\ar@mcellbox=\box68
+\extrarowheight=\dimen282
+\NC@list=\toks39
 \extratabsurround=\skip79
 \backup@length=\skip80
-\ar@cellbox=\box67
+\ar@cellbox=\box69
 )
-\everycr=\toks38
+\everycr=\toks40
 \minrowclearance=\skip81
-\rownum=\count326
+\rownum=\count329
 ))
-\AM@pagewidth=\dimen269
-\AM@pageheight=\dimen270
-\AM@fboxrule=\dimen271
+\AM@pagewidth=\dimen283
+\AM@pageheight=\dimen284
+\AM@fboxrule=\dimen285
 
 (c:/texlive/2024/texmf-dist/tex/latex/pdfpages/ppxetex.def
 File: ppxetex.def 2024/10/28 v0.6c Pdfpages driver for XeTeX (AM)
 )
-\pdfpages@includegraphics@status=\count327
-\AM@pagebox=\box68
-\AM@global@opts=\toks39
-\AM@pagecnt=\count328
-\AM@toc@title=\toks40
-\AM@lof@heading=\toks41
-\c@AM@survey=\count329
-\AM@templatesizebox=\box69
+\pdfpages@includegraphics@status=\count330
+\AM@pagebox=\box70
+\AM@global@opts=\toks41
+\AM@pagecnt=\count331
+\AM@toc@title=\toks42
+\AM@lof@heading=\toks43
+\c@AM@survey=\count332
+\AM@templatesizebox=\box71
 )
 (c:/texlive/2024/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (c:/texlive/2024/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (c:/texlive/2024/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks42
-\pgfutil@tempdima=\dimen272
-\pgfutil@tempdimb=\dimen273
+\pgfutil@everybye=\toks44
+\pgfutil@tempdima=\dimen286
+\pgfutil@tempdimb=\dimen287
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box70
+\pgfutil@abb=\box72
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/pgf.revision.tex)
@@ -605,33 +659,33 @@ Package: pgf 2023-01-15 v3.1.10 (3.1.10)
 Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
 
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks43
-\pgfkeys@temptoks=\toks44
+\pgfkeys@pathtoks=\toks45
+\pgfkeys@temptoks=\toks46
 
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.co
 de.tex
-\pgfkeys@tmptoks=\toks45
+\pgfkeys@tmptoks=\toks47
 ))
-\pgf@x=\dimen274
-\pgf@y=\dimen275
-\pgf@xa=\dimen276
-\pgf@ya=\dimen277
-\pgf@xb=\dimen278
-\pgf@yb=\dimen279
-\pgf@xc=\dimen280
-\pgf@yc=\dimen281
-\pgf@xd=\dimen282
-\pgf@yd=\dimen283
+\pgf@x=\dimen288
+\pgf@y=\dimen289
+\pgf@xa=\dimen290
+\pgf@ya=\dimen291
+\pgf@xb=\dimen292
+\pgf@yb=\dimen293
+\pgf@xc=\dimen294
+\pgf@yc=\dimen295
+\pgf@xd=\dimen296
+\pgf@yd=\dimen297
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count330
-\c@pgf@countb=\count331
-\c@pgf@countc=\count332
-\c@pgf@countd=\count333
-\t@pgf@toka=\toks46
-\t@pgf@tokb=\toks47
-\t@pgf@tokc=\toks48
-\pgf@sys@id@count=\count334
+\c@pgf@counta=\count333
+\c@pgf@countb=\count334
+\c@pgf@countc=\count335
+\c@pgf@countd=\count336
+\t@pgf@toka=\toks48
+\t@pgf@tokb=\toks49
+\t@pgf@tokc=\toks50
+\pgf@sys@id@count=\count337
  (c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
 )
@@ -646,12 +700,12 @@ File: pgfsys-dvipdfmx.def 2023-01-15 v3.1.10 (3.1.10)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
 File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
 )
-\pgfsys@objnum=\count335
+\pgfsys@objnum=\count338
 )))
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfsyssoftpath@smallbuffer@items=\count336
-\pgfsyssoftpath@bigbuffer@items=\count337
+\pgfsyssoftpath@smallbuffer@items=\count339
+\pgfsyssoftpath@bigbuffer@items=\count340
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
@@ -666,12 +720,12 @@ Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen284
-\pgfmath@count=\count338
-\pgfmath@box=\box71
-\pgfmath@toks=\toks49
-\pgfmath@stack@operand=\toks50
-\pgfmath@stack@operation=\toks51
+\pgfmath@dimen=\dimen298
+\pgfmath@count=\count341
+\pgfmath@box=\box73
+\pgfmath@toks=\toks51
+\pgfmath@stack@operand=\toks52
+\pgfmath@stack@operation=\toks53
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.te
@@ -692,56 +746,56 @@ x)
 etics.code.tex)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count339
+\c@pgfmathroundto@lastzeros=\count342
 ))
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@picminx=\dimen285
-\pgf@picmaxx=\dimen286
-\pgf@picminy=\dimen287
-\pgf@picmaxy=\dimen288
-\pgf@pathminx=\dimen289
-\pgf@pathmaxx=\dimen290
-\pgf@pathminy=\dimen291
-\pgf@pathmaxy=\dimen292
-\pgf@xx=\dimen293
-\pgf@xy=\dimen294
-\pgf@yx=\dimen295
-\pgf@yy=\dimen296
-\pgf@zx=\dimen297
-\pgf@zy=\dimen298
+\pgf@picminx=\dimen299
+\pgf@picmaxx=\dimen300
+\pgf@picminy=\dimen301
+\pgf@picmaxy=\dimen302
+\pgf@pathminx=\dimen303
+\pgf@pathmaxx=\dimen304
+\pgf@pathminy=\dimen305
+\pgf@pathmaxy=\dimen306
+\pgf@xx=\dimen307
+\pgf@xy=\dimen308
+\pgf@yx=\dimen309
+\pgf@yy=\dimen310
+\pgf@zx=\dimen311
+\pgf@zy=\dimen312
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.cod
 e.tex
 File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@path@lastx=\dimen299
-\pgf@path@lasty=\dimen300
+\pgf@path@lastx=\dimen313
+\pgf@path@lasty=\dimen314
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.te
 x
 File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@shorten@end@additional=\dimen301
-\pgf@shorten@start@additional=\dimen302
+\pgf@shorten@end@additional=\dimen315
+\pgf@shorten@start@additional=\dimen316
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfpic=\box72
-\pgf@hbox=\box73
-\pgf@layerbox@main=\box74
-\pgf@picture@serial@count=\count340
+\pgfpic=\box74
+\pgf@hbox=\box75
+\pgf@layerbox@main=\box76
+\pgf@picture@serial@count=\count343
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code
 .tex
 File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgflinewidth=\dimen303
+\pgflinewidth=\dimen317
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.c
 ode.tex
 File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@pt@x=\dimen304
-\pgf@pt@y=\dimen305
-\pgf@pt@temp=\dimen306
+\pgf@pt@x=\dimen318
+\pgf@pt@y=\dimen319
+\pgf@pt@temp=\dimen320
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
 File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
@@ -755,20 +809,20 @@ File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
 File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowsep=\dimen307
+\pgfarrowsep=\dimen321
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@max=\dimen308
-\pgf@sys@shading@range@num=\count341
-\pgf@shadingcount=\count342
+\pgf@max=\dimen322
+\pgf@sys@shading@range@num=\count344
+\pgf@shadingcount=\count345
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
 File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfexternal@startupbox=\box75
+\pgfexternal@startupbox=\box77
 ) (c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
 File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
@@ -783,7 +837,7 @@ File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))) (c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.te
 x
 File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfnodeparttextbox=\box76
+\pgfnodeparttextbox=\box78
 )
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
 File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
@@ -791,8 +845,8 @@ File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (c:/texlive/2024/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.st
 y
 Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
-\pgf@nodesepstart=\dimen309
-\pgf@nodesepend=\dimen310
+\pgf@nodesepstart=\dimen323
+\pgf@nodesepend=\dimen324
 )
 (c:/texlive/2024/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.st
 y
@@ -804,10 +858,10 @@ Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
 Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
-\pgffor@iter=\dimen311
-\pgffor@skip=\dimen312
-\pgffor@stack=\toks52
-\pgffor@toks=\toks53
+\pgffor@iter=\dimen325
+\pgffor@skip=\dimen326
+\pgffor@stack=\toks54
+\pgffor@toks=\toks55
 ))
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2023-01-15 v3.1.10 (3.1.10)
@@ -815,33 +869,33 @@ Package: tikz 2023-01-15 v3.1.10 (3.1.10)
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.co
 de.tex
 File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@plot@mark@count=\count343
-\pgfplotmarksize=\dimen313
+\pgf@plot@mark@count=\count346
+\pgfplotmarksize=\dimen327
 )
-\tikz@lastx=\dimen314
-\tikz@lasty=\dimen315
-\tikz@lastxsaved=\dimen316
-\tikz@lastysaved=\dimen317
-\tikz@lastmovetox=\dimen318
-\tikz@lastmovetoy=\dimen319
-\tikzleveldistance=\dimen320
-\tikzsiblingdistance=\dimen321
-\tikz@figbox=\box77
-\tikz@figbox@bg=\box78
-\tikz@tempbox=\box79
-\tikz@tempbox@bg=\box80
-\tikztreelevel=\count344
-\tikznumberofchildren=\count345
-\tikznumberofcurrentchild=\count346
-\tikz@fig@count=\count347
+\tikz@lastx=\dimen328
+\tikz@lasty=\dimen329
+\tikz@lastxsaved=\dimen330
+\tikz@lastysaved=\dimen331
+\tikz@lastmovetox=\dimen332
+\tikz@lastmovetoy=\dimen333
+\tikzleveldistance=\dimen334
+\tikzsiblingdistance=\dimen335
+\tikz@figbox=\box79
+\tikz@figbox@bg=\box80
+\tikz@tempbox=\box81
+\tikz@tempbox@bg=\box82
+\tikztreelevel=\count347
+\tikznumberofchildren=\count348
+\tikznumberofcurrentchild=\count349
+\tikz@fig@count=\count350
 
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfmatrixcurrentrow=\count348
-\pgfmatrixcurrentcolumn=\count349
-\pgf@matrix@numberofcolumns=\count350
+\pgfmatrixcurrentrow=\count351
+\pgfmatrixcurrentcolumn=\count352
+\pgf@matrix@numberofcolumns=\count353
 )
-\tikz@expandcount=\count351
+\tikz@expandcount=\count354
 
 (c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
 brarytopaths.code.tex
@@ -850,13 +904,13 @@ File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (c:/texlive/2024/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2024/11/08 v24.13 The multilingual framework for pdfLaTeX, LuaLa
 TeX and XeLaTeX
-\babel@savecnt=\count352
-\U@D=\dimen322
+\babel@savecnt=\count355
+\U@D=\dimen336
 \l@unhyphenated=\language89
 
 (c:/texlive/2024/texmf-dist/tex/generic/babel/xebabel.def)
 \bbl@readstream=\read3
-\bbl@dirlevel=\count353
+\bbl@dirlevel=\count356
 
 (c:/texlive/2024/texmf-dist/tex/generic/babel-portuges/portuguese.ldf
 Language: portuges 2021/07/09 v1.2t Portuguese support from the babel system
@@ -881,13 +935,13 @@ Package babel Info: Importing font and identification data for portuguese
 )
 (c:/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
-\csq@reset=\count354
-\csq@gtype=\count355
-\csq@glevel=\count356
-\csq@qlevel=\count357
-\csq@maxlvl=\count358
-\csq@tshold=\count359
-\csq@ltx@everypar=\toks54
+\csq@reset=\count357
+\csq@gtype=\count358
+\csq@glevel=\count359
+\csq@qlevel=\count360
+\csq@maxlvl=\count361
+\csq@tshold=\count362
+\csq@ltx@everypar=\toks56
 
 (c:/texlive/2024/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2024-04-04 v5.2o csquotes generic definitions (JAW)
@@ -905,25 +959,25 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip82
 \bibsep=\skip83
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count360
+\c@NAT@ctr=\count363
 )
 (c:/texlive/2024/texmf-dist/tex/latex/notoccite/notoccite.sty
 Package: notoccite 2000/07/20
 )
 (c:/texlive/2024/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count361
-\float@exts=\toks55
-\float@box=\box81
-\@float@everytoks=\toks56
-\@floatcapt=\box82
+\c@float@type=\count364
+\float@exts=\toks57
+\float@box=\box83
+\@float@everytoks=\toks58
+\@floatcapt=\box84
 )
 (c:/texlive/2024/texmf-dist/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen323
-\WF@size=\dimen324
-\c@WF@wrappedlines=\count362
-\WF@box=\box83
-\WF@everypar=\toks57
+\wrapoverhang=\dimen337
+\WF@size=\dimen338
+\c@WF@wrappedlines=\count365
+\WF@box=\box85
+\WF@everypar=\toks59
 Package: wrapfig 2003/01/31  v 3.6
 )
 (c:/texlive/2024/texmf-dist/tex/latex/placeins/placeins.sty
@@ -931,15 +985,15 @@ Package: placeins 2005/04/18  v 2.2
 )
 (c:/texlive/2024/texmf-dist/tex/latex/footmisc/footmisc.sty
 Package: footmisc 2023/07/05 v6.0f a miscellany of footnote facilities
-\FN@temptoken=\toks58
-\footnotemargin=\dimen325
-\@outputbox@depth=\dimen326
+\FN@temptoken=\toks60
+\footnotemargin=\dimen339
+\@outputbox@depth=\dimen340
 
 (c:/texlive/2024/texmf-dist/tex/latex/bigfoot/perpage.sty
 Package: perpage 2014/10/25 2.0 Reset/sort counters per page
-\c@abspage=\count363
+\c@abspage=\count366
 )
-\c@pp@a@footnote=\count364
+\c@pp@a@footnote=\count367
 Package footmisc Info: Declaring symbol style bringhurst on input line 696.
 Package footmisc Info: Declaring symbol style chicago on input line 704.
 Package footmisc Info: Declaring symbol style wiley on input line 713.
@@ -981,9 +1035,9 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 Package: shellesc 2023/07/08 v1.0d unified shell escape interface for LaTeX
 Package shellesc Info: Restricted shell escape enabled on input line 77.
 )
-\c@svg@param@lastpage=\count365
-\svg@box=\box84
-\c@svg@param@currpage=\count366
+\c@svg@param@lastpage=\count368
+\svg@box=\box86
+\c@svg@param@currpage=\count369
 )
 
 LaTeX Warning: Package "xcolor" has already been loaded: ignoring load-time
@@ -1003,9 +1057,9 @@ PDF mode.
 )) (c:/texlive/2024/texmf-dist/tex/latex/caption/subcaption.sty
 Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
 Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count367
+\c@subfigure=\count370
 Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count368
+\c@subtable=\count371
 )
 (c:/texlive/2024/texmf-dist/tex/latex/commath/commath.sty
 Invalid UTF-8 byte or sequence at line 6 replaced by U+FFFD.
@@ -1018,43 +1072,43 @@ Package: mathpazo 2020/03/25 PSNFSS-v9.3 Palatino w/ Pazo Math (D.Puga, WaS)
 )
 (c:/texlive/2024/texmf-dist/tex/latex/siunitx/siunitx.sty
 Package: siunitx 2024-11-19 v3.3.24 A comprehensive (SI) units package
-\l__siunitx_number_uncert_offset_int=\count369
-\l__siunitx_number_exponent_fixed_int=\count370
-\l__siunitx_number_min_decimal_int=\count371
-\l__siunitx_number_min_integer_int=\count372
-\l__siunitx_number_round_precision_int=\count373
-\l__siunitx_number_lower_threshold_int=\count374
-\l__siunitx_number_upper_threshold_int=\count375
-\l__siunitx_number_group_first_int=\count376
-\l__siunitx_number_group_size_int=\count377
-\l__siunitx_number_group_minimum_int=\count378
-\l__siunitx_angle_tmp_dim=\dimen327
-\l__siunitx_angle_marker_box=\box85
-\l__siunitx_angle_unit_box=\box86
-\l__siunitx_compound_count_int=\count379
+\l__siunitx_number_uncert_offset_int=\count372
+\l__siunitx_number_exponent_fixed_int=\count373
+\l__siunitx_number_min_decimal_int=\count374
+\l__siunitx_number_min_integer_int=\count375
+\l__siunitx_number_round_precision_int=\count376
+\l__siunitx_number_lower_threshold_int=\count377
+\l__siunitx_number_upper_threshold_int=\count378
+\l__siunitx_number_group_first_int=\count379
+\l__siunitx_number_group_size_int=\count380
+\l__siunitx_number_group_minimum_int=\count381
+\l__siunitx_angle_tmp_dim=\dimen341
+\l__siunitx_angle_marker_box=\box87
+\l__siunitx_angle_unit_box=\box88
+\l__siunitx_compound_count_int=\count382
 
 (c:/texlive/2024/texmf-dist/tex/latex/translations/translations.sty
 Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages
  (CN)
 )
-\l__siunitx_table_tmp_box=\box87
-\l__siunitx_table_tmp_dim=\dimen328
-\l__siunitx_table_column_width_dim=\dimen329
-\l__siunitx_table_integer_box=\box88
-\l__siunitx_table_decimal_box=\box89
-\l__siunitx_table_uncert_box=\box90
-\l__siunitx_table_before_box=\box91
-\l__siunitx_table_after_box=\box92
-\l__siunitx_table_before_dim=\dimen330
-\l__siunitx_table_carry_dim=\dimen331
-\l__siunitx_unit_tmp_int=\count380
-\l__siunitx_unit_position_int=\count381
-\l__siunitx_unit_total_int=\count382
+\l__siunitx_table_tmp_box=\box89
+\l__siunitx_table_tmp_dim=\dimen342
+\l__siunitx_table_column_width_dim=\dimen343
+\l__siunitx_table_integer_box=\box90
+\l__siunitx_table_decimal_box=\box91
+\l__siunitx_table_uncert_box=\box92
+\l__siunitx_table_before_box=\box93
+\l__siunitx_table_after_box=\box94
+\l__siunitx_table_before_dim=\dimen344
+\l__siunitx_table_carry_dim=\dimen345
+\l__siunitx_unit_tmp_int=\count383
+\l__siunitx_unit_position_int=\count384
+\l__siunitx_unit_total_int=\count385
 )
 (c:/texlive/2024/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks59
-\verbatim@line=\toks60
+\every@verbatim=\toks61
+\verbatim@line=\toks62
 \verbatim@in@stream=\read4
 )
 (c:/texlive/2024/texmf-dist/tex/latex/epigraph/epigraph.sty
@@ -1068,55 +1122,35 @@ Package: nextpage 2009/09/03 v1.1a additional page commands
 \epigraphwidth=\skip86
 \epigraphrule=\skip87
 )
-(c:/texlive/2024/texmf-dist/tex/latex/varwidth/varwidth.sty
-Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box93
-\sift@deathcycles=\count383
-\@vwid@loff=\dimen332
-\@vwid@roff=\dimen333
-)
 (./epigraphoverload.tex
-\epi@textbox=\box94
-\epi@sourcebox=\box95
+\epi@textbox=\box95
+\epi@sourcebox=\box96
 \epi@finalwidth=\skip88
 ) (c:/texlive/2024/texmf-dist/tex/latex/xargs/xargs.sty
 Package: xargs 2008/03/22 v1.1  extended macro definitions  (mpg)
-
-(c:/texlive/2024/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
-
-(c:/texlive/2024/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-(c:/texlive/2024/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks61
-\XKV@tempa@toks=\toks62
-)
-\XKV@depth=\count384
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-))
-\xargs@max=\count385
+\xargs@max=\count386
 \xargs@toksa=\toks63
 \xargs@toksb=\toks64
-)
-(c:/texlive/2024/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+) (c:/texlive/2024/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count386
-\c@ALG@rem=\count387
-\c@ALG@nested=\count388
+\c@ALG@line=\count387
+\c@ALG@rem=\count388
+\c@ALG@nested=\count389
 \ALG@tlm=\skip89
 \ALG@thistlm=\skip90
-\c@ALG@Lnr=\count389
-\c@ALG@blocknr=\count390
-\c@ALG@storecount=\count391
-\c@ALG@tmpcounter=\count392
+\c@ALG@Lnr=\count390
+\c@ALG@blocknr=\count391
+\c@ALG@storecount=\count392
+\c@ALG@tmpcounter=\count393
 \ALG@tmplength=\skip91
 ) (c:/texlive/2024/texmf-dist/tex/latex/algorithms/algorithm.sty
 Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 \@float@every@algorithm=\toks65
-\c@algorithm=\count393
+\c@algorithm=\count394
 )
 (c:/texlive/2024/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
@@ -1125,17 +1159,17 @@ Document Style - pseudocode environments for use with the `algorithmicx' style
 ) (c:/texlive/2024/texmf-dist/tex/latex/hyperref/backref.sty
 Package: backref 2023-11-26 v1.44 Bibliographical back referencing
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 160.
-Package hyperref Info: Option `breaklinks' set `true' on input line 160.
-Package hyperref Info: Option `hypertexnames' set `true' on input line 160.
+Package hyperref Info: Option `colorlinks' set `true' on input line 161.
+Package hyperref Info: Option `breaklinks' set `true' on input line 161.
+Package hyperref Info: Option `hypertexnames' set `true' on input line 161.
 
 (c:/texlive/2024/texmf-dist/tex/latex/fancybox/fancybox.sty
 Package: fancybox 2010/05/15 1.4
 
 Style option: `fancybox' v1.4 <2010/05/15> (tvz)
-\@fancybox=\box96
-\shadowsize=\dimen334
-\@Sbox=\box97
+\@fancybox=\box97
+\shadowsize=\dimen346
+\@Sbox=\box98
 \do@VerbBox=\toks66
 \the@fancyput=\toks67
 \this@fancyput=\toks68
@@ -1162,35 +1196,34 @@ Package: ragged2e 2023/06/22 v3.6 ragged2e Package
 (c:/texlive/2024/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
 \multirow@colwidth=\skip106
-\multirow@cntb=\count394
+\multirow@cntb=\count395
 \multirow@dima=\skip107
-\bigstrutjot=\dimen335
+\bigstrutjot=\dimen347
 )
 (c:/texlive/2024/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
-\c@tracingmulticols=\count395
-\mult@box=\box98
-\multicol@leftmargin=\dimen336
-\c@unbalance=\count396
-\c@collectmore=\count397
-\doublecol@number=\count398
-\multicoltolerance=\count399
-\multicolpretolerance=\count400
-\full@width=\dimen337
-\page@free=\dimen338
-\premulticols=\dimen339
-\postmulticols=\dimen340
+\c@tracingmulticols=\count396
+\mult@box=\box99
+\multicol@leftmargin=\dimen348
+\c@unbalance=\count397
+\c@collectmore=\count398
+\doublecol@number=\count399
+\multicoltolerance=\count400
+\multicolpretolerance=\count401
+\full@width=\dimen349
+\page@free=\dimen350
+\premulticols=\dimen351
+\postmulticols=\dimen352
 \multicolsep=\skip108
 \multicolbaselineskip=\skip109
-\partial@page=\box99
-\last@line=\box100
-\mc@boxedresult=\box101
-\maxbalancingoverflow=\dimen341
-\mult@rightbox=\box102
-\mult@grightbox=\box103
-\mult@firstbox=\box104
-\mult@gfirstbox=\box105
-\@tempa=\box106
+\partial@page=\box100
+\last@line=\box101
+\mc@boxedresult=\box102
+\maxbalancingoverflow=\dimen353
+\mult@rightbox=\box103
+\mult@grightbox=\box104
+\mult@firstbox=\box105
+\mult@gfirstbox=\box106
 \@tempa=\box107
 \@tempa=\box108
 \@tempa=\box109
@@ -1226,15 +1259,16 @@ Package: multicol 2024/09/14 v1.9i multicolumn formatting (FMi)
 \@tempa=\box139
 \@tempa=\box140
 \@tempa=\box141
-\c@minrows=\count401
-\c@columnbadness=\count402
-\c@finalcolumnbadness=\count403
-\last@try=\dimen342
-\multicolovershoot=\dimen343
-\multicolundershoot=\dimen344
-\mult@nat@firstbox=\box142
-\colbreak@box=\box143
-\mc@col@check@num=\count404
+\@tempa=\box142
+\c@minrows=\count402
+\c@columnbadness=\count403
+\c@finalcolumnbadness=\count404
+\last@try=\dimen354
+\multicolovershoot=\dimen355
+\multicolundershoot=\dimen356
+\mult@nat@firstbox=\box143
+\colbreak@box=\box144
+\mc@col@check@num=\count405
 )
 (c:/texlive/2024/texmf-dist/tex/latex/todonotes/todonotes.sty
 Package: todonotes 2024/01/05 v1.1.7 Todonotes source and documentation.
@@ -1249,7 +1283,7 @@ LaTeX Warning: Package "xcolor" has already been loaded: ignoring load-time
 brarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-\c@@todonotes@numberoftodonotes=\count405
+\c@@todonotes@numberoftodonotes=\count406
 )
 (c:/texlive/2024/texmf-dist/tex/latex/fontspec/fontspec.sty
 Package: fontspec 2024/05/11 v2.9e Font selection for XeLaTeX and LuaLaTeX
@@ -1257,20 +1291,20 @@ Package: fontspec 2024/05/11 v2.9e Font selection for XeLaTeX and LuaLaTeX
 (c:/texlive/2024/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
 Package: fontspec-xetex 2024/05/11 v2.9e Font selection for XeLaTeX and LuaLaTe
 X
-\l__fontspec_script_int=\count406
-\l__fontspec_language_int=\count407
-\l__fontspec_strnum_int=\count408
-\l__fontspec_tmp_int=\count409
-\l__fontspec_tmpa_int=\count410
-\l__fontspec_tmpb_int=\count411
-\l__fontspec_tmpc_int=\count412
-\l__fontspec_em_int=\count413
-\l__fontspec_emdef_int=\count414
-\l__fontspec_strong_int=\count415
-\l__fontspec_strongdef_int=\count416
-\l__fontspec_tmpa_dim=\dimen345
-\l__fontspec_tmpb_dim=\dimen346
-\l__fontspec_tmpc_dim=\dimen347
+\l__fontspec_script_int=\count407
+\l__fontspec_language_int=\count408
+\l__fontspec_strnum_int=\count409
+\l__fontspec_tmp_int=\count410
+\l__fontspec_tmpa_int=\count411
+\l__fontspec_tmpb_int=\count412
+\l__fontspec_tmpc_int=\count413
+\l__fontspec_em_int=\count414
+\l__fontspec_emdef_int=\count415
+\l__fontspec_strong_int=\count416
+\l__fontspec_strongdef_int=\count417
+\l__fontspec_tmpa_dim=\dimen357
+\l__fontspec_tmpb_dim=\dimen358
+\l__fontspec_tmpc_dim=\dimen359
 
 (c:/texlive/2024/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
@@ -1341,7 +1375,7 @@ Package: datatool-base 2019/09/27 v2.32 (NLCT)
 
 (c:/texlive/2024/texmf-dist/tex/latex/substr/substr.sty
 Package: substr 2009/10/20 v1.2 Handle substrings
-\c@su@anzahl=\count417
+\c@su@anzahl=\count418
 )
 (c:/texlive/2024/texmf-dist/tex/latex/datatool/datatool-fp.sty
 Package: datatool-fp 2019/09/27 v2.32 (NLCT)
@@ -1352,19 +1386,19 @@ Package: fp 1995/04/02
 `Fixed Point Package', Version 0.8, April 2, 1995 (C) Michael Mehlich
 (c:/texlive/2024/texmf-dist/tex/latex/fp/defpattern.sty
 Package: defpattern 1994/10/12
-\actioncount=\count418
+\actioncount=\count419
 )
 (c:/texlive/2024/texmf-dist/tex/latex/fp/fp-basic.sty
 Package: fp-basic 1996/05/13
-\FP@xs=\count419
-\FP@xia=\count420
-\FP@xib=\count421
-\FP@xfa=\count422
-\FP@xfb=\count423
-\FP@rega=\count424
-\FP@regb=\count425
-\FP@regs=\count426
-\FP@times=\count427
+\FP@xs=\count420
+\FP@xia=\count421
+\FP@xib=\count422
+\FP@xfa=\count423
+\FP@xfb=\count424
+\FP@rega=\count425
+\FP@regb=\count426
+\FP@regs=\count427
+\FP@times=\count428
 )
 (c:/texlive/2024/texmf-dist/tex/latex/fp/fp-addons.sty
 Package: fp-addons 1995/03/15
@@ -1383,7 +1417,7 @@ Package: fp-pas 1994/08/29
 )
 (c:/texlive/2024/texmf-dist/tex/latex/fp/fp-random.sty
 Package: fp-random 1995/02/23
-\FPseed=\count428
+\FPseed=\count429
 )
 (c:/texlive/2024/texmf-dist/tex/latex/fp/fp-eqn.sty
 Package: fp-eqn 1995/04/03
@@ -1395,16 +1429,16 @@ Package: fp-upn 1996/10/21
 Package: fp-eval 1995/04/03
 )))
 \@dtl@toks=\toks72
-\@dtl@tmpcount=\count429
+\@dtl@tmpcount=\count430
 \dtl@tmplength=\skip110
-\dtl@sortresult=\count430
-\@dtl@numgrpsepcount=\count431
-\@dtl@datatype=\count432
-\dtl@codeA=\count433
-\dtl@codeB=\count434
-\@dtl@foreach@level=\count435
+\dtl@sortresult=\count431
+\@dtl@numgrpsepcount=\count432
+\@dtl@datatype=\count433
+\dtl@codeA=\count434
+\dtl@codeB=\count435
+\@dtl@foreach@level=\count436
 )
-\gls@level=\count436
+\gls@level=\count437
 \@gls@tmpb=\toks73
 \gls@tmplen=\skip111
 \glskeylisttok=\toks74
@@ -1429,21 +1463,21 @@ Package: glossary-super 2024/11/01 v4.55 (NLCT)
 
 (c:/texlive/2024/texmf-dist/tex/latex/supertabular/supertabular.sty
 Package: supertabular 2024/07/20 v4.2c the supertabular environment
-\c@tracingst=\count437
-\ST@wd=\dimen348
+\c@tracingst=\count438
+\ST@wd=\dimen360
 \ST@rightskip=\skip115
 \ST@leftskip=\skip116
 \ST@parfillskip=\skip117
-\ST@pageleft=\dimen349
-\ST@headht=\dimen350
-\ST@tailht=\dimen351
-\ST@pagesofar=\dimen352
-\ST@pboxht=\dimen353
-\ST@rowht=\dimen354
-\ST@prevht=\dimen355
-\ST@toadd=\dimen356
-\ST@dimen=\dimen357
-\ST@pbox=\box144
+\ST@pageleft=\dimen361
+\ST@headht=\dimen362
+\ST@tailht=\dimen363
+\ST@pagesofar=\dimen364
+\ST@pboxht=\dimen365
+\ST@rowht=\dimen366
+\ST@prevht=\dimen367
+\ST@toadd=\dimen368
+\ST@dimen=\dimen369
+\ST@pbox=\box145
 ))
 (c:/texlive/2024/texmf-dist/tex/latex/glossaries/styles/glossary-tree.sty
 Package: glossary-tree 2024/11/01 v4.55 (NLCT)
@@ -1453,15 +1487,15 @@ Package: glossary-tree 2024/11/01 v4.55 (NLCT)
 \glo@main@file=\write6
 \openout6 = `main.glo'.
 
-Package glossaries Info: Writing glossary file main.glo on input line 230.
+Package glossaries Info: Writing glossary file main.glo on input line 231.
 \glo@acronym@file=\write7
 \openout7 = `main.acn'.
 
-Package glossaries Info: Writing glossary file main.acn on input line 230.
+Package glossaries Info: Writing glossary file main.acn on input line 231.
 
 (c:/texlive/2024/texmf-dist/tex/latex/titlesec/titletoc.sty
 Package: titletoc 2023/10/27 v2.16 TOC entries
-\ttl@leftsep=\dimen358
+\ttl@leftsep=\dimen370
 )) (./vars.tex)
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
@@ -1536,7 +1570,7 @@ Package caption Info: rotating package is loaded.
 Package caption Info: supertabular package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count438
+\c@lstlisting=\count439
 Package hyperref Info: Link coloring ON on input line 35.
  (./main.out)
 (./main.out)
@@ -2969,11 +3003,123 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [39]
-Overfull \hbox (12.03226pt too wide) in paragraph at lines 111--133
- [][] 
- []
+
+./Chapters/Results.tex:135: LaTeX Error: \begin{tabular} on input line 112 ende
+d by \end{adjustbox}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.135 \end{adjustbox}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./Chapters/Results.tex:135: Missing } inserted.
+<inserted text> 
+                }
+l.135 \end{adjustbox}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./Chapters/Results.tex:135: Missing $ inserted.
+<inserted text> 
+                $
+l.135 \end{adjustbox}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./Chapters/Results.tex:135: Missing } inserted.
+<inserted text> 
+                }
+l.135 \end{adjustbox}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./Chapters/Results.tex:136: Misplaced \crcr.
+\tbl_crcr:n ...l_count_missing_cells:n {#1}}\crcr 
+                                                  
+l.136 \end{tabular}
+                   
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./Chapters/Results.tex:136: Extra }, or forgotten \endgroup.
+\endarray ...tbl_restore_outer_cell_data: \egroup 
+                                                  \@arrayright \gdef \@pream...
+l.136 \end{tabular}
+                   
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./Chapters/Results.tex:136: Extra }, or forgotten $.
+<recently read> \egroup 
+                        
+l.136 \end{tabular}
+                   
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
 
+./Chapters/Results.tex:136: LaTeX Error: \begin{adjustbox} on input line 111 en
+ded by \end{tabular}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.136 \end{tabular}
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./Chapters/Results.tex:136: Missing $ inserted.
+<inserted text> 
+                $
+l.136 \end{tabular}
+                   
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+
+./Chapters/Results.tex:145: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.145 T
+       his effect may also help explain why\ac{hc} and diving, although desi...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -2985,6 +3131,17 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 
 [40]
 
+./Chapters/Results.tex:145: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.145 T
+       his effect may also help explain why\ac{hc} and diving, although desi...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
 (fancyhdr)                Make it at least 18.99997pt, for example:
@@ -2994,6 +3151,17 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [41]) (./Chapters/Conclusion.tex
+
+./Chapters/Conclusion.tex:7: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.7 \chapter
+            {Conclusion}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -3014,6 +3182,17 @@ e represent only the $\OT1/zplm/m/n/10.95 (\OML/zplm/m/it/10.95 weekday\OT1/ppl
 
 
 
+./Chapters/Conclusion.tex:34: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.34 A
+      lthough early testing of this approach did not yield strong results, i...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
 (fancyhdr)                Make it at least 18.99997pt, for example:
@@ -3033,6 +3212,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 42--42
 
 
 
+./Chapters/Conclusion.tex:55: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.55 
+     
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
 (fancyhdr)                Make it at least 18.99997pt, for example:
@@ -3046,6 +3236,17 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 \openout12 = `main.brf'.
 
 
+
+./main.bbl:2: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.2 \begin{thebibliography}{13}
+                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -3103,6 +3304,17 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 ** the default language instead.
 
 
+./main.bbl:98: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.98 
+     
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
 (fancyhdr)                Make it at least 18.99997pt, for example:
@@ -3143,6 +3355,17 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 ** the default language instead.
 ) (./Appendices/AppendixA.tex
 
+./Appendices/AppendixA.tex:3: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.3 \chapter
+            *{Appendix A} % Main appendix title
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
 (fancyhdr)                Make it at least 18.99997pt, for example:
@@ -3180,6 +3403,17 @@ Package fontspec Info:
 
 )
 
+./main.tex:138: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.138 \backmatter
+                 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
 (fancyhdr)                Make it at least 18.99997pt, for example:
@@ -3191,6 +3425,17 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 [48
 
 ]
+
+./main.tex:138: Undefined control sequence.
+<argument> {\CT@arc@ 
+                     \vline }
+l.138 \backmatter
+                 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
 
 Package fancyhdr Warning: \headheight is too small (14.0pt): 
@@ -3211,10 +3456,10 @@ Package rerunfilecheck Info: File `main.brf' has not changed.
 (rerunfilecheck)             Checksum: F023BAC889C01218E08DD732CBA3BC02;1793.
  ) 
 Here is how much of TeX's memory you used:
- 44504 strings out of 473965
- 915781 string characters out of 5736631
- 1403074 words of memory out of 5000000
- 66590 multiletter control sequences out of 15000+600000
+ 45330 strings out of 473965
+ 931076 string characters out of 5736631
+ 1422395 words of memory out of 5000000
+ 67396 multiletter control sequences out of 15000+600000
  584019 words of font info for 153 fonts, out of 8000000 for 9000
  1351 hyphenation exceptions out of 8191
  100i,19n,124p,2378b,1099s stack positions out of 10000i,1000n,20000p,200000b,200000s

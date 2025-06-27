@@ -1,0 +1,340 @@
+C=0.1, seed=01
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=02
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=03
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=04
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=05
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=06
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=07
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=08
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=09
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
+C=0.1, seed=10
+Processing comp01.ctt...
+Finished processing comp01.ctt, output saved to output/comp01_output.txt.
+Processing comp02.ctt...
+Finished processing comp02.ctt, output saved to output/comp02_output.txt.
+Processing comp03.ctt...
+Finished processing comp03.ctt, output saved to output/comp03_output.txt.
+Processing comp04.ctt...
+Finished processing comp04.ctt, output saved to output/comp04_output.txt.
+Processing comp05.ctt...
+Finished processing comp05.ctt, output saved to output/comp05_output.txt.
+Processing comp11.ctt...
+Finished processing comp11.ctt, output saved to output/comp11_output.txt.
+Saving results to excel...
+Results saved to 'test_results.xlsx' successfully!
+
+tar: mcts_tree: Cannot stat: No such file or directory
+tar: constraint_progress: Cannot stat: No such file or directory
+a output
+a output/comp04_output.txt
+a output/comp01_output.txt
+a output/comp03_output.txt
+a output/comp11_output.txt
+a output/comp05_output.txt
+a output/comp02_output.txt
+a log
+a log/comp04_log.txt
+a log/comp05_log.txt
+a log/comp03_log.txt
+a log/comp02_log.txt
+a log/comp01_log.txt
+a log/comp11_log.txt
+tar: profiler: Cannot stat: No such file or directory
+tar: Error exit delayed from previous errors.
