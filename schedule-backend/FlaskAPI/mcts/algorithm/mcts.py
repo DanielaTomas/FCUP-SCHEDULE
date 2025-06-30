@@ -9,10 +9,6 @@ from dataclasses import dataclass
 import cProfile
 import time
 
-#TODO remove prints; remove debug ?
-#TODO documentation
-#TODO remove final_result ?
-
 @dataclass
 class Params:
     c_param: float = 1.4
@@ -288,9 +284,9 @@ class MCTS:
                     break
                 if self.expansion():
                     simulation_hard, simulation_soft = self.simulation(start_time, self.params.time_limit)
-                    """ if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
+                    if self.global_best_hard_penalty == 0 and self.global_best_soft_penalty == 0:
                         print("Optimal solution found!\n")
-                        break """
+                        break
                     self.backpropagation(simulation_hard, simulation_soft)
                     duration = time.time() - start_time
                     if DEBUG_PROGRESS: self.update_progress_metrics(i+1)

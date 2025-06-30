@@ -270,6 +270,14 @@
   {1em} % space between number and text
   {} % formatting for just the text
   [] % formatting for after the text
+  
+  \titleformat{\subsubsection}
+  {\normalfont\normalsize} % <-- removes bold
+  {\thesubsubsection}
+  {1em}
+  {}
+  []
+
 
 \titlespacing\chapter{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 \titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}

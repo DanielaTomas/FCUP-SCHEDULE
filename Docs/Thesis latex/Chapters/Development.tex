@@ -141,9 +141,9 @@ A node is composed of the following attributes:
 
 \item \textbf{Visits} is initialized to 0, tracking the number of times a node has been visited.
 
-\item The \textbf{hard and soft scores} are both initialized to 0, representing the cumulative hard and soft scores for a node, which are used to evaluate the quality of the node's state.
+\item The \textbf{hard and soft scores} are both initialized to 0, representing the cumulative back-propagated hard and soft scores for a node, which are used to evaluate the quality of the node's state.
 
-\item The \textbf{hard and soft simulation results} represent the simulation results encountered for a node. These values are used as \(best\_penalty\_n\) in the normalization equation (section \ref{sec:normalization} Equation \ref{normalization_formula}) to scale results between 0 and 1.
+\item The \textbf{hard and soft simulation results} represent the result of a single simulation performed for a node. These values are used as \(best\_penalty\_n\) in the normalization equation (section \ref{sec:normalization} Equation \ref{normalization_formula}) to scale results between 0 and 1.
 \end{itemize}
 
 \subsection{Events Allocation}
@@ -194,7 +194,7 @@ The\ac{mcts} algorithm consists of four phases: \(selection\), \(expansion\), \(
 
 The \(selection\) phase (Algorithm \ref{selection}) begins at the root and traverses the tree by iteratively selecting the best child nodes according to Equation \ref{uct_formula} until a terminal (leaf) node is reached. A node is considered terminal if it cannot be expanded further (i.e., its expansion limit is zero). Conversely, a node is deemed fully expanded if either its expansion limit is zero or if the number of its children equals its expansion limit. If the traversal encounters a node that is not fully expanded, the selection stops, and that node is selected for further expansion.
 
-The best child node (Algorithm \ref{best_child}) is determined by applying the\ac{uct} formula (Equation \ref{uct_formula}). However, since the problem has two goals, maximizing the hard constraints first and then the soft constraints, the\ac{uct} formula was applied differently. Initially, the algorithm computes the weights for each child node using the hard score. Among the children with the highest hard score, the weights are recalculated based on the soft score. The child node with the highest weight in this second calculation is selected as the best child. %However, if all of a node's children have reached their expansion limit, the algorithm backtracks: if the current node has a parent, the current node's expansion limit is set to zero, and it moves up to the parent. Reaching the root indicates that the entire tree is fully expanded.
+The best child node (Algorithm \ref{best_child}) is determined by applying the\ac{uct} formula (Equation \ref{uct_formula}). However, since the problem has two goals, minimizing hard constraints' violations first and then the soft constraints, the\ac{uct} formula was applied differently. Initially, the algorithm computes the weights for each child node using the hard score. Among the children with the highest hard score, the weights are recalculated based on the soft score. The child node with the highest weight in this second calculation is selected as the best child. %However, if all of a node's children have reached their expansion limit, the algorithm backtracks: if the current node has a parent, the current node's expansion limit is set to zero, and it moves up to the parent. Reaching the root indicates that the entire tree is fully expanded.
 
 \begin{algorithm}
 \caption{Selection}\label{selection}
@@ -241,7 +241,7 @@ A list of valid (period, room) combinations is generated. If no such combination
 
 A combination is selected based on the number of already-expanded children. %A new path is constructed by assigning the selected period and room to the event.
 
-Before proceeding, the algorithm evaluates the partial timetable (i.e., the new child) against a global hard penalty threshold. If the new assignment violates hard constraints, resulting in a penalty below the threshold, the expansion stops for that branch. However, if the penalty exceeds or equals the threshold, the node remains in the tree. This pruning strategy was introduced to focus computational effort on promising and potentially feasible solutions. Notably, we use a threshold rather than immediately discarding all infeasible nodes because, in real-world timetabling problems, a fully feasible solution might not always be possible. Completely eliminating infeasible nodes would make the algorithm unsuitable for hard instances, as it would prevent the search from distinguishing between degrees of infeasibility.
+Before proceeding, the algorithm evaluates the partial timetable (i.e., the new child) against a global hard penalty threshold. Since the problem is formulated as a maximization problem (i.e., higher hard scores indicate fewer constraint violations), this threshold defines the minimum acceptable hard score for a solution. If the resulting hard score for the partial timetable with the new assignment is lower than the threshold, the expansion stops for that branch. However, if the penalty exceeds or equals the threshold, the node remains in the tree. This pruning strategy was introduced to focus computational effort on promising and potentially feasible solutions. Notably, we use a threshold rather than immediately discarding all infeasible nodes because, in real-world timetabling problems, a fully feasible solution might not always be possible. Completely eliminating infeasible nodes would make the algorithm unsuitable for hard instances, as it would prevent the search from distinguishing between degrees of infeasibility.
 
 If the expansion continues, the algorithm calculates the number of valid (period, room) combinations for the next event. This value is stored as the child’s expansion\_limit to guide future branching.
 
@@ -262,7 +262,9 @@ Finally, a new child node is created with the updated path and expansion limit. 
 	\State Select the next untried (period, room) combination
 	\State Assign this to the event
 \\
-	\If{the assignment violates hard constraints}
+    \State Evaluate partial assignment's hard score
+\\
+    \If{hard score is below threshold}
 		\State Pruning
 		\State \Return False
 	\EndIf
@@ -425,7 +427,7 @@ This formulation ensures that the best simulation result is mapped to a value cl
 
 \section{Hill climbing}\label{hill_climbing_section}
 
-The\ac{hc} algorithm (Appendix \ref{AppendixA} Algorithm \ref{run_hill_climbing}) is applied as a local search method to further optimize the timetable obtained from the\ac{mcts} simulation phase. This approach refines an initially feasible solution by iteratively exploring small modifications to enhance overall quality.
+The\ac{hc} algorithm (Appendix \ref{AppendixA} Algorithm \ref{run_hill_climbing}) is applied as a local search method to further improve the timetable obtained from the\ac{mcts} simulation phase. This approach refines an initially feasible solution by iteratively exploring small modifications to enhance overall quality.
 
 To maintain the structure established during the tree search,\ac{hc} only modifies events that are not assigned in the tree. This ensures that the global search strategy remains intact while improving suboptimally placed events by the simulation phase.
 

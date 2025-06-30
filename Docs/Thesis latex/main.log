@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  27 JUN 2025 14:07
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.11.27)  30 JUN 2025 10:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2728,7 +2728,7 @@ Overfull \hbox (2.1293pt too wide) in paragraph at lines 244--245
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 281--282
+Underfull \hbox (badness 10000) in paragraph at lines 283--284
 []\TU/Arial(0)/b/n/10.95 function \TU/Arial(0)/m/sc/10.95 FIND_AVAILABLE_ROOMS\
 TU/Arial(0)/m/n/10.95 (event_capacity, rooms, events, avail-
  []
@@ -2794,19 +2794,19 @@ Package fancyhdr Warning: \headheight is too small (14.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-4.99997pt}.
 
 [27]
-./Chapters/Development.tex:491: Missing number, treated as zero.
+./Chapters/Development.tex:493: Missing number, treated as zero.
 <to be read again> 
                    \ALG@b@2@Else@0 
-l.491         \Else
+l.493         \Else
                    
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
 look up `weird error' in the index to The TeXbook.)
 
-./Chapters/Development.tex:493: Missing number, treated as zero.
+./Chapters/Development.tex:495: Missing number, treated as zero.
 <to be read again> 
                    \ALG@b@2@EndIf@0 
-l.493         \EndIf
+l.495         \EndIf
                     
 A number should have been here; I inserted `0'.
 (If you can't figure out why I needed to see a number,
@@ -3458,7 +3458,7 @@ Package rerunfilecheck Info: File `main.brf' has not changed.
 Here is how much of TeX's memory you used:
  45330 strings out of 473965
  931076 string characters out of 5736631
- 1422395 words of memory out of 5000000
+ 1422373 words of memory out of 5000000
  67396 multiletter control sequences out of 15000+600000
  584019 words of font info for 153 fonts, out of 8000000 for 9000
  1351 hyphenation exceptions out of 8191
