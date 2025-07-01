@@ -204,6 +204,43 @@
 \pagestyle{empty}
 \setlength{\parindent}{0cm}
 
+%-------------------------------------------------------------------------
+%	COVER PAGE
+%-------------------------------------------------------------------------
+
+
+\hspace{25mm}
+\begin{minipage}[b][297mm][t]{125mm}
+	\vfill
+	\parbox[b][200mm][c]{125mm}{
+		\raggedright
+		\setstretch{\ttlspcfront}
+		{\HUGE \bfseries \frttitle} \\
+		\setstretch{1.2} {\large~\\}
+		{\LargeA \authr \\}
+		{\large \degree \\}
+		{\small \deptname \\}
+		{\small \supaffil \\ \the\year \\}
+		{\small~\\}
+	}
+	\vspace{5mm}
+\end{minipage}
+\hfill
+\begin{minipage}[b][297mm][b]{\sidew}
+\setstretch{1.0}
+	\ifdefined\extraaffilnolink
+		\includegraphics[width=52mm]{\extralogo}
+		\\[2mm]
+	\fi
+	\ifdefined\otheraffilnolink
+		\includegraphics[width=52mm]{\otherlogo}
+		\\[2mm]
+	\fi
+	\includegraphics[width=52mm]{fcup}
+	\includegraphics[scale=0.97]{title}
+\end{minipage}
+
+\newpage
 
 %-------------------------------------------------------------------------
 %	ONE-SIDED TITLE PAGE
@@ -219,10 +256,10 @@
 		{\HUGE \bfseries \frttitle} \\
 		\setstretch{1.2} {\large~\\}
 		{\LargeA \authr \\}
-		{\large \degree \\}
+		{\large Dissertation Report carried out as part of the \degree \\}
 		{\small \deptname \\ \the\year \\}
 		{\small~\\}
-		{\large \bfseries Orientador \\}
+		{\large \bfseries Supervisor \\}
 		{\small \supname,~\ifdefined\suppos \suppos,~\fi \supaffil \\}
 		{\small~\\}
 		\ifdefined\cosupaffilnolink
@@ -231,10 +268,6 @@
 		\fi
 	}
 	\vspace{5mm}
-\end{minipage}
-\hfill
-\begin{minipage}[b][297mm][b]{\sidew}
-	\includegraphics[scale=0.97]{title}
 \end{minipage}
 
 \newpage
