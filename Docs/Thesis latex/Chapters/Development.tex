@@ -33,7 +33,7 @@ The formulation presented is based on the model proposed in the\ac{itc-2007} tra
 			%\item Type (TODO)
 		\end{itemize}
 
-	\item \textbf{Lecturers, \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):} 
+	\item \textbf{Lecturers, \(L = \{L_0, L_1, ..., L_|_L_|_-_1\}\):} We assume lecturers are pre-assigned to events.
 		\begin{itemize}
 			%\item Office
 			\item Availability
@@ -58,7 +58,7 @@ The formulation presented is based on the model proposed in the\ac{itc-2007} tra
         		\item Minimum working days (days over which the events of the same course should be spread);
         		\item Available periods;
         		\item Priority;
-        		\item Lecturer;
+        		\item Lecturer
 		\end{itemize}
 %		\end{multicols} 
 
@@ -158,6 +158,8 @@ Events are sorted in advance so that the most difficult event to place is placed
 \end{itemize}
 
 If two or more events have the same priority score, they are ordered randomly.
+
+The order of the events has a significant impact on the results. We tried other alternatives, but this one worked the best. 
 
 \begin{equation}
   \begin{aligned}

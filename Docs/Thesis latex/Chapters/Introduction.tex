@@ -25,19 +25,36 @@ The challenge intensifies when considering a complete bachelor’s or master’s
 
 \section{Motivation}
 
-The process of building timetables at\ac{fcup} each semester is currently time-consuming, not automated, and the final results are not always the most satisfactory. In general, existing tools focus primarily on visualizing timetables or on basic conflict detection. This situation not only results in suboptimal schedules but also increases the workload for administrative staff and impacts the satisfaction of both lecturers and students. 
+The process of building timetables, for instance, at\ac{fcup} each semester is currently time-consuming, not automated, and the final results are not always the most satisfactory. In general, existing tools focus primarily on visualizing timetables or on basic conflict detection. This situation not only results in suboptimal schedules but also increases the workload for administrative staff and impacts the satisfaction of both lecturers and students. 
 
 In the academic year 2023/2024,\ac{fcup} enrolled more than 5000 students, offered 117 different curricula, and coordinated 646 collaborators \cite{fcup_em_numeros}. This scale underscores the need for an effective timetabling system that can manage such scale while minimizing errors and conflicts. %The approach in use is not only inefficient but also prone to errors and conflicts.
 
 \section{Objectives}
 
-The primary objective of this dissertation is to design a tool able to enhance the efficiency and quality of\ac{fcup}'s weekly timetable development by providing step-by-step interactive recommendations and detecting potential conflicts during its construction. The aim of this functionality is to later be integrated into a timetable visualization interface that was previously developed using reactive programming.
+The primary objective of this dissertation is to contribute to the field of university course timetabling by proposing, implementing, and evaluating a novel method that combines\ac{mcts},\ac{hc}, and a diving strategy.
+
+More specifically, the objectives are to:
+\begin{itemize}
+\item Demonstrate that\ac{mcts} can be adapted to the\ac{cb-ctt} problem effectively;
+
+\item Integrate\ac{mcts} with\ac{hc} to refine feasible solutions;
+
+\item Introduce a diving strategy to guide search focus towards promising areas of the search space;
+
+\item Evaluate the method on the 21 benchmark instances from the\ac{itc-2007} competition and analyze the feasibility and quality of the resulting timetables;
+
+\item Analyze the influence of key algorithmic parameters and design choices.
+\end{itemize}
+
+This dissertation does not aim to develop a complete timetabling system or integrate with visualization tools. Its contributions lie primarily in algorithmic innovation and performance evaluation.
+
+%The primary objective of this dissertation is to design a tool able to enhance the efficiency and quality of\ac{fcup}'s weekly timetable development by providing step-by-step interactive recommendations and detecting potential conflicts during its construction. The aim of this functionality is to later be integrated into a timetable visualization interface that was previously developed using reactive programming.
 
 \section{Methodology and Contributions}
 
 To address the problem challenges, this dissertation proposes a novel hybrid approach combining two heuristic algorithms:\ac{mcts} and\ac{hc}, along with a diving strategy. The\ac{mcts} heuristic search algorithm was chosen, as it has been applied to various optimization problems and has proven to be particularly effective in games.\ac{hc} was also chosen to be used in conjunction with\ac{mcts} for local optimization, refining feasible solutions discovered during the global search. The diving strategy further strengthens the search process by deepening the exploration of promising partial solutions, thereby improving the chances of reaching higher-quality timetables.
 
-Although\ac{mcts} has shown positive results in relevant areas, its application to\ac{ucttp} remains largely unexplored. Therefore, the proposed system presents an opportunity to advance the state of the art and help in further studies, by leveraging the global search capabilities of\ac{mcts} to explore diverse scheduling possibilities with\ac{hc} to refine solutions locally. This hybrid approach aims to deliver both feasible and better-quality timetables while addressing the practical challenges faced by\ac{fcup} in managing large-scale scheduling.
+Although\ac{mcts} has shown positive results in relevant areas, its application to\ac{ucttp} remains largely unexplored. Therefore, the proposed system presents an opportunity to advance the state of the art and help in further studies by leveraging the global search capabilities of\ac{mcts} to explore diverse scheduling possibilities with\ac{hc} to refine solutions locally. This hybrid approach aims to deliver both feasible and better-quality timetables while addressing the practical challenges faced by\ac{fcup} in managing large-scale scheduling.
 
 \section{Dissertation layout}
 

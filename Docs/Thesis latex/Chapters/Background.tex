@@ -46,7 +46,7 @@ Due to the size and complexity of the problem, obtaining an optimal solution in 
 \item \textbf{\ac{pe-ctt}:} Events are scheduled after students enroll in their courses, taking into account their preferred event combinations while minimizing conflicts.
 \end{itemize}
 
-These two problems differ significantly in terms of timing, flexibility, and constraints.\ac{pe-ctt} is performed after the student has enrolled in their courses, while\ac{cb-ctt} is performed first.\ac{pe-ctt} adjusts to the student choices, providing greater flexibility, while\ac{cb-ctt} follows a more rigid and predefined structure. Furthermore,\ac{pe-ctt} often involves more complex constraints due to diverse student preferences, whereas\ac{cb-ctt} deals with more predictable patterns. As a result,\ac{pe-ctt} is appropriate for institutions with a flexible course enrollment, while\ac{cb-ctt} is ideal for institutions with fixed curricula.\ac{fcup}'s timetables generation fits into\ac{cb-ctt}.
+These two problems differ significantly in terms of timing, flexibility, and constraints.\ac{pe-ctt} is performed after the student has enrolled in their courses, while\ac{cb-ctt} is performed first.\ac{pe-ctt} adjusts to the student choices, providing greater flexibility, while\ac{cb-ctt} follows a more rigid and predefined structure. Furthermore,\ac{pe-ctt} often involves more complex constraints due to diverse student preferences, whereas\ac{cb-ctt} deals with more predictable patterns. As a result,\ac{pe-ctt} is appropriate for institutions with a flexible course enrollment, while\ac{cb-ctt} is ideal for institutions with fixed curricula.%\ac{fcup}'s timetables generation fits into\ac{cb-ctt}.
 
 \subsection{Constraints}
 %How can a university/school schedule its classes to make the best use of teachers and classrooms without conflicts?
@@ -71,6 +71,8 @@ Since 2002, the\ac{patat}\footnote{\url{https://patatconference.org/communitySer
 The first\ac{itc} in 2002 focused on the\ac{pe-ctt} problem and utilized artificially generated instances. Over successive editions, the competition introduced problem instances that increasingly reflected real-world constraints and complexities.
 
 The\ac{itc-2007}\footnote{\url{https://www.eeecs.qub.ac.uk/itc2007/}} was structured into three distinct tracks: Examination Timetabling Problem, Post-enrollment Course Timetabling, and Curriculum-based Course Timetabling. The second one is an extended version of the previous competition. This dissertation focuses on the Curriculum-Based Course Timetabling track (track 3) of the\ac{itc-2007}, as it aligns with the problem under investigation. Even after 18 years, these benchmark datasets remain widely used in academic research and optimization studies, demonstrating their relevance in the field.
+
+ITC-2019 has a more realistic and complex focus, reflecting real problems collected from universities around the world. However, because ITC-2019 has a higher entry curve,\ac{itc-2007} was deemed sufficient for validating and testing the effectiveness of our approach.
 
 \section{Monte Carlo Tree Search}
 

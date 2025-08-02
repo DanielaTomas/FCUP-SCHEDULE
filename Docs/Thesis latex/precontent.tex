@@ -67,11 +67,11 @@ Apesar de várias melhorias e adaptações ao algoritmo MCTS padrão, continuam 
 \addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
 \begin{abstract}
 
-Timetable generation for schools and universities is an NP-hard combinatorial optimization problem with a vast search space and hard to meet constraints. At the Faculty of Sciences of the University of Porto (FCUP), preparing semester schedules for thousands of students, dozens of curricula, and hundreds of lecturers is currently done manual by an activity that is time-consuming, and prone to errors.
+Timetable generation for schools and universities is an NP-hard combinatorial optimization problem with a vast search space and hard-to-meet constraints. At the Faculty of Sciences of the University of Porto (FCUP), preparing semester schedules for thousands of students, dozens of curricula, and hundreds of lecturers is currently done manually by an activity that is time-consuming and prone to errors.
 
 This dissertation addresses the Curriculum-Based Course Timetabling (CB-CTT) variant of the University Course Timetabling Problem by presenting a novel hybrid approach that combines Monte Carlo Tree Search (MCTS) with Hill Climbing (HC) and a diving strategy. MCTS drives the global search, simulating and evaluating multiple event, period, and room assignments, prioritizing the most constrained events and expanding the most promising branches. Whenever MCTS obtains an improved feasible timetable during simulation, HC takes over and applies six neighborhood moves to iteratively improve the solution while preserving the feasibility. A diving strategy was introduced to further enhance the MCTS effectiveness. This strategy deepens promising partial solutions, allowing the algorithm to focus on higher-quality regions of the search space.
 
-Tests on the ITC-2007 track 3 benchmark instances show that the hybrid approach consistently finds feasible timetables. However, even with extended time limits, the approach does not yet outperform best published results in terms of minimizing soft constraint violations.
+Tests on the ITC-2007 track 3 benchmark instances show that the hybrid approach consistently finds feasible timetables. However, even with extended time limits, the approach does not yet outperform the best published results in terms of minimizing soft constraint violations.
 
 Despite some improvements and changes to the standard MCTS algorithm, challenges remain. Nevertheless, the proposed hybrid approach demonstrates strong potential and a solid foundation for further research and practical adoption in institutional timetabling contexts like FCUP. 
 

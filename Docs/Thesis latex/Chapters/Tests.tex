@@ -54,7 +54,7 @@ All instances guarantee at least one feasible solution, which means that in the 
 
 \section{Test Setup}
 
-The tests were conducted for different values of the parameter \(C\) (Equation \ref{uct_formula}), which affects the exploration-exploitation trade-off in the\ac{mcts} algorithm. A higher \(C\) value increases the weight of the second term, allowing the algorithm explore less-visited nodes with more intensity. On the other hand, a lower \(C\) value favors nodes with a higher average reward, resulting in increased exploitation of known favorable choices. Specifically, we tested the algorithm with some values of C ranging from 0.1 to 1000.
+The tests were conducted for different values of the parameter \(C\) (Equation \ref{uct_formula}), which affects the exploration-exploitation trade-off in the\ac{mcts} algorithm. A higher \(C\) value increases the weight of the second term, allowing the algorithm explore less-visited nodes with more intensity. On the other hand, a lower \(C\) value favors nodes with a higher average reward, resulting in increased exploitation of known favorable choices. Specifically, we tested the algorithm with some values of C ranging from 0.1 to 1000 (0.1, 0.2, 0.5, 1, 1.4, 2, 5, 10, 20, 50, 100, 200, 500, 1000).
 
 Additionally, an alternative\ac{uct} formula was evaluated, modifying the exploitation term to use the accumulated reward instead of the average (Equation \ref{modified_uct}), giving an advantage to the nodes that were exploited first.
 

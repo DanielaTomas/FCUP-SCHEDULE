@@ -30,7 +30,7 @@ These results highlight the importance of incorporating domain knowledge informa
 
 The exploration constant \(C\) in the\ac{uct} formula (Formula \ref{uct_formula}) was varied across several orders of magnitude (from 0.1 to 1000), including the modified variant incorporating accumulated rewards (Equation \ref{modified_uct}). 
 
-Surprisingly, the results showed that varying \(C\) had minimal impact on solution quality, which indicates a lower-than-expected sensitivity to node selection.
+Surprisingly, the results showed that varying \(C\) had minimal impact on solution quality, which indicates a lower-than-expected sensitivity to node selection. No clear or consistent pattern emerged across different benchmark instances or configurations.
 
 \section{Pruning}
 
@@ -100,9 +100,17 @@ The results demonstrate that the diving mechanism contributes positively to the 
 
 In both approaches (with and without diving) it is noticeable that the algorithm eventually stagnates, reaching a point where no further improvement is observed. After an initial phase of rapid improvement, the soft penalty score typically plateaus without finding an optimal solution. However, with the diving strategy, the soft constraint penalties at each iteration tend to remain closer to the best solution found, indicating a more stable and focused search trajectory.
 
+Although the diving strategy yielded improved convergence, it may also reveal a potential drawback in the balance between exploration and exploitation. By aggressively deepening promising paths, the algorithm might prematurely narrow its search space, reducing its ability to discover alternative high-quality regions. This behavior suggests that while diving is effective in focusing the search, it might also limit broader exploration.
+
+\section{Extended Runtime Evaluation}
+
+To determine whether the proposed approach benefits from longer execution times, additional experiments were conducted with extended time limits (1 hour and 24 hours) on selected benchmark instances. These experiments aimed to evaluate the long-term convergence behavior of the different algorithm variants.
+
+The results showed that the algorithm tended to plateau early, but it slightly reduced soft constraint penalties. The number of iterations remained relatively low. With even longer times, we could have had better outcomes.
+
 \section{Competition Results Comparison}
 
-The effectiveness of the\ac{mcts}-\ac{hc} hybrid was evaluated on the official\ac{itc-2007} track 3 benchmark datasets. Table \ref{tab:comparison_results} presents a comparison between the best results submitted by Müller (competition winner) and our approach (with \(C\)=0.1) for instances \texttt{comp01.ctt} to\texttt{comp05.ctt}, and \texttt{comp11.ctt}. Initially, all benchmark instances were considered for evaluation, but due to time constraints, the experiments were narrowed down to focus on only six instances.
+The effectiveness of our approach was evaluated on the official\ac{itc-2007} track 3 benchmark datasets. Table \ref{tab:comparison_results} presents a comparison between the best results submitted by Müller (competition winner) and our approach (with \(C\)=0.1) for instances \texttt{comp01.ctt} to\texttt{comp05.ctt}, and \texttt{comp11.ctt}. Initially, all benchmark instances were considered for evaluation, but due to time constraints, the experiments were narrowed down to focus on only six instances. We chose the first five cases simply because they were the most often utilized and thus the ones we became most familiar with. The \texttt{comp11.ctt} instance was chosen since it produces an optimal solution.
 
 \begin{sidewaystable}[p]
 \centering
@@ -134,7 +142,7 @@ The effectiveness of the\ac{mcts}-\ac{hc} hybrid was evaluated on the official\a
 \hline
 \end{adjustbox}
 \end{tabular}
-\caption{Comparison of Müller and our method variants across six benchmark instances during 10 minutes. Soft constraint penalties are shown with hard constraint violations in parentheses.}
+\caption{Comparison of Müller and our method variants across six benchmark instances during 10 minutes and run 10 times. Soft constraint penalties are shown with hard constraint violations in parentheses.}
 \label{tab:comparison_results}
 \end{sidewaystable}
 
@@ -146,7 +154,7 @@ This effect may also help explain why\ac{hc} and diving, although designed to im
 
 \section{Summary}
 
-This chapter evaluated the\ac{mcts}-\ac{hc} hybrid approach across several dimensions: implementation performance, feasibility, parameter tuning, pruning impact, and solution quality. Key findings include:
+This chapter evaluated the approach across several dimensions: implementation performance, feasibility, parameter tuning, pruning impact, and solution quality. Key findings include:
 
 \begin{itemize}
 \item \textbf{Feasibility:} The method consistently generated feasible timetables in the challenging\ac{itc-2007} set of benchmark instances.
@@ -156,6 +164,8 @@ This chapter evaluated the\ac{mcts}-\ac{hc} hybrid approach across several dimen
 \item \textbf{Random Simulation:} Purely random simulations failed to produce feasible solutions, emphasizing the necessity of guided search and domain knowledge to navigate the complex solution space effectively.
 
 \item \textbf{Pruning:} Efficiently eliminated some infeasible branches, improving search focus and convergence.
+
+\item \textbf{Hill Climbing:} The inclusion of\ac{hc} did not consistently outperform the base\ac{mcts} or diving versions within the 10-minute budget, but it demonstrated potential to refine certain solutions.
 
 \item \textbf{Diving:} Diving successfully reduced soft constraint penalties after\ac{mcts} found a feasible solution.
 

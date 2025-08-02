@@ -21,7 +21,7 @@
 \contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Objectives}{2}{section.1.2}%
 \contentsline {section}{\numberline {1.3}Methodology and Contributions}{2}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Dissertation layout}{2}{section.1.4}%
+\contentsline {section}{\numberline {1.4}Dissertation layout}{3}{section.1.4}%
 \contentsline {chapter}{\numberline {2}Background}{4}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Combinatorial Optimization Problems}{4}{section.2.1}%
 \contentsline {section}{\numberline {2.2}The University Course Timetabling Problem}{4}{section.2.2}%
@@ -77,13 +77,14 @@
 \contentsline {section}{\numberline {6.5}Pruning}{36}{section.6.5}%
 \contentsline {section}{\numberline {6.6}Hill Climbing}{38}{section.6.6}%
 \contentsline {section}{\numberline {6.7}Diving}{38}{section.6.7}%
-\contentsline {section}{\numberline {6.8}Competition Results Comparison}{40}{section.6.8}%
-\contentsline {section}{\numberline {6.9}Summary}{42}{section.6.9}%
-\contentsline {chapter}{\numberline {7}Conclusion}{43}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Future Work}{43}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Performance}{43}{subsection.7.1.1}%
-\contentsline {subsection}{\numberline {7.1.2}Expand Hard and Soft Constraints}{44}{subsection.7.1.2}%
-\contentsline {subsection}{\numberline {7.1.3}Previous Work}{44}{subsection.7.1.3}%
+\contentsline {section}{\numberline {6.8}Extended Runtime Evaluation}{40}{section.6.8}%
+\contentsline {section}{\numberline {6.9}Competition Results Comparison}{40}{section.6.9}%
+\contentsline {section}{\numberline {6.10}Summary}{43}{section.6.10}%
+\contentsline {chapter}{\numberline {7}Conclusion}{44}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Future Work}{44}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Performance}{44}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Expand Hard and Soft Constraints}{45}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Visualization tool}{45}{subsection.7.1.3}%
 \vspace {0.5cm}
-\contentsline {chapter}{Bibliography}{45}{dummy.6}%
+\contentsline {chapter}{Bibliography}{46}{dummy.6}%
 \contentsfinish 
