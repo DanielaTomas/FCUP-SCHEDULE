@@ -15,7 +15,7 @@
 
 This chapter describes the development of the timetable system, formulating the problem, discussing the implementation of the\ac{mcts} and\ac{hc} hybrid approach, detailing the design choices, and algorithmic improvements made throughout the project. 
 
-The source code for the hybrid timetabling system is available at \url{https://github.com/DanielaTomas/FCUP-SCHEDULE/tree/main/schedule-backend/FlaskAPI/mcts/}. The repository includes detailed instructions for installation, configuration, and running the system.
+The source code for the hybrid timetabling system is available at \url{https://github.com/DanielaTomas/FCUP-SCHEDULE/tree/main/schedule-backend/FlaskAPI/mcts/}. The repository includes documentation and detailed instructions for installation, configuration, and running the system.
 
 \section{Problem Formulation}
 
@@ -429,7 +429,7 @@ This formulation ensures that the best simulation result is mapped to a value cl
 
 \section{Hill climbing}\label{hill_climbing_section}
 
-The\ac{hc} algorithm (Appendix \ref{AppendixA} Algorithm \ref{run_hill_climbing}) is applied as a local search method to further improve the timetable obtained from the\ac{mcts} simulation phase. This approach refines an initially feasible solution by iteratively exploring small modifications to enhance overall quality.
+The\ac{hc} algorithm (Algorithm \ref{run_hill_climbing}) is applied as a local search method to further improve the timetable obtained from the\ac{mcts} simulation phase. This approach refines an initially feasible solution by iteratively exploring small modifications to enhance overall quality.
 
 To maintain the structure established during the tree search,\ac{hc} only modifies events that are not assigned in the tree. This ensures that the global search strategy remains intact while improving suboptimally placed events by the simulation phase.
 

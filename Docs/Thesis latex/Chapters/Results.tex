@@ -157,17 +157,21 @@ This effect may also help explain why\ac{hc} and diving, although designed to im
 This chapter evaluated the approach across several dimensions: implementation performance, feasibility, parameter tuning, pruning impact, and solution quality. Key findings include:
 
 \begin{itemize}
-\item \textbf{Feasibility:} The method consistently generated feasible timetables in the challenging\ac{itc-2007} set of benchmark instances.
+\item \textbf{Feasibility:} The method consistently generated feasible timetables in the challenging\ac{itc-2007} set of benchmark instances;
 
-\item \textbf{Performance:} PyPy significantly outperformed standard Python, justifying its use in all experiments.
+\item \textbf{Performance:} PyPy significantly outperformed standard Python, justifying its use in all experiments;
 
-\item \textbf{Random Simulation:} Purely random simulations failed to produce feasible solutions, emphasizing the necessity of guided search and domain knowledge to navigate the complex solution space effectively.
+\item \textbf{Random Simulation:} Purely random simulations failed to produce feasible solutions, emphasizing the necessity of guided search and domain knowledge to navigate the complex solution space effectively;
 
-\item \textbf{Pruning:} Efficiently eliminated some infeasible branches, improving search focus and convergence.
+\item \textbf{\(C\) Parameter Behaviour:} \(C\) parameter across several orders of magnitude did not lead to significant or consistent improvements in solution quality. This suggests that the algorithm exhibits lower-than-expected sensitivity to the exploration-exploitation trade-off in node selection;
 
-\item \textbf{Hill Climbing:} The inclusion of\ac{hc} did not consistently outperform the base\ac{mcts} or diving versions within the 10-minute budget, but it demonstrated potential to refine certain solutions.
+\item \textbf{Pruning:} Efficiently eliminated some infeasible branches, improving search focus and convergence;
 
-\item \textbf{Diving:} Diving successfully reduced soft constraint penalties after\ac{mcts} found a feasible solution.
+\item \textbf{Hill Climbing:} The inclusion of\ac{hc} did not consistently outperform the base\ac{mcts} or diving versions within the 10-minute budget, but it demonstrated potential to refine certain solutions;
+
+\item \textbf{Diving:} The diving strategy improved convergence speed and helped maintain stable soft constraint values after feasible solutions were found. However, it may also limit broader exploration by focusing too early on promising branches, potentially reducing the diversity of solutions explored;
+
+\item \textbf{Extended Runtime:} Longer executions slightly reduced soft constraint penalties but revealed early stagnation in most cases. The number of iterations remained relatively low, suggesting that performance could still benefit from further optimization to make better use of extended time limits;
 
 \item \textbf{Competition Benchmarking:} Although solution quality was below the best-known results, the approach shows solid potential with room for improvement.
 \end{itemize}
